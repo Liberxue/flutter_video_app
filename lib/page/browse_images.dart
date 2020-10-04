@@ -85,9 +85,8 @@ class _BrowseImagesState extends State<BrowseImages> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-                padding: EdgeInsets.all(18.0),
-                margin: EdgeInsets.only(top: 10),
-                // width: searchwidth,
+                padding: EdgeInsets.all(20.0),
+                margin: EdgeInsets.only(bottom: 10),
                 alignment: Alignment.center,
                 child: TextField(
                   cursorWidth: 2.0,
@@ -95,10 +94,9 @@ class _BrowseImagesState extends State<BrowseImages> {
                   controller: searchQueryController,
                   onEditingComplete: () async {
                     setState(() {
-                      if (searchTop <= 300.0 && searchwidth <= 900) {
+                      if (searchTop <= 300.0 && searchwidth <= 900)
                         searchTop -= 300;
-                        searchwidth += deviceWidth;
-                      }
+                      searchwidth += deviceWidth;
                       _isLoading = true;
                     });
                     await _performSearch();
@@ -115,10 +113,9 @@ class _BrowseImagesState extends State<BrowseImages> {
                         icon: Icon(Icons.search),
                         onPressed: () async {
                           setState(() {
-                            if (searchTop <= 300.0 && searchwidth <= 900) {
+                            if (searchTop <= 300.0 && searchwidth <= 900)
                               searchTop -= 300;
-                              searchwidth += deviceWidth;
-                            }
+                            searchwidth += deviceWidth;
                             _isLoading = true;
                           });
                           await _performSearch();
