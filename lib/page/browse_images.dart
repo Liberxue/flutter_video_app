@@ -1,4 +1,4 @@
-import 'package:CiYing/common/constants.dart';
+import 'package:CiYing/components/rounded_input_field.dart';
 import 'package:CiYing/page/ResourceGrid.dart';
 import 'package:flutter/material.dart';
 import 'package:CiYing/models/image_list.dart';
@@ -15,6 +15,7 @@ class _BrowseImagesState extends State<BrowseImages> {
   bool _isLoading = false;
   ImageList _images;
   bool _searchDone = false;
+  bool _searchHeaderShow = false;
   double searchTop = 300.0;
   double searchwidth = 650.0;
 
@@ -33,6 +34,8 @@ class _BrowseImagesState extends State<BrowseImages> {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _controller = new TextEditingController();
+
     double deviceWidth = MediaQuery.of(context).size.width;
     // double deviceheight = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -40,10 +43,6 @@ class _BrowseImagesState extends State<BrowseImages> {
           preferredSize: Size.fromHeight(60.0),
           child: AppBar(
             // automaticallyImplyLeading: true, // hides leading widget
-            title: Text(
-              APPNAME + "搜索",
-              style: TextStyle(fontSize: 20, height: 2, color: Colors.black45),
-            ),
             leading: Builder(builder: (BuildContext context) {
               return IconButton(
                 icon: Image.asset("assets/images/logo.png"),
@@ -57,75 +56,72 @@ class _BrowseImagesState extends State<BrowseImages> {
             elevation: 1.5,
             backgroundColor: Colors.white,
             actions: <Widget>[
-              IconButton(
-                  icon: Icon(Icons.home),
-                  color: Colors.black,
-                  onPressed: () {}),
+              if (_searchHeaderShow)
+                RoundedInputField(
+                  icon: Icons.search,
+                  hintText: "搜索",
+                  onChanged: (value) {},
+                ),
               Container(
-                margin:
-                    EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-                child: RaisedButton(
-                  elevation: 0.5,
-                  color: Colors.blueAccent,
-                  onPressed: () {},
-                  child: Text(
-                    '登录',
-                    style: TextStyle(
-                        fontFamily: 'arial',
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500),
+                decoration: BoxDecoration(
+                  borderRadius: new BorderRadius.all(new Radius.circular(40.0)),
+                  border: new Border.all(
+                    color: Colors.black,
+                    width: 2.0,
                   ),
                 ),
-              )
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "https://avatars0.githubusercontent.com/u/5831248?s=460&u=cfea690871e82c78cd60c9fde9a086e6da6b6d3c&v=4"),
+                  foregroundColor: Colors.black,
+                  radius: 30.0,
+                ),
+              ),
             ],
           ),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-                padding: EdgeInsets.all(20.0),
-                margin: EdgeInsets.only(bottom: 10),
-                alignment: Alignment.center,
-                child: TextField(
-                  cursorWidth: 2.0,
-                  cursorRadius: Radius.circular(5.0),
-                  controller: searchQueryController,
-                  onEditingComplete: () async {
-                    setState(() {
-                      if (searchTop <= 300.0 && searchwidth <= 900)
-                        searchTop -= 300;
-                      searchwidth += deviceWidth;
-                      _isLoading = true;
-                    });
-                    await _performSearch();
-                  },
-                  maxLines: 1,
-                  decoration: InputDecoration(
-                      labelText: '搜索',
-                      labelStyle: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w300,
-                          color: Colors.black,
-                          fontSize: 12.0),
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.search),
-                        onPressed: () async {
-                          setState(() {
-                            if (searchTop <= 300.0 && searchwidth <= 900)
-                              searchTop -= 300;
-                            searchwidth += deviceWidth;
-                            _isLoading = true;
-                          });
-                          await _performSearch();
-                        },
-                      ),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                        Radius.circular(24.0),
-                      ))),
-                )),
+            if (!_searchHeaderShow)
+              Container(
+                  padding: EdgeInsets.all(20.0),
+                  margin: EdgeInsets.only(bottom: 10),
+                  alignment: Alignment.center,
+                  child: TextField(
+                    cursorWidth: 2.0,
+                    cursorRadius: Radius.circular(5.0),
+                    controller: searchQueryController,
+                    onEditingComplete: () async {
+                      setState(() {
+                        _isLoading = true;
+                        _searchHeaderShow = true;
+                      });
+                      await _performSearch();
+                    },
+                    maxLines: 1,
+                    decoration: InputDecoration(
+                        labelText: '搜索',
+                        labelStyle: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w300,
+                            color: Colors.black,
+                            fontSize: 12.0),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.search),
+                          onPressed: () async {
+                            setState(() {
+                              _isLoading = true;
+                              _searchHeaderShow = true;
+                            });
+                            await _performSearch();
+                          },
+                        ),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                          Radius.circular(24.0),
+                        ))),
+                  )),
             if (_isLoading)
               Padding(
                   padding:

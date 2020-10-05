@@ -1,16 +1,31 @@
 import 'package:CiYing/models/image_list.dart';
 import 'package:CiYing/models/image.dart' as DisplayImage;
+import 'package:CiYing/page/FlavCart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ResourceGrid extends StatelessWidget {
+class ResourceGrid extends StatefulWidget {
   final ImageList _images;
   final bool searchPerformed;
   ResourceGrid(this._images, {this.searchPerformed = false});
+  @override
+  _ResourceGridState createState() => _ResourceGridState();
+}
 
-  Widget getBuildWidget(BuildContext context) {
+class _ResourceGridState extends State<ResourceGrid>
+    with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) => _getBuildWidget(context);
+
+  Widget _getBuildWidget(BuildContext context) {
     Widget targetWidget;
 
-    if (_images == null && searchPerformed == true) {
+    if (widget._images == null && widget.searchPerformed == true) {
       targetWidget = Container(
         padding: EdgeInsets.all(16.0),
         child: Text(
@@ -22,7 +37,7 @@ class ResourceGrid extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       );
-    } else if (searchPerformed == false) {
+    } else if (widget.searchPerformed == false) {
       targetWidget = Container(
         padding: EdgeInsets.all(16.0),
         child: Text(
@@ -42,9 +57,12 @@ class ResourceGrid extends StatelessWidget {
   }
 
   Widget buildImagesGrid(BuildContext context) {
-    List<DisplayImage.Image> displayImages = _images.images;
-    TextStyle authorStyle =
-        TextStyle(color: Colors.black54, fontFamily: 'Roboto', fontSize: 14.0);
+    List<DisplayImage.Image> displayImages = widget._images.images;
+    TextStyle authorStyle = TextStyle(
+      fontSize: 10,
+      color: Colors.white,
+      letterSpacing: 1,
+    );
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     final double _tileHeight = MediaQuery.of(context).size.height / 3;
@@ -53,7 +71,7 @@ class ResourceGrid extends StatelessWidget {
 
     if (deviceWidth > 800)
       noOfRows = 5;
-    else if (deviceWidth > 200) noOfRows = 3;
+    else if (deviceWidth > 200) noOfRows = 2;
     return Expanded(
       child: GridView.builder(
         itemCount: displayImages.length,
@@ -64,24 +82,27 @@ class ResourceGrid extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return Stack(
             children: <Widget>[
-              Container(
-                height: _tileHeight,
-                width: double.infinity,
-                padding: const EdgeInsets.all(2.6),
-                child: Hero(
-                  tag: '${displayImages[index].imageUrl}',
-                  child: Material(
-                    color: Colors.redAccent,
-                    borderRadius: BorderRadius.circular(14),
-                    shadowColor: Colors.grey.withOpacity(0.5),
-                    elevation: 24.0,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, '/images/${_images.searchQuery}/$index');
-                      },
-                      child: Image.network(displayImages[index].imageUrl,
-                          fit: BoxFit.cover),
+              ItemChildWidget(
+                position: index,
+                child: Container(
+                  height: _tileHeight,
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(2.6),
+                  child: Hero(
+                    tag: '${displayImages[index].imageUrl}',
+                    child: Material(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(14),
+                      shadowColor: Colors.grey.withOpacity(0.5),
+                      elevation: 24.0,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context,
+                              '/images/${widget._images.searchQuery}/$index');
+                        },
+                        child: Image.network(displayImages[index].imageUrl,
+                            fit: BoxFit.cover),
+                      ),
                     ),
                   ),
                 ),
@@ -93,6 +114,9 @@ class ResourceGrid extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
+                        // SizedBox(
+                        //   width: 20.0,
+                        // ),
                         Flexible(
                           flex: 9,
                           child: Padding(
@@ -107,35 +131,23 @@ class ResourceGrid extends StatelessWidget {
                                 children: <Widget>[
                                   Text(
                                     "片名：${displayImages[index].photographer}",
-                                    style: TextStyle(
-                                      fontSize: 12.0,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                    style: authorStyle,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  // Divider(
-                                  //   height: 5,
-                                  //   color: Colors.black87,
-                                  // ),
+                                  Divider(
+                                    height: 5,
+                                    color: Colors.white30,
+                                  ),
                                   Text(
                                     "时长：${displayImages[index].views}",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.white,
-                                      letterSpacing: 1,
-                                    ),
+                                    style: authorStyle,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
                                     "来源：${displayImages[index].views}",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.white,
-                                      letterSpacing: 1,
-                                    ),
+                                    style: authorStyle,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -144,24 +156,12 @@ class ResourceGrid extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Flexible(
-                          flex: 2,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: double.infinity, right: 20),
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                  bottom: double.infinity, right: 20),
-                              height: 50.0,
-                              width: 50.0,
-                              color: Colors.black38,
-                              child: Icon(
-                                Icons.play_arrow,
-                                color: Colors.white,
-                                size: 24.0,
-                              ),
-                            ),
-                          ),
+                        IconButton(
+                          highlightColor: Colors.amber,
+                          hoverColor: Colors.blue,
+                          icon: Icon(Icons.call),
+                          color: Colors.black,
+                          onPressed: () => _flavModalBottomSheet(context),
                         ),
                       ])),
             ],
@@ -170,9 +170,8 @@ class ResourceGrid extends StatelessWidget {
       ),
     );
   }
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return getBuildWidget(context);
-  }
+void _flavModalBottomSheet(BuildContext context) {
+  print("_flavModalBottomSheet");
 }

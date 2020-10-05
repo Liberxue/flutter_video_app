@@ -56,9 +56,9 @@ class _VideoPlayereState extends State<VideoPlayer> {
       // showSkipButtons: false,
       // allowFullScreen: false,
       fullScreenByDefault: false,
-      // placeholder: new Container(
-      //   color: Colors.grey,
-      // ),
+      placeholder: new Container(
+        color: Colors.black,
+      ),
       isPlaying: (isPlaying) {
         //
         // print(isPlaying);

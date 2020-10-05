@@ -1,10 +1,10 @@
 import 'package:CiYing/common/constants.dart';
+
 import 'package:CiYing/page/VideoPlayer.dart';
 import 'package:flutter/material.dart';
 import 'package:CiYing/models/image.dart' as DisplayImage;
 import 'package:CiYing/page/browse_images.dart';
 import 'package:CiYing/util/network.dart';
-import 'package:CiYing/page/image_display.dart';
 
 class Wallio extends StatelessWidget {
   @override
@@ -17,6 +17,8 @@ class Wallio extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
+        // '/signup': (context) => SignUpScreen(),
+        // '/login': (context) => LoginScreen(),
         '/': (context) => BrowseImages(),
       },
       onGenerateRoute: (RouteSettings settings) {
@@ -29,7 +31,6 @@ class Wallio extends StatelessWidget {
           String query = pathElements[2];
           DisplayImage.Image imageToDisplay =
               Storage.images.images[int.parse(pathElements[3])];
-
           return MaterialPageRoute(builder: (BuildContext context) {
             return VideoPlayer("this's url ", "this's title");
           });
