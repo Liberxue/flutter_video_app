@@ -28,3 +28,8 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    
+# fonts:
+#   - family: appIconFont
+#     fonts:
+#     - asset: assets/fonts/iconfont.ttf

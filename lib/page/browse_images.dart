@@ -16,8 +16,6 @@ class _BrowseImagesState extends State<BrowseImages> {
   ImageList _images;
   bool _searchDone = false;
   bool _searchHeaderShow = false;
-  double searchTop = 300.0;
-  double searchwidth = 650.0;
 
   Future _performSearch() async {
     final String query = searchQueryController.text;
@@ -34,20 +32,18 @@ class _BrowseImagesState extends State<BrowseImages> {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller = new TextEditingController();
-
-    double deviceWidth = MediaQuery.of(context).size.width;
-    // double deviceheight = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
           child: AppBar(
-            // automaticallyImplyLeading: true, // hides leading widget
+            automaticallyImplyLeading: true, // hides leading widget
             leading: Builder(builder: (BuildContext context) {
               return IconButton(
                 icon: Image.asset("assets/images/logo.png"),
                 onPressed: () {
-                  Scaffold.of(context).openDrawer();
+                  setState(() {
+                    Navigator.pop(context);
+                  });
                 },
                 tooltip: MaterialLocalizations.of(context)
                     .openAppDrawerTooltip, //打开抽屉drawer
@@ -65,10 +61,6 @@ class _BrowseImagesState extends State<BrowseImages> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: new BorderRadius.all(new Radius.circular(40.0)),
-                  border: new Border.all(
-                    color: Colors.black,
-                    width: 2.0,
-                  ),
                 ),
                 child: CircleAvatar(
                   backgroundImage: NetworkImage(

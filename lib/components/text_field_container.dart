@@ -1,4 +1,3 @@
-import 'package:CiYing/common/constants.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldContainer extends StatelessWidget {
@@ -12,9 +11,9 @@ class TextFieldContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      // margin: EdgeInsets.symmetric(vertical: 8),
-      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      width: size.width * 0.8,
+      margin: EdgeInsets.symmetric(vertical: 2),
+      // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      width: size.width * 0.7,
       decoration: BoxDecoration(
         // color: kPrimaryLightColor,
         borderRadius: BorderRadius.circular(24),
