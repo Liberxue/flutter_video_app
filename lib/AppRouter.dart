@@ -1,29 +1,33 @@
 import 'package:CiYing/common/constants.dart';
 
 import 'package:CiYing/page/VideoPlayer.dart';
+import 'package:CiYing/page/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:CiYing/models/image.dart' as DisplayImage;
 import 'package:CiYing/page/browse_images.dart';
 import 'package:CiYing/util/network.dart';
 
-class Wallio extends StatelessWidget {
+class AppRouter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: APPNAME,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blueGrey,
+        scaffoldBackgroundColor: Colors.white,
+        cursorColor: Colors.blueGrey,
+        accentColor: Colors.blueGrey,
+        primarySwatch: Colors.blueGrey,
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         // '/signup': (context) => SignUpScreen(),
-        // '/login': (context) => LoginScreen(),
+        '/login': (context) => LoginScreen(),
         '/': (context) => BrowseImages(),
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
-
         if (pathElements[0] != '') {
           return null;
         }

@@ -1,5 +1,6 @@
 import 'package:CiYing/components/rounded_input_field.dart';
 import 'package:CiYing/page/ResourceGrid.dart';
+import 'package:CiYing/page/UserProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:CiYing/models/image_list.dart';
 import 'package:CiYing/util/network.dart';
@@ -34,41 +35,40 @@ class _BrowseImagesState extends State<BrowseImages> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60.0),
+          preferredSize: Size.fromHeight(65.0),
           child: AppBar(
             automaticallyImplyLeading: true, // hides leading widget
             leading: Builder(builder: (BuildContext context) {
-              return IconButton(
-                icon: Image.asset("assets/images/logo.png"),
-                onPressed: () {
-                  setState(() {
-                    Navigator.pop(context);
-                  });
-                },
-                tooltip: MaterialLocalizations.of(context)
-                    .openAppDrawerTooltip, //打开抽屉drawer
-              );
+              return Container(
+                  child: new Center(
+                child: IconButton(
+                  icon: Image.asset("assets/images/logo.png"),
+                  onPressed: () {
+                    setState(() {
+                      Navigator.pop(context);
+                    });
+                  },
+                  tooltip: MaterialLocalizations.of(context)
+                      .openAppDrawerTooltip, //打开抽屉drawer
+                ),
+              ));
             }),
             elevation: 1.5,
             backgroundColor: Colors.white,
             actions: <Widget>[
               if (_searchHeaderShow)
-                RoundedInputField(
-                  icon: Icons.search,
-                  hintText: "搜索",
-                  onChanged: (value) {},
+                Container(
+                  padding: const EdgeInsets.only(left: 8.0, right: 12.0),
+                  child: RoundedInputField(
+                    icon: Icons.search,
+                    hintText: "搜索",
+                    onChanged: (value) {
+                      _performSearch();
+                      print(searchQueryController.text = value);
+                    },
+                  ),
                 ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: new BorderRadius.all(new Radius.circular(40.0)),
-                ),
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "https://avatars0.githubusercontent.com/u/5831248?s=460&u=cfea690871e82c78cd60c9fde9a086e6da6b6d3c&v=4"),
-                  foregroundColor: Colors.black,
-                  radius: 30.0,
-                ),
-              ),
+              UserProfile(),
             ],
           ),
         ),

@@ -1,8 +1,13 @@
-import 'package:CiYing/wallio.dart';
+import 'package:CiYing/AppRouter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  debugPaintSizeEnabled = false;
-  runApp(Wallio());
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      systemNavigationBarColor:
+          SystemUiOverlayStyle.dark.systemNavigationBarColor,
+    ),
+  );
+  runApp(AppRouter());
 }

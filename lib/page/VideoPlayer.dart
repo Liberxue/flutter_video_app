@@ -1,4 +1,4 @@
-import 'package:CiYing/common/constants.dart';
+import 'package:CiYing/page/UserProfile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player_controls/video_player_controls.dart';
@@ -87,11 +87,6 @@ class _VideoPlayereState extends State<VideoPlayer> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
           child: AppBar(
-            // automaticallyImplyLeading: true, // hides leading widget
-            title: Text(
-              APPNAME + "搜索",
-              style: TextStyle(fontSize: 20, height: 2, color: Colors.black45),
-            ),
             leading: Builder(builder: (BuildContext context) {
               return IconButton(
                 icon: Image.asset("assets/images/logo.png"),
@@ -105,27 +100,7 @@ class _VideoPlayereState extends State<VideoPlayer> {
             elevation: 1.5,
             backgroundColor: Colors.white,
             actions: <Widget>[
-              IconButton(
-                  icon: Icon(Icons.home),
-                  color: Colors.black,
-                  onPressed: () {}),
-              Container(
-                margin:
-                    EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-                child: RaisedButton(
-                  elevation: 0.5,
-                  color: Colors.blueAccent,
-                  onPressed: () {},
-                  child: Text(
-                    '登录',
-                    style: TextStyle(
-                        fontFamily: 'arial',
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-              )
+              UserProfile(),
             ],
           ),
         ),

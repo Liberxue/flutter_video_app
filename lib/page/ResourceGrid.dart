@@ -1,10 +1,10 @@
 import 'package:CiYing/models/image_list.dart';
 import 'package:CiYing/models/image.dart' as DisplayImage;
-import 'package:CiYing/page/FlavCart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ResourceGrid extends StatefulWidget {
+  var isShow = false;
   final ImageList _images;
   final bool searchPerformed;
   ResourceGrid(this._images, {this.searchPerformed = false});
@@ -14,6 +14,7 @@ class ResourceGrid extends StatefulWidget {
 
 class _ResourceGridState extends State<ResourceGrid>
     with SingleTickerProviderStateMixin {
+  Color flavColor = Colors.white;
   @override
   void initState() {
     super.initState();
@@ -82,8 +83,7 @@ class _ResourceGridState extends State<ResourceGrid>
         itemBuilder: (BuildContext context, int index) {
           return Stack(
             children: <Widget>[
-              ItemChildWidget(
-                position: index,
+              Container(
                 child: Container(
                   height: _tileHeight,
                   width: double.infinity,
@@ -135,10 +135,10 @@ class _ResourceGridState extends State<ResourceGrid>
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  Divider(
-                                    height: 5,
-                                    color: Colors.white30,
-                                  ),
+                                  // Divider(
+                                  //   height: 5,
+                                  //   color: Colors.white30,
+                                  // ),
                                   Text(
                                     "时长：${displayImages[index].views}",
                                     style: authorStyle,
@@ -159,10 +159,9 @@ class _ResourceGridState extends State<ResourceGrid>
                         IconButton(
                           padding: const EdgeInsets.all(15.0),
                           iconSize: 34,
-                          highlightColor: Colors.amber,
                           alignment: Alignment.center,
                           icon: Icon(CupertinoIcons.heart),
-                          color: Colors.white,
+                          color: flavColor, //API回调！！！
                           tooltip: "收藏",
                           onPressed: () => _flavModalBottomSheet(context),
                         ),
