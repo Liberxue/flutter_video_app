@@ -5,14 +5,14 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:CiYing/wallio.dart-1';
+import 'package:CiYing/AppRouter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(Wallio());
+    await tester.pumpWidget(AppRouter());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

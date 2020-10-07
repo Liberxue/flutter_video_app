@@ -17,6 +17,8 @@ dependencies:
   video_player_controls: ^2.1.6
   video_player_web: ^0.1.4
   flutter_login: ^1.0.14
+  protobuf:
+  grpc:
 
 
 
