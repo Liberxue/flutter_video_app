@@ -27,14 +27,6 @@ const FileType$json = const {
   ],
 };
 
-const StatusCode$json = const {
-  '1': 'StatusCode',
-  '2': const [
-    const {'1': 'SUCCESSFUL', '2': 0},
-    const {'1': 'FAILED', '2': 1},
-  ],
-};
-
 const EmotionCode$json = const {
   '1': 'EmotionCode',
   '2': const [
@@ -64,6 +56,30 @@ const LevelType$json = const {
   '2': const [
     const {'1': 'VIP', '2': 0},
     const {'1': 'SuperVIP', '2': 1},
+  ],
+};
+
+const ResponseCode$json = const {
+  '1': 'ResponseCode',
+  '2': const [
+    const {'1': 'SUCCESSFUL', '2': 0},
+    const {'1': 'FAILED', '2': 1},
+    const {'1': 'AccessDenied', '2': 2},
+    const {'1': 'InternalFault', '2': 3},
+    const {'1': 'FrequentOperation', '2': 4},
+    const {'1': 'PhoneNumberExisting', '2': 5},
+    const {'1': 'ParameterIsNotValid', '2': 6},
+    const {'1': 'AccountOrPasswordIsNotCorrect', '2': 7},
+  ],
+};
+
+const LoginType$json = const {
+  '1': 'LoginType',
+  '2': const [
+    const {'1': 'ACCOUNT', '2': 0},
+    const {'1': 'PHONEMESSAGEAUTHCODE', '2': 1},
+    const {'1': 'WECHAT', '2': 2},
+    const {'1': 'DOUYIN', '2': 3},
   ],
 };
 

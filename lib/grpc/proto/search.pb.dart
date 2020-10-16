@@ -9,13 +9,13 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'common.pbenum.dart' as $3;
+import 'common.pbenum.dart' as $5;
 
 class ResourceSection extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ResourceSection', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Source', protoName: 'Source')
     ..a<$core.double>(2, 'Duration', $pb.PbFieldType.OF, protoName: 'Duration')
-    ..e<$3.EmotionCode>(3, 'EmotionCode', $pb.PbFieldType.OE, protoName: 'EmotionCode', defaultOrMaker: $3.EmotionCode.AMUSEMENT, valueOf: $3.EmotionCode.valueOf, enumValues: $3.EmotionCode.values)
+    ..e<$5.EmotionCode>(3, 'EmotionCode', $pb.PbFieldType.OE, protoName: 'EmotionCode', defaultOrMaker: $5.EmotionCode.AMUSEMENT, valueOf: $5.EmotionCode.valueOf, enumValues: $5.EmotionCode.values)
     ..aOS(4, 'SourceName', protoName: 'SourceName')
     ..aOS(5, 'ResourceAddrees', protoName: 'ResourceAddrees')
     ..aOS(6, 'ResourceID', protoName: 'ResourceID')
@@ -57,9 +57,9 @@ class ResourceSection extends $pb.GeneratedMessage {
   void clearDuration() => clearField(2);
 
   @$pb.TagNumber(3)
-  $3.EmotionCode get emotionCode => $_getN(2);
+  $5.EmotionCode get emotionCode => $_getN(2);
   @$pb.TagNumber(3)
-  set emotionCode($3.EmotionCode v) { setField(3, v); }
+  set emotionCode($5.EmotionCode v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasEmotionCode() => $_has(2);
   @$pb.TagNumber(3)
@@ -108,7 +108,7 @@ class SearchRequest extends $pb.GeneratedMessage {
     ..a<$core.int>(2, 'Limit', $pb.PbFieldType.O3, protoName: 'Limit')
     ..a<$core.int>(3, 'Offest', $pb.PbFieldType.O3, protoName: 'Offest')
     ..pPS(4, 'Tags', protoName: 'Tags')
-    ..e<$3.EmotionCode>(5, 'EmotionCode', $pb.PbFieldType.OE, protoName: 'EmotionCode', defaultOrMaker: $3.EmotionCode.AMUSEMENT, valueOf: $3.EmotionCode.valueOf, enumValues: $3.EmotionCode.values)
+    ..e<$5.EmotionCode>(5, 'EmotionCode', $pb.PbFieldType.OE, protoName: 'EmotionCode', defaultOrMaker: $5.EmotionCode.AMUSEMENT, valueOf: $5.EmotionCode.valueOf, enumValues: $5.EmotionCode.values)
     ..hasRequiredFields = false
   ;
 
@@ -158,9 +158,9 @@ class SearchRequest extends $pb.GeneratedMessage {
   $core.List<$core.String> get tags => $_getList(3);
 
   @$pb.TagNumber(5)
-  $3.EmotionCode get emotionCode => $_getN(4);
+  $5.EmotionCode get emotionCode => $_getN(4);
   @$pb.TagNumber(5)
-  set emotionCode($3.EmotionCode v) { setField(5, v); }
+  set emotionCode($5.EmotionCode v) { setField(5, v); }
   @$pb.TagNumber(5)
   $core.bool hasEmotionCode() => $_has(4);
   @$pb.TagNumber(5)
@@ -169,7 +169,7 @@ class SearchRequest extends $pb.GeneratedMessage {
 
 class SearchResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SearchResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..e<$3.StatusCode>(1, 'StatusCode', $pb.PbFieldType.OE, protoName: 'StatusCode', defaultOrMaker: $3.StatusCode.SUCCESSFUL, valueOf: $3.StatusCode.valueOf, enumValues: $3.StatusCode.values)
+    ..e<$5.ResponseCode>(1, 'StatusCode', $pb.PbFieldType.OE, protoName: 'StatusCode', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
     ..aOS(2, 'Message', protoName: 'Message')
     ..pc<ResourceSection>(3, 'ResourceSection', $pb.PbFieldType.PM, protoName: 'ResourceSection', subBuilder: ResourceSection.create)
     ..hasRequiredFields = false
@@ -191,9 +191,9 @@ class SearchResponse extends $pb.GeneratedMessage {
   static SearchResponse _defaultInstance;
 
   @$pb.TagNumber(1)
-  $3.StatusCode get statusCode => $_getN(0);
+  $5.ResponseCode get statusCode => $_getN(0);
   @$pb.TagNumber(1)
-  set statusCode($3.StatusCode v) { setField(1, v); }
+  set statusCode($5.ResponseCode v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasStatusCode() => $_has(0);
   @$pb.TagNumber(1)

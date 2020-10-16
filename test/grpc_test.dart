@@ -25,7 +25,7 @@ getRemoteData() async {
     port: 50051,
     options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
   );
-  final stub = GateWayServerClient(channel);
+  final stub =GateWayClient(channel);
   try {
     var response = await stub.login(LoginRequest()..user = user);
     print('服务端返回信息: ${response.message}');

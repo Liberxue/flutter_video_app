@@ -51,21 +51,6 @@ class FileType extends $pb.ProtobufEnum {
   const FileType._($core.int v, $core.String n) : super(v, n);
 }
 
-class StatusCode extends $pb.ProtobufEnum {
-  static const StatusCode SUCCESSFUL = StatusCode._(0, 'SUCCESSFUL');
-  static const StatusCode FAILED = StatusCode._(1, 'FAILED');
-
-  static const $core.List<StatusCode> values = <StatusCode> [
-    SUCCESSFUL,
-    FAILED,
-  ];
-
-  static final $core.Map<$core.int, StatusCode> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static StatusCode valueOf($core.int value) => _byValue[value];
-
-  const StatusCode._($core.int v, $core.String n) : super(v, n);
-}
-
 class EmotionCode extends $pb.ProtobufEnum {
   static const EmotionCode AMUSEMENT = EmotionCode._(0, 'AMUSEMENT');
   static const EmotionCode CONTEMPT = EmotionCode._(1, 'CONTEMPT');
@@ -125,5 +110,51 @@ class LevelType extends $pb.ProtobufEnum {
   static LevelType valueOf($core.int value) => _byValue[value];
 
   const LevelType._($core.int v, $core.String n) : super(v, n);
+}
+
+class ResponseCode extends $pb.ProtobufEnum {
+  static const ResponseCode SUCCESSFUL = ResponseCode._(0, 'SUCCESSFUL');
+  static const ResponseCode FAILED = ResponseCode._(1, 'FAILED');
+  static const ResponseCode AccessDenied = ResponseCode._(2, 'AccessDenied');
+  static const ResponseCode InternalFault = ResponseCode._(3, 'InternalFault');
+  static const ResponseCode FrequentOperation = ResponseCode._(4, 'FrequentOperation');
+  static const ResponseCode PhoneNumberExisting = ResponseCode._(5, 'PhoneNumberExisting');
+  static const ResponseCode ParameterIsNotValid = ResponseCode._(6, 'ParameterIsNotValid');
+  static const ResponseCode AccountOrPasswordIsNotCorrect = ResponseCode._(7, 'AccountOrPasswordIsNotCorrect');
+
+  static const $core.List<ResponseCode> values = <ResponseCode> [
+    SUCCESSFUL,
+    FAILED,
+    AccessDenied,
+    InternalFault,
+    FrequentOperation,
+    PhoneNumberExisting,
+    ParameterIsNotValid,
+    AccountOrPasswordIsNotCorrect,
+  ];
+
+  static final $core.Map<$core.int, ResponseCode> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static ResponseCode valueOf($core.int value) => _byValue[value];
+
+  const ResponseCode._($core.int v, $core.String n) : super(v, n);
+}
+
+class LoginType extends $pb.ProtobufEnum {
+  static const LoginType ACCOUNT = LoginType._(0, 'ACCOUNT');
+  static const LoginType PHONEMESSAGEAUTHCODE = LoginType._(1, 'PHONEMESSAGEAUTHCODE');
+  static const LoginType WECHAT = LoginType._(2, 'WECHAT');
+  static const LoginType DOUYIN = LoginType._(3, 'DOUYIN');
+
+  static const $core.List<LoginType> values = <LoginType> [
+    ACCOUNT,
+    PHONEMESSAGEAUTHCODE,
+    WECHAT,
+    DOUYIN,
+  ];
+
+  static final $core.Map<$core.int, LoginType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static LoginType valueOf($core.int value) => _byValue[value];
+
+  const LoginType._($core.int v, $core.String n) : super(v, n);
 }
 

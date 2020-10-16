@@ -1,39 +1,42 @@
+import 'package:CiYing/api/login/login.dart';
 import 'package:CiYing/common/constants.dart';
+import 'package:CiYing/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-
 import 'browse_images.dart';
 
-const users = const {
-  '123': '123',
-  '1': '1',
-};
+// const users = const {
+//   '123': '123',
+//   '1': '1',
+// };
 
 class LoginScreen extends StatelessWidget {
   Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2150);
 
-  Future<String> _authUser(LoginData data) {
+  Future<String> _authUser(LoginData data) async {
     print('Name: ${data.name}, Password: ${data.password}');
+    LoginResponse loginResponse = await loginRequest(data.name,data.password);
+    print(loginResponse.data.avatarImage);
     return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(data.name)) {
-        return '手机号码不存在!';
-      }
-      if (users[data.name] != data.password) {
-        return '密码不正确!';
-      }
+      // if (!users.containsKey(data.name)) {
+      //   return '手机号码不存在!';
+      // }
+      // if (users[data.name] != data.password) {
+      //   return '密码不正确!';
+      // }
       return null;
     });
   }
 
   Future<String> _recoverPassword(String name) {
     print('Name: $name');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(name)) {
-        return '手机号码不存在!';
-      }
-      return null;
-    });
+    // return Future.delayed(loginTime).then((_) {
+    //   if (!users.containsKey(name)) {
+    //     return '手机号码不存在!';
+    //   }
+    //   return null;
+    // });
   }
 
   @override
@@ -119,13 +122,17 @@ class LoginScreen extends StatelessWidget {
         return _recoverPassword(name);
         // Show new password dialog
       },
-      // onLogin: _authUser,
-      // onSignup: _authUser,
-      onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => BrowseImages(),
-        ));
-      },
+
+      // onSubmitAnimationCompleted: () {
+      //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+      //     builder: (context) => BrowseImages(),
+      //   ));
+      // },
+
+      //onSubmitAnimationCompleted: loginRequest("",""),
+      //    onSubmitAnimationCompleted: (value) {
+      //        loginRequest("18898988899","123456");
+      //    },
       // onRecoverPassword: _recoverPassword,
     );
   }

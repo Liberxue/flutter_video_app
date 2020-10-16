@@ -7,16 +7,20 @@
 
 import 'dart:core' as $core;
 
-import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'common.pbenum.dart' as $3;
+import 'accountManager.pb.dart' as $0;
+
+import 'common.pbenum.dart' as $5;
 
 class LoginRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('LoginRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'User', protoName: 'User')
-    ..aOS(2, 'PassWord', protoName: 'PassWord')
-    ..aOS(3, 'Device', protoName: 'Device')
+    ..e<$5.LoginType>(1, 'LoginType', $pb.PbFieldType.OE, protoName: 'LoginType', defaultOrMaker: $5.LoginType.ACCOUNT, valueOf: $5.LoginType.valueOf, enumValues: $5.LoginType.values)
+    ..aOS(2, 'User', protoName: 'User')
+    ..aOS(3, 'PhoneNumber', protoName: 'PhoneNumber')
+    ..aOS(4, 'PassWord', protoName: 'PassWord')
+    ..aOS(5, 'DeviceType', protoName: 'DeviceType')
+    ..aOS(6, 'DeviceVersion', protoName: 'DeviceVersion')
     ..hasRequiredFields = false
   ;
 
@@ -36,90 +40,66 @@ class LoginRequest extends $pb.GeneratedMessage {
   static LoginRequest _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get user => $_getSZ(0);
+  $5.LoginType get loginType => $_getN(0);
   @$pb.TagNumber(1)
-  set user($core.String v) { $_setString(0, v); }
+  set loginType($5.LoginType v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasUser() => $_has(0);
+  $core.bool hasLoginType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearUser() => clearField(1);
+  void clearLoginType() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get passWord => $_getSZ(1);
+  $core.String get user => $_getSZ(1);
   @$pb.TagNumber(2)
-  set passWord($core.String v) { $_setString(1, v); }
+  set user($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasPassWord() => $_has(1);
+  $core.bool hasUser() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPassWord() => clearField(2);
+  void clearUser() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get device => $_getSZ(2);
+  $core.String get phoneNumber => $_getSZ(2);
   @$pb.TagNumber(3)
-  set device($core.String v) { $_setString(2, v); }
+  set phoneNumber($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasDevice() => $_has(2);
+  $core.bool hasPhoneNumber() => $_has(2);
   @$pb.TagNumber(3)
-  void clearDevice() => clearField(3);
-}
+  void clearPhoneNumber() => clearField(3);
 
-class User extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('User', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'UserName', protoName: 'UserName')
-    ..e<$3.LevelType>(2, 'Level', $pb.PbFieldType.OE, protoName: 'Level', defaultOrMaker: $3.LevelType.VIP, valueOf: $3.LevelType.valueOf, enumValues: $3.LevelType.values)
-    ..aInt64(3, 'Quota', protoName: 'Quota')
-    ..hasRequiredFields = false
-  ;
+  @$pb.TagNumber(4)
+  $core.String get passWord => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set passWord($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPassWord() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPassWord() => clearField(4);
 
-  User._() : super();
-  factory User() => create();
-  factory User.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory User.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  User clone() => User()..mergeFromMessage(this);
-  User copyWith(void Function(User) updates) => super.copyWith((message) => updates(message as User));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static User create() => User._();
-  User createEmptyInstance() => create();
-  static $pb.PbList<User> createRepeated() => $pb.PbList<User>();
-  @$core.pragma('dart2js:noInline')
-  static User getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<User>(create);
-  static User _defaultInstance;
+  @$pb.TagNumber(5)
+  $core.String get deviceType => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set deviceType($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasDeviceType() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearDeviceType() => clearField(5);
 
-  @$pb.TagNumber(1)
-  $core.String get userName => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set userName($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasUserName() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearUserName() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $3.LevelType get level => $_getN(1);
-  @$pb.TagNumber(2)
-  set level($3.LevelType v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasLevel() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearLevel() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $fixnum.Int64 get quota => $_getI64(2);
-  @$pb.TagNumber(3)
-  set quota($fixnum.Int64 v) { $_setInt64(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasQuota() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearQuota() => clearField(3);
+  @$pb.TagNumber(6)
+  $core.String get deviceVersion => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set deviceVersion($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasDeviceVersion() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearDeviceVersion() => clearField(6);
 }
 
 class LoginResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('LoginResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
-    ..a<$core.int>(2, 'Code', $pb.PbFieldType.O3, protoName: 'Code')
+    ..e<$5.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
     ..aOS(3, 'Token', protoName: 'Token')
-    ..aOM<User>(4, 'Data', protoName: 'Data', subBuilder: User.create)
+    ..aOM<$0.AccountResponse>(4, 'Data', protoName: 'Data', subBuilder: $0.AccountResponse.create)
     ..hasRequiredFields = false
   ;
 
@@ -148,9 +128,9 @@ class LoginResponse extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.int get code => $_getIZ(1);
+  $5.ResponseCode get code => $_getN(1);
   @$pb.TagNumber(2)
-  set code($core.int v) { $_setSignedInt32(1, v); }
+  set code($5.ResponseCode v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
@@ -166,15 +146,15 @@ class LoginResponse extends $pb.GeneratedMessage {
   void clearToken() => clearField(3);
 
   @$pb.TagNumber(4)
-  User get data => $_getN(3);
+  $0.AccountResponse get data => $_getN(3);
   @$pb.TagNumber(4)
-  set data(User v) { setField(4, v); }
+  set data($0.AccountResponse v) { setField(4, v); }
   @$pb.TagNumber(4)
   $core.bool hasData() => $_has(3);
   @$pb.TagNumber(4)
   void clearData() => clearField(4);
   @$pb.TagNumber(4)
-  User ensureData() => $_ensure(3);
+  $0.AccountResponse ensureData() => $_ensure(3);
 }
 
 class SignInRequest extends $pb.GeneratedMessage {
@@ -231,7 +211,7 @@ class SignInRequest extends $pb.GeneratedMessage {
 class SignInResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignInResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
-    ..a<$core.int>(2, 'Code', $pb.PbFieldType.O3, protoName: 'Code')
+    ..e<$5.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
     ..hasRequiredFields = false
   ;
 
@@ -260,9 +240,9 @@ class SignInResponse extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.int get code => $_getIZ(1);
+  $5.ResponseCode get code => $_getN(1);
   @$pb.TagNumber(2)
-  set code($core.int v) { $_setSignedInt32(1, v); }
+  set code($5.ResponseCode v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
@@ -313,7 +293,7 @@ class FavoriteRequest extends $pb.GeneratedMessage {
 class FavoriteResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('FavoriteResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
-    ..a<$core.double>(2, 'code', $pb.PbFieldType.OD)
+    ..e<$5.ResponseCode>(2, 'code', $pb.PbFieldType.OE, defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
     ..hasRequiredFields = false
   ;
 
@@ -342,9 +322,9 @@ class FavoriteResponse extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.double get code => $_getN(1);
+  $5.ResponseCode get code => $_getN(1);
   @$pb.TagNumber(2)
-  set code($core.double v) { $_setDouble(1, v); }
+  set code($5.ResponseCode v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)

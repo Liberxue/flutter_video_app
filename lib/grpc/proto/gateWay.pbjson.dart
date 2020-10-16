@@ -8,18 +8,12 @@
 const LoginRequest$json = const {
   '1': 'LoginRequest',
   '2': const [
-    const {'1': 'User', '3': 1, '4': 1, '5': 9, '10': 'User'},
-    const {'1': 'PassWord', '3': 2, '4': 1, '5': 9, '10': 'PassWord'},
-    const {'1': 'Device', '3': 3, '4': 1, '5': 9, '10': 'Device'},
-  ],
-};
-
-const User$json = const {
-  '1': 'User',
-  '2': const [
-    const {'1': 'UserName', '3': 1, '4': 1, '5': 9, '10': 'UserName'},
-    const {'1': 'Level', '3': 2, '4': 1, '5': 14, '6': '.proto.LevelType', '10': 'Level'},
-    const {'1': 'Quota', '3': 3, '4': 1, '5': 3, '10': 'Quota'},
+    const {'1': 'LoginType', '3': 1, '4': 1, '5': 14, '6': '.proto.LoginType', '10': 'LoginType'},
+    const {'1': 'User', '3': 2, '4': 1, '5': 9, '10': 'User'},
+    const {'1': 'PhoneNumber', '3': 3, '4': 1, '5': 9, '10': 'PhoneNumber'},
+    const {'1': 'PassWord', '3': 4, '4': 1, '5': 9, '10': 'PassWord'},
+    const {'1': 'DeviceType', '3': 5, '4': 1, '5': 9, '10': 'DeviceType'},
+    const {'1': 'DeviceVersion', '3': 6, '4': 1, '5': 9, '10': 'DeviceVersion'},
   ],
 };
 
@@ -27,9 +21,9 @@ const LoginResponse$json = const {
   '1': 'LoginResponse',
   '2': const [
     const {'1': 'Message', '3': 1, '4': 1, '5': 9, '10': 'Message'},
-    const {'1': 'Code', '3': 2, '4': 1, '5': 5, '10': 'Code'},
+    const {'1': 'Code', '3': 2, '4': 1, '5': 14, '6': '.proto.ResponseCode', '10': 'Code'},
     const {'1': 'Token', '3': 3, '4': 1, '5': 9, '10': 'Token'},
-    const {'1': 'Data', '3': 4, '4': 1, '5': 11, '6': '.proto.User', '10': 'Data'},
+    const {'1': 'Data', '3': 4, '4': 1, '5': 11, '6': '.proto.AccountResponse', '10': 'Data'},
   ],
 };
 
@@ -46,7 +40,7 @@ const SignInResponse$json = const {
   '1': 'SignInResponse',
   '2': const [
     const {'1': 'Message', '3': 1, '4': 1, '5': 9, '10': 'Message'},
-    const {'1': 'Code', '3': 2, '4': 1, '5': 5, '10': 'Code'},
+    const {'1': 'Code', '3': 2, '4': 1, '5': 14, '6': '.proto.ResponseCode', '10': 'Code'},
   ],
 };
 
@@ -62,7 +56,7 @@ const FavoriteResponse$json = const {
   '1': 'FavoriteResponse',
   '2': const [
     const {'1': 'Message', '3': 1, '4': 1, '5': 9, '10': 'Message'},
-    const {'1': 'code', '3': 2, '4': 1, '5': 1, '10': 'code'},
+    const {'1': 'code', '3': 2, '4': 1, '5': 14, '6': '.proto.ResponseCode', '10': 'code'},
   ],
 };
 
