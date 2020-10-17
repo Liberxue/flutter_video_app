@@ -8,9 +8,29 @@ import 'package:fixnum/fixnum.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+class Login extends StatefulWidget {
+  _LoginState createState() {
+    return _LoginState();
+  }
+}
 
-
-class LoginScreen extends StatelessWidget {
+class _LoginState extends State<Login> {
+ String Token="";
+  @override
+  void initState() {
+    super.initState();
+    this.loadIsLoginData();
+  }
+  void loadIsLoginData()async{
+    final token = await getMethod("token");
+    setState(() {
+      Token = token;
+    });
+    if(Token.length>0){
+      Navigator.push(
+      context, MaterialPageRoute(builder: (context) => SearchList(),maintainState: false));
+    }
+  }
   Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 50);
   Future<String> _authUser(LoginData data) async {
     SignInRequest signInRequest =SignInRequest();
@@ -46,9 +66,14 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  // getMethod("token").then((token)=> {
+  //  if(token.length>0){
+  //   Navigator.push(
+  //     context, MaterialPageRoute(builder: (context) => SearchList(),maintainState: false))
+  // }
     return FlutterLogin(
       title: APPNAME,
-      logo: 'assets/images/logo.png',
+      // logo: 'assets/images/logo.png',
       messages: LoginMessages(
         usernameHint: '请输入11位手机号',
         passwordHint: '请输入6-12密码',

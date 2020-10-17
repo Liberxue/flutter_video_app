@@ -1,6 +1,6 @@
 import 'package:CiYing/components/rounded_input_field.dart';
 import 'package:CiYing/page/ResourceGrid.dart';
-import 'package:CiYing/page/UserProfile.dart';
+import 'package:CiYing/page/head_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:CiYing/models/image_list.dart';
 import 'package:CiYing/util/network.dart';
@@ -44,31 +44,28 @@ class _SearchListState extends State<SearchList> {
                 child: IconButton(
                   icon: Image.asset("assets/images/logo.png"),
                   onPressed: () {
-                    setState(() {
                       Navigator.pop(context);
-                    });
-                  },
-                  tooltip: MaterialLocalizations.of(context)
-                      .openAppDrawerTooltip, //打开抽屉drawer
+                    }//打开抽屉drawer
                 ),
               ));
             }),
-            elevation: 1.5,
+            elevation: 1.2,
             backgroundColor: Colors.white,
             actions: <Widget>[
               if (_searchHeaderShow)
                 Container(
-                  padding: const EdgeInsets.only(left: 8.0, right: 12.0),
+                  padding: const EdgeInsets.only(left: 8.0, right: 2.0),
+                  width: 280,
+                  height: 50,
                   child: RoundedInputField(
                     icon: Icons.search,
                     hintText: "搜索",
                     onChanged: (value) {
                       _performSearch();
-                      print(searchQueryController.text = value);
                     },
                   ),
                 ),
-              UserProfile(),
+              UserHeaderProfile(),
             ],
           ),
         ),

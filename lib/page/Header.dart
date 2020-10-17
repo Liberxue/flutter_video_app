@@ -38,8 +38,8 @@ class _headerState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(20.0),
-        margin: EdgeInsets.only(bottom: 10),
+        // padding: EdgeInsets.all(20.0),
+        // margin: EdgeInsets.only(bottom: 10),
         alignment: Alignment.center,
         child: TextField(
           cursorWidth: 2.0,
@@ -59,7 +59,7 @@ class _headerState extends State<Header> {
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w300,
                   color: Colors.black,
-                  fontSize: 12.0),
+                  fontSize: 14.0),
               suffixIcon: IconButton(
                 icon: Icon(Icons.search),
                 onPressed: () async {
@@ -72,7 +72,7 @@ class _headerState extends State<Header> {
               ),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
-                Radius.circular(24.0),
+                Radius.circular(14.0),
               ))),
         ));
   }

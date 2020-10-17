@@ -1,7 +1,6 @@
 import 'package:CiYing/common/constants.dart';
-import 'package:CiYing/page/LoginScreen.dart';
 import 'package:CiYing/page/VideoPlayer.dart';
-import 'package:CiYing/util/store.dart';
+import 'package:CiYing/page/login.dart';
 import 'package:flutter/material.dart';
 import 'package:CiYing/models/image.dart' as DisplayImage;
 import 'package:CiYing/page/search_list.dart';
@@ -14,22 +13,6 @@ class AppRouter extends StatefulWidget {
 }
 
 class _AppRouterState extends State<AppRouter> {
-String Token="";
-  @override
-  void initState() {
-    super.initState();
-    this._loadIsLoginData();
-  }
-  void _loadIsLoginData()async{
-    final token = await getMethod("token");
-    setState(() {
-      Token = token;
-      print("gent store Token------\r\n"+Token);
-    });
-    if(Token.length>0){
-      SearchList();
-    }
-  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,7 +27,7 @@ String Token="";
       initialRoute: '/login',
       routes: {
         // '/signup': (context) => SignUpScreen(),
-        '/login': (context) => LoginScreen(),
+        '/login': (context) => Login(),
         '/': (context) => SearchList(),
       },
       onGenerateRoute: (RouteSettings settings) {

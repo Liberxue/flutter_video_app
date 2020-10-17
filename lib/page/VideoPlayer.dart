@@ -1,4 +1,4 @@
-import 'package:CiYing/page/UserProfile.dart';
+import 'package:CiYing/page/head_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player_controls/video_player_controls.dart';
@@ -100,7 +100,7 @@ class _VideoPlayereState extends State<VideoPlayer> {
             elevation: 1.5,
             backgroundColor: Colors.white,
             actions: <Widget>[
-              UserProfile(),
+              UserHeaderProfile(),
             ],
           ),
         ),
