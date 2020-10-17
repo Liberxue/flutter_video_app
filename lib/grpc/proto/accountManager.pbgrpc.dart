@@ -38,6 +38,12 @@ class AccountManagerClient extends $grpc.Client {
           ($0.LoginAccountRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.LoginAccountResponse.fromBuffer(value));
+  static final _$rechargeCoin =
+      $grpc.ClientMethod<$0.RechargeCoinRequest, $0.RechargeCoinResponse>(
+          '/proto.AccountManager/RechargeCoin',
+          ($0.RechargeCoinRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.RechargeCoinResponse.fromBuffer(value));
 
   AccountManagerClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
       : super(channel, options: options);
@@ -74,6 +80,15 @@ class AccountManagerClient extends $grpc.Client {
       {$grpc.CallOptions options}) {
     final call = $createCall(
         _$loginAccount, $async.Stream.fromIterable([request]),
+        options: options);
+    return $grpc.ResponseFuture(call);
+  }
+
+  $grpc.ResponseFuture<$0.RechargeCoinResponse> rechargeCoin(
+      $0.RechargeCoinRequest request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(
+        _$rechargeCoin, $async.Stream.fromIterable([request]),
         options: options);
     return $grpc.ResponseFuture(call);
   }
@@ -119,6 +134,15 @@ abstract class AccountManagerServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $0.LoginAccountRequest.fromBuffer(value),
             ($0.LoginAccountResponse value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.RechargeCoinRequest, $0.RechargeCoinResponse>(
+            'RechargeCoin',
+            rechargeCoin_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.RechargeCoinRequest.fromBuffer(value),
+            ($0.RechargeCoinResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.CreateAccountResponse> createAccount_Pre(
@@ -145,6 +169,12 @@ abstract class AccountManagerServiceBase extends $grpc.Service {
     return loginAccount(call, await request);
   }
 
+  $async.Future<$0.RechargeCoinResponse> rechargeCoin_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.RechargeCoinRequest> request) async {
+    return rechargeCoin(call, await request);
+  }
+
   $async.Future<$0.CreateAccountResponse> createAccount(
       $grpc.ServiceCall call, $0.CreateAccountRequest request);
   $async.Future<$0.UpdateProfileResponse> updateProfile(
@@ -153,4 +183,6 @@ abstract class AccountManagerServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.UpdatePassWordRequest request);
   $async.Future<$0.LoginAccountResponse> loginAccount(
       $grpc.ServiceCall call, $0.LoginAccountRequest request);
+  $async.Future<$0.RechargeCoinResponse> rechargeCoin(
+      $grpc.ServiceCall call, $0.RechargeCoinRequest request);
 }

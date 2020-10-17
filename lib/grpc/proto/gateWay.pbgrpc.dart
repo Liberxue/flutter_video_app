@@ -15,15 +15,16 @@ import 'search.pb.dart' as $2;
 export 'gateWay.pb.dart';
 
 class GateWayClient extends $grpc.Client {
-  static final _$login = $grpc.ClientMethod<$1.LoginRequest, $1.LoginResponse>(
-      '/proto.GateWay/Login',
-      ($1.LoginRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.LoginResponse.fromBuffer(value));
   static final _$signIn =
       $grpc.ClientMethod<$1.SignInRequest, $1.SignInResponse>(
           '/proto.GateWay/SignIn',
           ($1.SignInRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.SignInResponse.fromBuffer(value));
+  static final _$signUp =
+      $grpc.ClientMethod<$1.SignUpRequest, $1.SignUpResponse>(
+          '/proto.GateWay/SignUp',
+          ($1.SignUpRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.SignUpResponse.fromBuffer(value));
   static final _$search =
       $grpc.ClientMethod<$2.SearchRequest, $2.SearchResponse>(
           '/proto.GateWay/Search',
@@ -39,16 +40,16 @@ class GateWayClient extends $grpc.Client {
   GateWayClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
       : super(channel, options: options);
 
-  $grpc.ResponseFuture<$1.LoginResponse> login($1.LoginRequest request,
+  $grpc.ResponseFuture<$1.SignInResponse> signIn($1.SignInRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$login, $async.Stream.fromIterable([request]),
+    final call = $createCall(_$signIn, $async.Stream.fromIterable([request]),
         options: options);
     return $grpc.ResponseFuture(call);
   }
 
-  $grpc.ResponseFuture<$1.SignInResponse> signIn($1.SignInRequest request,
+  $grpc.ResponseFuture<$1.SignUpResponse> signUp($1.SignUpRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$signIn, $async.Stream.fromIterable([request]),
+    final call = $createCall(_$signUp, $async.Stream.fromIterable([request]),
         options: options);
     return $grpc.ResponseFuture(call);
   }
@@ -72,13 +73,6 @@ abstract class GateWayServiceBase extends $grpc.Service {
   $core.String get $name => 'proto.GateWay';
 
   GateWayServiceBase() {
-    $addMethod($grpc.ServiceMethod<$1.LoginRequest, $1.LoginResponse>(
-        'Login',
-        login_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $1.LoginRequest.fromBuffer(value),
-        ($1.LoginResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.SignInRequest, $1.SignInResponse>(
         'SignIn',
         signIn_Pre,
@@ -86,6 +80,13 @@ abstract class GateWayServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.SignInRequest.fromBuffer(value),
         ($1.SignInResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.SignUpRequest, $1.SignUpResponse>(
+        'SignUp',
+        signUp_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.SignUpRequest.fromBuffer(value),
+        ($1.SignUpResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$2.SearchRequest, $2.SearchResponse>(
         'Search',
         search_Pre,
@@ -102,14 +103,14 @@ abstract class GateWayServiceBase extends $grpc.Service {
         ($1.FavoriteResponse value) => value.writeToBuffer()));
   }
 
-  $async.Future<$1.LoginResponse> login_Pre(
-      $grpc.ServiceCall call, $async.Future<$1.LoginRequest> request) async {
-    return login(call, await request);
-  }
-
   $async.Future<$1.SignInResponse> signIn_Pre(
       $grpc.ServiceCall call, $async.Future<$1.SignInRequest> request) async {
     return signIn(call, await request);
+  }
+
+  $async.Future<$1.SignUpResponse> signUp_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.SignUpRequest> request) async {
+    return signUp(call, await request);
   }
 
   $async.Future<$2.SearchResponse> search_Pre(
@@ -122,10 +123,10 @@ abstract class GateWayServiceBase extends $grpc.Service {
     return favorite(call, await request);
   }
 
-  $async.Future<$1.LoginResponse> login(
-      $grpc.ServiceCall call, $1.LoginRequest request);
   $async.Future<$1.SignInResponse> signIn(
       $grpc.ServiceCall call, $1.SignInRequest request);
+  $async.Future<$1.SignUpResponse> signUp(
+      $grpc.ServiceCall call, $1.SignUpRequest request);
   $async.Future<$2.SearchResponse> search(
       $grpc.ServiceCall call, $2.SearchRequest request);
   $async.Future<$1.FavoriteResponse> favorite(

@@ -1,30 +1,35 @@
-import 'package:CiYing/api/login/login.dart';
 import 'package:CiYing/common/constants.dart';
+import 'package:CiYing/grpc/proto/common.pbenum.dart';
 import 'package:CiYing/grpc/proto/gateWay.pbgrpc.dart';
+import 'package:CiYing/models/signIn/signIn.dart';
+import 'package:CiYing/page/search_list.dart';
+import 'package:CiYing/util/store.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'browse_images.dart';
 
-// const users = const {
-//   '123': '123',
-//   '1': '1',
-// };
 
 class LoginScreen extends StatelessWidget {
-  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2150);
-
+  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 50);
   Future<String> _authUser(LoginData data) async {
-    print('Name: ${data.name}, Password: ${data.password}');
-    LoginResponse loginResponse = await loginRequest(data.name,data.password);
-    print(loginResponse.data.avatarImage);
-    return Future.delayed(loginTime).then((_) {
-      // if (!users.containsKey(data.name)) {
-      //   return '手机号码不存在!';
-      // }
-      // if (users[data.name] != data.password) {
-      //   return '密码不正确!';
-      // }
+    SignInRequest signInRequest =SignInRequest();
+    signInRequest.loginType=LoginType.PHONEMESSAGEAUTHCODE;
+    signInRequest.passWord=data.password;
+    signInRequest.phoneNumber=Int64(int.parse(data.password));
+    SignInResponse signInResponse = await signIn(signInRequest);
+   return Future.delayed(loginTime).then((_) {
+    print(signInResponse.code);
+    print(signInResponse.data.avatarImage);
+    print(signInResponse.token);
+    saveMethod("token",signInResponse.token);
+ 
+    if(signInResponse.code!=ResponseCode.SUCCESSFUL){
+        return "登录失败，请检查账号密码";// 多语言支持？#issue https://github.com/PomCloud/CiYing/issues/3
+    }
+    if (signInResponse.token.length<1){
+      return  "登录异常";
+    }
       return null;
     });
   }
@@ -43,10 +48,10 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlutterLogin(
       title: APPNAME,
-      // logo: 'assets/images/logo.png',
+      logo: 'assets/images/logo.png',
       messages: LoginMessages(
-        usernameHint: '手机号码',
-        passwordHint: '密码',
+        usernameHint: '请输入11位手机号',
+        passwordHint: '请输入6-12密码',
         confirmPasswordHint: '密码确认',
         loginButton: '登入',
         signupButton: '注册',
@@ -59,7 +64,7 @@ class LoginScreen extends StatelessWidget {
         recoverPasswordSuccess: '密码重置成功',
       ),
       theme: LoginTheme(
-        primaryColor: Colors.blueGrey,
+        // primaryColor: Colors.blueGrey,
         errorColor: Colors.deepOrange,
         pageColorLight: Colors.white,
         pageColorDark: Colors.white,
@@ -76,10 +81,10 @@ class LoginScreen extends StatelessWidget {
         ),
         cardTheme: CardTheme(
           color: Colors.white,
-          elevation: 5,
-          margin: EdgeInsets.only(top: 15),
-          shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.circular(24.0)),
+          elevation: 0.0,
+          margin: EdgeInsets.only(top: 10),
+          // shape: ContinuousRectangleBorder(
+          //     borderRadius: BorderRadius.circular(100.0)),
         ),
         textFieldStyle: TextStyle(
           color: Colors.blueGrey,
@@ -88,7 +93,7 @@ class LoginScreen extends StatelessWidget {
           splashColor: Colors.blueGrey,
           backgroundColor: Colors.blueGrey,
           highlightColor: Colors.blueGrey,
-          elevation: 9.0,
+          elevation: 6.0,
           highlightElevation: 6.0,
         ),
       ),
@@ -105,35 +110,21 @@ class LoginScreen extends StatelessWidget {
         return null;
       },
       onLogin: (loginData) {
-        print('Login info');
-        print('Name: ${loginData.name}');
-        print('Password: ${loginData.password}');
         return _authUser(loginData);
       },
       onSignup: (loginData) {
-        print('Signup info');
-        print('Name: ${loginData.name}');
-        print('Password: ${loginData.password}');
         return _authUser(loginData);
       },
       onRecoverPassword: (name) {
-        print('Recover password info');
-        print('Name: $name');
         return _recoverPassword(name);
-        // Show new password dialog
       },
 
-      // onSubmitAnimationCompleted: () {
-      //   Navigator.of(context).pushReplacement(MaterialPageRoute(
-      //     builder: (context) => BrowseImages(),
-      //   ));
-      // },
-
-      //onSubmitAnimationCompleted: loginRequest("",""),
-      //    onSubmitAnimationCompleted: (value) {
-      //        loginRequest("18898988899","123456");
-      //    },
-      // onRecoverPassword: _recoverPassword,
+      onSubmitAnimationCompleted: () {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => SearchList(),
+        ));
+      },
+      
     );
   }
 }

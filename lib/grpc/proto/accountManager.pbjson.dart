@@ -92,3 +92,19 @@ const UpdatePassWordResponse$json = const {
   ],
 };
 
+const RechargeCoinRequest$json = const {
+  '1': 'RechargeCoinRequest',
+  '2': const [
+    const {'1': 'Id', '3': 1, '4': 1, '5': 9, '10': 'Id'},
+    const {'1': 'Coin', '3': 5, '4': 1, '5': 3, '10': 'Coin'},
+  ],
+};
+
+const RechargeCoinResponse$json = const {
+  '1': 'RechargeCoinResponse',
+  '2': const [
+    const {'1': 'Message', '3': 1, '4': 1, '5': 9, '10': 'Message'},
+    const {'1': 'Code', '3': 2, '4': 1, '5': 14, '6': '.proto.ResponseCode', '10': 'Code'},
+  ],
+};
+

@@ -12,8 +12,7 @@ class ResourceGrid extends StatefulWidget {
   _ResourceGridState createState() => _ResourceGridState();
 }
 
-class _ResourceGridState extends State<ResourceGrid>
-    with SingleTickerProviderStateMixin {
+class _ResourceGridState extends State<ResourceGrid>with SingleTickerProviderStateMixin {
   Color flavColor = Colors.white;
   @override
   void initState() {

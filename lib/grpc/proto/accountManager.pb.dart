@@ -500,3 +500,85 @@ class UpdatePassWordResponse extends $pb.GeneratedMessage {
   void clearCode() => clearField(2);
 }
 
+class RechargeCoinRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('RechargeCoinRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+    ..aOS(1, 'Id', protoName: 'Id')
+    ..aInt64(5, 'Coin', protoName: 'Coin')
+    ..hasRequiredFields = false
+  ;
+
+  RechargeCoinRequest._() : super();
+  factory RechargeCoinRequest() => create();
+  factory RechargeCoinRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RechargeCoinRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  RechargeCoinRequest clone() => RechargeCoinRequest()..mergeFromMessage(this);
+  RechargeCoinRequest copyWith(void Function(RechargeCoinRequest) updates) => super.copyWith((message) => updates(message as RechargeCoinRequest));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RechargeCoinRequest create() => RechargeCoinRequest._();
+  RechargeCoinRequest createEmptyInstance() => create();
+  static $pb.PbList<RechargeCoinRequest> createRepeated() => $pb.PbList<RechargeCoinRequest>();
+  @$core.pragma('dart2js:noInline')
+  static RechargeCoinRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RechargeCoinRequest>(create);
+  static RechargeCoinRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get coin => $_getI64(1);
+  @$pb.TagNumber(5)
+  set coin($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasCoin() => $_has(1);
+  @$pb.TagNumber(5)
+  void clearCoin() => clearField(5);
+}
+
+class RechargeCoinResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('RechargeCoinResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+    ..aOS(1, 'Message', protoName: 'Message')
+    ..e<$5.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
+    ..hasRequiredFields = false
+  ;
+
+  RechargeCoinResponse._() : super();
+  factory RechargeCoinResponse() => create();
+  factory RechargeCoinResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RechargeCoinResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  RechargeCoinResponse clone() => RechargeCoinResponse()..mergeFromMessage(this);
+  RechargeCoinResponse copyWith(void Function(RechargeCoinResponse) updates) => super.copyWith((message) => updates(message as RechargeCoinResponse));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RechargeCoinResponse create() => RechargeCoinResponse._();
+  RechargeCoinResponse createEmptyInstance() => create();
+  static $pb.PbList<RechargeCoinResponse> createRepeated() => $pb.PbList<RechargeCoinResponse>();
+  @$core.pragma('dart2js:noInline')
+  static RechargeCoinResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RechargeCoinResponse>(create);
+  static RechargeCoinResponse _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get message => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set message($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMessage() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMessage() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $5.ResponseCode get code => $_getN(1);
+  @$pb.TagNumber(2)
+  set code($5.ResponseCode v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCode() => clearField(2);
+}
+

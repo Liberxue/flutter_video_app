@@ -36,3 +36,11 @@ Future<String> _getId() async {
 // IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
 // print('Running on ${iosInfo.utsname.machine}');
 }
+
+// void getVersion() async {
+//     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+//       setState(() {
+//         _version = packageInfo.version;
+//       });
+//     });
+//   }

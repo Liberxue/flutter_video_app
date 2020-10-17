@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:CiYing/models/image_list.dart';
 import 'package:CiYing/util/network.dart';
 
-class BrowseImages extends StatefulWidget {
+class SearchList extends StatefulWidget {
   @override
-  _BrowseImagesState createState() => _BrowseImagesState();
+  _SearchListState createState() => _SearchListState();
 }
 
-class _BrowseImagesState extends State<BrowseImages> {
+class _SearchListState extends State<SearchList> {
   TextEditingController searchQueryController = TextEditingController();
 
   bool _isLoading = false;

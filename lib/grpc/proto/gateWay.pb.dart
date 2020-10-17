@@ -7,37 +7,38 @@
 
 import 'dart:core' as $core;
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'accountManager.pb.dart' as $0;
 
 import 'common.pbenum.dart' as $5;
 
-class LoginRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('LoginRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+class SignInRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignInRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..e<$5.LoginType>(1, 'LoginType', $pb.PbFieldType.OE, protoName: 'LoginType', defaultOrMaker: $5.LoginType.ACCOUNT, valueOf: $5.LoginType.valueOf, enumValues: $5.LoginType.values)
     ..aOS(2, 'User', protoName: 'User')
-    ..aOS(3, 'PhoneNumber', protoName: 'PhoneNumber')
+    ..a<$fixnum.Int64>(3, 'PhoneNumber', $pb.PbFieldType.OU6, protoName: 'PhoneNumber', defaultOrMaker: $fixnum.Int64.ZERO)
     ..aOS(4, 'PassWord', protoName: 'PassWord')
     ..aOS(5, 'DeviceType', protoName: 'DeviceType')
     ..aOS(6, 'DeviceVersion', protoName: 'DeviceVersion')
     ..hasRequiredFields = false
   ;
 
-  LoginRequest._() : super();
-  factory LoginRequest() => create();
-  factory LoginRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory LoginRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  LoginRequest clone() => LoginRequest()..mergeFromMessage(this);
-  LoginRequest copyWith(void Function(LoginRequest) updates) => super.copyWith((message) => updates(message as LoginRequest));
+  SignInRequest._() : super();
+  factory SignInRequest() => create();
+  factory SignInRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SignInRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  SignInRequest clone() => SignInRequest()..mergeFromMessage(this);
+  SignInRequest copyWith(void Function(SignInRequest) updates) => super.copyWith((message) => updates(message as SignInRequest));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static LoginRequest create() => LoginRequest._();
-  LoginRequest createEmptyInstance() => create();
-  static $pb.PbList<LoginRequest> createRepeated() => $pb.PbList<LoginRequest>();
+  static SignInRequest create() => SignInRequest._();
+  SignInRequest createEmptyInstance() => create();
+  static $pb.PbList<SignInRequest> createRepeated() => $pb.PbList<SignInRequest>();
   @$core.pragma('dart2js:noInline')
-  static LoginRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoginRequest>(create);
-  static LoginRequest _defaultInstance;
+  static SignInRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SignInRequest>(create);
+  static SignInRequest _defaultInstance;
 
   @$pb.TagNumber(1)
   $5.LoginType get loginType => $_getN(0);
@@ -58,9 +59,9 @@ class LoginRequest extends $pb.GeneratedMessage {
   void clearUser() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get phoneNumber => $_getSZ(2);
+  $fixnum.Int64 get phoneNumber => $_getI64(2);
   @$pb.TagNumber(3)
-  set phoneNumber($core.String v) { $_setString(2, v); }
+  set phoneNumber($fixnum.Int64 v) { $_setInt64(2, v); }
   @$pb.TagNumber(3)
   $core.bool hasPhoneNumber() => $_has(2);
   @$pb.TagNumber(3)
@@ -94,8 +95,8 @@ class LoginRequest extends $pb.GeneratedMessage {
   void clearDeviceVersion() => clearField(6);
 }
 
-class LoginResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('LoginResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+class SignInResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignInResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
     ..e<$5.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
     ..aOS(3, 'Token', protoName: 'Token')
@@ -103,20 +104,20 @@ class LoginResponse extends $pb.GeneratedMessage {
     ..hasRequiredFields = false
   ;
 
-  LoginResponse._() : super();
-  factory LoginResponse() => create();
-  factory LoginResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory LoginResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  LoginResponse clone() => LoginResponse()..mergeFromMessage(this);
-  LoginResponse copyWith(void Function(LoginResponse) updates) => super.copyWith((message) => updates(message as LoginResponse));
+  SignInResponse._() : super();
+  factory SignInResponse() => create();
+  factory SignInResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SignInResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  SignInResponse clone() => SignInResponse()..mergeFromMessage(this);
+  SignInResponse copyWith(void Function(SignInResponse) updates) => super.copyWith((message) => updates(message as SignInResponse));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static LoginResponse create() => LoginResponse._();
-  LoginResponse createEmptyInstance() => create();
-  static $pb.PbList<LoginResponse> createRepeated() => $pb.PbList<LoginResponse>();
+  static SignInResponse create() => SignInResponse._();
+  SignInResponse createEmptyInstance() => create();
+  static $pb.PbList<SignInResponse> createRepeated() => $pb.PbList<SignInResponse>();
   @$core.pragma('dart2js:noInline')
-  static LoginResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoginResponse>(create);
-  static LoginResponse _defaultInstance;
+  static SignInResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SignInResponse>(create);
+  static SignInResponse _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);
@@ -157,37 +158,37 @@ class LoginResponse extends $pb.GeneratedMessage {
   $0.AccountResponse ensureData() => $_ensure(3);
 }
 
-class SignInRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignInRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'User', protoName: 'User')
+class SignUpRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignUpRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, 'PhoneNumber', $pb.PbFieldType.OU6, protoName: 'PhoneNumber', defaultOrMaker: $fixnum.Int64.ZERO)
     ..aOS(2, 'PassWord', protoName: 'PassWord')
     ..aOS(3, 'Device', protoName: 'Device')
     ..hasRequiredFields = false
   ;
 
-  SignInRequest._() : super();
-  factory SignInRequest() => create();
-  factory SignInRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SignInRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  SignInRequest clone() => SignInRequest()..mergeFromMessage(this);
-  SignInRequest copyWith(void Function(SignInRequest) updates) => super.copyWith((message) => updates(message as SignInRequest));
+  SignUpRequest._() : super();
+  factory SignUpRequest() => create();
+  factory SignUpRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SignUpRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  SignUpRequest clone() => SignUpRequest()..mergeFromMessage(this);
+  SignUpRequest copyWith(void Function(SignUpRequest) updates) => super.copyWith((message) => updates(message as SignUpRequest));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static SignInRequest create() => SignInRequest._();
-  SignInRequest createEmptyInstance() => create();
-  static $pb.PbList<SignInRequest> createRepeated() => $pb.PbList<SignInRequest>();
+  static SignUpRequest create() => SignUpRequest._();
+  SignUpRequest createEmptyInstance() => create();
+  static $pb.PbList<SignUpRequest> createRepeated() => $pb.PbList<SignUpRequest>();
   @$core.pragma('dart2js:noInline')
-  static SignInRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SignInRequest>(create);
-  static SignInRequest _defaultInstance;
+  static SignUpRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SignUpRequest>(create);
+  static SignUpRequest _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get user => $_getSZ(0);
+  $fixnum.Int64 get phoneNumber => $_getI64(0);
   @$pb.TagNumber(1)
-  set user($core.String v) { $_setString(0, v); }
+  set phoneNumber($fixnum.Int64 v) { $_setInt64(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasUser() => $_has(0);
+  $core.bool hasPhoneNumber() => $_has(0);
   @$pb.TagNumber(1)
-  void clearUser() => clearField(1);
+  void clearPhoneNumber() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get passWord => $_getSZ(1);
@@ -208,27 +209,27 @@ class SignInRequest extends $pb.GeneratedMessage {
   void clearDevice() => clearField(3);
 }
 
-class SignInResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignInResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+class SignUpResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignUpResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
     ..e<$5.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
     ..hasRequiredFields = false
   ;
 
-  SignInResponse._() : super();
-  factory SignInResponse() => create();
-  factory SignInResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SignInResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  SignInResponse clone() => SignInResponse()..mergeFromMessage(this);
-  SignInResponse copyWith(void Function(SignInResponse) updates) => super.copyWith((message) => updates(message as SignInResponse));
+  SignUpResponse._() : super();
+  factory SignUpResponse() => create();
+  factory SignUpResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SignUpResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  SignUpResponse clone() => SignUpResponse()..mergeFromMessage(this);
+  SignUpResponse copyWith(void Function(SignUpResponse) updates) => super.copyWith((message) => updates(message as SignUpResponse));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static SignInResponse create() => SignInResponse._();
-  SignInResponse createEmptyInstance() => create();
-  static $pb.PbList<SignInResponse> createRepeated() => $pb.PbList<SignInResponse>();
+  static SignUpResponse create() => SignUpResponse._();
+  SignUpResponse createEmptyInstance() => create();
+  static $pb.PbList<SignUpResponse> createRepeated() => $pb.PbList<SignUpResponse>();
   @$core.pragma('dart2js:noInline')
-  static SignInResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SignInResponse>(create);
-  static SignInResponse _defaultInstance;
+  static SignUpResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SignUpResponse>(create);
+  static SignUpResponse _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);

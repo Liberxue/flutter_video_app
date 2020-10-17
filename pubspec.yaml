@@ -21,6 +21,9 @@ dependencies:
   grpc:
   base_x: ^1.0.1
   device_info: ^0.4.0+4
+  fixnum: ^0.10.11  #fix flutter int64 https://github.com/PomCloud/gateway/issues/3
+  shared_preferences: ^0.5.3+4
+
 
 
 

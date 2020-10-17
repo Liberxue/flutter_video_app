@@ -1,7 +1,7 @@
 import 'package:grpc/grpc.dart';
 
 class APIConfig {
-  static const Address = "192.168.187.84";
+  static const Address = "127.0.0.1";
   static const Port = 50003;
 }
 
