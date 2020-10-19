@@ -1,4 +1,3 @@
-import 'package:CiYing/page/profile/profile.dart';
 import 'package:flutter/material.dart';
 
 class UserHeaderProfile extends StatefulWidget {
@@ -12,8 +11,9 @@ class _UserHeaderProfileState extends State<UserHeaderProfile>
   Widget build(BuildContext context) {
     return new GestureDetector(
         onTap: (){
-          Navigator.push(
-           context, MaterialPageRoute(builder: (context) => ProfilePage(),maintainState: false));
+              Navigator.pushNamed(context, '/UserProfile');
+          // Navigator.push(
+          //  context, MaterialPageRoute(builder: (context) => UserProfile(),maintainState: false));
         },
           child:Container(
         width: 50,

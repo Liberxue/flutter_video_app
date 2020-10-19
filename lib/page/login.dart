@@ -3,8 +3,10 @@ import 'package:CiYing/grpc/proto/common.pbenum.dart';
 import 'package:CiYing/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:CiYing/models/signIn/signIn.dart';
 import 'package:CiYing/page/search_list.dart';
+import 'package:CiYing/util/exit.dart';
 import 'package:CiYing/util/store.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
@@ -15,41 +17,62 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  ///RichText中隐私协议的手势
+  TapGestureRecognizer _privacyProtocolRecognizer;
+  ///RichText中注册协议的手势
+  TapGestureRecognizer _registProtocolRecognizer;
+
  String Token="";
   @override
   void initState() {
     super.initState();
-    this.loadIsLoginData();
+    //    //注册协议的手势
+    // _registProtocolRecognizer = TapGestureRecognizer();
+    // //隐私协议的手势
+    // _privacyProtocolRecognizer = TapGestureRecognizer();
   }
-  void loadIsLoginData()async{
-    final token = await getMethod("token");
-    setState(() {
-      Token = token;
-    });
-    if(Token.length>0){
-      Navigator.push(
-      context, MaterialPageRoute(builder: (context) => SearchList(),maintainState: false));
-    }
+
+  
+  ///复选框的选中标识
+  bool checkIsSelect = false;
+
+  ///使用图片素材自定义圆形自选框
+  buildCircleCheckBox() {
+    return Container(
+      // padding: EdgeInsets.all(8),
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            checkIsSelect = !checkIsSelect;
+          });
+        },
+        child: Image.asset(
+          checkIsSelect
+              ? "images/no_select_icon.png"
+              : "images/select_icon.png",
+          width: 18,
+          height: 18,
+        ),
+      ),
+    );
   }
-  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 50);
+
+  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 150);
   Future<String> _authUser(LoginData data) async {
     SignInRequest signInRequest =SignInRequest();
     signInRequest.loginType=LoginType.PHONEMESSAGEAUTHCODE;
     signInRequest.passWord=data.password;
-    signInRequest.phoneNumber=Int64(int.parse(data.password));
+    signInRequest.phoneNumber=Int64(int.parse(data.name));
     SignInResponse signInResponse = await signIn(signInRequest);
    return Future.delayed(loginTime).then((_) {
-    print(signInResponse.code);
-    print(signInResponse.data.avatarImage);
-    print(signInResponse.token);
-    saveMethod("token",signInResponse.token);
- 
-    if(signInResponse.code!=ResponseCode.SUCCESSFUL){
-        return "登录失败，请检查账号密码";// 多语言支持？#issue https://github.com/PomCloud/CiYing/issues/3
-    }
-    if (signInResponse.token.length<1){
-      return  "登录异常";
-    }
+      if(signInResponse.code!=ResponseCode.SUCCESSFUL){
+          return "登录失败，请检查账号密码";// 多语言支持？#issue https://github.com/PomCloud/CiYing/issues/3
+      }
+      if (signInResponse.token.length<1){//mark check token
+        return  "登录异常";
+      }
+      Cache.setCache("token",signInResponse.token);
+      Cache.setCache("avatarImage", signInResponse.data.avatarImage);
       return null;
     });
   }
@@ -71,7 +94,27 @@ class _LoginState extends State<Login> {
   //   Navigator.push(
   //     context, MaterialPageRoute(builder: (context) => SearchList(),maintainState: false))
   // }
-    return FlutterLogin(
+    return WillPopScope(
+      onWillPop: () async => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('你确定要退出吗？'),
+                actions: <Widget>[
+                  RaisedButton(
+                      child: Text('退出'),
+                      //onPressed: () => Navigator.of(context).pop(true)),
+                    onPressed:() async {
+                       await ExitApp();
+                      }),                      
+                  RaisedButton(
+                      child: Text('取消'),
+                      onPressed: () => Navigator.of(context).pop(false)),
+                      
+                ],
+              )),
+      child: Stack(
+    children: <Widget>[
+      FlutterLogin(
       title: APPNAME,
       // logo: 'assets/images/logo.png',
       messages: LoginMessages(
@@ -143,13 +186,58 @@ class _LoginState extends State<Login> {
       onRecoverPassword: (name) {
         return _recoverPassword(name);
       },
-
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => SearchList(),
         ));
       },
-      
+    ),
+      Container(
+      margin: EdgeInsets.only(top: 600),
+      child: Row(
+        children: [
+          //使用图片切图实现自定义的复选框
+          // buildCircleCheckBox(),
+          SizedBox(width: 1,),
+          ///文字区域
+          Expanded(
+            child: RichText(
+              ///文字区域
+              text: TextSpan(
+                  text: "注册同意",
+                  style: TextStyle(color: Color(0xaafafafa)),
+                  children: [
+                    TextSpan(
+                        text: "《用户注册协议》",
+                        style: TextStyle(color: Colors.orange),
+                        //点击事件
+                        recognizer: _registProtocolRecognizer
+                          // ..onTap = () {
+                          //   print("点击用户协议");
+                          // }
+                          ),
+                    TextSpan(
+                      text: "与",
+                      style: TextStyle(color: Color(0xaafafafa)),
+                    ),
+                    TextSpan(
+                        text: "《用户隐私协议》",
+                        style: TextStyle(color: Colors.orange),
+                        //点击事件
+                        recognizer: _privacyProtocolRecognizer
+                          // ..onTap = () {
+                          //   print("点击隐私协议");
+                          // }
+                          )
+                  ]),
+            ),
+          )
+        ],
+      )
+    )
+   ]
+ )
     );
   }
 }
+

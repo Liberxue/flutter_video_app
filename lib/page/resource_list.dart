@@ -3,16 +3,16 @@ import 'package:CiYing/models/image.dart' as DisplayImage;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ResourceGrid extends StatefulWidget {
+class ResourceList extends StatefulWidget {
   var isShow = false;
   final ImageList _images;
   final bool searchPerformed;
-  ResourceGrid(this._images, {this.searchPerformed = false});
+  ResourceList(this._images, {this.searchPerformed = false});
   @override
-  _ResourceGridState createState() => _ResourceGridState();
+  _ResourceListState createState() => _ResourceListState();
 }
 
-class _ResourceGridState extends State<ResourceGrid>with SingleTickerProviderStateMixin {
+class _ResourceListState extends State<ResourceList>with SingleTickerProviderStateMixin {
   Color flavColor = Colors.white;
   @override
   void initState() {
@@ -24,7 +24,6 @@ class _ResourceGridState extends State<ResourceGrid>with SingleTickerProviderSta
 
   Widget _getBuildWidget(BuildContext context) {
     Widget targetWidget;
-
     if (widget._images == null && widget.searchPerformed == true) {
       targetWidget = Container(
         padding: EdgeInsets.all(16.0),

@@ -6,7 +6,7 @@ import 'dart:math' as math;
 
 
 
-class ProfilePage extends StatelessWidget {
+class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,6 +16,7 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+
             _myListTitle(context,Icons.verified_user,'账户与安全'),
 
             _myListTitle(context,Icons.hot_tub,'优惠活动'),
@@ -222,7 +223,7 @@ Widget _myListTitle(BuildContext context,IconData icon,String title) {
 
   }
    void loginOut(BuildContext context)async{
-     deleteMethod("token");
+     Cache.deleteCache("token");
       Navigator.push(
       context, MaterialPageRoute(builder: (context) => Login(),maintainState: false));
   }

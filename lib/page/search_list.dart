@@ -1,5 +1,5 @@
 import 'package:CiYing/components/rounded_input_field.dart';
-import 'package:CiYing/page/ResourceGrid.dart';
+import 'package:CiYing/page/resource_list.dart';
 import 'package:CiYing/page/head_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:CiYing/models/image_list.dart';
@@ -122,7 +122,7 @@ class _SearchListState extends State<SearchList> {
                             Theme.of(context).primaryColor),
                       )))
             else
-              ResourceGrid(_images, searchPerformed: _searchDone)
+              ResourceList(_images, searchPerformed: _searchDone)
           ],
         ));
   }
