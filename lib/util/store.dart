@@ -24,5 +24,11 @@ class Cache {
       return false;
     }
     return true;
+
+  }
+  static Future<String> getToken()async{
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    String _tokenKey = "token";
+    return sp.get(_tokenKey) as String;
   }
 }

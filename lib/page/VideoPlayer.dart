@@ -1,5 +1,4 @@
 import 'package:CiYing/page/head_profile.dart';
-import 'package:CiYing/util/check_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player_controls/video_player_controls.dart';
