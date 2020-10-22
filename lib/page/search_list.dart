@@ -54,9 +54,9 @@ class _SearchListState extends State<SearchList> {
             actions: <Widget>[
               if (_searchHeaderShow)
                 Container(
-                  padding: const EdgeInsets.only(left: 8.0, right: 2.0),
-                  width: 280,
-                  height: 50,
+                  padding: const EdgeInsets.only(right: 2.0),
+                  width: 300,
+                  height: 60,
                   child: RoundedInputField(
                     icon: Icons.search,
                     hintText: "搜索",

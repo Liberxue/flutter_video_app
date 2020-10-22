@@ -9,7 +9,6 @@ import 'package:CiYing/util/exit.dart';
 import 'package:CiYing/util/store.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 class Login extends StatefulWidget {
@@ -102,7 +101,7 @@ void dispose() {
     );
   }
 
-  Duration get loginTime => Duration(milliseconds: 2250);
+  Duration get loginTime => Duration(milliseconds: 10);
   Future<String> _authUser(LoginData data) async {
     SignInRequest signInRequest =SignInRequest();
     signInRequest.loginType=LoginType.PHONEMESSAGEAUTHCODE;
@@ -214,6 +213,9 @@ void dispose() {
         // if (!value.contains('@') || !value.endsWith('.com')) {
         //   return "Email must contain '@' and end with '.com'";
         // }
+        if (value.isEmpty) {
+          return '手机不能为空';
+        }
         return null;
       },
       passwordValidator: (value) {

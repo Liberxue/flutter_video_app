@@ -1,4 +1,5 @@
 import 'package:CiYing/page/head_profile.dart';
+import 'package:CiYing/page/search_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player_controls/video_player_controls.dart';
@@ -90,11 +91,11 @@ class _VideoPlayereState extends State<VideoPlayer> {
             leading: Builder(builder: (BuildContext context) {
               return IconButton(
                 icon: Image.asset("assets/images/logo.png"),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                tooltip: MaterialLocalizations.of(context)
-                    .openAppDrawerTooltip, //打开抽屉drawer
+                  onPressed: () {
+                     Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => SearchList(),
+                    ));
+                  },
               );
             }),
             elevation: 1.5,

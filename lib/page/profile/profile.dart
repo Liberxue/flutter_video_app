@@ -5,18 +5,18 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 
-
 class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 18),
+     margin: EdgeInsets.symmetric(vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-
+            CustomHeadeBar(),
             _myListTitle(context,Icons.verified_user,'账户与安全'),
 
             _myListTitle(context,Icons.hot_tub,'优惠活动'),
@@ -38,68 +38,63 @@ final String url = "https://avatars0.githubusercontent.com/u/5831248?s=460&u=cfe
 
 class CustomAppBar extends StatelessWidget
   with PreferredSizeWidget{
-
   @override
-  Size get preferredSize => Size(double.infinity, 180);
-
+  Size get preferredSize => Size(double.infinity, 40);
+  @override
+  Widget build(BuildContext context) {
+    return  AppBar(
+        title: Container(
+          // color: Colors.white10,
+          child:Text("个人中心", style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.edit, color: Colors.white,),     
+            tooltip: 'Restitch it',
+            onPressed: null,
+          ),
+        ], // 左侧返回按钮，可以有按钮，可以有文字
+        // backgroundColor: Colors.red, //导航栏和状态栏的的颜色
+        elevation: 0.0, //阴影的高度
+        brightness: Brightness.light, //控制状态栏的颜色，lignt 文字是灰色的，dark是白色的
+        textTheme: TextTheme(), //这个主题的参数比较多,flutter定义了13种不同的字体样式
+        centerTitle: true, //标题是否居中，默认为false
+        toolbarOpacity: 0.5, //整个导航栏的不透明度
+        bottomOpacity: 0.8, //bottom的不透明度
+        titleSpacing: 10, //标题两边的空白区域,
+      );          
+  }
+}
+class CustomHeadeBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipPath(
       // clipper: MyClipper(),
-      child: Container(
-        padding: EdgeInsets.only(top: 5),
-        decoration: BoxDecoration(
-          color: Colors.blueGrey,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.blueGrey,
-              blurRadius: 20,
-              offset: Offset(0, 0)
-            )
-          ]
-        ),
+      
         child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.white,),
-                    onPressed: () {
-                        Navigator.pop(context);
-                      },
-                ),
-                Text("个人中心", style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),),
-
-                IconButton(
-                  icon: Icon(Icons.edit, color: Colors.white,),
-                  onPressed: (){},
-                )
-              ],
-            ),   
-
+          children: <Widget>[  
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SizedBox(width: 120,),
                 Text("LiberDemo", style: TextStyle(
-                color: Colors.white,
+                color: Colors.blueGrey,
                 fontSize: 20
                ),),
                  SizedBox(width: 20,),
                  Container(
                       width: 110,
-                      height: 32,              
+                      height: 30,  
                       child: Center(child: Text("账户充值"),),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.redAccent,
                         borderRadius: BorderRadius.all(Radius.circular(16)),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black12,
+                            color: Colors.blueGrey,
                             blurRadius: 20
                           )
                         ]
@@ -130,33 +125,33 @@ class CustomAppBar extends StatelessWidget
                 Column(
                   children: <Widget>[
                     Text("收藏夹", style: TextStyle(
-                      color: Colors.white
+                      color: Colors.blueGrey
                     ),),
                     Text("8", style: TextStyle(
                         fontSize: 26,
-                        color: Colors.white
+                        color: Colors.blueGrey
                     ),)
                   ],
                 ),
                 Column(
                   children: <Widget>[
                     Text("下载量", style: TextStyle(
-                        color: Colors.white
+                        color: Colors.blueGrey
                     ),),
                     Text("12", style: TextStyle(
                         fontSize: 26,
-                        color: Colors.white
+                        color: Colors.blueGrey
                     ),)
                   ],
                 ),
                 Column(
                   children: <Widget>[
                     Text("搜索币", style: TextStyle(
-                        color: Colors.white
+                        color: Colors.blueGrey
                     ),),
                     Text("4", style: TextStyle(
                         fontSize: 26,
-                        color: Colors.white
+                        color: Colors.blueGrey
                     ),)
                   ],
                 ),           
@@ -164,36 +159,36 @@ class CustomAppBar extends StatelessWidget
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }
+class MyClipper extends CustomClipper<Path>{
 
-// class MyClipper extends CustomClipper<Path>{
+  @override
+  Path getClip(Size size) {
+    Path p = Path();
 
-//   @override
-//   Path getClip(Size size) {
-//     Path p = Path();
+    p.lineTo(0, size.height-20);//切斜度
+    p.lineTo(size.width, size.height);
 
-//     p.lineTo(0, size.height-70);//切斜度
-//     p.lineTo(size.width, size.height);
+    p.lineTo(size.width, 0);
 
-//     p.lineTo(size.width, 0);
+    p.close();
 
-//     p.close();
+    return p;
+  }
 
-//     return p;
-//   }
-
-//   @override
-//   bool shouldReclip(CustomClipper<Path> oldClipper) {
-//     return true;
-//   }
-// }
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
 
 Widget _myListTitle(BuildContext context,IconData icon,String title) {
   
     return Container(
+      margin: EdgeInsets.symmetric(vertical: 1),
+      padding: EdgeInsets.only(top: 13),
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(bottom: BorderSide(width: 1, color: Colors.black12))),
