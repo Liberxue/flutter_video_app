@@ -27,7 +27,6 @@ class _headerState extends State<Header> {
   Future _performSearch() async {
     final String query = searchQueryController.text;
     ImageList images = await Storage.getImagesForSearch(query);
-    print(images.images[0].imageUrl);
     setState(() {
       _images = images;
       _searchDone = true;

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:CiYing/common/constants.dart';
 import 'package:CiYing/grpc/proto/common.pbenum.dart';
 import 'package:CiYing/grpc/proto/gateWay.pbgrpc.dart';
@@ -16,21 +18,64 @@ class Login extends StatefulWidget {
   }
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends State<Login> with WidgetsBindingObserver {
+
+  // 输入框的焦点实例
+  FocusNode _focusNode;
+  // 当前键盘是否是激活状态
+  bool isKeyboardActived = false;
+
   ///RichText中隐私协议的手势
   TapGestureRecognizer _privacyProtocolRecognizer;
   ///RichText中注册协议的手势
   TapGestureRecognizer _registProtocolRecognizer;
 
- String Token="";
   @override
   void initState() {
     super.initState();
-    //    //注册协议的手势
-    // _registProtocolRecognizer = TapGestureRecognizer();
-    // //隐私协议的手势
-    // _privacyProtocolRecognizer = TapGestureRecognizer();
+    //注册协议的手势
+    _registProtocolRecognizer = TapGestureRecognizer();
+    //隐私协议的手势
+    _privacyProtocolRecognizer = TapGestureRecognizer();
+     _focusNode = FocusNode();
+    // 监听输入框焦点变化
+    _focusNode.addListener(_onFocus);
+    // 创建一个界面变化的观察者
+    WidgetsBinding.instance.addObserver(this);
   }
+
+// 焦点变化时触发的函数
+_onFocus() {
+    if (_focusNode.hasFocus) {
+    // 聚焦时候的操作
+    return;
+    }
+}
+ 
+@override
+void didChangeMetrics() {
+    super.didChangeMetrics();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+        // 当前是安卓系统并且在焦点聚焦的情况下
+        if (Platform.isAndroid && _focusNode.hasFocus) {
+            if (isKeyboardActived) {
+                isKeyboardActived = false;
+                // 使输入框失去焦点
+                _focusNode.unfocus();
+                return;
+            }
+            isKeyboardActived = true;
+        }
+    });
+}
+ 
+// 卸载，防止内存泄漏
+@override
+void dispose() {
+    super.dispose();
+    _focusNode.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+}
 
   
   ///复选框的选中标识
@@ -57,22 +102,22 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 150);
+  Duration get loginTime => Duration(milliseconds: 2250);
   Future<String> _authUser(LoginData data) async {
     SignInRequest signInRequest =SignInRequest();
     signInRequest.loginType=LoginType.PHONEMESSAGEAUTHCODE;
     signInRequest.passWord=data.password;
     signInRequest.phoneNumber=Int64(int.parse(data.name));
     SignInResponse signInResponse = await signIn(signInRequest);
-   return Future.delayed(loginTime).then((_) {
+    return Future.delayed(loginTime).then((_) async {
       if(signInResponse.code!=ResponseCode.SUCCESSFUL){
-          return "登录失败，请检查账号密码";// 多语言支持？#issue https://github.com/PomCloud/CiYing/issues/3
+          return "登录失败，请检查账号密码"; // 多语言支持？#issue https://github.com/PomCloud/CiYing/issues/3
       }
-      if (signInResponse.token.length<1){//mark check token
+      if (signInResponse.token.length<1){ //mark check token
         return  "登录异常";
       }
-      Cache.setCache("token",signInResponse.token);
-      Cache.setCache("avatarImage", signInResponse.data.avatarImage);
+      await Cache.setCache("token",signInResponse.token);
+      await Cache.setCache("avatarImage", signInResponse.data.avatarImage);
       return null;
     });
   }

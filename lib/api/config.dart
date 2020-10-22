@@ -2,7 +2,7 @@ import 'package:grpc/grpc.dart';
 
 class APIConfig {
   // static const Address = "192.168.31.151";
-    static const Address = "123.58.211.129";
+  static const Address = "123.58.211.129";
 
     // static const Address = "192.168.187.84";
   static const Port = 50003;
@@ -23,7 +23,7 @@ class Manager {
   static Manager get instance => _getInstance();
   static Manager _instance;
   ClientChannel channel;
-  Manager._internal() {  
+  Manager._internal() { 
       channel = ClientChannel(
       APIConfig.Address,
       port: APIConfig.Port,

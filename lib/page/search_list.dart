@@ -22,8 +22,6 @@ class _SearchListState extends State<SearchList> {
     final String query = searchQueryController.text;
     ImageList images = await Storage.getImagesForSearch(query);
 
-    print(images.images[0].imageUrl);
-
     setState(() {
       _images = images;
       _searchDone = true;
@@ -44,8 +42,10 @@ class _SearchListState extends State<SearchList> {
                 child: IconButton(
                   icon: Image.asset("assets/images/logo.png"),
                   onPressed: () {
-                      Navigator.pop(context);
-                    }//打开抽屉drawer
+                     Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => SearchList(),
+                    ));
+                  },
                 ),
               ));
             }),
