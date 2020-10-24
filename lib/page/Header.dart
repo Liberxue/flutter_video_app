@@ -37,11 +37,9 @@ class _headerState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        // padding: EdgeInsets.all(20.0),
-        // margin: EdgeInsets.only(bottom: 10),
         alignment: Alignment.center,
         child: TextField(
-          cursorWidth: 2.0,
+          cursorWidth: 1.0,
           cursorRadius: Radius.circular(5.0),
           controller: searchQueryController,
           onEditingComplete: () async {
@@ -51,13 +49,13 @@ class _headerState extends State<Header> {
             });
             await _performSearch();
           },
-          maxLines: 1,
+          maxLines: 2,
           decoration: InputDecoration(
               labelText: '搜索',
               labelStyle: TextStyle(
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w300,
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 14.0),
               suffixIcon: IconButton(
                 icon: Icon(Icons.search),

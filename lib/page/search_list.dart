@@ -74,8 +74,8 @@ class _SearchListState extends State<SearchList> {
           children: <Widget>[
             if (!_searchHeaderShow)
               Container(
-                  padding: EdgeInsets.all(20.0),
-                  margin: EdgeInsets.only(bottom: 10),
+                  padding: EdgeInsets.all(25.0),
+                  margin: EdgeInsets.only(bottom: 5),
                   alignment: Alignment.center,
                   child: TextField(
                     cursorWidth: 2.0,

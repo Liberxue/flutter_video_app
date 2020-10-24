@@ -30,6 +30,7 @@ class _AppRouterState extends State<AppRouter> {
 
     _getLoginState() async {
     _isLogin = await Cache.checkLoginState();
+     _isLogin ? navigationPage(): Login();
   }
 
   @override
@@ -37,6 +38,12 @@ class _AppRouterState extends State<AppRouter> {
     super.dispose();
     _timer.cancel();
   }
+
+  void navigationPage() {
+    _timer.cancel();
+    Navigator.of(context).pushReplacementNamed('/SearchList');
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +59,7 @@ class _AppRouterState extends State<AppRouter> {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => _isLogin ? SearchList(): Login() ,
+        '/': (context) => _isLogin ? SearchList(): Login(),
         '/SearchList': (context) => _isLogin ? SearchList(): Login() ,
         '/UserProfile':(context) => _isLogin ? UserProfile(): Login(),
       },

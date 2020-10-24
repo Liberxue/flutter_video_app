@@ -5,6 +5,8 @@ import 'package:CiYing/grpc/proto/common.pbenum.dart';
 import 'package:CiYing/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:CiYing/models/signIn/signIn.dart';
 import 'package:CiYing/page/search_list.dart';
+import 'package:CiYing/page/userPrivacyAgreement.dart';
+import 'package:CiYing/page/userRegistrationAgreement.dart';
 import 'package:CiYing/util/exit.dart';
 import 'package:CiYing/util/store.dart';
 import 'package:fixnum/fixnum.dart';
@@ -257,24 +259,22 @@ void dispose() {
                     TextSpan(
                         text: "《用户注册协议》",
                         style: TextStyle(color: Colors.orange),
-                        //点击事件
                         recognizer: _registProtocolRecognizer
-                          // ..onTap = () {
-                          //   print("点击用户协议");
-                          // }
+                          ..onTap = () {
+                            userRegistrationAgreementShowAlertDialog(context);
+                          }
                           ),
                     TextSpan(
                       text: "与",
-                      style: TextStyle(color: Color(0xaafafafa)),
+                        style: TextStyle(color: Colors.orange),
                     ),
                     TextSpan(
                         text: "《用户隐私协议》",
                         style: TextStyle(color: Colors.orange),
-                        //点击事件
                         recognizer: _privacyProtocolRecognizer
-                          // ..onTap = () {
-                          //   print("点击隐私协议");
-                          // }
+                          ..onTap = () {
+                               userPrivacyAgreementShowAlertDialog(context);
+                          }
                           )
                   ]),
             ),
@@ -287,4 +287,3 @@ void dispose() {
     );
   }
 }
-

@@ -1,22 +1,95 @@
+import 'package:CiYing/animation/animation_point_manager.dart';
+import 'package:CiYing/common/constants.dart';
 import 'package:CiYing/models/image_list.dart';
 import 'package:CiYing/models/image.dart' as DisplayImage;
+import 'package:CiYing/page/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ResourceList extends StatefulWidget {
+
   var isShow = false;
   final ImageList _images;
   final bool searchPerformed;
+
   ResourceList(this._images, {this.searchPerformed = false});
   @override
   _ResourceListState createState() => _ResourceListState();
 }
 
-class _ResourceListState extends State<ResourceList>with SingleTickerProviderStateMixin {
-  Color flavColor = Colors.white;
+class _ResourceListState extends State<ResourceList>with TickerProviderStateMixin {
+  // int count = 0;
+
+  // AnimationPointManager _animationPointManager = AnimationPointManager();
+
+  // GlobalKey stackKey = GlobalKey();
+  // GlobalKey endKey = GlobalKey();
+
+  // itemOnTap(GlobalKey startKey) {
+  //   print("start key " + startKey.toString());
+  //   print("stack key " + stackKey.toString());
+  //   print("end key " + endKey.toString());
+
+  //   _animationPointManager.addParabolicAniamtion(
+  //     vsync: this,
+  //     stackKey: stackKey,
+  //     startKey: startKey,
+  //     endKey: endKey,
+  //     color: Colors.green,
+  //     statusListener: (AnimationStatus status) {
+  //       setState(() {});
+  //       if (status == AnimationStatus.completed) {
+  //         buyOnTap();
+  //       }
+  //     },
+  //     duration: Duration(milliseconds: 700),
+  //   );
+  // }
+  
+  //   buyOnTap() {
+  //   _animationPointManager.addPopupAniamtion(
+  //     vsync: this,
+  //     stackKey: stackKey,
+  //     startKey: endKey,
+  //     child: Container(
+  //       width: 100,
+  //       color: Colors.green,
+  //       padding: EdgeInsets.all(25),
+  //       child: Icon(Icons.home, size: 50, color: Colors.white),
+  //     ),
+  //     popupOffset: Offset(0, -50),
+  //     duration: Duration(milliseconds: 800),
+  //     statusListener: (AnimationStatus status) {
+  //       if (status == AnimationStatus.completed) {
+  //         setState(() {
+  //           count += 1;
+  //         });
+  //       } else {
+  //         setState(() {});
+  //       }
+  //     },
+  //   );
+  // }
+  bool isLiked = true;
+  AnimationController controller;
+  Animation<double> animation;
+
   @override
   void initState() {
+       controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    animation = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(parent: controller, curve: Curves.easeInToLinear));
+    controller.forward();
+
     super.initState();
+  }
+
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -56,13 +129,15 @@ class _ResourceListState extends State<ResourceList>with SingleTickerProviderSta
   }
 
   Widget buildImagesGrid(BuildContext context) {
+
     List<DisplayImage.Image> displayImages = widget._images.images;
     TextStyle authorStyle = TextStyle(
       fontSize: 10,
       color: Colors.white,
       letterSpacing: 1,
     );
-    double deviceHeight = MediaQuery.of(context).size.height;
+
+    // double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     final double _tileHeight = MediaQuery.of(context).size.height / 3;
 
@@ -133,10 +208,10 @@ class _ResourceListState extends State<ResourceList>with SingleTickerProviderSta
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  // Divider(
-                                  //   height: 5,
-                                  //   color: Colors.white30,
-                                  // ),
+                                  Divider(
+                                    height: 5,
+                                    color: Colors.white30,
+                                  ),
                                   Text(
                                     "时长：${displayImages[index].views}",
                                     style: authorStyle,
@@ -154,15 +229,29 @@ class _ResourceListState extends State<ResourceList>with SingleTickerProviderSta
                             ),
                           ),
                         ),
-                        IconButton(
-                          padding: const EdgeInsets.all(15.0),
-                          iconSize: 34,
-                          alignment: Alignment.center,
-                          icon: Icon(CupertinoIcons.heart),
-                          color: flavColor, //API回调！！！
-                          tooltip: "收藏",
-                          onPressed: () => _flavModalBottomSheet(context),
-                        ),
+                        //likeIcon
+                          likeIcon(isLiked ? Icons.favorite : Icons.favorite_border,
+                            color: isLiked ? red : lightGrey,
+                            size: 40,
+                            padding: 15,
+                            isOutLine: false, onPressed: () {
+                          setState(() {
+                            print("${displayImages[index].imageUrl}");
+                            isLiked = !isLiked;
+                           });
+                          }),
+                        // IconButton(
+                        //   padding: const EdgeInsets.all(15.0),
+                        //   iconSize: 34,
+                        //   alignment: Alignment.center,
+                        //   icon: Icon(CupertinoIcons.heart),
+                        //   color: flavColor, //API回调！！！
+                        //   tooltip: "收藏",
+                        //   onPressed: () => {
+                        //       flavColor=Colors.redAccent,
+                        //       _flavModalBottomSheet(context),
+                        //   },
+                        // ),
                       ])),
             ],
           );

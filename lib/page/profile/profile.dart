@@ -11,17 +11,19 @@ class UserProfile extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(),
       body: Container(
-     margin: EdgeInsets.symmetric(vertical: 20),
-      padding: EdgeInsets.symmetric(horizontal: 20),
+    //  margin: EdgeInsets.symmetric(vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 2,vertical: 3),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             CustomHeadeBar(),
-            _myListTitle(context,Icons.verified_user,'账户与安全'),
+            _myListTitle(context,Icons.verified_user,'账户安全'),
 
             _myListTitle(context,Icons.hot_tub,'优惠活动'),
 
             _myListTitle(context,Icons.chat,'联系客服'),
+
+            _myListTitle(context,Icons.lock,'隐私设置'),
 
             _myListTitle(context,Icons.chat_bubble,'关于我们'),
 
@@ -53,7 +55,7 @@ class CustomAppBar extends StatelessWidget
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.edit, color: Colors.white,),     
-            tooltip: 'Restitch it',
+            // tooltip: 'Restitch it',
             onPressed: null,
           ),
         ], // 左侧返回按钮，可以有按钮，可以有文字
@@ -79,23 +81,27 @@ class CustomHeadeBar extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(width: 120,),
+                SizedBox(width: 120, 
+                 height: 50,),
                 Text("LiberDemo", style: TextStyle(
                 color: Colors.blueGrey,
                 fontSize: 20
                ),),
-                 SizedBox(width: 20,),
+                 SizedBox(width: 30,),
                  Container(
                       width: 110,
                       height: 30,  
-                      child: Center(child: Text("账户充值"),),
+                      child: Center(child: Text("账户充值", style: TextStyle(
+                        color:Color.fromRGBO(102, 51, 0, 0.9),
+                        fontSize: 14
+                      )),),
                       decoration: BoxDecoration(
-                        color: Colors.redAccent,
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        color:Color.fromRGBO(255, 178, 102, 0.9),
+                        borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.blueGrey,
-                            blurRadius: 20
+                            blurRadius: 5
                           )
                         ]
                       ),
@@ -110,7 +116,7 @@ class CustomHeadeBar extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       width: 100,
-                      height: 100,
+                      height: 120,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
@@ -151,7 +157,7 @@ class CustomHeadeBar extends StatelessWidget {
                     ),),
                     Text("4", style: TextStyle(
                         fontSize: 26,
-                        color: Colors.blueGrey
+                        color:Color.fromRGBO(102, 51, 0, 0.9),
                     ),)
                   ],
                 ),           
@@ -187,7 +193,7 @@ class MyClipper extends CustomClipper<Path>{
 Widget _myListTitle(BuildContext context,IconData icon,String title) {
   
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 1),
+      margin: EdgeInsets.symmetric(vertical: 8),
       padding: EdgeInsets.only(top: 13),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -199,7 +205,7 @@ Widget _myListTitle(BuildContext context,IconData icon,String title) {
         dense: true,
         selected: true,
         // enabled: false,
-        // contentPadding: EdgeInsets.symmetric(horizontal: 25.0),
+        contentPadding: EdgeInsets.symmetric(horizontal: 25.0),
         trailing: Icon(Icons.chevron_right),
          onTap: (){
           // Navigator.push(
