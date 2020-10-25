@@ -10,7 +10,7 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'common.pbenum.dart' as $5;
+import 'common.pbenum.dart' as $4;
 
 class Account extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Account', package: const $pb.PackageName('proto'), createEmptyInstance: create)
@@ -200,7 +200,7 @@ class CreateAccountRequest extends $pb.GeneratedMessage {
 class CreateAccountResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('CreateAccountResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
-    ..e<$5.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
+    ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..hasRequiredFields = false
   ;
 
@@ -229,9 +229,9 @@ class CreateAccountResponse extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $5.ResponseCode get code => $_getN(1);
+  $4.ResponseCode get code => $_getN(1);
   @$pb.TagNumber(2)
-  set code($5.ResponseCode v) { setField(2, v); }
+  set code($4.ResponseCode v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
@@ -274,7 +274,7 @@ class LoginAccountRequest extends $pb.GeneratedMessage {
 class LoginAccountResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('LoginAccountResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
-    ..e<$5.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
+    ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..aOM<AccountResponse>(3, 'Data', protoName: 'Data', subBuilder: AccountResponse.create)
     ..hasRequiredFields = false
   ;
@@ -304,9 +304,9 @@ class LoginAccountResponse extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $5.ResponseCode get code => $_getN(1);
+  $4.ResponseCode get code => $_getN(1);
   @$pb.TagNumber(2)
-  set code($5.ResponseCode v) { setField(2, v); }
+  set code($4.ResponseCode v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
@@ -388,7 +388,7 @@ class UpdateProfileRequest extends $pb.GeneratedMessage {
 class UpdateProfileResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('UpdateProfileResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
-    ..e<$5.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
+    ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..hasRequiredFields = false
   ;
 
@@ -417,9 +417,9 @@ class UpdateProfileResponse extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $5.ResponseCode get code => $_getN(1);
+  $4.ResponseCode get code => $_getN(1);
   @$pb.TagNumber(2)
-  set code($5.ResponseCode v) { setField(2, v); }
+  set code($4.ResponseCode v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
@@ -462,7 +462,7 @@ class UpdatePassWordRequest extends $pb.GeneratedMessage {
 class UpdatePassWordResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('UpdatePassWordResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
-    ..e<$5.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
+    ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..hasRequiredFields = false
   ;
 
@@ -491,9 +491,9 @@ class UpdatePassWordResponse extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $5.ResponseCode get code => $_getN(1);
+  $4.ResponseCode get code => $_getN(1);
   @$pb.TagNumber(2)
-  set code($5.ResponseCode v) { setField(2, v); }
+  set code($4.ResponseCode v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
@@ -544,7 +544,7 @@ class RechargeCoinRequest extends $pb.GeneratedMessage {
 class RechargeCoinResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('RechargeCoinResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
-    ..e<$5.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
+    ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..hasRequiredFields = false
   ;
 
@@ -573,9 +573,9 @@ class RechargeCoinResponse extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $5.ResponseCode get code => $_getN(1);
+  $4.ResponseCode get code => $_getN(1);
   @$pb.TagNumber(2)
-  set code($5.ResponseCode v) { setField(2, v); }
+  set code($4.ResponseCode v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)

@@ -1,4 +1,3 @@
-import 'package:CiYing/animation/animation_point_manager.dart';
 import 'package:CiYing/common/constants.dart';
 import 'package:CiYing/models/image_list.dart';
 import 'package:CiYing/models/image.dart' as DisplayImage;
@@ -18,58 +17,6 @@ class ResourceList extends StatefulWidget {
 }
 
 class _ResourceListState extends State<ResourceList>with TickerProviderStateMixin {
-  // int count = 0;
-
-  // AnimationPointManager _animationPointManager = AnimationPointManager();
-
-  // GlobalKey stackKey = GlobalKey();
-  // GlobalKey endKey = GlobalKey();
-
-  // itemOnTap(GlobalKey startKey) {
-  //   print("start key " + startKey.toString());
-  //   print("stack key " + stackKey.toString());
-  //   print("end key " + endKey.toString());
-
-  //   _animationPointManager.addParabolicAniamtion(
-  //     vsync: this,
-  //     stackKey: stackKey,
-  //     startKey: startKey,
-  //     endKey: endKey,
-  //     color: Colors.green,
-  //     statusListener: (AnimationStatus status) {
-  //       setState(() {});
-  //       if (status == AnimationStatus.completed) {
-  //         buyOnTap();
-  //       }
-  //     },
-  //     duration: Duration(milliseconds: 700),
-  //   );
-  // }
-  
-  //   buyOnTap() {
-  //   _animationPointManager.addPopupAniamtion(
-  //     vsync: this,
-  //     stackKey: stackKey,
-  //     startKey: endKey,
-  //     child: Container(
-  //       width: 100,
-  //       color: Colors.green,
-  //       padding: EdgeInsets.all(25),
-  //       child: Icon(Icons.home, size: 50, color: Colors.white),
-  //     ),
-  //     popupOffset: Offset(0, -50),
-  //     duration: Duration(milliseconds: 800),
-  //     statusListener: (AnimationStatus status) {
-  //       if (status == AnimationStatus.completed) {
-  //         setState(() {
-  //           count += 1;
-  //         });
-  //       } else {
-  //         setState(() {});
-  //       }
-  //     },
-  //   );
-  // }
   bool isLiked = true;
   AnimationController controller;
   Animation<double> animation;
@@ -187,9 +134,6 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        // SizedBox(
-                        //   width: 20.0,
-                        // ),
                         Flexible(
                           flex: 9,
                           child: Padding(
@@ -235,23 +179,11 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
                             size: 40,
                             padding: 15,
                             isOutLine: false, onPressed: () {
-                          setState(() {
-                            print("${displayImages[index].imageUrl}");
-                            isLiked = !isLiked;
-                           });
+                              setState(() {
+                                print("${displayImages[index].imageUrl}");
+                                isLiked = !isLiked;
+                              });
                           }),
-                        // IconButton(
-                        //   padding: const EdgeInsets.all(15.0),
-                        //   iconSize: 34,
-                        //   alignment: Alignment.center,
-                        //   icon: Icon(CupertinoIcons.heart),
-                        //   color: flavColor, //API回调！！！
-                        //   tooltip: "收藏",
-                        //   onPressed: () => {
-                        //       flavColor=Colors.redAccent,
-                        //       _flavModalBottomSheet(context),
-                        //   },
-                        // ),
                       ])),
             ],
           );

@@ -10,12 +10,12 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'common.pbenum.dart' as $5;
+import 'common.pbenum.dart' as $4;
 
 class UploadRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('UploadRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..e<$5.ResourceLangType>(1, 'ResourceLangType', $pb.PbFieldType.OE, protoName: 'ResourceLangType', defaultOrMaker: $5.ResourceLangType.ENGLISH, valueOf: $5.ResourceLangType.valueOf, enumValues: $5.ResourceLangType.values)
-    ..e<$5.FileType>(2, 'FileType', $pb.PbFieldType.OE, protoName: 'FileType', defaultOrMaker: $5.FileType.MP4, valueOf: $5.FileType.valueOf, enumValues: $5.FileType.values)
+    ..e<$4.ResourceLangType>(1, 'ResourceLangType', $pb.PbFieldType.OE, protoName: 'ResourceLangType', defaultOrMaker: $4.ResourceLangType.ENGLISH, valueOf: $4.ResourceLangType.valueOf, enumValues: $4.ResourceLangType.values)
+    ..e<$4.FileType>(2, 'FileType', $pb.PbFieldType.OE, protoName: 'FileType', defaultOrMaker: $4.FileType.MP4, valueOf: $4.FileType.valueOf, enumValues: $4.FileType.values)
     ..a<$core.List<$core.int>>(3, 'Data', $pb.PbFieldType.OY, protoName: 'Data')
     ..aOS(4, 'DataID', protoName: 'DataID')
     ..a<$core.int>(5, 'ChunkSize', $pb.PbFieldType.O3, protoName: 'ChunkSize')
@@ -43,18 +43,18 @@ class UploadRequest extends $pb.GeneratedMessage {
   static UploadRequest _defaultInstance;
 
   @$pb.TagNumber(1)
-  $5.ResourceLangType get resourceLangType => $_getN(0);
+  $4.ResourceLangType get resourceLangType => $_getN(0);
   @$pb.TagNumber(1)
-  set resourceLangType($5.ResourceLangType v) { setField(1, v); }
+  set resourceLangType($4.ResourceLangType v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasResourceLangType() => $_has(0);
   @$pb.TagNumber(1)
   void clearResourceLangType() => clearField(1);
 
   @$pb.TagNumber(2)
-  $5.FileType get fileType => $_getN(1);
+  $4.FileType get fileType => $_getN(1);
   @$pb.TagNumber(2)
-  set fileType($5.FileType v) { setField(2, v); }
+  set fileType($4.FileType v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasFileType() => $_has(1);
   @$pb.TagNumber(2)
@@ -135,7 +135,7 @@ class UploadRequest extends $pb.GeneratedMessage {
 
 class UploadResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('UploadResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..e<$5.ResponseCode>(1, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
+    ..e<$4.ResponseCode>(1, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..aOS(2, 'Message', protoName: 'Message')
     ..hasRequiredFields = false
   ;
@@ -156,9 +156,9 @@ class UploadResponse extends $pb.GeneratedMessage {
   static UploadResponse _defaultInstance;
 
   @$pb.TagNumber(1)
-  $5.ResponseCode get code => $_getN(0);
+  $4.ResponseCode get code => $_getN(0);
   @$pb.TagNumber(1)
-  set code($5.ResponseCode v) { setField(1, v); }
+  set code($4.ResponseCode v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasCode() => $_has(0);
   @$pb.TagNumber(1)
@@ -177,7 +177,7 @@ class UploadResponse extends $pb.GeneratedMessage {
 class OperationRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('OperationRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..pPS(1, 'ResourceID', protoName: 'ResourceID')
-    ..e<$5.ResouceAction>(2, 'ResouceAction', $pb.PbFieldType.OE, protoName: 'ResouceAction', defaultOrMaker: $5.ResouceAction.MERGE, valueOf: $5.ResouceAction.valueOf, enumValues: $5.ResouceAction.values)
+    ..e<$4.ResouceAction>(2, 'ResouceAction', $pb.PbFieldType.OE, protoName: 'ResouceAction', defaultOrMaker: $4.ResouceAction.MERGE, valueOf: $4.ResouceAction.valueOf, enumValues: $4.ResouceAction.values)
     ..hasRequiredFields = false
   ;
 
@@ -200,9 +200,9 @@ class OperationRequest extends $pb.GeneratedMessage {
   $core.List<$core.String> get resourceID => $_getList(0);
 
   @$pb.TagNumber(2)
-  $5.ResouceAction get resouceAction => $_getN(1);
+  $4.ResouceAction get resouceAction => $_getN(1);
   @$pb.TagNumber(2)
-  set resouceAction($5.ResouceAction v) { setField(2, v); }
+  set resouceAction($4.ResouceAction v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasResouceAction() => $_has(1);
   @$pb.TagNumber(2)
@@ -211,7 +211,7 @@ class OperationRequest extends $pb.GeneratedMessage {
 
 class OperationResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('OperationResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..e<$5.ResponseCode>(1, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
+    ..e<$4.ResponseCode>(1, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..aOS(2, 'Message', protoName: 'Message')
     ..hasRequiredFields = false
   ;
@@ -232,9 +232,9 @@ class OperationResponse extends $pb.GeneratedMessage {
   static OperationResponse _defaultInstance;
 
   @$pb.TagNumber(1)
-  $5.ResponseCode get code => $_getN(0);
+  $4.ResponseCode get code => $_getN(0);
   @$pb.TagNumber(1)
-  set code($5.ResponseCode v) { setField(1, v); }
+  set code($4.ResponseCode v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasCode() => $_has(0);
   @$pb.TagNumber(1)
@@ -277,7 +277,7 @@ class DownloadRequest extends $pb.GeneratedMessage {
 
 class DownloadResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('DownloadResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..e<$5.ResponseCode>(1, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
+    ..e<$4.ResponseCode>(1, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..aOS(2, 'Message', protoName: 'Message')
     ..a<$core.List<$core.int>>(3, 'Data', $pb.PbFieldType.OY, protoName: 'Data')
     ..aOS(4, 'DataID', protoName: 'DataID')
@@ -305,9 +305,9 @@ class DownloadResponse extends $pb.GeneratedMessage {
   static DownloadResponse _defaultInstance;
 
   @$pb.TagNumber(1)
-  $5.ResponseCode get code => $_getN(0);
+  $4.ResponseCode get code => $_getN(0);
   @$pb.TagNumber(1)
-  set code($5.ResponseCode v) { setField(1, v); }
+  set code($4.ResponseCode v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasCode() => $_has(0);
   @$pb.TagNumber(1)

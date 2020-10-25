@@ -4,14 +4,17 @@ import 'package:CiYing/common/constants.dart';
 import 'package:CiYing/grpc/proto/common.pbenum.dart';
 import 'package:CiYing/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:CiYing/models/signIn/signIn.dart';
+import 'package:CiYing/models/sign_up.dart';
 import 'package:CiYing/page/search_list.dart';
 import 'package:CiYing/page/userPrivacyAgreement.dart';
 import 'package:CiYing/page/userRegistrationAgreement.dart';
 import 'package:CiYing/util/exit.dart';
 import 'package:CiYing/util/store.dart';
+import 'package:CiYing/util/validation.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_login/flutter_login.dart';
 class Login extends StatefulWidget {
   _LoginState createState() {
@@ -84,9 +87,7 @@ void dispose() {
 
   ///使用图片素材自定义圆形自选框
   buildCircleCheckBox() {
-    return Container(
-      // padding: EdgeInsets.all(8),
-      child: InkWell(
+    return GestureDetector(
         onTap: () {
           setState(() {
             checkIsSelect = !checkIsSelect;
@@ -94,31 +95,42 @@ void dispose() {
         },
         child: Image.asset(
           checkIsSelect
-              ? "images/no_select_icon.png"
-              : "images/select_icon.png",
+                ? "assets/images/no_select_icon.png"
+              : "assets/images/select_icon.png",
           width: 18,
           height: 18,
         ),
-      ),
     );
   }
-
-  Duration get loginTime => Duration(milliseconds: 10);
+  SignInResponse _signInResponse;
+  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
   Future<String> _authUser(LoginData data) async {
     SignInRequest signInRequest =SignInRequest();
     signInRequest.loginType=LoginType.PHONEMESSAGEAUTHCODE;
     signInRequest.passWord=data.password;
     signInRequest.phoneNumber=Int64(int.parse(data.name));
-    SignInResponse signInResponse = await signIn(signInRequest);
+    _signInResponse = await signIn(signInRequest);
     return Future.delayed(loginTime).then((_) async {
-      if(signInResponse.code!=ResponseCode.SUCCESSFUL){
+      if(_signInResponse.code!=ResponseCode.SUCCESSFUL){
           return "登录失败，请检查账号密码"; // 多语言支持？#issue https://github.com/PomCloud/CiYing/issues/3
       }
-      if (signInResponse.token.length<1){ //mark check token
+      if (_signInResponse==null&&_signInResponse.token.length<1){ //mark check token
         return  "登录异常";
       }
-      await Cache.setCache("token",signInResponse.token);
-      await Cache.setCache("avatarImage", signInResponse.data.avatarImage);
+      return null;
+    });
+  }
+
+  SignUpResponse _signUpResponse;
+  Future<String> _singUp(LoginData data)async{
+    SignUpRequest signUpRequest=SignUpRequest();
+    signUpRequest.phoneNumber=Int64(int.parse(data.name));
+    signUpRequest.passWord=data.password;
+    _signUpResponse=await signUp(signUpRequest);
+      return Future.delayed(loginTime).then((_) async {
+      if (_signUpResponse==null&&_signUpResponse.code!=ResponseCode.SUCCESSFUL){ 
+        return  "注册异常";
+      }
       return null;
     });
   }
@@ -135,11 +147,6 @@ void dispose() {
 
   @override
   Widget build(BuildContext context) {
-  // getMethod("token").then((token)=> {
-  //  if(token.length>0){
-  //   Navigator.push(
-  //     context, MaterialPageRoute(builder: (context) => SearchList(),maintainState: false))
-  // }
     return WillPopScope(
       onWillPop: () async => showDialog(
           context: context,
@@ -212,11 +219,11 @@ void dispose() {
         ),
       ),
       emailValidator: (value) {
-        // if (!value.contains('@') || !value.endsWith('.com')) {
-        //   return "Email must contain '@' and end with '.com'";
-        // }
         if (value.isEmpty) {
           return '手机不能为空';
+        }
+        if (!isChinaPhoneLegal(value)){
+          return "手机号码格式不正确";
         }
         return null;
       },
@@ -224,64 +231,73 @@ void dispose() {
         if (value.isEmpty) {
           return '密码不能为空';
         }
+        if(!checkIsSelect){
+          return '请同意用户协议与用户隐私协议';
+        }
         return null;
       },
       onLogin: (loginData) {
         return _authUser(loginData);
       },
       onSignup: (loginData) {
-        return _authUser(loginData);
+        return _singUp(loginData);
       },
       onRecoverPassword: (name) {
         return _recoverPassword(name);
       },
-      onSubmitAnimationCompleted: () {
+      onSubmitAnimationCompleted: () async {
+      await Cache.setCache("token",_signInResponse.token);
+      await Cache.setCache("avatarImage", _signInResponse.data.avatarImage);
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => SearchList(),
         ));
       },
     ),
-      Container(
-      margin: EdgeInsets.only(top: 600),
-      child: Row(
-        children: [
-          //使用图片切图实现自定义的复选框
-          // buildCircleCheckBox(),
-          SizedBox(width: 1,),
-          ///文字区域
-          Expanded(
+  ConstrainedBox(
+  constraints: BoxConstraints.expand(),
+  child: Stack(
+    alignment:Alignment.center,
+    children: <Widget>[
+      Positioned(
+        left: 30.0,
+        bottom: 25.0,
+        child: buildCircleCheckBox(),
+      ),
+        Positioned(
+         left: 60.0,
+          bottom: 25.0,
             child: RichText(
-              ///文字区域
-              text: TextSpan(
-                  text: "注册同意",
-                  style: TextStyle(color: Color(0xaafafafa)),
-                  children: [
-                    TextSpan(
-                        text: "《用户注册协议》",
-                        style: TextStyle(color: Colors.orange),
-                        recognizer: _registProtocolRecognizer
-                          ..onTap = () {
-                            userRegistrationAgreementShowAlertDialog(context);
-                          }
-                          ),
-                    TextSpan(
-                      text: "与",
-                        style: TextStyle(color: Colors.orange),
-                    ),
-                    TextSpan(
-                        text: "《用户隐私协议》",
-                        style: TextStyle(color: Colors.orange),
-                        recognizer: _privacyProtocolRecognizer
-                          ..onTap = () {
-                               userPrivacyAgreementShowAlertDialog(context);
-                          }
-                          )
-                  ]),
-            ),
-          )
-        ],
-      )
-    )
+                ///文字区域
+                text: TextSpan(
+                    text: "勾选",
+                    style: TextStyle(color: Colors.orange),
+                    children: [
+                      TextSpan(
+                          text: "《用户注册协议》",
+                          style: TextStyle(color: Colors.orange),
+                          recognizer: _registProtocolRecognizer
+                            ..onTap = () {
+                              userRegistrationAgreementShowAlertDialog(context);
+                            }
+                            ),
+                      TextSpan(
+                        text: "与",
+                          style: TextStyle(color: Colors.orange),
+                      ),
+                      TextSpan(
+                          text: "《用户隐私协议》",
+                          style: TextStyle(color: Colors.orange),
+                          recognizer: _privacyProtocolRecognizer
+                            ..onTap = () {
+                                userPrivacyAgreementShowAlertDialog(context);
+                            }
+                            )
+                    ]),
+              ),
+        )        
+      ],
+    ),
+  ),
    ]
  )
     );

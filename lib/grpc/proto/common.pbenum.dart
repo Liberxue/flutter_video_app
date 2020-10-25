@@ -158,3 +158,33 @@ class LoginType extends $pb.ProtobufEnum {
   const LoginType._($core.int v, $core.String n) : super(v, n);
 }
 
+class FavoriteType extends $pb.ProtobufEnum {
+  static const FavoriteType Confirm = FavoriteType._(0, 'Confirm');
+  static const FavoriteType Cancel = FavoriteType._(1, 'Cancel');
+
+  static const $core.List<FavoriteType> values = <FavoriteType> [
+    Confirm,
+    Cancel,
+  ];
+
+  static final $core.Map<$core.int, FavoriteType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static FavoriteType valueOf($core.int value) => _byValue[value];
+
+  const FavoriteType._($core.int v, $core.String n) : super(v, n);
+}
+
+class ResourceType extends $pb.ProtobufEnum {
+  static const ResourceType videoSearch = ResourceType._(0, 'videoSearch');
+  static const ResourceType videoProduce = ResourceType._(1, 'videoProduce');
+
+  static const $core.List<ResourceType> values = <ResourceType> [
+    videoSearch,
+    videoProduce,
+  ];
+
+  static final $core.Map<$core.int, ResourceType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static ResourceType valueOf($core.int value) => _byValue[value];
+
+  const ResourceType._($core.int v, $core.String n) : super(v, n);
+}
+

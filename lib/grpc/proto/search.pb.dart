@@ -9,13 +9,13 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'common.pbenum.dart' as $5;
+import 'common.pbenum.dart' as $4;
 
 class ResourceSection extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ResourceSection', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Source', protoName: 'Source')
     ..a<$core.double>(2, 'Duration', $pb.PbFieldType.OF, protoName: 'Duration')
-    ..e<$5.EmotionCode>(3, 'EmotionCode', $pb.PbFieldType.OE, protoName: 'EmotionCode', defaultOrMaker: $5.EmotionCode.AMUSEMENT, valueOf: $5.EmotionCode.valueOf, enumValues: $5.EmotionCode.values)
+    ..e<$4.EmotionCode>(3, 'EmotionCode', $pb.PbFieldType.OE, protoName: 'EmotionCode', defaultOrMaker: $4.EmotionCode.AMUSEMENT, valueOf: $4.EmotionCode.valueOf, enumValues: $4.EmotionCode.values)
     ..aOS(4, 'SourceName', protoName: 'SourceName')
     ..aOS(5, 'ResourceAddrees', protoName: 'ResourceAddrees')
     ..aOS(6, 'ResourceID', protoName: 'ResourceID')
@@ -57,9 +57,9 @@ class ResourceSection extends $pb.GeneratedMessage {
   void clearDuration() => clearField(2);
 
   @$pb.TagNumber(3)
-  $5.EmotionCode get emotionCode => $_getN(2);
+  $4.EmotionCode get emotionCode => $_getN(2);
   @$pb.TagNumber(3)
-  set emotionCode($5.EmotionCode v) { setField(3, v); }
+  set emotionCode($4.EmotionCode v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasEmotionCode() => $_has(2);
   @$pb.TagNumber(3)
@@ -108,7 +108,7 @@ class SearchRequest extends $pb.GeneratedMessage {
     ..a<$core.int>(2, 'Limit', $pb.PbFieldType.O3, protoName: 'Limit')
     ..a<$core.int>(3, 'Offest', $pb.PbFieldType.O3, protoName: 'Offest')
     ..pPS(4, 'Tags', protoName: 'Tags')
-    ..e<$5.EmotionCode>(5, 'EmotionCode', $pb.PbFieldType.OE, protoName: 'EmotionCode', defaultOrMaker: $5.EmotionCode.AMUSEMENT, valueOf: $5.EmotionCode.valueOf, enumValues: $5.EmotionCode.values)
+    ..e<$4.EmotionCode>(5, 'EmotionCode', $pb.PbFieldType.OE, protoName: 'EmotionCode', defaultOrMaker: $4.EmotionCode.AMUSEMENT, valueOf: $4.EmotionCode.valueOf, enumValues: $4.EmotionCode.values)
     ..hasRequiredFields = false
   ;
 
@@ -158,9 +158,9 @@ class SearchRequest extends $pb.GeneratedMessage {
   $core.List<$core.String> get tags => $_getList(3);
 
   @$pb.TagNumber(5)
-  $5.EmotionCode get emotionCode => $_getN(4);
+  $4.EmotionCode get emotionCode => $_getN(4);
   @$pb.TagNumber(5)
-  set emotionCode($5.EmotionCode v) { setField(5, v); }
+  set emotionCode($4.EmotionCode v) { setField(5, v); }
   @$pb.TagNumber(5)
   $core.bool hasEmotionCode() => $_has(4);
   @$pb.TagNumber(5)
@@ -169,7 +169,7 @@ class SearchRequest extends $pb.GeneratedMessage {
 
 class SearchResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SearchResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..e<$5.ResponseCode>(1, 'StatusCode', $pb.PbFieldType.OE, protoName: 'StatusCode', defaultOrMaker: $5.ResponseCode.SUCCESSFUL, valueOf: $5.ResponseCode.valueOf, enumValues: $5.ResponseCode.values)
+    ..e<$4.ResponseCode>(1, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..aOS(2, 'Message', protoName: 'Message')
     ..pc<ResourceSection>(3, 'ResourceSection', $pb.PbFieldType.PM, protoName: 'ResourceSection', subBuilder: ResourceSection.create)
     ..hasRequiredFields = false
@@ -191,13 +191,13 @@ class SearchResponse extends $pb.GeneratedMessage {
   static SearchResponse _defaultInstance;
 
   @$pb.TagNumber(1)
-  $5.ResponseCode get statusCode => $_getN(0);
+  $4.ResponseCode get code => $_getN(0);
   @$pb.TagNumber(1)
-  set statusCode($5.ResponseCode v) { setField(1, v); }
+  set code($4.ResponseCode v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasStatusCode() => $_has(0);
+  $core.bool hasCode() => $_has(0);
   @$pb.TagNumber(1)
-  void clearStatusCode() => clearField(1);
+  void clearCode() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get message => $_getSZ(1);

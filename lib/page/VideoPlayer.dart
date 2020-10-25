@@ -51,11 +51,11 @@ class _VideoPlayereState extends State<VideoPlayer> {
       // isLooping: false,
       allowedScreenSleep: false,
       // showControls: false,
-      hasSubtitles: true,
+      hasSubtitles: false,
       // isLive: true,
-      // showSeekButtons: false,
-      // showSkipButtons: false,
-      // allowFullScreen: false,
+      showSeekButtons: false,
+      showSkipButtons: false,
+      allowFullScreen: false,
       fullScreenByDefault: false,
       placeholder: new Container(
         color: Colors.black,
@@ -66,6 +66,7 @@ class _VideoPlayereState extends State<VideoPlayer> {
       },
 
       playerItem: (playerItem) {
+        // _title=playerItem.title;
         // print('Player title: ' + playerItem.title);
         // print('position: ' + playerItem.position.inSeconds.toString());
         // print('Duration: ' + playerItem.duration.inSeconds.toString());
@@ -88,6 +89,13 @@ class _VideoPlayereState extends State<VideoPlayer> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
           child: AppBar(
+               title: Container(
+                color: Colors.white10,
+                child:Text(widget.title, style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                  ),),
+              ),
             leading: Builder(builder: (BuildContext context) {
               return IconButton(
                 icon: Image.asset("assets/images/logo.png"),

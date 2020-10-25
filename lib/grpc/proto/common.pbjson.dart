@@ -83,3 +83,19 @@ const LoginType$json = const {
   ],
 };
 
+const FavoriteType$json = const {
+  '1': 'FavoriteType',
+  '2': const [
+    const {'1': 'Confirm', '2': 0},
+    const {'1': 'Cancel', '2': 1},
+  ],
+};
+
+const ResourceType$json = const {
+  '1': 'ResourceType',
+  '2': const [
+    const {'1': 'videoSearch', '2': 0},
+    const {'1': 'videoProduce', '2': 1},
+  ],
+};
+

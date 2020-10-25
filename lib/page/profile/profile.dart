@@ -193,7 +193,7 @@ class MyClipper extends CustomClipper<Path>{
 Widget _myListTitle(BuildContext context,IconData icon,String title) {
   
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      // margin: EdgeInsets.symmetric(vertical: 1),
       padding: EdgeInsets.only(top: 13),
       decoration: BoxDecoration(
           color: Colors.white,

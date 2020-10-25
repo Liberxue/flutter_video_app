@@ -55,7 +55,7 @@ class _SearchListState extends State<SearchList> {
               if (_searchHeaderShow)
                 Container(
                   padding: const EdgeInsets.only(right: 2.0),
-                  width: 300,
+                  width: 280,
                   height: 60,
                   child: RoundedInputField(
                     icon: Icons.search,

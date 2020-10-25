@@ -12,7 +12,7 @@ Widget likeIcon(
     Function onPressed,
   }) {
     return Container(
-      height: 40,
+      height: 35,
       width: 35,
       // padding: EdgeInsets.all(padding),
       margin: EdgeInsets.all(padding),
@@ -24,11 +24,11 @@ Widget likeIcon(
         color:
             isOutLine ? Colors.transparent :  Colors.transparent,
         boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Color.fromRGBO(0, 0, 0,0.1),
-              blurRadius: 1,
-              spreadRadius: 1,
-              offset: Offset(1, 1)),
+          // BoxShadow(
+          //     // color: Color.fromRGBO(0, 0, 0,0.1),
+          //     blurRadius: 1,
+          //     spreadRadius: 1,
+          //     offset: Offset(1, 1)),
         ],
       ),
       child: Icon(icon, color: color, size: size),
