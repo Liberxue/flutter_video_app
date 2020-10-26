@@ -24,7 +24,7 @@ const UploadRequest$json = const {
 const UploadResponse$json = const {
   '1': 'UploadResponse',
   '2': const [
-    const {'1': 'StatusCode', '3': 1, '4': 1, '5': 14, '6': '.proto.StatusCode', '10': 'StatusCode'},
+    const {'1': 'Code', '3': 1, '4': 1, '5': 14, '6': '.proto.ResponseCode', '10': 'Code'},
     const {'1': 'Message', '3': 2, '4': 1, '5': 9, '10': 'Message'},
   ],
 };
@@ -40,7 +40,7 @@ const OperationRequest$json = const {
 const OperationResponse$json = const {
   '1': 'OperationResponse',
   '2': const [
-    const {'1': 'StatusCode', '3': 1, '4': 1, '5': 14, '6': '.proto.StatusCode', '10': 'StatusCode'},
+    const {'1': 'Code', '3': 1, '4': 1, '5': 14, '6': '.proto.ResponseCode', '10': 'Code'},
     const {'1': 'Message', '3': 2, '4': 1, '5': 9, '10': 'Message'},
   ],
 };
@@ -55,7 +55,7 @@ const DownloadRequest$json = const {
 const DownloadResponse$json = const {
   '1': 'DownloadResponse',
   '2': const [
-    const {'1': 'StatusCode', '3': 1, '4': 1, '5': 14, '6': '.proto.StatusCode', '10': 'StatusCode'},
+    const {'1': 'Code', '3': 1, '4': 1, '5': 14, '6': '.proto.ResponseCode', '10': 'Code'},
     const {'1': 'Message', '3': 2, '4': 1, '5': 9, '10': 'Message'},
     const {'1': 'Data', '3': 3, '4': 1, '5': 12, '10': 'Data'},
     const {'1': 'DataID', '3': 4, '4': 1, '5': 9, '10': 'DataID'},

@@ -1,16 +1,16 @@
 import 'package:CiYing/components/rounded_input_field.dart';
-import 'package:CiYing/page/ResourceGrid.dart';
-import 'package:CiYing/page/UserProfile.dart';
+import 'package:CiYing/page/resource_list.dart';
+import 'package:CiYing/page/head_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:CiYing/models/image_list.dart';
 import 'package:CiYing/util/network.dart';
 
-class BrowseImages extends StatefulWidget {
+class SearchList extends StatefulWidget {
   @override
-  _BrowseImagesState createState() => _BrowseImagesState();
+  _SearchListState createState() => _SearchListState();
 }
 
-class _BrowseImagesState extends State<BrowseImages> {
+class _SearchListState extends State<SearchList> {
   TextEditingController searchQueryController = TextEditingController();
 
   bool _isLoading = false;
@@ -21,8 +21,6 @@ class _BrowseImagesState extends State<BrowseImages> {
   Future _performSearch() async {
     final String query = searchQueryController.text;
     ImageList images = await Storage.getImagesForSearch(query);
-
-    print(images.images[0].imageUrl);
 
     setState(() {
       _images = images;
@@ -44,31 +42,30 @@ class _BrowseImagesState extends State<BrowseImages> {
                 child: IconButton(
                   icon: Image.asset("assets/images/logo.png"),
                   onPressed: () {
-                    setState(() {
-                      Navigator.pop(context);
-                    });
+                     Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => SearchList(),
+                    ));
                   },
-                  tooltip: MaterialLocalizations.of(context)
-                      .openAppDrawerTooltip, //打开抽屉drawer
                 ),
               ));
             }),
-            elevation: 1.5,
+            elevation: 1.2,
             backgroundColor: Colors.white,
             actions: <Widget>[
               if (_searchHeaderShow)
                 Container(
-                  padding: const EdgeInsets.only(left: 8.0, right: 12.0),
+                  padding: const EdgeInsets.only(right: 2.0),
+                  width: 280,
+                  height: 60,
                   child: RoundedInputField(
                     icon: Icons.search,
                     hintText: "搜索",
                     onChanged: (value) {
                       _performSearch();
-                      print(searchQueryController.text = value);
                     },
                   ),
                 ),
-              UserProfile(),
+              UserHeaderProfile(),
             ],
           ),
         ),
@@ -77,8 +74,8 @@ class _BrowseImagesState extends State<BrowseImages> {
           children: <Widget>[
             if (!_searchHeaderShow)
               Container(
-                  padding: EdgeInsets.all(20.0),
-                  margin: EdgeInsets.only(bottom: 10),
+                  padding: EdgeInsets.all(25.0),
+                  margin: EdgeInsets.only(bottom: 5),
                   alignment: Alignment.center,
                   child: TextField(
                     cursorWidth: 2.0,
@@ -125,7 +122,7 @@ class _BrowseImagesState extends State<BrowseImages> {
                             Theme.of(context).primaryColor),
                       )))
             else
-              ResourceGrid(_images, searchPerformed: _searchDone)
+              ResourceList(_images, searchPerformed: _searchDone)
           ],
         ));
   }

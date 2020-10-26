@@ -19,8 +19,12 @@ dependencies:
   flutter_login: ^1.0.14
   protobuf:
   grpc:
-
-
+  base_x: ^1.0.1
+  device_info: ^0.4.0+4
+  fixnum: ^0.10.11  #fix flutter int64 https://github.com/PomCloud/gateway/issues/3
+  shared_preferences: ^0.5.12+2
+  provider: ^4.0.2
+  persist_theme: ^1.6.0
 
 
 dev_dependencies:

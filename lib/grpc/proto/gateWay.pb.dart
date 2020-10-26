@@ -10,178 +10,18 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'common.pbenum.dart' as $3;
+import 'accountManager.pb.dart' as $0;
 
-class LoginRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('LoginRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'User', protoName: 'User')
-    ..aOS(2, 'PassWord', protoName: 'PassWord')
-    ..aOS(3, 'Device', protoName: 'Device')
-    ..hasRequiredFields = false
-  ;
-
-  LoginRequest._() : super();
-  factory LoginRequest() => create();
-  factory LoginRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory LoginRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  LoginRequest clone() => LoginRequest()..mergeFromMessage(this);
-  LoginRequest copyWith(void Function(LoginRequest) updates) => super.copyWith((message) => updates(message as LoginRequest));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static LoginRequest create() => LoginRequest._();
-  LoginRequest createEmptyInstance() => create();
-  static $pb.PbList<LoginRequest> createRepeated() => $pb.PbList<LoginRequest>();
-  @$core.pragma('dart2js:noInline')
-  static LoginRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoginRequest>(create);
-  static LoginRequest _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get user => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set user($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasUser() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearUser() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get passWord => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set passWord($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasPassWord() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearPassWord() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.String get device => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set device($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasDevice() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearDevice() => clearField(3);
-}
-
-class User extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('User', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'UserName', protoName: 'UserName')
-    ..e<$3.LevelType>(2, 'Level', $pb.PbFieldType.OE, protoName: 'Level', defaultOrMaker: $3.LevelType.VIP, valueOf: $3.LevelType.valueOf, enumValues: $3.LevelType.values)
-    ..aInt64(3, 'Quota', protoName: 'Quota')
-    ..hasRequiredFields = false
-  ;
-
-  User._() : super();
-  factory User() => create();
-  factory User.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory User.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  User clone() => User()..mergeFromMessage(this);
-  User copyWith(void Function(User) updates) => super.copyWith((message) => updates(message as User));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static User create() => User._();
-  User createEmptyInstance() => create();
-  static $pb.PbList<User> createRepeated() => $pb.PbList<User>();
-  @$core.pragma('dart2js:noInline')
-  static User getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<User>(create);
-  static User _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get userName => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set userName($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasUserName() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearUserName() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $3.LevelType get level => $_getN(1);
-  @$pb.TagNumber(2)
-  set level($3.LevelType v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasLevel() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearLevel() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $fixnum.Int64 get quota => $_getI64(2);
-  @$pb.TagNumber(3)
-  set quota($fixnum.Int64 v) { $_setInt64(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasQuota() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearQuota() => clearField(3);
-}
-
-class LoginResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('LoginResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'Message', protoName: 'Message')
-    ..a<$core.int>(2, 'Code', $pb.PbFieldType.O3, protoName: 'Code')
-    ..aOS(3, 'Token', protoName: 'Token')
-    ..aOM<User>(4, 'Data', protoName: 'Data', subBuilder: User.create)
-    ..hasRequiredFields = false
-  ;
-
-  LoginResponse._() : super();
-  factory LoginResponse() => create();
-  factory LoginResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory LoginResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  LoginResponse clone() => LoginResponse()..mergeFromMessage(this);
-  LoginResponse copyWith(void Function(LoginResponse) updates) => super.copyWith((message) => updates(message as LoginResponse));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static LoginResponse create() => LoginResponse._();
-  LoginResponse createEmptyInstance() => create();
-  static $pb.PbList<LoginResponse> createRepeated() => $pb.PbList<LoginResponse>();
-  @$core.pragma('dart2js:noInline')
-  static LoginResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoginResponse>(create);
-  static LoginResponse _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get message => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set message($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasMessage() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearMessage() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.int get code => $_getIZ(1);
-  @$pb.TagNumber(2)
-  set code($core.int v) { $_setSignedInt32(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasCode() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearCode() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.String get token => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set token($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasToken() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearToken() => clearField(3);
-
-  @$pb.TagNumber(4)
-  User get data => $_getN(3);
-  @$pb.TagNumber(4)
-  set data(User v) { setField(4, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasData() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearData() => clearField(4);
-  @$pb.TagNumber(4)
-  User ensureData() => $_ensure(3);
-}
+import 'common.pbenum.dart' as $4;
 
 class SignInRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignInRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'User', protoName: 'User')
-    ..aOS(2, 'PassWord', protoName: 'PassWord')
-    ..aOS(3, 'Device', protoName: 'Device')
+    ..e<$4.LoginType>(1, 'LoginType', $pb.PbFieldType.OE, protoName: 'LoginType', defaultOrMaker: $4.LoginType.ACCOUNT, valueOf: $4.LoginType.valueOf, enumValues: $4.LoginType.values)
+    ..aOS(2, 'User', protoName: 'User')
+    ..aInt64(3, 'PhoneNumber', protoName: 'PhoneNumber')
+    ..aOS(4, 'PassWord', protoName: 'PassWord')
+    ..aOS(5, 'DeviceType', protoName: 'DeviceType')
+    ..aOS(6, 'DeviceVersion', protoName: 'DeviceVersion')
     ..hasRequiredFields = false
   ;
 
@@ -201,37 +41,66 @@ class SignInRequest extends $pb.GeneratedMessage {
   static SignInRequest _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get user => $_getSZ(0);
+  $4.LoginType get loginType => $_getN(0);
   @$pb.TagNumber(1)
-  set user($core.String v) { $_setString(0, v); }
+  set loginType($4.LoginType v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasUser() => $_has(0);
+  $core.bool hasLoginType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearUser() => clearField(1);
+  void clearLoginType() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get passWord => $_getSZ(1);
+  $core.String get user => $_getSZ(1);
   @$pb.TagNumber(2)
-  set passWord($core.String v) { $_setString(1, v); }
+  set user($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasPassWord() => $_has(1);
+  $core.bool hasUser() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPassWord() => clearField(2);
+  void clearUser() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get device => $_getSZ(2);
+  $fixnum.Int64 get phoneNumber => $_getI64(2);
   @$pb.TagNumber(3)
-  set device($core.String v) { $_setString(2, v); }
+  set phoneNumber($fixnum.Int64 v) { $_setInt64(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasDevice() => $_has(2);
+  $core.bool hasPhoneNumber() => $_has(2);
   @$pb.TagNumber(3)
-  void clearDevice() => clearField(3);
+  void clearPhoneNumber() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get passWord => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set passWord($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPassWord() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPassWord() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get deviceType => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set deviceType($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasDeviceType() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearDeviceType() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get deviceVersion => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set deviceVersion($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasDeviceVersion() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearDeviceVersion() => clearField(6);
 }
 
 class SignInResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignInResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
-    ..a<$core.int>(2, 'Code', $pb.PbFieldType.O3, protoName: 'Code')
+    ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
+    ..aOS(3, 'Token', protoName: 'Token')
+    ..aOM<$0.AccountResponse>(4, 'Data', protoName: 'Data', subBuilder: $0.AccountResponse.create)
     ..hasRequiredFields = false
   ;
 
@@ -260,77 +129,117 @@ class SignInResponse extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.int get code => $_getIZ(1);
+  $4.ResponseCode get code => $_getN(1);
   @$pb.TagNumber(2)
-  set code($core.int v) { $_setSignedInt32(1, v); }
+  set code($4.ResponseCode v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
   void clearCode() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get token => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set token($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasToken() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearToken() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $0.AccountResponse get data => $_getN(3);
+  @$pb.TagNumber(4)
+  set data($0.AccountResponse v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasData() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearData() => clearField(4);
+  @$pb.TagNumber(4)
+  $0.AccountResponse ensureData() => $_ensure(3);
 }
 
-class FavoriteRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FavoriteRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'ResourceID', protoName: 'ResourceID')
-    ..aOB(2, 'IsFavorite', protoName: 'IsFavorite')
+class SignUpRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignUpRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+    ..aOS(1, 'User', protoName: 'User')
+    ..aInt64(2, 'PhoneNumber', protoName: 'PhoneNumber')
+    ..aOS(3, 'PassWord', protoName: 'PassWord')
+    ..aOS(4, 'Device', protoName: 'Device')
     ..hasRequiredFields = false
   ;
 
-  FavoriteRequest._() : super();
-  factory FavoriteRequest() => create();
-  factory FavoriteRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FavoriteRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  FavoriteRequest clone() => FavoriteRequest()..mergeFromMessage(this);
-  FavoriteRequest copyWith(void Function(FavoriteRequest) updates) => super.copyWith((message) => updates(message as FavoriteRequest));
+  SignUpRequest._() : super();
+  factory SignUpRequest() => create();
+  factory SignUpRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SignUpRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  SignUpRequest clone() => SignUpRequest()..mergeFromMessage(this);
+  SignUpRequest copyWith(void Function(SignUpRequest) updates) => super.copyWith((message) => updates(message as SignUpRequest));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static FavoriteRequest create() => FavoriteRequest._();
-  FavoriteRequest createEmptyInstance() => create();
-  static $pb.PbList<FavoriteRequest> createRepeated() => $pb.PbList<FavoriteRequest>();
+  static SignUpRequest create() => SignUpRequest._();
+  SignUpRequest createEmptyInstance() => create();
+  static $pb.PbList<SignUpRequest> createRepeated() => $pb.PbList<SignUpRequest>();
   @$core.pragma('dart2js:noInline')
-  static FavoriteRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FavoriteRequest>(create);
-  static FavoriteRequest _defaultInstance;
+  static SignUpRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SignUpRequest>(create);
+  static SignUpRequest _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get resourceID => $_getSZ(0);
+  $core.String get user => $_getSZ(0);
   @$pb.TagNumber(1)
-  set resourceID($core.String v) { $_setString(0, v); }
+  set user($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasResourceID() => $_has(0);
+  $core.bool hasUser() => $_has(0);
   @$pb.TagNumber(1)
-  void clearResourceID() => clearField(1);
+  void clearUser() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.bool get isFavorite => $_getBF(1);
+  $fixnum.Int64 get phoneNumber => $_getI64(1);
   @$pb.TagNumber(2)
-  set isFavorite($core.bool v) { $_setBool(1, v); }
+  set phoneNumber($fixnum.Int64 v) { $_setInt64(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasIsFavorite() => $_has(1);
+  $core.bool hasPhoneNumber() => $_has(1);
   @$pb.TagNumber(2)
-  void clearIsFavorite() => clearField(2);
+  void clearPhoneNumber() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get passWord => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set passWord($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPassWord() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPassWord() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get device => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set device($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasDevice() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearDevice() => clearField(4);
 }
 
-class FavoriteResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FavoriteResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+class SignUpResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignUpResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
-    ..a<$core.double>(2, 'code', $pb.PbFieldType.OD)
+    ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..hasRequiredFields = false
   ;
 
-  FavoriteResponse._() : super();
-  factory FavoriteResponse() => create();
-  factory FavoriteResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FavoriteResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  FavoriteResponse clone() => FavoriteResponse()..mergeFromMessage(this);
-  FavoriteResponse copyWith(void Function(FavoriteResponse) updates) => super.copyWith((message) => updates(message as FavoriteResponse));
+  SignUpResponse._() : super();
+  factory SignUpResponse() => create();
+  factory SignUpResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SignUpResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  SignUpResponse clone() => SignUpResponse()..mergeFromMessage(this);
+  SignUpResponse copyWith(void Function(SignUpResponse) updates) => super.copyWith((message) => updates(message as SignUpResponse));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static FavoriteResponse create() => FavoriteResponse._();
-  FavoriteResponse createEmptyInstance() => create();
-  static $pb.PbList<FavoriteResponse> createRepeated() => $pb.PbList<FavoriteResponse>();
+  static SignUpResponse create() => SignUpResponse._();
+  SignUpResponse createEmptyInstance() => create();
+  static $pb.PbList<SignUpResponse> createRepeated() => $pb.PbList<SignUpResponse>();
   @$core.pragma('dart2js:noInline')
-  static FavoriteResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FavoriteResponse>(create);
-  static FavoriteResponse _defaultInstance;
+  static SignUpResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SignUpResponse>(create);
+  static SignUpResponse _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);
@@ -342,12 +251,213 @@ class FavoriteResponse extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.double get code => $_getN(1);
+  $4.ResponseCode get code => $_getN(1);
   @$pb.TagNumber(2)
-  set code($core.double v) { $_setDouble(1, v); }
+  set code($4.ResponseCode v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
   void clearCode() => clearField(2);
+}
+
+class ResourceData extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ResourceData', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+    ..aOS(1, 'ResourceId', protoName: 'ResourceId')
+    ..aOS(2, 'ResourceAddress', protoName: 'ResourceAddress')
+    ..hasRequiredFields = false
+  ;
+
+  ResourceData._() : super();
+  factory ResourceData() => create();
+  factory ResourceData.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ResourceData.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ResourceData clone() => ResourceData()..mergeFromMessage(this);
+  ResourceData copyWith(void Function(ResourceData) updates) => super.copyWith((message) => updates(message as ResourceData));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ResourceData create() => ResourceData._();
+  ResourceData createEmptyInstance() => create();
+  static $pb.PbList<ResourceData> createRepeated() => $pb.PbList<ResourceData>();
+  @$core.pragma('dart2js:noInline')
+  static ResourceData getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResourceData>(create);
+  static ResourceData _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get resourceId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set resourceId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasResourceId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResourceId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get resourceAddress => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set resourceAddress($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasResourceAddress() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResourceAddress() => clearField(2);
+}
+
+class ReourceDownloadRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ReourceDownloadRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+    ..aOS(1, 'UserId', protoName: 'UserId')
+    ..pPS(2, 'ResourceId', protoName: 'ResourceId')
+    ..hasRequiredFields = false
+  ;
+
+  ReourceDownloadRequest._() : super();
+  factory ReourceDownloadRequest() => create();
+  factory ReourceDownloadRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ReourceDownloadRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ReourceDownloadRequest clone() => ReourceDownloadRequest()..mergeFromMessage(this);
+  ReourceDownloadRequest copyWith(void Function(ReourceDownloadRequest) updates) => super.copyWith((message) => updates(message as ReourceDownloadRequest));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ReourceDownloadRequest create() => ReourceDownloadRequest._();
+  ReourceDownloadRequest createEmptyInstance() => create();
+  static $pb.PbList<ReourceDownloadRequest> createRepeated() => $pb.PbList<ReourceDownloadRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ReourceDownloadRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReourceDownloadRequest>(create);
+  static ReourceDownloadRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get userId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set userId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUserId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUserId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.String> get resourceId => $_getList(1);
+}
+
+class ReourceDownloadResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ReourceDownloadResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+    ..aOS(1, 'Message', protoName: 'Message')
+    ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
+    ..pc<ResourceData>(3, 'Data', $pb.PbFieldType.PM, protoName: 'Data', subBuilder: ResourceData.create)
+    ..hasRequiredFields = false
+  ;
+
+  ReourceDownloadResponse._() : super();
+  factory ReourceDownloadResponse() => create();
+  factory ReourceDownloadResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ReourceDownloadResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ReourceDownloadResponse clone() => ReourceDownloadResponse()..mergeFromMessage(this);
+  ReourceDownloadResponse copyWith(void Function(ReourceDownloadResponse) updates) => super.copyWith((message) => updates(message as ReourceDownloadResponse));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ReourceDownloadResponse create() => ReourceDownloadResponse._();
+  ReourceDownloadResponse createEmptyInstance() => create();
+  static $pb.PbList<ReourceDownloadResponse> createRepeated() => $pb.PbList<ReourceDownloadResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ReourceDownloadResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReourceDownloadResponse>(create);
+  static ReourceDownloadResponse _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get message => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set message($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMessage() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMessage() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $4.ResponseCode get code => $_getN(1);
+  @$pb.TagNumber(2)
+  set code($4.ResponseCode v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCode() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<ResourceData> get data => $_getList(2);
+}
+
+class ReourcePreviewRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ReourcePreviewRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+    ..aOS(1, 'UserId', protoName: 'UserId')
+    ..pc<ResourceData>(2, 'Data', $pb.PbFieldType.PM, protoName: 'Data', subBuilder: ResourceData.create)
+    ..hasRequiredFields = false
+  ;
+
+  ReourcePreviewRequest._() : super();
+  factory ReourcePreviewRequest() => create();
+  factory ReourcePreviewRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ReourcePreviewRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ReourcePreviewRequest clone() => ReourcePreviewRequest()..mergeFromMessage(this);
+  ReourcePreviewRequest copyWith(void Function(ReourcePreviewRequest) updates) => super.copyWith((message) => updates(message as ReourcePreviewRequest));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ReourcePreviewRequest create() => ReourcePreviewRequest._();
+  ReourcePreviewRequest createEmptyInstance() => create();
+  static $pb.PbList<ReourcePreviewRequest> createRepeated() => $pb.PbList<ReourcePreviewRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ReourcePreviewRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReourcePreviewRequest>(create);
+  static ReourcePreviewRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get userId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set userId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUserId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUserId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<ResourceData> get data => $_getList(1);
+}
+
+class ReourcePreviewResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ReourcePreviewResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+    ..aOS(1, 'Message', protoName: 'Message')
+    ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
+    ..pc<ResourceData>(3, 'Data', $pb.PbFieldType.PM, protoName: 'Data', subBuilder: ResourceData.create)
+    ..hasRequiredFields = false
+  ;
+
+  ReourcePreviewResponse._() : super();
+  factory ReourcePreviewResponse() => create();
+  factory ReourcePreviewResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ReourcePreviewResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ReourcePreviewResponse clone() => ReourcePreviewResponse()..mergeFromMessage(this);
+  ReourcePreviewResponse copyWith(void Function(ReourcePreviewResponse) updates) => super.copyWith((message) => updates(message as ReourcePreviewResponse));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ReourcePreviewResponse create() => ReourcePreviewResponse._();
+  ReourcePreviewResponse createEmptyInstance() => create();
+  static $pb.PbList<ReourcePreviewResponse> createRepeated() => $pb.PbList<ReourcePreviewResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ReourcePreviewResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReourcePreviewResponse>(create);
+  static ReourcePreviewResponse _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get message => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set message($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMessage() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMessage() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $4.ResponseCode get code => $_getN(1);
+  @$pb.TagNumber(2)
+  set code($4.ResponseCode v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCode() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<ResourceData> get data => $_getList(2);
 }
 
