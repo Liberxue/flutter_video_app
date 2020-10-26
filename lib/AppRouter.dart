@@ -54,7 +54,7 @@ class _AppRouterState extends State<AppRouter> {
       child: Consumer<ThemeModel>(
       builder: (context, model, child) => MaterialApp(
           title: APPNAME,
-          debugShowCheckedModeBanner: false,
+          debugShowCheckedModeBanner: IsdebugShowCheckedModeBanner,
           theme: ThemeData(
             // platform: TargetPlatform.iOS,
             primaryColor: Colors.blueGrey,

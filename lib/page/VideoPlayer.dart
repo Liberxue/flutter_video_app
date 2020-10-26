@@ -1,3 +1,4 @@
+import 'package:CiYing/common/constants.dart';
 import 'package:CiYing/page/head_profile.dart';
 import 'package:CiYing/page/search_list.dart';
 import 'package:CiYing/util/screenshots.dart';
@@ -91,6 +92,7 @@ class _VideoPlayereState extends State<VideoPlayer> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: IsdebugShowCheckedModeBanner,  
       home: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
