@@ -2,7 +2,6 @@
 import 'package:CiYing/page/login.dart';
 import 'package:CiYing/util/store.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 
 class UserProfile extends StatelessWidget {
@@ -75,7 +74,6 @@ class CustomHeadeBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipPath(
       // clipper: MyClipper(),
-      
         child: Column(
           children: <Widget>[  
             Row(

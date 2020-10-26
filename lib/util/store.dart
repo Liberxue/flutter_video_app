@@ -3,13 +3,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Cache {
   static setCache(String key,String value) async {
-  SharedPreferences sp = await SharedPreferences.getInstance();
-      sp.setString(key, value);
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString(key, value);
+    });
   }
 
  static Future<String> getCache(String key) async{
-    SharedPreferences sharePre = await SharedPreferences.getInstance();
-    return sharePre.get(key);
+    var _prefs = await SharedPreferences.getInstance();
+    String _rememberMe;
+    try {
+      _rememberMe = _prefs.getString(key);
+    } catch (e) {
+      print(e);
+      _rememberMe = null;
+    }
+    return _rememberMe;
   }
  
   static deleteCache(String key) async{

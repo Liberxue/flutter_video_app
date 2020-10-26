@@ -105,10 +105,12 @@ void dispose() {
   SignInResponse _signInResponse;
   Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
   Future<String> _authUser(LoginData data) async {
+
     SignInRequest signInRequest =SignInRequest();
     signInRequest.loginType=LoginType.PHONEMESSAGEAUTHCODE;
     signInRequest.passWord=data.password;
     signInRequest.phoneNumber=Int64(int.parse(data.name));
+
     _signInResponse = await signIn(signInRequest);
     return Future.delayed(loginTime).then((_) async {
       if(_signInResponse.code!=ResponseCode.SUCCESSFUL){
@@ -248,6 +250,7 @@ void dispose() {
       onSubmitAnimationCompleted: () async {
       await Cache.setCache("token",_signInResponse.token);
       await Cache.setCache("avatarImage", _signInResponse.data.avatarImage);
+      print(Cache.getToken());
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => SearchList(),
         ));

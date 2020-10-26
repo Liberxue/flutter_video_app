@@ -12,6 +12,7 @@ Future<SignInResponse> signInRequest(SignInRequest data) async {
     response = await stub.signIn(data,options: CallOptions(metadata: {'authorization': 'bearer grpc.auth.token'}));
   } catch (e) {
     print('signInRequest Caught error: $e');
+    return null;
   }
   // await manager.channel.shutdown();
   return response;

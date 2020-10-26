@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:CiYing/common/constants.dart';
 import 'package:CiYing/page/VideoPlayer.dart';
 import 'package:CiYing/page/login.dart';
@@ -9,6 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:CiYing/models/image.dart' as DisplayImage;
 import 'package:CiYing/page/search_list.dart';
 import 'package:CiYing/util/network.dart';
+import 'package:persist_theme/persist_theme.dart';
+import 'package:provider/provider.dart';
+
+import 'models/auth.dart';
 
 class AppRouter extends StatefulWidget {
   @override
@@ -18,14 +20,13 @@ class AppRouter extends StatefulWidget {
 }
 
 class _AppRouterState extends State<AppRouter> {
-  Timer _timer;
   bool _isLogin = false;
+  final ThemeModel _model = ThemeModel();
+  final AuthModel _auth = AuthModel();
+
   @override
   void initState() {
-    super.initState();
-       _timer = Timer.periodic(Duration(seconds: 1), (_) {
-          _getLoginState();
-       });
+    _getLoginState();
   }
 
     _getLoginState() async {
@@ -36,32 +37,43 @@ class _AppRouterState extends State<AppRouter> {
   @override
   void dispose() {
     super.dispose();
-    _timer.cancel();
   }
 
   void navigationPage() {
-    _timer.cancel();
     Navigator.of(context).pushReplacementNamed('/SearchList');
   }
 
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: APPNAME,
-      theme: ThemeData(
-        // platform: TargetPlatform.iOS,
-        primaryColor: Colors.blueGrey,
-        scaffoldBackgroundColor: Colors.white,
-        cursorColor: Colors.blueGrey,
-        accentColor: Colors.blueGrey,
-        primarySwatch: Colors.blueGrey,
-      ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => _isLogin ? SearchList(): Login(),
-        '/SearchList': (context) => _isLogin ? SearchList(): Login() ,
-        '/UserProfile':(context) => _isLogin ? UserProfile(): Login(),
+    return MultiProvider(
+      providers: [
+          ChangeNotifierProvider<ThemeModel>.value(value: _model),
+          ChangeNotifierProvider<AuthModel>.value(value: _auth),
+        ],
+      child: Consumer<ThemeModel>(
+      builder: (context, model, child) => MaterialApp(
+          title: APPNAME,
+          theme: ThemeData(
+            // platform: TargetPlatform.iOS,
+            primaryColor: Colors.blueGrey,
+            scaffoldBackgroundColor: Colors.white,
+            cursorColor: Colors.blueGrey,
+            accentColor: Colors.blueGrey,
+            primarySwatch: Colors.blueGrey,
+          ),
+      home: Consumer<AuthModel>(builder: (context, model, child) {
+          if (_isLogin) return SearchList();
+          return Login();
+        }),
+      // initialRoute: '/',
+      routes: <String, WidgetBuilder>{
+        // '/Login': (context) => _isLogin ? SearchList(): Login(),
+        // '/SearchList': (context) => _isLogin ? SearchList(): Login() ,
+        // '/UserProfile':(context) => _isLogin ? UserProfile(): Login(),
+          '/Login': (context) => SearchList(),
+        '/SearchList': (context) =>  SearchList(),
+        '/UserProfile':(context) => UserProfile(),
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
@@ -73,12 +85,13 @@ class _AppRouterState extends State<AppRouter> {
           DisplayImage.Image imageToDisplay =
               Storage.images.images[int.parse(pathElements[3])];
           return MaterialPageRoute(builder: (BuildContext context) {
-            return  _isLogin ? VideoPlayer(query, "this's title"): Login();
+            return  VideoPlayer(query, "this's title");
           });
         } else {
           return null;
         }
-      },
-    );
+            },
+          ),
+        ));
   }
 }
