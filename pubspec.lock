@@ -15,13 +15,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.1"
-  bloc:
-    dependency: transitive
-    description:
-      name: bloc
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "6.0.3"
   boolean_selector:
     dependency: transitive
     description:
@@ -43,6 +36,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.0-nullsafety"
+  chewie:
+    dependency: "direct main"
+    description:
+      name: chewie
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.9.10"
   clock:
     dependency: transitive
     description:
@@ -92,13 +92,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.1"
-  equatable:
-    dependency: transitive
-    description:
-      name: equatable
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.2.5"
   fake_async:
     dependency: transitive
     description:
@@ -139,13 +132,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_bloc:
-    dependency: transitive
-    description:
-      name: flutter_bloc
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "6.0.5"
   flutter_login:
     dependency: "direct main"
     description:
@@ -247,6 +233,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.0.4"
+  open_iconic_flutter:
+    dependency: transitive
+    description:
+      name: open_iconic_flutter
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.3.0"
   path:
     dependency: transitive
     description:
@@ -427,13 +420,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.0-nullsafety"
-  subtitle_wrapper_package:
-    dependency: transitive
-    description:
-      name: subtitle_wrapper_package
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.2"
   term_glyph:
     dependency: transitive
     description:
@@ -448,13 +434,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.2.19-nullsafety"
-  toast:
-    dependency: transitive
-    description:
-      name: toast
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.1.5"
   transformer_page_view:
     dependency: transitive
     description:
@@ -483,13 +462,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.10.12+5"
-  video_player_controls:
-    dependency: "direct main"
-    description:
-      name: video_player_controls
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.1.6"
   video_player_platform_interface:
     dependency: transitive
     description:

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:CiYing/util/size_helper.dart';
 import 'package:flutter/material.dart';
 
 class DisableScreenshotsWatarmark extends StatelessWidget {
@@ -34,6 +35,7 @@ class DisableScreenshotsWatarmark extends StatelessWidget {
     for (var i = 0; i < rowCount; i++) {
       final widget = Expanded(
           child: Center(
+            widthFactor: 10,
               child: Transform.rotate(
                   angle: pi / 10, child: Text(text, style: textStyle))));
       list.add(widget);
@@ -42,34 +44,31 @@ class DisableScreenshotsWatarmark extends StatelessWidget {
   }
 
   List<Widget> creatColumnWidgets(BuildContext context) {
-      
-    double deviceHeight = MediaQuery.of(context).size.height;
-    double deviceWidth = MediaQuery.of(context).size.width;
     List<Widget> list = [];
     for (var i = 0; i < columnCount; i++) {
       final widget = Expanded(
           child: Row(
             children: creatRowWdiges(),
           ));
-          Stack(
-                  alignment: AlignmentDirectional.bottomStart,
-                  children: <Widget>[
-                    Container(
-                      child: Image.asset(
-                        "assets/images/logo.png",
-                        width: (deviceWidth - 50) / 2,
-                        height: (deviceHeight - 50) / 1.5,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    Container(
-                      width: (deviceWidth- 50) / 2,
-                      height: (deviceHeight - 50) / 1.5*0.9,
-                      child: Text("1"),
-                      decoration: BoxDecoration(color: Color(0x90000000)),
-                    )
-                  ],
-                );
+          // Stack(
+          //         alignment: AlignmentDirectional.bottomStart,
+          //         children: <Widget>[
+          //           Container(
+          //             child: Image.asset(
+          //               "assets/images/logo.png",
+          //               width: (displayWidth(context) - 50) / 2,
+          //               height: (displayHeight(context) - 50) / 1.5,
+          //               fit: BoxFit.fill,
+          //             ),
+          //           ),
+          //           Container(
+          //             width: (displayWidth(context) - 50) / 2,
+          //             height: (displayHeight(context) - 50) / 1.5*0.9,
+          //             child: Text("1"),
+          //             decoration: BoxDecoration(color: Color(0x90000000)),
+          //           )
+          //         ],
+          //       );
       list.add(widget);
     }
     return list;
@@ -113,8 +112,8 @@ class WatarMarkInstance {
           text: watermark,
           textStyle: textStyle ??
               const TextStyle(
-                  color: Color(0x08000000),
-                  fontSize: 14,
+                  color: Colors.yellow,
+                  fontSize: 18,
                   decoration: TextDecoration.none),
         ));
     overlayState.insert(_overlayEntry);
