@@ -1,6 +1,4 @@
 import 'package:CiYing/common/constants.dart';
-import 'package:CiYing/page/search_list.dart';
-import 'package:CiYing/util/screenshots.dart';
 import 'package:chewie/chewie.dart';
 import 'package:chewie/src/chewie_player.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,14 +70,14 @@ class _VideoPlayerState extends State<VideoPlayer> {
                     fontSize: 18,
                   ),),
               ),
-            leading: Builder(builder: (BuildContext context) {
-              return IconButton(
-                icon: Image.asset("assets/images/logo.png"),
-                  onPressed: () {
-                          Navigator.pushNamed(context, '/UserProfile');
-                  },
-              );
-            }),
+            // leading: Builder(builder: (BuildContext context) {
+            //   return IconButton(
+            //     icon: Image.asset("assets/images/logo.png"),
+            //       onPressed: () {
+            //               Navigator.pushNamed(context, '/UserProfile');
+            //       },
+            //   );
+            // }),
             elevation: 1.5,
             backgroundColor: Colors.white,
             actions: <Widget>[

@@ -1,5 +1,3 @@
-import 'package:CiYing/models/image_list.dart';
-import 'package:CiYing/util/network.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatefulWidget {
@@ -20,15 +18,14 @@ class _headerState extends State<Header> {
   TextEditingController searchQueryController = TextEditingController();
 
   bool _isLoading = false;
-  ImageList _images;
   bool _searchDone = false;
   bool _searchHeaderShow = false;
 
   Future _performSearch() async {
-    final String query = searchQueryController.text;
-    ImageList images = await Storage.getImagesForSearch(query);
+    // final String query = searchQueryController.text;
+    // ImageList images = await Storage.getImagesForSearch(query);
     setState(() {
-      _images = images;
+      // _images = images;
       _searchDone = true;
       _isLoading = false;
     });

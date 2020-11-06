@@ -22,7 +22,7 @@ class _UserHeaderProfileState extends State<UserHeaderProfile>
             shape: BoxShape.circle,
             image: DecorationImage(
                 fit: BoxFit.cover,
-                image: NetworkImage("https://avatars0.githubusercontent.com/u/5831248?s=460&u=cfea690871e82c78cd60c9fde9a086e6da6b6d3c&v=4"),
+                image: NetworkImage("https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"),
                 )
             )
         ),

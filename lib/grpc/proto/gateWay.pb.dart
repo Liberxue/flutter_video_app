@@ -301,27 +301,27 @@ class ResourceData extends $pb.GeneratedMessage {
   void clearResourceAddress() => clearField(2);
 }
 
-class ReourceDownloadRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ReourceDownloadRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+class ResourceDownloadRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ResourceDownloadRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'UserId', protoName: 'UserId')
     ..pPS(2, 'ResourceId', protoName: 'ResourceId')
     ..hasRequiredFields = false
   ;
 
-  ReourceDownloadRequest._() : super();
-  factory ReourceDownloadRequest() => create();
-  factory ReourceDownloadRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ReourceDownloadRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  ReourceDownloadRequest clone() => ReourceDownloadRequest()..mergeFromMessage(this);
-  ReourceDownloadRequest copyWith(void Function(ReourceDownloadRequest) updates) => super.copyWith((message) => updates(message as ReourceDownloadRequest));
+  ResourceDownloadRequest._() : super();
+  factory ResourceDownloadRequest() => create();
+  factory ResourceDownloadRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ResourceDownloadRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ResourceDownloadRequest clone() => ResourceDownloadRequest()..mergeFromMessage(this);
+  ResourceDownloadRequest copyWith(void Function(ResourceDownloadRequest) updates) => super.copyWith((message) => updates(message as ResourceDownloadRequest));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ReourceDownloadRequest create() => ReourceDownloadRequest._();
-  ReourceDownloadRequest createEmptyInstance() => create();
-  static $pb.PbList<ReourceDownloadRequest> createRepeated() => $pb.PbList<ReourceDownloadRequest>();
+  static ResourceDownloadRequest create() => ResourceDownloadRequest._();
+  ResourceDownloadRequest createEmptyInstance() => create();
+  static $pb.PbList<ResourceDownloadRequest> createRepeated() => $pb.PbList<ResourceDownloadRequest>();
   @$core.pragma('dart2js:noInline')
-  static ReourceDownloadRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReourceDownloadRequest>(create);
-  static ReourceDownloadRequest _defaultInstance;
+  static ResourceDownloadRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResourceDownloadRequest>(create);
+  static ResourceDownloadRequest _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get userId => $_getSZ(0);
@@ -336,28 +336,28 @@ class ReourceDownloadRequest extends $pb.GeneratedMessage {
   $core.List<$core.String> get resourceId => $_getList(1);
 }
 
-class ReourceDownloadResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ReourceDownloadResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+class ResourceDownloadResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ResourceDownloadResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
     ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..pc<ResourceData>(3, 'Data', $pb.PbFieldType.PM, protoName: 'Data', subBuilder: ResourceData.create)
     ..hasRequiredFields = false
   ;
 
-  ReourceDownloadResponse._() : super();
-  factory ReourceDownloadResponse() => create();
-  factory ReourceDownloadResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ReourceDownloadResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  ReourceDownloadResponse clone() => ReourceDownloadResponse()..mergeFromMessage(this);
-  ReourceDownloadResponse copyWith(void Function(ReourceDownloadResponse) updates) => super.copyWith((message) => updates(message as ReourceDownloadResponse));
+  ResourceDownloadResponse._() : super();
+  factory ResourceDownloadResponse() => create();
+  factory ResourceDownloadResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ResourceDownloadResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ResourceDownloadResponse clone() => ResourceDownloadResponse()..mergeFromMessage(this);
+  ResourceDownloadResponse copyWith(void Function(ResourceDownloadResponse) updates) => super.copyWith((message) => updates(message as ResourceDownloadResponse));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ReourceDownloadResponse create() => ReourceDownloadResponse._();
-  ReourceDownloadResponse createEmptyInstance() => create();
-  static $pb.PbList<ReourceDownloadResponse> createRepeated() => $pb.PbList<ReourceDownloadResponse>();
+  static ResourceDownloadResponse create() => ResourceDownloadResponse._();
+  ResourceDownloadResponse createEmptyInstance() => create();
+  static $pb.PbList<ResourceDownloadResponse> createRepeated() => $pb.PbList<ResourceDownloadResponse>();
   @$core.pragma('dart2js:noInline')
-  static ReourceDownloadResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReourceDownloadResponse>(create);
-  static ReourceDownloadResponse _defaultInstance;
+  static ResourceDownloadResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResourceDownloadResponse>(create);
+  static ResourceDownloadResponse _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);
@@ -381,27 +381,27 @@ class ReourceDownloadResponse extends $pb.GeneratedMessage {
   $core.List<ResourceData> get data => $_getList(2);
 }
 
-class ReourcePreviewRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ReourcePreviewRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+class ResourcePreviewRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ResourcePreviewRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'UserId', protoName: 'UserId')
     ..pc<ResourceData>(2, 'Data', $pb.PbFieldType.PM, protoName: 'Data', subBuilder: ResourceData.create)
     ..hasRequiredFields = false
   ;
 
-  ReourcePreviewRequest._() : super();
-  factory ReourcePreviewRequest() => create();
-  factory ReourcePreviewRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ReourcePreviewRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  ReourcePreviewRequest clone() => ReourcePreviewRequest()..mergeFromMessage(this);
-  ReourcePreviewRequest copyWith(void Function(ReourcePreviewRequest) updates) => super.copyWith((message) => updates(message as ReourcePreviewRequest));
+  ResourcePreviewRequest._() : super();
+  factory ResourcePreviewRequest() => create();
+  factory ResourcePreviewRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ResourcePreviewRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ResourcePreviewRequest clone() => ResourcePreviewRequest()..mergeFromMessage(this);
+  ResourcePreviewRequest copyWith(void Function(ResourcePreviewRequest) updates) => super.copyWith((message) => updates(message as ResourcePreviewRequest));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ReourcePreviewRequest create() => ReourcePreviewRequest._();
-  ReourcePreviewRequest createEmptyInstance() => create();
-  static $pb.PbList<ReourcePreviewRequest> createRepeated() => $pb.PbList<ReourcePreviewRequest>();
+  static ResourcePreviewRequest create() => ResourcePreviewRequest._();
+  ResourcePreviewRequest createEmptyInstance() => create();
+  static $pb.PbList<ResourcePreviewRequest> createRepeated() => $pb.PbList<ResourcePreviewRequest>();
   @$core.pragma('dart2js:noInline')
-  static ReourcePreviewRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReourcePreviewRequest>(create);
-  static ReourcePreviewRequest _defaultInstance;
+  static ResourcePreviewRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResourcePreviewRequest>(create);
+  static ResourcePreviewRequest _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get userId => $_getSZ(0);
@@ -416,28 +416,28 @@ class ReourcePreviewRequest extends $pb.GeneratedMessage {
   $core.List<ResourceData> get data => $_getList(1);
 }
 
-class ReourcePreviewResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ReourcePreviewResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
+class ResourcePreviewResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ResourcePreviewResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..aOS(1, 'Message', protoName: 'Message')
     ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..pc<ResourceData>(3, 'Data', $pb.PbFieldType.PM, protoName: 'Data', subBuilder: ResourceData.create)
     ..hasRequiredFields = false
   ;
 
-  ReourcePreviewResponse._() : super();
-  factory ReourcePreviewResponse() => create();
-  factory ReourcePreviewResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ReourcePreviewResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  ReourcePreviewResponse clone() => ReourcePreviewResponse()..mergeFromMessage(this);
-  ReourcePreviewResponse copyWith(void Function(ReourcePreviewResponse) updates) => super.copyWith((message) => updates(message as ReourcePreviewResponse));
+  ResourcePreviewResponse._() : super();
+  factory ResourcePreviewResponse() => create();
+  factory ResourcePreviewResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ResourcePreviewResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ResourcePreviewResponse clone() => ResourcePreviewResponse()..mergeFromMessage(this);
+  ResourcePreviewResponse copyWith(void Function(ResourcePreviewResponse) updates) => super.copyWith((message) => updates(message as ResourcePreviewResponse));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ReourcePreviewResponse create() => ReourcePreviewResponse._();
-  ReourcePreviewResponse createEmptyInstance() => create();
-  static $pb.PbList<ReourcePreviewResponse> createRepeated() => $pb.PbList<ReourcePreviewResponse>();
+  static ResourcePreviewResponse create() => ResourcePreviewResponse._();
+  ResourcePreviewResponse createEmptyInstance() => create();
+  static $pb.PbList<ResourcePreviewResponse> createRepeated() => $pb.PbList<ResourcePreviewResponse>();
   @$core.pragma('dart2js:noInline')
-  static ReourcePreviewResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReourcePreviewResponse>(create);
-  static ReourcePreviewResponse _defaultInstance;
+  static ResourcePreviewResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResourcePreviewResponse>(create);
+  static ResourcePreviewResponse _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);

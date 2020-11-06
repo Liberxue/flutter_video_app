@@ -43,18 +43,18 @@ class GateWayClient extends $grpc.Client {
           ($3.FavoriteListRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $3.FavoriteListResponse.fromBuffer(value));
-  static final _$reourcePreview =
-      $grpc.ClientMethod<$1.ReourcePreviewRequest, $1.ReourcePreviewResponse>(
-          '/proto.GateWay/ReourcePreview',
-          ($1.ReourcePreviewRequest value) => value.writeToBuffer(),
+  static final _$resourcePreview =
+      $grpc.ClientMethod<$1.ResourcePreviewRequest, $1.ResourcePreviewResponse>(
+          '/proto.GateWay/ResourcePreview',
+          ($1.ResourcePreviewRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $1.ReourcePreviewResponse.fromBuffer(value));
-  static final _$reourceDownload =
-      $grpc.ClientMethod<$1.ReourceDownloadRequest, $1.ReourceDownloadResponse>(
-          '/proto.GateWay/ReourceDownload',
-          ($1.ReourceDownloadRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) =>
-              $1.ReourceDownloadResponse.fromBuffer(value));
+              $1.ResourcePreviewResponse.fromBuffer(value));
+  static final _$resourceDownload = $grpc.ClientMethod<
+          $1.ResourceDownloadRequest, $1.ResourceDownloadResponse>(
+      '/proto.GateWay/ResourceDownload',
+      ($1.ResourceDownloadRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $1.ResourceDownloadResponse.fromBuffer(value));
 
   GateWayClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
       : super(channel, options: options);
@@ -98,20 +98,20 @@ class GateWayClient extends $grpc.Client {
     return $grpc.ResponseFuture(call);
   }
 
-  $grpc.ResponseFuture<$1.ReourcePreviewResponse> reourcePreview(
-      $1.ReourcePreviewRequest request,
+  $grpc.ResponseFuture<$1.ResourcePreviewResponse> resourcePreview(
+      $1.ResourcePreviewRequest request,
       {$grpc.CallOptions options}) {
     final call = $createCall(
-        _$reourcePreview, $async.Stream.fromIterable([request]),
+        _$resourcePreview, $async.Stream.fromIterable([request]),
         options: options);
     return $grpc.ResponseFuture(call);
   }
 
-  $grpc.ResponseFuture<$1.ReourceDownloadResponse> reourceDownload(
-      $1.ReourceDownloadRequest request,
+  $grpc.ResponseFuture<$1.ResourceDownloadResponse> resourceDownload(
+      $1.ResourceDownloadRequest request,
       {$grpc.CallOptions options}) {
     final call = $createCall(
-        _$reourceDownload, $async.Stream.fromIterable([request]),
+        _$resourceDownload, $async.Stream.fromIterable([request]),
         options: options);
     return $grpc.ResponseFuture(call);
   }
@@ -160,24 +160,24 @@ abstract class GateWayServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $3.FavoriteListRequest.fromBuffer(value),
             ($3.FavoriteListResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$1.ReourcePreviewRequest,
-            $1.ReourcePreviewResponse>(
-        'ReourcePreview',
-        reourcePreview_Pre,
+    $addMethod($grpc.ServiceMethod<$1.ResourcePreviewRequest,
+            $1.ResourcePreviewResponse>(
+        'ResourcePreview',
+        resourcePreview_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $1.ReourcePreviewRequest.fromBuffer(value),
-        ($1.ReourcePreviewResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$1.ReourceDownloadRequest,
-            $1.ReourceDownloadResponse>(
-        'ReourceDownload',
-        reourceDownload_Pre,
+            $1.ResourcePreviewRequest.fromBuffer(value),
+        ($1.ResourcePreviewResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.ResourceDownloadRequest,
+            $1.ResourceDownloadResponse>(
+        'ResourceDownload',
+        resourceDownload_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $1.ReourceDownloadRequest.fromBuffer(value),
-        ($1.ReourceDownloadResponse value) => value.writeToBuffer()));
+            $1.ResourceDownloadRequest.fromBuffer(value),
+        ($1.ResourceDownloadResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.SignInResponse> signIn_Pre(
@@ -207,16 +207,16 @@ abstract class GateWayServiceBase extends $grpc.Service {
     return favoriteList(call, await request);
   }
 
-  $async.Future<$1.ReourcePreviewResponse> reourcePreview_Pre(
+  $async.Future<$1.ResourcePreviewResponse> resourcePreview_Pre(
       $grpc.ServiceCall call,
-      $async.Future<$1.ReourcePreviewRequest> request) async {
-    return reourcePreview(call, await request);
+      $async.Future<$1.ResourcePreviewRequest> request) async {
+    return resourcePreview(call, await request);
   }
 
-  $async.Future<$1.ReourceDownloadResponse> reourceDownload_Pre(
+  $async.Future<$1.ResourceDownloadResponse> resourceDownload_Pre(
       $grpc.ServiceCall call,
-      $async.Future<$1.ReourceDownloadRequest> request) async {
-    return reourceDownload(call, await request);
+      $async.Future<$1.ResourceDownloadRequest> request) async {
+    return resourceDownload(call, await request);
   }
 
   $async.Future<$1.SignInResponse> signIn(
@@ -229,8 +229,8 @@ abstract class GateWayServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $3.FavoriteActionRequest request);
   $async.Future<$3.FavoriteListResponse> favoriteList(
       $grpc.ServiceCall call, $3.FavoriteListRequest request);
-  $async.Future<$1.ReourcePreviewResponse> reourcePreview(
-      $grpc.ServiceCall call, $1.ReourcePreviewRequest request);
-  $async.Future<$1.ReourceDownloadResponse> reourceDownload(
-      $grpc.ServiceCall call, $1.ReourceDownloadRequest request);
+  $async.Future<$1.ResourcePreviewResponse> resourcePreview(
+      $grpc.ServiceCall call, $1.ResourcePreviewRequest request);
+  $async.Future<$1.ResourceDownloadResponse> resourceDownload(
+      $grpc.ServiceCall call, $1.ResourceDownloadRequest request);
 }

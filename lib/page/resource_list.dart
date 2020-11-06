@@ -1,6 +1,5 @@
 import 'package:CiYing/common/constants.dart';
-import 'package:CiYing/models/image_list.dart';
-import 'package:CiYing/models/image.dart' as DisplayImage;
+import 'package:CiYing/grpc/proto/search.pb.dart';
 import 'package:CiYing/page/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +7,10 @@ import 'package:flutter/material.dart';
 class ResourceList extends StatefulWidget {
 
   var isShow = false;
-  final ImageList _images;
+  final List<ResourceSection> _resourceSection;
   final bool searchPerformed;
 
-  ResourceList(this._images, {this.searchPerformed = false});
+  ResourceList(this._resourceSection, {this.searchPerformed = false});
   @override
   _ResourceListState createState() => _ResourceListState();
 }
@@ -44,7 +43,7 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
 
   Widget _getBuildWidget(BuildContext context) {
     Widget targetWidget;
-    if (widget._images == null && widget.searchPerformed == true) {
+    if (widget._resourceSection == null && widget.searchPerformed == true) {
       targetWidget = Container(
         padding: EdgeInsets.all(16.0),
         child: Text(
@@ -76,8 +75,7 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
   }
 
   Widget buildImagesGrid(BuildContext context) {
-
-    List<DisplayImage.Image> displayImages = widget._images.images;
+    List<ResourceSection> _resourceSectionList = widget._resourceSection;
     TextStyle authorStyle = TextStyle(
       fontSize: 10,
       color: Colors.white,
@@ -95,7 +93,7 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
     else if (deviceWidth > 200) noOfRows = 2;
     return Expanded(
       child: GridView.builder(
-        itemCount: displayImages.length,
+        itemCount: _resourceSectionList.length,
         padding: EdgeInsets.all(2.0),
         scrollDirection: Axis.vertical,
         gridDelegate:
@@ -109,7 +107,7 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
                   width: double.infinity,
                   padding: const EdgeInsets.all(2.6),
                   child: Hero(
-                    tag: '${displayImages[index].imageUrl}',
+                    tag: '${_resourceSectionList[index].resourceAddress}',
                     child: Material(
                       color: Colors.black12,
                       borderRadius: BorderRadius.circular(14),
@@ -118,9 +116,9 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
                       child: GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context,
-                              '/images/${widget._images.searchQuery}/$index');
+                              '${widget._resourceSection}/$index');
                         },
-                        child: Image.network(displayImages[index].imageUrl,
+                        child: Image.network(_resourceSectionList[index].resourceAddress,
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -147,7 +145,7 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    "片名：${displayImages[index].photographer}",
+                                    "片名：${_resourceSectionList[index].sourceName}",
                                     style: authorStyle,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -157,13 +155,13 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
                                     color: Colors.white30,
                                   ),
                                   Text(
-                                    "时长：${displayImages[index].views}",
+                                    "时长：${_resourceSectionList[index].duration}",
                                     style: authorStyle,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
-                                    "来源：${displayImages[index].views}",
+                                    "来源：${_resourceSectionList[index].source}",
                                     style: authorStyle,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -180,7 +178,7 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
                             padding: 15,
                             isOutLine: false, onPressed: () {
                               setState(() {
-                                print("${displayImages[index].imageUrl}");
+                                print("${_resourceSectionList[index].resourceAddress}");
                                 isLiked = !isLiked;
                               });
                           }),

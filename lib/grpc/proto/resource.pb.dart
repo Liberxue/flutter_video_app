@@ -177,7 +177,7 @@ class UploadResponse extends $pb.GeneratedMessage {
 class OperationRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('OperationRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
     ..pPS(1, 'ResourceID', protoName: 'ResourceID')
-    ..e<$4.ResouceAction>(2, 'ResouceAction', $pb.PbFieldType.OE, protoName: 'ResouceAction', defaultOrMaker: $4.ResouceAction.MERGE, valueOf: $4.ResouceAction.valueOf, enumValues: $4.ResouceAction.values)
+    ..e<$4.ResouceAction>(2, 'ResourceAction', $pb.PbFieldType.OE, protoName: 'ResourceAction', defaultOrMaker: $4.ResouceAction.MERGE, valueOf: $4.ResouceAction.valueOf, enumValues: $4.ResouceAction.values)
     ..hasRequiredFields = false
   ;
 
@@ -200,13 +200,13 @@ class OperationRequest extends $pb.GeneratedMessage {
   $core.List<$core.String> get resourceID => $_getList(0);
 
   @$pb.TagNumber(2)
-  $4.ResouceAction get resouceAction => $_getN(1);
+  $4.ResouceAction get resourceAction => $_getN(1);
   @$pb.TagNumber(2)
-  set resouceAction($4.ResouceAction v) { setField(2, v); }
+  set resourceAction($4.ResouceAction v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasResouceAction() => $_has(1);
+  $core.bool hasResourceAction() => $_has(1);
   @$pb.TagNumber(2)
-  void clearResouceAction() => clearField(2);
+  void clearResourceAction() => clearField(2);
 }
 
 class OperationResponse extends $pb.GeneratedMessage {

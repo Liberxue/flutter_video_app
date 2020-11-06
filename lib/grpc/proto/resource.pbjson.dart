@@ -33,7 +33,7 @@ const OperationRequest$json = const {
   '1': 'OperationRequest',
   '2': const [
     const {'1': 'ResourceID', '3': 1, '4': 3, '5': 9, '10': 'ResourceID'},
-    const {'1': 'ResouceAction', '3': 2, '4': 1, '5': 14, '6': '.proto.ResouceAction', '10': 'ResouceAction'},
+    const {'1': 'ResourceAction', '3': 2, '4': 1, '5': 14, '6': '.proto.ResouceAction', '10': 'ResourceAction'},
   ],
 };
 

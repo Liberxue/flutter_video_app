@@ -5,12 +5,10 @@ import 'package:CiYing/page/logout.dart';
 import 'package:CiYing/page/profile/profile.dart';
 import 'package:CiYing/util/store.dart';
 import 'package:flutter/material.dart';
-import 'package:CiYing/models/image.dart' as DisplayImage;
 import 'package:CiYing/page/search_list.dart';
-import 'package:CiYing/util/network.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
-
+import 'grpc/proto/search.pb.dart';
 import 'models/auth.dart';
 
 class AppRouter extends StatefulWidget {
@@ -74,26 +72,26 @@ class _AppRouterState extends State<AppRouter> {
         // '/Login': (context) => _isLogin ? SearchList(): Login(),
         // '/SearchList': (context) => _isLogin ? SearchList(): Login() ,
         // '/UserProfile':(context) => _isLogin ? UserProfile(): Login(),
-        '/Login': (context) => SearchList(),
+        '/Login': (context) => Login(),
         '/SearchList': (context) =>  SearchList(),
         '/UserProfile':(context) => UserProfile(),
         '/Logout':(context) => Logout(),
       },
       onGenerateRoute: (RouteSettings settings) {
-        final List<String> pathElements = settings.name.split('/');
-        if (pathElements[0] != '') {
-          return null;
-        }
-        if (pathElements[1] == 'images') {
-          String query = pathElements[2];
-          DisplayImage.Image imageToDisplay =
-              Storage.images.images[int.parse(pathElements[3])];
+        // final List<ResourceSection> _resourceSections = settings.name.split('/');
+        // if (pathElements[0] != '') {
+        //   return null;
+        // }
+        // if (pathElements[1] == 'images') {
+        //   String query = pathElements[2];
+          // List<ResourceSection> _resourceSection =
+          //     _resourceSection[int.parse(pathElements[3])];
           return MaterialPageRoute(builder: (BuildContext context) {
-            return  VideoPlayer(query, "this's title");
+            return  VideoPlayer("query", "this's title");
           });
-        } else {
-          return null;
-        }
+        // } else {
+        //   return null;
+        // }
             },
           ),
         ));

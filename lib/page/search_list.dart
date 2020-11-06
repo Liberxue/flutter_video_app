@@ -4,8 +4,6 @@ import 'package:CiYing/grpc/proto/search.pb.dart';
 import 'package:CiYing/page/resource_list.dart';
 import 'package:CiYing/page/head_profile.dart';
 import 'package:flutter/material.dart';
-import 'package:CiYing/models/image_list.dart';
-import 'package:CiYing/util/network.dart';
 
 class SearchList extends StatefulWidget {
   @override
@@ -16,24 +14,21 @@ class _SearchListState extends State<SearchList> {
   TextEditingController searchQueryController = TextEditingController();
 
   bool _isLoading = false;
-  ImageList _images;
+  List<ResourceSection> _resourceSection;
   bool _searchDone = false;
   bool _searchHeaderShow = false;
 
   Future _performSearch() async {
     final String query = searchQueryController.text;
-    ImageList images = await Storage.getImagesForSearch(query);
-    // SearchRequest searchRequest=SearchRequest();
-    // searchRequest.text="hello";
-    // searchRequest.limit=100;
-    // // searchRequest.tags=[]string2Uint8List(source)
-    // SearchResponse searchResponse=await Search.searchAPIRequest(searchRequest);
-    // print(searchResponse);
-    // print(searchResponse.code);
+    SearchRequest searchRequest=SearchRequest();
+    searchRequest.text=query;
+    searchRequest.limit=100;
+    SearchResponse searchResponse=await Search.searchAPIRequest(searchRequest);
+    print(searchResponse.code);
     // print(searchResponse.message);
-    // print(searchResponse.resourceSection);
+    print(searchResponse.resourceSection);
     setState(() {
-      _images = images;
+      _resourceSection=searchResponse.resourceSection;
       _searchDone = true;
       _isLoading = false;
     });
@@ -133,7 +128,7 @@ class _SearchListState extends State<SearchList> {
                             Theme.of(context).primaryColor),
                       )))
             else
-              ResourceList(_images, searchPerformed: _searchDone)
+              ResourceList(_resourceSection, searchPerformed: _searchDone)
           ],
         ));
   }
