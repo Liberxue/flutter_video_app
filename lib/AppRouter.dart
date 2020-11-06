@@ -1,6 +1,7 @@
 import 'package:CiYing/common/constants.dart';
 import 'package:CiYing/page/VideoPlayer.dart';
 import 'package:CiYing/page/login.dart';
+import 'package:CiYing/page/logout.dart';
 import 'package:CiYing/page/profile/profile.dart';
 import 'package:CiYing/util/store.dart';
 import 'package:flutter/material.dart';
@@ -54,9 +55,10 @@ class _AppRouterState extends State<AppRouter> {
       child: Consumer<ThemeModel>(
       builder: (context, model, child) => MaterialApp(
           title: APPNAME,
+          color: Colors.blueGrey,
           debugShowCheckedModeBanner: IsdebugShowCheckedModeBanner,
           theme: ThemeData(
-            // platform: TargetPlatform.iOS,
+            platform: TargetPlatform.iOS,
             primaryColor: Colors.blueGrey,
             scaffoldBackgroundColor: Colors.white,
             cursorColor: Colors.blueGrey,
@@ -72,9 +74,10 @@ class _AppRouterState extends State<AppRouter> {
         // '/Login': (context) => _isLogin ? SearchList(): Login(),
         // '/SearchList': (context) => _isLogin ? SearchList(): Login() ,
         // '/UserProfile':(context) => _isLogin ? UserProfile(): Login(),
-          '/Login': (context) => SearchList(),
+        '/Login': (context) => SearchList(),
         '/SearchList': (context) =>  SearchList(),
         '/UserProfile':(context) => UserProfile(),
+        '/Logout':(context) => Logout(),
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');

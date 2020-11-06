@@ -1,5 +1,6 @@
 
 import 'package:CiYing/page/login.dart';
+import 'package:CiYing/page/logout.dart';
 import 'package:CiYing/util/store.dart';
 import 'package:flutter/material.dart';
 
@@ -210,7 +211,10 @@ Widget _myListTitle(BuildContext context,IconData icon,String title) {
           //  context, MaterialPageRoute(builder: (context) => ProfilePage(),maintainState: false));
           print(title);
           if (title=="退出登录"){
-            loginOut(context);
+            // loginOut(context);
+                         Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => Logout(),
+                    ));
           }
         },
         // onLongPress: (){
@@ -220,9 +224,4 @@ Widget _myListTitle(BuildContext context,IconData icon,String title) {
 
     );
 
-  }
-   void loginOut(BuildContext context)async{
-     Cache.deleteCache("token");
-      Navigator.push(
-      context, MaterialPageRoute(builder: (context) => Login(),maintainState: false));
   }

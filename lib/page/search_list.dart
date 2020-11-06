@@ -1,4 +1,6 @@
+import 'package:CiYing/api/search.dart';
 import 'package:CiYing/components/rounded_input_field.dart';
+import 'package:CiYing/grpc/proto/search.pb.dart';
 import 'package:CiYing/page/resource_list.dart';
 import 'package:CiYing/page/head_profile.dart';
 import 'package:flutter/material.dart';
@@ -21,13 +23,22 @@ class _SearchListState extends State<SearchList> {
   Future _performSearch() async {
     final String query = searchQueryController.text;
     ImageList images = await Storage.getImagesForSearch(query);
-
+    // SearchRequest searchRequest=SearchRequest();
+    // searchRequest.text="hello";
+    // searchRequest.limit=100;
+    // // searchRequest.tags=[]string2Uint8List(source)
+    // SearchResponse searchResponse=await Search.searchAPIRequest(searchRequest);
+    // print(searchResponse);
+    // print(searchResponse.code);
+    // print(searchResponse.message);
+    // print(searchResponse.resourceSection);
     setState(() {
       _images = images;
       _searchDone = true;
       _isLoading = false;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

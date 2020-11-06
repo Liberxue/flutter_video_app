@@ -164,7 +164,6 @@ void dispose() {
                   RaisedButton(
                       child: Text('取消'),
                       onPressed: () => Navigator.of(context).pop(false)),
-                      
                 ],
               )),
       child: Stack(

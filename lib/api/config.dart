@@ -4,18 +4,9 @@ class APIConfig {
   static const Address = "192.168.31.151";
   // static const Address = "123.58.211.129";
 
-    // static const Address = "192.168.187.84";
+    // static const Address = "192.168.1.106";
   static const Port = 5003;
 }
-
-// ClientChannel initGrpc() {
-//   final channel = ClientChannel(
-//     APIConfig.Address,
-//     port: APIConfig.Port,
-//     options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
-//   );
-//   return channel;
-// }
 
 class Manager {
   // 工厂模式
