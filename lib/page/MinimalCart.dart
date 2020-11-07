@@ -1,4 +1,5 @@
 import 'package:CiYing/models/Cart.dart';
+import 'package:CiYing/page/VideoPlayer.dart';
 import 'package:CiYing/page/bloc/CartBloc.dart';
 import 'package:flutter/material.dart';
 
@@ -19,15 +20,16 @@ class MinimalCart extends StatelessWidget {
             new Container(
             color: Colors.white,
             // color: Colors.grey.withOpacity(0.5),
-             width: double.infinity, height: MediaQuery.of(context).size.height - _gridSize, child:
+             width: double.infinity, height: 100, child:
               new ListView.builder(scrollDirection: Axis.horizontal, itemCount: _listWidget.length, controller: _scrollController, itemBuilder: (context, index){
-                return new Align(alignment: Alignment.centerLeft, child:_listWidget[index]);
+                return new Align(alignment: Alignment.center, child:_listWidget[index]);
               })
             );
           try{
             _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
           }catch(e){
             //TODO fix
+            print(e);
           }
           return content;
         }
@@ -41,12 +43,14 @@ class MinimalCart extends StatelessWidget {
           new GestureDetector(child:
               new Hero(tag: "tagHeroOrder${order.resourceSection.sourceID}", child:
                new ClipOval(child:
-                  // new Container(color: Colors.white, child: new Image.network(order.resourceSection.resourceAddress,fit: BoxFit.cover), height: 50)
                   new Container(
-                      width: 100,
-                      height: 100,
+                      width: 120,
+                      height: 80,
                       decoration: BoxDecoration(
-                        // borderRadius: BorderRadius.circular(1),
+                        // shape: RoundedRectangleBorder(
+                        //   borderRadius: BorderRadius.circular(16)
+                        // ),
+                        borderRadius: BorderRadius.circular(1),
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(order.resourceSection.resourceAddress)
@@ -56,8 +60,11 @@ class MinimalCart extends StatelessWidget {
                 ),
             ),
             onTap: (){
-              //TODO
-              print("tagHeroOrder${order.resourceSection.sourceID}");
+                Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => VideoPlayer(order.resourceSection),
+                ),
+              );
             },
           )
         );

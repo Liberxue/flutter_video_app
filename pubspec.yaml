@@ -25,6 +25,7 @@ dependencies:
   provider: ^4.0.2
   persist_theme: ^1.6.0
   rxdart: ^0.21.0
+  cached_network_image: ^0.7.0
 
 
 dev_dependencies:

@@ -76,7 +76,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
               return IconButton(
                 icon: Image.asset("assets/images/logo.png"),
                   onPressed: () {
-                          Navigator.pushNamed(context, '/UserProfile');
+                       Navigator.pushNamed(context, '/UserProfile');
                   },
               );
             }),
@@ -101,7 +101,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
               new Container(margin: EdgeInsets.only(top: 40, bottom: 40), child:
                 new Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                   new Text("详细", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
-                  new Padding(padding: EdgeInsets.only(top: 10), child: new Text(widget._resourceSection.source, style: TextStyle(color: Colors.grey, fontSize: 18)))
+                  new Padding(padding: EdgeInsets.only(top: 10), child: new Text(widget._resourceSection.duration.toString(), style: TextStyle(color: Colors.grey, fontSize: 18)))
                 ])
               ),
 
