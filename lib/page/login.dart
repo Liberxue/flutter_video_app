@@ -24,11 +24,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> with WidgetsBindingObserver {
 
-  // 输入框的焦点实例
-  FocusNode _focusNode;
-  // 当前键盘是否是激活状态
-  bool isKeyboardActived = false;
-
   ///RichText中隐私协议的手势
   TapGestureRecognizer _privacyProtocolRecognizer;
   ///RichText中注册协议的手势
@@ -41,45 +36,13 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
     _registProtocolRecognizer = TapGestureRecognizer();
     //隐私协议的手势
     _privacyProtocolRecognizer = TapGestureRecognizer();
-     _focusNode = FocusNode();
-    // 监听输入框焦点变化
-    _focusNode.addListener(_onFocus);
-    // 创建一个界面变化的观察者
-    WidgetsBinding.instance.addObserver(this);
+
   }
 
-// 焦点变化时触发的函数
-_onFocus() {
-    if (_focusNode.hasFocus) {
-    // 聚焦时候的操作
-    return;
+    @override
+    void dispose() {
+      super.dispose();
     }
-}
- 
-@override
-void didChangeMetrics() {
-    super.didChangeMetrics();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-        // 当前是安卓系统并且在焦点聚焦的情况下
-        if (Platform.isAndroid && _focusNode.hasFocus) {
-            if (isKeyboardActived) {
-                isKeyboardActived = false;
-                // 使输入框失去焦点
-                _focusNode.unfocus();
-                return;
-            }
-            isKeyboardActived = true;
-        }
-    });
-}
- 
-// 卸载，防止内存泄漏
-@override
-void dispose() {
-    super.dispose();
-    _focusNode.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-}
 
   
   ///复选框的选中标识
@@ -103,7 +66,7 @@ void dispose() {
     );
   }
   SignInResponse _signInResponse;
-  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
+  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 50);
   Future<String> _authUser(LoginData data) async {
 
     SignInRequest signInRequest =SignInRequest();

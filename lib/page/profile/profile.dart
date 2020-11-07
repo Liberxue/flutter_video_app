@@ -1,8 +1,8 @@
 
 import 'package:CiYing/page/login.dart';
-import 'package:CiYing/page/logout.dart';
 import 'package:CiYing/util/store.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 
 class UserProfile extends StatelessWidget {
@@ -75,6 +75,7 @@ class CustomHeadeBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipPath(
       // clipper: MyClipper(),
+      
         child: Column(
           children: <Widget>[  
             Row(
@@ -211,10 +212,7 @@ Widget _myListTitle(BuildContext context,IconData icon,String title) {
           //  context, MaterialPageRoute(builder: (context) => ProfilePage(),maintainState: false));
           print(title);
           if (title=="退出登录"){
-            // loginOut(context);
-                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => Logout(),
-                    ));
+            loginOut(context);
           }
         },
         // onLongPress: (){
@@ -224,4 +222,9 @@ Widget _myListTitle(BuildContext context,IconData icon,String title) {
 
     );
 
+  }
+   void loginOut(BuildContext context)async{
+     Cache.deleteCache("token");
+      Navigator.push(
+      context, MaterialPageRoute(builder: (context) => Login(),maintainState: false));
   }

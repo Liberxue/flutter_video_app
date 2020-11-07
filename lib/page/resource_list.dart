@@ -4,6 +4,8 @@ import 'package:CiYing/page/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'VideoPlayer.dart';
+
 class ResourceList extends StatefulWidget {
 
   var isShow = false;
@@ -107,16 +109,16 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
                   width: double.infinity,
                   padding: const EdgeInsets.all(2.6),
                   child: Hero(
-                    tag: '${_resourceSectionList[index].resourceAddress}',
+                    tag: '${_resourceSectionList[index]}',
                     child: Material(
                       color: Colors.black12,
                       borderRadius: BorderRadius.circular(14),
                       shadowColor: Colors.grey.withOpacity(0.5),
-                      elevation: 24.0,
+                      elevation: 30.0,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context,
-                              '${widget._resourceSection}/$index');
+                      Navigator.pushNamed(context,
+                              '/images/${widget._resourceSection[index].resourceID}/$index');
                         },
                         child: Image.network(_resourceSectionList[index].resourceAddress,
                             fit: BoxFit.cover),
@@ -178,7 +180,7 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
                             padding: 15,
                             isOutLine: false, onPressed: () {
                               setState(() {
-                                print("${_resourceSectionList[index].resourceAddress}");
+                                print("${_resourceSectionList[index].resourceID}");
                                 isLiked = !isLiked;
                               });
                           }),

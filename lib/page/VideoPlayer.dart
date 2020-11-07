@@ -1,10 +1,8 @@
 import 'package:CiYing/common/constants.dart';
 import 'package:chewie/chewie.dart';
-import 'package:chewie/src/chewie_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-
 import 'head_profile.dart';
 import 'my_chewie_custom.dart';
 
@@ -33,7 +31,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
       placeholder: Center(
-        child: Text("正在缓冲",style: TextStyle(color: Colors.white30),),
+        child: Text("正在缓冲",style: TextStyle(color: Colors.white),),
       ),
       aspectRatio: 3 / 2,
       autoPlay: true,
@@ -70,14 +68,14 @@ class _VideoPlayerState extends State<VideoPlayer> {
                     fontSize: 18,
                   ),),
               ),
-            // leading: Builder(builder: (BuildContext context) {
-            //   return IconButton(
-            //     icon: Image.asset("assets/images/logo.png"),
-            //       onPressed: () {
-            //               Navigator.pushNamed(context, '/UserProfile');
-            //       },
-            //   );
-            // }),
+            leading: Builder(builder: (BuildContext context) {
+              return IconButton(
+                icon: Image.asset("assets/images/logo.png"),
+                  onPressed: () {
+                          Navigator.pushNamed(context, '/UserProfile');
+                  },
+              );
+            }),
             elevation: 1.5,
             backgroundColor: Colors.white,
             actions: <Widget>[
@@ -88,36 +86,36 @@ class _VideoPlayerState extends State<VideoPlayer> {
         body: Column(
           children: <Widget>[
             videoPlay(context),
-             Row(
-              children: <Widget>[
-                Expanded(
-                  child: FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        Navigator.pop(context);
-                      });
-                    },
-                    child: Padding(
-                      child: Text("返回"),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        // _platform = TargetPlatform.iOS;
-                      });
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text("收藏"),
-                    ),
-                  ),
-                )
-              ],
-            )
+            //  Row(
+            //   children: <Widget>[
+            //     Expanded(
+            //       child: FlatButton(
+            //         onPressed: () {
+            //           setState(() {
+            //             Navigator.pop(context);
+            //           });
+            //         },
+            //         child: Padding(
+            //           child: Text("返回"),
+            //           padding: EdgeInsets.symmetric(vertical: 16.0),
+            //         ),
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: FlatButton(
+            //         onPressed: () {
+            //           setState(() {
+            //             // _platform = TargetPlatform.iOS;
+            //           });
+            //         },
+            //         child: Padding(
+            //           padding: EdgeInsets.symmetric(vertical: 16.0),
+            //           child: Text("收藏"),
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // )
           ],
         ),
       ),

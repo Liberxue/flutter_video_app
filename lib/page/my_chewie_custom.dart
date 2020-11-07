@@ -427,7 +427,6 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
             setState(() {
               _dragging = false;
             });
-
             _startHideTimer();
           },
           colors: ChewieProgressColors(
