@@ -1,16 +1,17 @@
 import 'package:CiYing/common/constants.dart';
+import 'package:CiYing/grpc/proto/search.pb.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'bloc/CartBloc.dart';
 import 'head_profile.dart';
 import 'my_chewie_custom.dart';
 
 class VideoPlayer extends StatefulWidget {
-  VideoPlayer(this.url, this.title);
+  VideoPlayer(this._resourceSection);
 
-  final String title;
-  final String url;
+  final ResourceSection _resourceSection;
 
   @override
   State<StatefulWidget> createState() {
@@ -19,6 +20,8 @@ class VideoPlayer extends StatefulWidget {
 }
 
 class _VideoPlayerState extends State<VideoPlayer> {
+  final CartBloc _cartBloc = new CartBloc();
+
   TargetPlatform _platform;
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
@@ -52,7 +55,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: widget.title,
+      title: widget._resourceSection.sourceName,
       debugShowCheckedModeBanner: IsdebugShowCheckedModeBanner,
       theme: ThemeData.light().copyWith(
         platform: _platform ?? Theme.of(context).platform,
@@ -63,7 +66,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
           child: AppBar(
                title: Container(
                 color: Colors.white10,
-                child:Text(widget.title, style: TextStyle(
+                child:Text(widget._resourceSection.sourceName, style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,
                   ),),
@@ -86,36 +89,46 @@ class _VideoPlayerState extends State<VideoPlayer> {
         body: Column(
           children: <Widget>[
             videoPlay(context),
-            //  Row(
-            //   children: <Widget>[
-            //     Expanded(
-            //       child: FlatButton(
-            //         onPressed: () {
-            //           setState(() {
-            //             Navigator.pop(context);
-            //           });
-            //         },
-            //         child: Padding(
-            //           child: Text("返回"),
-            //           padding: EdgeInsets.symmetric(vertical: 16.0),
-            //         ),
-            //       ),
-            //     ),
-            //     Expanded(
-            //       child: FlatButton(
-            //         onPressed: () {
-            //           setState(() {
-            //             // _platform = TargetPlatform.iOS;
-            //           });
-            //         },
-            //         child: Padding(
-            //           padding: EdgeInsets.symmetric(vertical: 16.0),
-            //           child: Text("收藏"),
-            //         ),
-            //       ),
-            //     )
-            //   ],
-            // )
+
+            new Container(margin: EdgeInsets.only(top: 20), child:
+                  new Text(widget._resourceSection.sourceName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40, color: Colors.black)),
+                ),
+                new Container(margin: EdgeInsets.only(top: 10), child:
+                  new Text("来源：${widget._resourceSection.source}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.grey)),
+                ),
+
+              new Container(margin: EdgeInsets.only(top: 40, bottom: 40), child:
+                new Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                  new Text("About the product:", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
+                  new Padding(padding: EdgeInsets.only(top: 10), child: new Text(widget._resourceSection.source, style: TextStyle(color: Colors.grey, fontSize: 18)))
+                ])
+              ),
+
+             new Container(decoration: BoxDecoration(boxShadow:  [
+              BoxShadow(
+                color: Colors.white,
+                blurRadius: 30.0, // has the effect of softening the shadow
+                spreadRadius: 5.0, // has the effect of extending the shadow
+                offset: Offset(
+                  0.0, // horizontal, move right 10
+                  -20.0, // vertical, move down 10
+                ),
+              )
+            ])
+            , padding: EdgeInsets.symmetric(horizontal: 20), height: MediaQuery.of(context).size.height*0.1, child:
+              new Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+                new FlatButton.icon(onPressed: (){}, icon: new Icon(Icons.favorite_border), label: new Text("")),
+                new SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
+                  new RaisedButton(color: Colors.amber, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)), padding: EdgeInsets.all(20),
+                      onPressed: (){
+                        _cartBloc.addOrderToCart(widget._resourceSection);
+                        Navigator.of(context).pop();
+                      },
+                      child: new Text("添加下载列表", style: TextStyle(fontWeight: FontWeight.bold))
+                  )
+                )
+              ]),
+            )
           ],
         ),
       ),

@@ -1,6 +1,8 @@
 import 'package:CiYing/api/search.dart';
 import 'package:CiYing/components/rounded_input_field.dart';
 import 'package:CiYing/grpc/proto/search.pb.dart';
+import 'package:CiYing/page/CartManager.dart';
+import 'package:CiYing/page/MinimalCart.dart';
 import 'package:CiYing/page/resource_list.dart';
 import 'package:CiYing/page/head_profile.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,7 @@ class _SearchListState extends State<SearchList> {
 
   @override
   Widget build(BuildContext context) {
+   double _gridSize = MediaQuery.of(context).size.height*0.88; //88% of screen
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(65.0),
@@ -128,7 +131,9 @@ class _SearchListState extends State<SearchList> {
                             Theme.of(context).primaryColor),
                       )))
             else
-              ResourceList(_resourceSection, searchPerformed: _searchDone)
+              ResourceList(_resourceSection, searchPerformed: _searchDone),
+            MinimalCart(_gridSize),
+            // CartManager(),
           ],
         ));
   }

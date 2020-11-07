@@ -1,10 +1,10 @@
 import 'package:CiYing/common/constants.dart';
 import 'package:CiYing/grpc/proto/search.pb.dart';
+import 'package:CiYing/page/MinimalCart.dart';
+import 'package:CiYing/page/VideoPlayer.dart';
 import 'package:CiYing/page/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'VideoPlayer.dart';
 
 class ResourceList extends StatefulWidget {
 
@@ -93,7 +93,8 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
     if (deviceWidth > 800)
       noOfRows = 5;
     else if (deviceWidth > 200) noOfRows = 2;
-    return Expanded(
+    // double _gridSize = MediaQuery.of(context).size.height*0.88; //88% of screen
+  return Expanded(
       child: GridView.builder(
         itemCount: _resourceSectionList.length,
         padding: EdgeInsets.all(2.0),
@@ -117,8 +118,15 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
                       elevation: 30.0,
                       child: GestureDetector(
                         onTap: () {
-                      Navigator.pushNamed(context,
-                              '/images/${widget._resourceSection[index].resourceID}/$index');
+                      // Navigator.pushNamed(context,
+                      //         '/images/${widget._resourceSection[index].resourceID}/$index',"${_resourceSectionList[index]}");
+                      //          print("${_resourceSectionList[index]}");
+                      //   },
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => VideoPlayer(_resourceSectionList[index]),
+                            ),
+                          );
                         },
                         child: Image.network(_resourceSectionList[index].resourceAddress,
                             fit: BoxFit.cover),

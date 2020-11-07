@@ -89,10 +89,11 @@ class _AppRouterState extends State<AppRouter> {
           print(query);
         //   DisplayImage.Image imageToDisplay =
         //       Storage.images.images[int.parse(pathElements[3])];
-          return MaterialPageRoute(builder: (BuildContext context) {
-            // return null;
-            return  VideoPlayer(query, "this's title");
-          });
+          // return MaterialPageRoute(builder: (BuildContext context) {
+          //   // print(_resourceSection);
+          //   // return null;
+          //   return  VideoPlayer(query, "this's title");
+          // });
         } else {
           return null;
         }
