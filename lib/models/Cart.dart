@@ -21,7 +21,7 @@ class Cart{
     double total = 0;
     _orders.forEach((o){
       // total += o.orderPrice;
-         total += 100;
+         total += 10;
     });
 
     return total;

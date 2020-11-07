@@ -22,6 +22,7 @@ class VideoPlayer extends StatefulWidget {
 class _VideoPlayerState extends State<VideoPlayer> {
   final CartBloc _cartBloc = new CartBloc();
 
+
   TargetPlatform _platform;
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
@@ -99,7 +100,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
               new Container(margin: EdgeInsets.only(top: 40, bottom: 40), child:
                 new Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                  new Text("About the product:", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
+                  new Text("详细", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
                   new Padding(padding: EdgeInsets.only(top: 10), child: new Text(widget._resourceSection.source, style: TextStyle(color: Colors.grey, fontSize: 18)))
                 ])
               ),

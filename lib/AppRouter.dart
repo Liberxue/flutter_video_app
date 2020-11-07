@@ -1,14 +1,10 @@
 import 'package:CiYing/common/constants.dart';
-import 'package:CiYing/page/VideoPlayer.dart';
-import 'package:CiYing/page/login.dart';
 import 'package:CiYing/page/logout.dart';
 import 'package:CiYing/page/profile/profile.dart';
-import 'package:CiYing/util/store.dart';
 import 'package:flutter/material.dart';
 import 'package:CiYing/page/search_list.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
-import 'grpc/proto/search.pb.dart';
 import 'models/auth.dart';
 
 class AppRouter extends StatefulWidget {
@@ -22,27 +18,6 @@ class _AppRouterState extends State<AppRouter> {
   bool _isLogin = false;
   final ThemeModel _model = ThemeModel();
   final AuthModel _auth = AuthModel();
-
-  // @override
-  // void initState() {
-  //   _getLoginState();
-  // }
-
-  //   _getLoginState() async {
-  //   _isLogin = await Cache.checkLoginState();
-  //    _isLogin ? navigationPage(): Login();
-  // }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  // }
-
-  // void navigationPage() {
-  //   Navigator.of(context).pushReplacementNamed('/SearchList');
-  // }
-
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

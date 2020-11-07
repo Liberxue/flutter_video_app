@@ -17,21 +17,26 @@ class _CartManager extends State<CartManager> {
 
     double _gridSize = MediaQuery.of(context).size.height*0.88;
 
-    return new Container(height: MediaQuery.of(context).size.height, child:
-        new Stack(children: <Widget>[
+    return new Container(
+      height: MediaQuery.of(context).size.height,
+      color:  const Color(0xFFeeeeee), 
+     child:new Stack(children: <Widget>[
           new Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
             new StreamBuilder(initialData: _cartBloc.currentCart, stream: _cartBloc.observableCart, builder: (context, AsyncSnapshot<Cart> snapshot){
               return
-                new Container(margin: EdgeInsets.symmetric(horizontal: 20), height: _gridSize, width: double.infinity, child:
+                new Container(margin: EdgeInsets.symmetric(horizontal: 10), height: _gridSize, width: double.infinity, child:
                   new Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                     new Padding(padding: EdgeInsets.symmetric(vertical: 40), child:
-                      new Text("Cart", style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold))
+                      new Text("选集列表", style: TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold))
                     ),
                     new Container(margin: EdgeInsets.only(bottom: 10), height: _gridSize*0.60, child:
                       new ListView.builder(itemCount: snapshot.data.orders.length, itemBuilder: (context, index ){
                         return Dismissible(
-                          background: Container(color: Colors.transparent),
-                          key: Key(snapshot.data.orders[index].id.toString()),
+                          background: Container(color: Colors.red, child:new Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+                            new Text("左滑取消", style: TextStyle(color: Colors.white, fontSize: 25)),
+                            new Text("右滑移除", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25)),
+                      ])),
+                          key: Key(snapshot.data.orders[index].resourceSection.sourceName.toString()),
                           onDismissed: (_) {
                             _cartBloc.removerOrderOfCart(snapshot.data.orders[index]);
                           },
@@ -39,10 +44,11 @@ class _CartManager extends State<CartManager> {
                         );
                       })
                     ),
-                    new Container(height: _gridSize*0.15, child:
-                      new Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-                        new Text("Total", style: TextStyle(color: Colors.white, fontSize: 20)),
-                        new Text("\$${snapshot.data.totalPrice().toStringAsFixed(2)}", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40)),
+                    new Container(
+                      height: _gridSize*0.15,
+                     child:new Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+                        new Text("消费积分", style: TextStyle(color: Colors.black, fontSize: 20)),
+                        new Text("${snapshot.data.totalPrice().toStringAsFixed(2)}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 40)),
                       ])
                     )
                   ])
@@ -54,7 +60,7 @@ class _CartManager extends State<CartManager> {
               new RaisedButton(color: Colors.amber, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)), padding: EdgeInsets.all(20),
                   onPressed: (){
                     if(_cartBloc.currentCart.isEmpty)
-                      Scaffold.of(context).showSnackBar(SnackBar(content: Text("Cart is empty")));
+                      Scaffold.of(context).showSnackBar(SnackBar(content: Text("空空如也～")));
                   },
                   child: new Text("批量下载", style: TextStyle(fontWeight: FontWeight.bold))
               )

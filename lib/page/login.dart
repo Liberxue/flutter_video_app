@@ -38,12 +38,6 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
     _privacyProtocolRecognizer = TapGestureRecognizer();
 
   }
-
-    @override
-    void dispose() {
-      super.dispose();
-    }
-
   
   ///复选框的选中标识
   bool checkIsSelect = false;
@@ -266,5 +260,11 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
    ]
  )
     );
+  }
+
+
+@override
+  void dispose() {
+    super.dispose();
   }
 }

@@ -1,8 +1,6 @@
 import 'package:CiYing/api/search.dart';
 import 'package:CiYing/components/rounded_input_field.dart';
 import 'package:CiYing/grpc/proto/search.pb.dart';
-import 'package:CiYing/page/CartManager.dart';
-import 'package:CiYing/page/MinimalCart.dart';
 import 'package:CiYing/page/resource_list.dart';
 import 'package:CiYing/page/head_profile.dart';
 import 'package:flutter/material.dart';
@@ -13,128 +11,9 @@ class SearchList extends StatefulWidget {
 }
 
 class _SearchListState extends State<SearchList> {
-  TextEditingController searchQueryController = TextEditingController();
-
-  bool _isLoading = false;
-  List<ResourceSection> _resourceSection;
-  bool _searchDone = false;
-  bool _searchHeaderShow = false;
-
-  Future _performSearch() async {
-    final String query = searchQueryController.text;
-    SearchRequest searchRequest=SearchRequest();
-    searchRequest.text=query;
-    searchRequest.limit=100;
-    SearchResponse searchResponse=await Search.searchAPIRequest(searchRequest);
-    print(searchResponse.code);
-    // print(searchResponse.message);
-    print(searchResponse.resourceSection);
-    setState(() {
-      _resourceSection=searchResponse.resourceSection;
-      _searchDone = true;
-      _isLoading = false;
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
-   double _gridSize = MediaQuery.of(context).size.height*0.88; //88% of screen
-    return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(65.0),
-          child: AppBar(
-            automaticallyImplyLeading: true, // hides leading widget
-            leading: Builder(builder: (BuildContext context) {
-              return Container(
-                  child: new Center(
-                child: IconButton(
-                  icon: Image.asset("assets/images/logo.png"),
-                  onPressed: () {
-                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => SearchList(),
-                    ));
-                  },
-                ),
-              ));
-            }),
-            elevation: 1.2,
-            backgroundColor: Colors.white,
-            actions: <Widget>[
-              if (_searchHeaderShow)
-                Container(
-                  padding: const EdgeInsets.only(right: 2.0),
-                  width: 280,
-                  height: 60,
-                  child: RoundedInputField(
-                    icon: Icons.search,
-                    hintText: "搜索",
-                    onChanged: (value) {
-                      _performSearch();
-                    },
-                  ),
-                ),
-              UserHeaderProfile(),
-            ],
-          ),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            if (!_searchHeaderShow)
-              Container(
-                  padding: EdgeInsets.all(25.0),
-                  margin: EdgeInsets.only(bottom: 5),
-                  alignment: Alignment.center,
-                  child: TextField(
-                    cursorWidth: 2.0,
-                    cursorRadius: Radius.circular(5.0),
-                    controller: searchQueryController,
-                    onEditingComplete: () async {
-                      setState(() {
-                        _isLoading = true;
-                        _searchHeaderShow = true;
-                      });
-                      await _performSearch();
-                    },
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                        labelText: '搜索',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black,
-                            fontSize: 12.0),
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.search),
-                          onPressed: () async {
-                            setState(() {
-                              _isLoading = true;
-                              _searchHeaderShow = true;
-                            });
-                            await _performSearch();
-                          },
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                          Radius.circular(24.0),
-                        ))),
-                  )),
-            if (_isLoading)
-              Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 45.0, horizontal: 50.0),
-                  child: SizedBox(
-                      height: 2.0,
-                      child: LinearProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            Theme.of(context).primaryColor),
-                      )))
-            else
-              ResourceList(_resourceSection, searchPerformed: _searchDone),
-            MinimalCart(_gridSize),
-            // CartManager(),
-          ],
-        ));
+    return ResourceList();
   }
 }

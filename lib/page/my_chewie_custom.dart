@@ -73,13 +73,6 @@ class _MyChewieMaterialControlsState extends State<MyChewieMaterialControls> {
       ),
     );
   }
-
-  @override
-  void dispose() {
-    _dispose();
-    super.dispose();
-  }
-
   void _dispose() {
     controller.removeListener(_updateState);
     _hideTimer?.cancel();
@@ -438,5 +431,11 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _dispose();
+    super.dispose();
   }
 }

@@ -1,7 +1,11 @@
+import 'package:CiYing/api/search.dart';
 import 'package:CiYing/common/constants.dart';
 import 'package:CiYing/grpc/proto/search.pb.dart';
+import 'package:CiYing/page/CartManager.dart';
 import 'package:CiYing/page/MinimalCart.dart';
+import 'package:CiYing/page/SearchGrid.dart';
 import 'package:CiYing/page/VideoPlayer.dart';
+import 'package:CiYing/page/bloc/CartBloc.dart';
 import 'package:CiYing/page/icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,19 +13,45 @@ import 'package:flutter/material.dart';
 class ResourceList extends StatefulWidget {
 
   var isShow = false;
-  final List<ResourceSection> _resourceSection;
-  final bool searchPerformed;
-
-  ResourceList(this._resourceSection, {this.searchPerformed = false});
+  // final List<ResourceSection> _resourceSection;
+  // final bool searchPerformed;
+  // ResourceList(this._resourceSection, {this.searchPerformed = false});
   @override
   _ResourceListState createState() => _ResourceListState();
+
+  
 }
 
 class _ResourceListState extends State<ResourceList>with TickerProviderStateMixin {
-  bool isLiked = true;
   AnimationController controller;
   Animation<double> animation;
+  //cart
+  bool _showCart = false;
+  CartBloc _cartBloc;
+  ScrollController _scrollController = new ScrollController();
 
+//  TextEditingController searchQueryController = TextEditingController();
+
+//   bool _isLoading = false;
+  List<ResourceSection> _resourceSection;
+//   bool _searchDone = false;
+//   bool _searchHeaderShow = false;
+
+  Future _performSearch() async {
+    // final String query = searchQueryController.text;
+    SearchRequest searchRequest=SearchRequest();
+    searchRequest.text="";
+    searchRequest.limit=100;
+    SearchResponse searchResponse=await Search.searchAPIRequest(searchRequest);
+    print(searchResponse.code);
+    // print(searchResponse.message);
+    print(searchResponse.resourceSection);
+    setState(() {
+      _resourceSection=searchResponse.resourceSection;
+      // _searchDone = true;
+      // _isLoading = false;
+    });
+  }
   @override
   void initState() {
        controller =
@@ -29,176 +59,48 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
     animation = Tween<double>(begin: 0, end: 1).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInToLinear));
     controller.forward();
-
+    // cart
+     _scrollController = new ScrollController();
+    _cartBloc = new CartBloc();
+    _performSearch();
     super.initState();
   }
-
-
   @override
+  Widget build(BuildContext context) {
+     return Scaffold(backgroundColor: Colors.black, body:
+      new Stack(children: <Widget>[
+        new CustomScrollView(physics: NeverScrollableScrollPhysics(), controller: _scrollController, slivers: <Widget>[
+          new SliverToBoxAdapter(child:
+            new SearchGrid(_resourceSection)
+          ),
+          new SliverToBoxAdapter(child:
+            new CartManager()
+          ),
+        ]),
+        new Align(alignment: Alignment.bottomRight, child:
+          new Container(margin: EdgeInsets.only(right: 10, bottom: 85),child:
+            new FloatingActionButton(onPressed: (){
+              if(_showCart)
+                _scrollController.animateTo(_scrollController.position.minScrollExtent, curve: Curves.fastOutSlowIn, duration: Duration(seconds: 2));
+              else
+                _scrollController.animateTo(_scrollController.position.maxScrollExtent, curve: Curves.fastOutSlowIn, duration: Duration(seconds: 2));
+
+              setState(() {
+              _showCart = !_showCart;
+              });
+            }, backgroundColor: Colors.amber, child: new Icon(_showCart ? Icons.close : Icons.shopping_cart))
+          )
+        )
+      ])
+    );
+}
+@override
   void dispose() {
     controller.dispose();
+    _cartBloc.dispose();
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) => _getBuildWidget(context);
-
-  Widget _getBuildWidget(BuildContext context) {
-    Widget targetWidget;
-    if (widget._resourceSection == null && widget.searchPerformed == true) {
-      targetWidget = Container(
-        padding: EdgeInsets.all(16.0),
-        child: Text(
-          'Something went wrong. Please try again.',
-          style: TextStyle(
-              fontFamily: 'Roboto',
-              fontWeight: FontWeight.w400,
-              fontSize: 16.0),
-          textAlign: TextAlign.center,
-        ),
-      );
-    } else if (widget.searchPerformed == false) {
-      targetWidget = Container(
-        padding: EdgeInsets.all(16.0),
-        child: Text(
-          '词影精准台词搜索 \n \n 搜索结果来自Spider爬行 \n \n 不存储任何内容，只提供信息检索服务。',
-          style: TextStyle(
-              fontFamily: 'Roboto',
-              fontWeight: FontWeight.w400,
-              fontSize: 16.0),
-          textAlign: TextAlign.center,
-        ),
-      );
-    } else {
-      targetWidget = buildImagesGrid(context);
-    }
-
-    return targetWidget;
-  }
-
-  Widget buildImagesGrid(BuildContext context) {
-    List<ResourceSection> _resourceSectionList = widget._resourceSection;
-    TextStyle authorStyle = TextStyle(
-      fontSize: 10,
-      color: Colors.white,
-      letterSpacing: 1,
-    );
-
-    // double deviceHeight = MediaQuery.of(context).size.height;
-    double deviceWidth = MediaQuery.of(context).size.width;
-    final double _tileHeight = MediaQuery.of(context).size.height / 3;
-
-    int noOfRows = 1;
-
-    if (deviceWidth > 800)
-      noOfRows = 5;
-    else if (deviceWidth > 200) noOfRows = 2;
-    // double _gridSize = MediaQuery.of(context).size.height*0.88; //88% of screen
-  return Expanded(
-      child: GridView.builder(
-        itemCount: _resourceSectionList.length,
-        padding: EdgeInsets.all(2.0),
-        scrollDirection: Axis.vertical,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: noOfRows),
-        itemBuilder: (BuildContext context, int index) {
-          return Stack(
-            children: <Widget>[
-              Container(
-                child: Container(
-                  height: _tileHeight,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(2.6),
-                  child: Hero(
-                    tag: '${_resourceSectionList[index]}',
-                    child: Material(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.circular(14),
-                      shadowColor: Colors.grey.withOpacity(0.5),
-                      elevation: 30.0,
-                      child: GestureDetector(
-                        onTap: () {
-                      // Navigator.pushNamed(context,
-                      //         '/images/${widget._resourceSection[index].resourceID}/$index',"${_resourceSectionList[index]}");
-                      //          print("${_resourceSectionList[index]}");
-                      //   },
-                        Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => VideoPlayer(_resourceSectionList[index]),
-                            ),
-                          );
-                        },
-                        child: Image.network(_resourceSectionList[index].resourceAddress,
-                            fit: BoxFit.cover),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                  height: _tileHeight,
-                  width: double.infinity,
-                  child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Flexible(
-                          flex: 9,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 50.0,
-                              width: double.infinity,
-                              color: Colors.black38,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    "片名：${_resourceSectionList[index].sourceName}",
-                                    style: authorStyle,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Divider(
-                                    height: 5,
-                                    color: Colors.white30,
-                                  ),
-                                  Text(
-                                    "时长：${_resourceSectionList[index].duration}",
-                                    style: authorStyle,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    "来源：${_resourceSectionList[index].source}",
-                                    style: authorStyle,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        //likeIcon
-                          likeIcon(isLiked ? Icons.favorite : Icons.favorite_border,
-                            color: isLiked ? red : lightGrey,
-                            size: 40,
-                            padding: 15,
-                            isOutLine: false, onPressed: () {
-                              setState(() {
-                                print("${_resourceSectionList[index].resourceID}");
-                                isLiked = !isLiked;
-                              });
-                          }),
-                      ])),
-            ],
-          );
-        },
-      ),
-    );
-  }
 }
 
 void _flavModalBottomSheet(BuildContext context) {
