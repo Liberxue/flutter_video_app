@@ -1,6 +1,7 @@
 import 'package:CiYing/models/Cart.dart';
 import 'package:CiYing/page/VideoPlayer.dart';
 import 'package:CiYing/page/bloc/CartBloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 
@@ -18,11 +19,12 @@ class MinimalCart extends StatelessWidget {
           _fillList(snapshot.data, context);
           var content =
             new Container(
-            color: Colors.white,
-            // color: Colors.grey.withOpacity(0.5),
-             width: double.infinity, height: 100, child:
+              padding: EdgeInsets.only(bottom: 110),
+            // color: Colors.white,
+            color: Colors.white.withOpacity(0.9),
+             width: double.infinity, height: MediaQuery.of(context).size.height - _gridSize, child:
               new ListView.builder(scrollDirection: Axis.horizontal, itemCount: _listWidget.length, controller: _scrollController, itemBuilder: (context, index){
-                return new Align(alignment: Alignment.center, child:_listWidget[index]);
+                return new Align(alignment: Alignment.centerLeft, child:_listWidget[index]);
               })
             );
           try{
@@ -43,20 +45,15 @@ class MinimalCart extends StatelessWidget {
           new GestureDetector(child:
               new Hero(tag: "tagHeroOrder${order.resourceSection.sourceID}", child:
                new ClipOval(child:
-                  new Container(
-                      width: 120,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        // shape: RoundedRectangleBorder(
-                        //   borderRadius: BorderRadius.circular(16)
-                        // ),
-                        borderRadius: BorderRadius.circular(1),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(order.resourceSection.resourceAddress)
-                          )
-                      ),
-                  )
+                  new CachedNetworkImage(
+                    width:100,
+                    height: 100,
+                    imageUrl: order.resourceSection.resourceAddress,
+                    fit: BoxFit.cover,
+                    progressIndicatorBuilder: (context, url, downloadProgress) => 
+                            CircularProgressIndicator(value: downloadProgress.progress),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
                 ),
             ),
             onTap: (){

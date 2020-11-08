@@ -1,4 +1,5 @@
 import 'package:CiYing/models/Order.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class OrderWidget extends StatelessWidget {
@@ -9,30 +10,26 @@ class OrderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+    
+    return new Row(
+      crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween,
+       children: <Widget>[
       new ClipOval(child:
-        // new Container(
-        //   color: Colors.white, 
-        //   child: new Image.network(this._order.resourceSection.resourceAddress),
-        //  height:  (MediaQuery.of(context).size.height - _gridSize)* 0.5,
-        //  )
-        Container(
-          width: 120,
-         height:  (MediaQuery.of(context).size.height - _gridSize)* 1.5,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            image: DecorationImage(
-              image: NetworkImage(this._order.resourceSection.resourceAddress)
-            )
-          )
+        CachedNetworkImage(
+            width:100,
+            height: 100,
+            imageUrl: this._order.resourceSection.resourceAddress,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => CircularProgressIndicator(),
+            errorWidget: (context, url, error) => Icon(Icons.error),
         ),
       ),
-      new Padding(padding: EdgeInsets.symmetric(horizontal: 10), child:
+      new Padding(padding: EdgeInsets.symmetric(horizontal: 5), child:
         new Text(this._order.resourceSection.sourceName.toString(), style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))
       ),
       new Text(":", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       new Flexible(flex: 2, child:
-        new Padding(padding: EdgeInsets.symmetric(horizontal: 10), child:
+        new Padding(padding: EdgeInsets.symmetric(horizontal: 5), child:
           new Text(this._order.resourceSection.source, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))
         )
       ),

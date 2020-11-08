@@ -1,21 +1,17 @@
 import 'package:CiYing/api/search.dart';
-import 'package:CiYing/common/constants.dart';
+import 'package:CiYing/components/rounded_input_field.dart';
 import 'package:CiYing/grpc/proto/search.pb.dart';
 import 'package:CiYing/page/CartManager.dart';
-import 'package:CiYing/page/MinimalCart.dart';
 import 'package:CiYing/page/SearchGrid.dart';
-import 'package:CiYing/page/VideoPlayer.dart';
 import 'package:CiYing/page/bloc/CartBloc.dart';
-import 'package:CiYing/page/icon.dart';
+import 'package:CiYing/page/head_profile.dart';
+import 'package:CiYing/page/search_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ResourceList extends StatefulWidget {
 
   var isShow = false;
-  // final List<ResourceSection> _resourceSection;
-  // final bool searchPerformed;
-  // ResourceList(this._resourceSection, {this.searchPerformed = false});
   @override
   _ResourceListState createState() => _ResourceListState();
 
@@ -67,7 +63,45 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
   }
   @override
   Widget build(BuildContext context) {
-     return Scaffold(backgroundColor: Colors.black, body:
+     return Scaffold(
+       appBar: PreferredSize(
+          preferredSize: Size.fromHeight(65.0),
+          child: AppBar(
+            automaticallyImplyLeading: true, // hides leading widget
+            leading: Builder(builder: (BuildContext context) {
+              return Container(
+                  child: new Center(
+                child: IconButton(
+                  icon: Image.asset("assets/images/logo.png"),
+                  onPressed: () {
+                     Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => SearchList(),
+                    ));
+                  },
+                ),
+              ));
+            }),
+            elevation: 1.2,
+            backgroundColor: Colors.white,
+            actions: <Widget>[
+              // if (_searchHeaderShow)
+                Container(
+                  padding: const EdgeInsets.only(right: 2.0),
+                  width: 280,
+                  height: 60,
+                  child: RoundedInputField(
+                    icon: Icons.search,
+                    hintText: "搜索",
+                    onChanged: (value) {
+                      _performSearch();
+                    },
+                  ),
+                ),
+              UserHeaderProfile(),
+            ],
+          ),
+        ),
+       backgroundColor: Colors.black, body:
       new Stack(children: <Widget>[
         new CustomScrollView(physics: NeverScrollableScrollPhysics(), controller: _scrollController, slivers: <Widget>[
           new SliverToBoxAdapter(child:
@@ -78,7 +112,7 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
           ),
         ]),
         new Align(alignment: Alignment.bottomRight, child:
-          new Container(margin: EdgeInsets.only(right: 10, bottom: 85),child:
+          new Container(margin: EdgeInsets.only(right: 15, bottom: 15),child:
             new FloatingActionButton(onPressed: (){
               if(_showCart)
                 _scrollController.animateTo(_scrollController.position.minScrollExtent, curve: Curves.fastOutSlowIn, duration: Duration(seconds: 2));

@@ -2,6 +2,7 @@ import 'package:CiYing/common/constants.dart';
 import 'package:CiYing/grpc/proto/search.pb.dart';
 import 'package:CiYing/page/VideoPlayer.dart';
 import 'package:CiYing/page/icon.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProductWidget extends StatelessWidget {
@@ -58,8 +59,14 @@ class ProductWidget extends StatelessWidget {
                             ),
                           );
                         },
-                        child: Image.network(_resourceSection.resourceAddress,
-                            fit: BoxFit.cover),
+                        // child: Image.network(_resourceSection.resourceAddress,
+                        //     fit: BoxFit.cover),
+                        child:CachedNetworkImage(
+                            imageUrl: _resourceSection.resourceAddress,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
+                        ),
                       ),
                     ),
                   ),
@@ -70,7 +77,6 @@ class ProductWidget extends StatelessWidget {
                   width: double.infinity,
                   child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Flexible(
                           flex: 9,
@@ -81,7 +87,7 @@ class ProductWidget extends StatelessWidget {
                               width: double.infinity,
                               color: Colors.black38,
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
@@ -114,7 +120,7 @@ class ProductWidget extends StatelessWidget {
                         //likeIcon
                           likeIcon(isLiked ? Icons.favorite : Icons.favorite_border,
                             color: isLiked ? red : lightGrey,
-                            size: 40,
+                            size: 35,
                             padding: 15,
                             isOutLine: false, onPressed: () {
                               // setState(() {

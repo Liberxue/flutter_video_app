@@ -15,7 +15,7 @@ class MyChewieMaterialControls extends StatefulWidget {
 
 class _MyChewieMaterialControlsState extends State<MyChewieMaterialControls> {
   VideoPlayerValue _latestValue;
-  double _latestVolume;
+  // double _latestVolume;
   bool _hideStuff = true;
   Timer _hideTimer;
   Timer _initTimer;
@@ -122,7 +122,7 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
   AnimatedOpacity _buildBottomBar(
     BuildContext context,
   ) {
-    final iconColor = Theme.of(context).textTheme.button.color;
+    // final iconColor = Theme.of(context).textTheme.button.color;
     return AnimatedOpacity(
       opacity: _hideStuff ? 0.0 : 1,
       duration: Duration(milliseconds: 300),

@@ -25,15 +25,15 @@ class _SearchGridState extends State<SearchGrid> {
         new Container(height: _gridSize,
         color:  const Color(0xFFeeeeee), 
         padding: EdgeInsets.only(left: 2, right: 2),
-       child:new Column(children: <Widget>[
-          new Container(margin: EdgeInsets.only(top: 80), child:
+        child:new Column(children: <Widget>[
+          new Container(margin: EdgeInsets.only(top: 2), child:
           new Column(children: <Widget>[
             new Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
               new CategoryDropMenu(),
               new FlatButton.icon(onPressed: (){}, icon: new Icon(Icons.filter_list), label: new Text(""))
             ]),
             if (widget._resourceSection!=null && widget._resourceSection.length>0)
-                new Container(height: _gridSize - 132, margin: EdgeInsets.only(top: 2), child:
+                new Container(height: _gridSize - 52, margin: EdgeInsets.only(top: 2), child:
                   new PhysicalModel(
                       color: Colors.transparent,
                       // borderRadius:  BorderRadius.only(bottomLeft: Radius.circular(_gridSize/10 - 10), bottomRight: Radius.circular(_gridSize/10 - 10)),
@@ -55,7 +55,7 @@ class _SearchGridState extends State<SearchGrid> {
           )
         ])
       ),
-      new MinimalCart(_gridSize)
+      // new MinimalCart(_gridSize)
     ]);
   }
 

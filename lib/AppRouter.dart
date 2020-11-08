@@ -15,7 +15,6 @@ class AppRouter extends StatefulWidget {
 }
 
 class _AppRouterState extends State<AppRouter> {
-  bool _isLogin = false;
   final ThemeModel _model = ThemeModel();
   final AuthModel _auth = AuthModel();
   @override
@@ -42,7 +41,7 @@ class _AppRouterState extends State<AppRouter> {
           // if (_isLogin) return SearchList();
           return SearchList();
         }),
-      // initialRoute: '/',
+      initialRoute: '/',
       routes: <String, WidgetBuilder>{
         // '/Login': (context) => _isLogin ? SearchList(): Login(),
         // '/SearchList': (context) => _isLogin ? SearchList(): Login() ,
@@ -52,27 +51,27 @@ class _AppRouterState extends State<AppRouter> {
         '/UserProfile':(context) => UserProfile(),
         '/Logout':(context) => Logout(),
       },
-      onGenerateRoute: (RouteSettings settings) {
-        print("settingssettingssettingssettingssettings");
-        print(settings);
-      final List<String> pathElements = settings.name.split('/');
-        if (pathElements[0] != '') {
-          return null;
-        }
-        if (pathElements[1] == 'images') {
-          String query = pathElements[2];
-          print(query);
-        //   DisplayImage.Image imageToDisplay =
-        //       Storage.images.images[int.parse(pathElements[3])];
-          // return MaterialPageRoute(builder: (BuildContext context) {
-          //   // print(_resourceSection);
-          //   // return null;
-          //   return  VideoPlayer(query, "this's title");
-          // });
-        } else {
-          return null;
-        }
-            },
+      // onGenerateRoute: (RouteSettings settings) {
+      //   print("settingssettingssettingssettingssettings");
+      //   print(settings);
+      // final List<String> pathElements = settings.name.split('/');
+      //   if (pathElements[0] != '') {
+      //     return null;
+      //   }
+      //   if (pathElements[1] == 'images') {
+      //     String query = pathElements[2];
+      //     print(query);
+      //   //   DisplayImage.Image imageToDisplay =
+      //   //       Storage.images.images[int.parse(pathElements[3])];
+      //     // return MaterialPageRoute(builder: (BuildContext context) {
+      //     //   // print(_resourceSection);
+      //     //   // return null;
+      //     //   return  VideoPlayer(query, "this's title");
+      //     // });
+      //   } else {
+      //     return null;
+      //   }
+      //       },
           ),
         ));
   }

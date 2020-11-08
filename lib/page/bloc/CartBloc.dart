@@ -25,8 +25,8 @@ class CartBloc{
     _publishSubjectOrder = new PublishSubject<Order>();
   }
 
-  Observable<Cart> get observableCart => _publishSubjectCart.stream;
-  Observable<Order> get observableLastOrder => _publishSubjectOrder.stream;
+  Stream<Cart> get observableCart => _publishSubjectCart.stream;
+  Stream<Order> get observableLastOrder => _publishSubjectOrder.stream;
 
   void _updateCart(){
     _publishSubjectCart.sink.add(_currentCart);
