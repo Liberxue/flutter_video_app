@@ -1,7 +1,7 @@
-import 'package:CiYing/api/config.dart';
-import 'package:CiYing/grpc/proto/gateWay.pbgrpc.dart';
-import 'package:CiYing/grpc/proto/search.pb.dart';
-import 'package:CiYing/util/store.dart';
+import 'package:ciying/api/config.dart';
+import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
+import 'package:ciying/grpc/proto/search.pb.dart';
+import 'package:ciying/util/store.dart';
 import 'package:grpc/grpc.dart';
 class Search{
 static Future<SearchResponse> searchAPIRequest(SearchRequest data) async {

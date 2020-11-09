@@ -1,11 +1,11 @@
-import 'package:CiYing/api/search.dart';
-import 'package:CiYing/components/rounded_input_field.dart';
-import 'package:CiYing/grpc/proto/search.pb.dart';
-import 'package:CiYing/page/CartManager.dart';
-import 'package:CiYing/page/SearchGrid.dart';
-import 'package:CiYing/page/bloc/CartBloc.dart';
-import 'package:CiYing/page/head_profile.dart';
-import 'package:CiYing/page/search_list.dart';
+import 'package:ciying/api/search.dart';
+import 'package:ciying/components/rounded_input_field.dart';
+import 'package:ciying/grpc/proto/search.pb.dart';
+import 'package:ciying/page/CartManager.dart';
+import 'package:ciying/page/SearchGrid.dart';
+import 'package:ciying/page/bloc/CartBloc.dart';
+import 'package:ciying/page/head_profile.dart';
+import 'package:ciying/page/search_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

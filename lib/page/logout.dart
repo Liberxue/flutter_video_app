@@ -1,7 +1,7 @@
 
 
-import 'package:CiYing/util/exit.dart';
-import 'package:CiYing/util/store.dart';
+import 'package:ciying/util/exit.dart';
+import 'package:ciying/util/store.dart';
 import 'package:flutter/material.dart';
 
 import 'login.dart';

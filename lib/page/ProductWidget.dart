@@ -1,7 +1,7 @@
-import 'package:CiYing/common/constants.dart';
-import 'package:CiYing/grpc/proto/search.pb.dart';
-import 'package:CiYing/page/VideoPlayer.dart';
-import 'package:CiYing/page/icon.dart';
+import 'package:ciying/common/constants.dart';
+import 'package:ciying/grpc/proto/search.pb.dart';
+import 'package:ciying/page/VideoPlayer.dart';
+import 'package:ciying/page/icon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 

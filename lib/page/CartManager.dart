@@ -1,7 +1,7 @@
-import 'package:CiYing/models/Cart.dart';
-import 'package:CiYing/page/OrderWidget.dart';
-import 'package:CiYing/page/bloc/CartBloc.dart';
-import 'package:CiYing/widgets/SeparatorLine.dart';
+import 'package:ciying/models/Cart.dart';
+import 'package:ciying/page/OrderWidget.dart';
+import 'package:ciying/page/bloc/CartBloc.dart';
+import 'package:ciying/widgets/SeparatorLine.dart';
 import 'package:flutter/material.dart';
 
 class CartManager extends StatefulWidget {
@@ -32,7 +32,7 @@ class _CartManager extends State<CartManager> {
                       new Text("选集列表", style: TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold))
                     ),
                     new SeparatorLine(height: 1,color: Colors.grey,width: 10,),
-                    new Container( height: _gridSize*0.72, child:
+                    new Container( height: _gridSize*0.68, child:
                       new ListView.builder(itemCount: snapshot.data.orders.length, itemBuilder: (context, index ){
                         return Dismissible(
                           background: Container(color: Colors.red, child:new Row(mainAxisAlignment: MainAxisAlignment.end,

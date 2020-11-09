@@ -1,4 +1,4 @@
-name: CiYing
+name: ciying
 description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -18,7 +18,7 @@ dependencies:
   protobuf:
   grpc:
   base_x: ^1.0.1
-  device_info: ^0.4.0+4
+  device_info: ^1.0.0
   fixnum: ^0.10.11  #fix flutter int64 https://github.com/PomCloud/gateway/issues/3
   shared_preferences: ^0.5.12+2
   provider: ^4.0.2
@@ -26,6 +26,9 @@ dependencies:
   rxdart: ^0.24.1
   cached_network_image: ^2.3.3
   flutter_downloader: ^1.5.2
+  path_provider: ^1.6.24
+  permission_handler: ^3.1.0
+  progress_dialog: ^1.1.0+1
 
 
 

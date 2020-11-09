@@ -1,5 +1,5 @@
 
-import 'package:CiYing/models/Order.dart';
+import 'package:ciying/models/Order.dart';
 
 class Cart{
 

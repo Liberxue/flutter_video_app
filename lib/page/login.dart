@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:CiYing/common/constants.dart';
-import 'package:CiYing/grpc/proto/common.pbenum.dart';
-import 'package:CiYing/grpc/proto/gateWay.pbgrpc.dart';
-import 'package:CiYing/models/signIn/signIn.dart';
-import 'package:CiYing/models/sign_up.dart';
-import 'package:CiYing/page/search_list.dart';
-import 'package:CiYing/page/userPrivacyAgreement.dart';
-import 'package:CiYing/page/userRegistrationAgreement.dart';
-import 'package:CiYing/util/exit.dart';
-import 'package:CiYing/util/store.dart';
-import 'package:CiYing/util/validation.dart';
+import 'package:ciying/common/constants.dart';
+import 'package:ciying/grpc/proto/common.pbenum.dart';
+import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
+import 'package:ciying/models/signIn/signIn.dart';
+import 'package:ciying/models/sign_up.dart';
+import 'package:ciying/page/search_list.dart';
+import 'package:ciying/page/userPrivacyAgreement.dart';
+import 'package:ciying/page/userRegistrationAgreement.dart';
+import 'package:ciying/util/exit.dart';
+import 'package:ciying/util/store.dart';
+import 'package:ciying/util/validation.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +71,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
     _signInResponse = await signIn(signInRequest);
     return Future.delayed(loginTime).then((_) async {
       if(_signInResponse.code!=ResponseCode.SUCCESSFUL){
-          return "登录失败，请检查账号密码"; // 多语言支持？#issue https://github.com/PomCloud/CiYing/issues/3
+          return "登录失败，请检查账号密码"; // 多语言支持？#issue https://github.com/PomCloud/ciying/issues/3
       }
       if (_signInResponse==null&&_signInResponse.token.length<1){ //mark check token
         return  "登录异常";

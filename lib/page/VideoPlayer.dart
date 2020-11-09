@@ -1,5 +1,5 @@
-import 'package:CiYing/common/constants.dart';
-import 'package:CiYing/grpc/proto/search.pb.dart';
+import 'package:ciying/common/constants.dart';
+import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

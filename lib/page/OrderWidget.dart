@@ -1,5 +1,5 @@
-import 'package:CiYing/models/Order.dart';
-import 'package:CiYing/widgets/SeparatorLine.dart';
+import 'package:ciying/models/Order.dart';
+import 'package:ciying/widgets/SeparatorLine.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 

@@ -1,10 +1,10 @@
-import 'package:CiYing/common/constants.dart';
-import 'package:CiYing/page/login.dart';
-import 'package:CiYing/page/logout.dart';
-import 'package:CiYing/page/profile/profile.dart';
-import 'package:CiYing/util/store.dart';
+import 'package:ciying/common/constants.dart';
+import 'package:ciying/page/login.dart';
+import 'package:ciying/page/logout.dart';
+import 'package:ciying/page/profile/profile.dart';
+import 'package:ciying/util/store.dart';
 import 'package:flutter/material.dart';
-import 'package:CiYing/page/search_list.dart';
+import 'package:ciying/page/search_list.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
 import 'models/auth.dart';

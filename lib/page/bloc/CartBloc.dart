@@ -1,6 +1,6 @@
-import 'package:CiYing/grpc/proto/search.pb.dart';
-import 'package:CiYing/models/Cart.dart';
-import 'package:CiYing/models/Order.dart';
+import 'package:ciying/grpc/proto/search.pb.dart';
+import 'package:ciying/models/Cart.dart';
+import 'package:ciying/models/Order.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CartBloc{

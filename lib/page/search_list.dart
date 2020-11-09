@@ -1,4 +1,4 @@
-import 'package:CiYing/page/resource_list.dart';
+import 'package:ciying/page/resource_list.dart';
 import 'package:flutter/material.dart';
 
 class SearchList extends StatefulWidget {

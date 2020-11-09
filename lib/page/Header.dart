@@ -1,6 +1,6 @@
-import 'package:CiYing/components/rounded_input_field.dart';
-import 'package:CiYing/page/head_profile.dart';
-import 'package:CiYing/page/search_list.dart';
+import 'package:ciying/components/rounded_input_field.dart';
+import 'package:ciying/page/head_profile.dart';
+import 'package:ciying/page/search_list.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatefulWidget {
@@ -39,7 +39,7 @@ class _headerState extends State<Header> {
                   onPressed: () {
                      Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => SearchList(),
-                    ));
+                        ));                
                   },
                 ),
               ));

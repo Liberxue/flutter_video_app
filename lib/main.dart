@@ -1,4 +1,4 @@
-import 'package:CiYing/appRouter.dart';
+import 'package:ciying/appRouter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

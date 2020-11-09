@@ -1,6 +1,6 @@
-import 'package:CiYing/api/config.dart';
-import 'package:CiYing/grpc/proto/gateWay.pbgrpc.dart';
-import 'package:CiYing/util/systemInfo.dart';
+import 'package:ciying/api/config.dart';
+import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
+import 'package:ciying/util/systemInfo.dart';
 import 'package:grpc/grpc.dart';
 
 Future<SignInResponse> signInRequest(SignInRequest data) async {
