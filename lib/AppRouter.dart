@@ -1,6 +1,8 @@
 import 'package:CiYing/common/constants.dart';
+import 'package:CiYing/page/login.dart';
 import 'package:CiYing/page/logout.dart';
 import 'package:CiYing/page/profile/profile.dart';
+import 'package:CiYing/util/store.dart';
 import 'package:flutter/material.dart';
 import 'package:CiYing/page/search_list.dart';
 import 'package:persist_theme/persist_theme.dart';
@@ -17,6 +19,16 @@ class AppRouter extends StatefulWidget {
 class _AppRouterState extends State<AppRouter> {
   final ThemeModel _model = ThemeModel();
   final AuthModel _auth = AuthModel();
+  // bool _isLogin = false;
+  //  @override
+  // void initState() {
+  //   _getLoginState();
+  // }
+
+  //   _getLoginState() async {
+  //   _isLogin = await Cache.checkLoginState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -41,12 +53,12 @@ class _AppRouterState extends State<AppRouter> {
           // if (_isLogin) return SearchList();
           return SearchList();
         }),
-      initialRoute: '/',
+      // initialRoute: '/',
       routes: <String, WidgetBuilder>{
         // '/Login': (context) => _isLogin ? SearchList(): Login(),
         // '/SearchList': (context) => _isLogin ? SearchList(): Login() ,
         // '/UserProfile':(context) => _isLogin ? UserProfile(): Login(),
-        // '/Login': (context) => Login(),
+        '/Login': (context) => Login(),
         '/SearchList': (context) =>  SearchList(),
         '/UserProfile':(context) => UserProfile(),
         '/Logout':(context) => Logout(),

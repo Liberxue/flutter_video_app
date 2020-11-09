@@ -2,6 +2,7 @@ import 'package:CiYing/grpc/proto/search.pb.dart';
 import 'package:CiYing/page/CategoryDropMenu.dart';
 import 'package:CiYing/page/MinimalCart.dart';
 import 'package:CiYing/page/ProductWidget.dart';
+import 'package:CiYing/widgets/SeparatorLine.dart';
 import 'package:flutter/material.dart';
 
 class SearchGrid extends StatefulWidget {
@@ -16,7 +17,9 @@ class _SearchGridState extends State<SearchGrid> {
   @override
   Widget build(BuildContext context){
 
-    double _gridSize = MediaQuery.of(context).size.height*0.88; //88% of screen
+    // double _gridSize = MediaQuery.of(context).size.height*0.88; //88% of screen
+      double _gridSize = MediaQuery.of(context).size.height*0.78; //88% of screen
+
     double childAspectRatio =  MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 2.3);
 
     return new Column(children: <Widget>[
@@ -55,7 +58,8 @@ class _SearchGridState extends State<SearchGrid> {
           )
         ])
       ),
-      // new MinimalCart(_gridSize)
+      SeparatorLine(color: Colors.white),
+      new MinimalCart(_gridSize),
     ]);
   }
 

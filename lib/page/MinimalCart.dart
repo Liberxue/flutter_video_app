@@ -1,6 +1,7 @@
 import 'package:CiYing/models/Cart.dart';
 import 'package:CiYing/page/VideoPlayer.dart';
 import 'package:CiYing/page/bloc/CartBloc.dart';
+import 'package:CiYing/widgets/SeparatorLine.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -20,8 +21,8 @@ class MinimalCart extends StatelessWidget {
           var content =
             new Container(
               padding: EdgeInsets.only(bottom: 110),
-            // color: Colors.white,
-            color: Colors.white.withOpacity(0.9),
+            color: Colors.white,
+            // color: Colors.white.withOpacity(0.9),
              width: double.infinity, height: MediaQuery.of(context).size.height - _gridSize, child:
               new ListView.builder(scrollDirection: Axis.horizontal, itemCount: _listWidget.length, controller: _scrollController, itemBuilder: (context, index){
                 return new Align(alignment: Alignment.centerLeft, child:_listWidget[index]);
@@ -41,15 +42,15 @@ class MinimalCart extends StatelessWidget {
   void _fillList(Cart cart, BuildContext context){
     _listWidget.add(new Text("选集", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)));
     _listWidget.addAll(cart.orders.map((order){
-        return new Padding(padding: EdgeInsets.symmetric(horizontal:3), child:
+        return new Padding(padding: EdgeInsets.symmetric(horizontal:2), child:
           new GestureDetector(child:
               new Hero(tag: "tagHeroOrder${order.resourceSection.sourceID}", child:
                new ClipOval(child:
                   new CachedNetworkImage(
-                    width:100,
-                    height: 100,
+                    width:80,
+                    height: 90,
                     imageUrl: order.resourceSection.resourceAddress,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                     progressIndicatorBuilder: (context, url, downloadProgress) => 
                             CircularProgressIndicator(value: downloadProgress.progress),
                     errorWidget: (context, url, error) => Icon(Icons.error),

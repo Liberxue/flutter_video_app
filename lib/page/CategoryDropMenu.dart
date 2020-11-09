@@ -7,7 +7,7 @@ class CategoryDropMenu extends StatefulWidget {
 
 class _CategoryDropMenu extends State<CategoryDropMenu> {
 
-  String dropdownValue = "Pasta & Noodles";
+  String dropdownValue = "全部语言";
 
   @override
   Widget build(BuildContext context){
@@ -19,12 +19,13 @@ class _CategoryDropMenu extends State<CategoryDropMenu> {
             dropdownValue = newValue;
           });
         },
-        items: <String>['Pasta & Noodles'].map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
-          );
-        }).toList(),
+        items: <String>['全部语言', '英语', '日语', '韩语']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
       ));
   }
 

@@ -33,9 +33,12 @@ class _CartManager extends State<CartManager> {
                     new Container( height: _gridSize*0.72, child:
                       new ListView.builder(itemCount: snapshot.data.orders.length, itemBuilder: (context, index ){
                         return Dismissible(
-                          background: Container(color: Colors.red, child:new Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-                            new Text("左滑移除", style: TextStyle(color: Colors.white, fontSize: 25)),
-                      ])),
+                          background: Container(color: Colors.red, child:new Row(mainAxisAlignment: MainAxisAlignment.end,
+                           children: <Widget>[
+                            new Text("滑动移除", style: TextStyle(color: Colors.white, fontSize: 18)),
+                            // new Text("滑动移除", style: TextStyle(color: Colors.white, fontSize: 18)),
+                         ]
+                      )),
                           key: Key(snapshot.data.orders[index].resourceSection.sourceName.toString()),
                           onDismissed: (_) {
                             _cartBloc.removerOrderOfCart(snapshot.data.orders[index]);
@@ -46,7 +49,7 @@ class _CartManager extends State<CartManager> {
                     ),
                     new Container(
                     // margin: EdgeInsets.only(top: _gridSize*0.1),
-                    height:35,
+                    height:40,
                      child:new Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
                         new Text("消费积分", style: TextStyle(color: Colors.black, fontSize: 20)),
                         new Text("${snapshot.data.totalPrice().toStringAsFixed(2)}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 40)),
@@ -61,7 +64,7 @@ class _CartManager extends State<CartManager> {
             padding: EdgeInsets.only(left: 10,
              bottom: _gridSize*0.02), 
               width: MediaQuery.of(context).size.width - 200, 
-              height:70,
+              height:80,
               child:new RaisedButton(color: Colors.amber, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)), padding: EdgeInsets.all(20),
                   onPressed: (){
                     if(_cartBloc.currentCart.isEmpty)
