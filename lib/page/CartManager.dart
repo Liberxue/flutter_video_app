@@ -1,6 +1,7 @@
 import 'package:CiYing/models/Cart.dart';
 import 'package:CiYing/page/OrderWidget.dart';
 import 'package:CiYing/page/bloc/CartBloc.dart';
+import 'package:CiYing/widgets/SeparatorLine.dart';
 import 'package:flutter/material.dart';
 
 class CartManager extends StatefulWidget {
@@ -18,18 +19,19 @@ class _CartManager extends State<CartManager> {
     double _gridSize = MediaQuery.of(context).size.height*0.9;
 
     return new Container(
-    // margin: EdgeInsets.only(top: _gridSize*0.4),
+      // margin: EdgeInsets.only(top: _gridSize*0.4),
       height: MediaQuery.of(context).size.height,
-      color:  const Color(0xFFeeeeee), 
-     child:new Stack(children: <Widget>[
+      color: Colors.white,
+      child:new Stack(children: <Widget>[
           new Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
             new StreamBuilder(initialData: _cartBloc.currentCart, stream: _cartBloc.observableCart, builder: (context, AsyncSnapshot<Cart> snapshot){
               return
                 new Container(margin: EdgeInsets.symmetric(horizontal: 8), height: _gridSize, width: double.infinity, child:
                   new Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                    new Padding(padding: EdgeInsets.only(top: _gridSize*0.18), child:
+                    new Padding(padding: EdgeInsets.only(top: _gridSize*0.15,bottom:_gridSize*0.02), child:
                       new Text("选集列表", style: TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold))
                     ),
+                    new SeparatorLine(height: 1,color: Colors.grey,width: 10,),
                     new Container( height: _gridSize*0.72, child:
                       new ListView.builder(itemCount: snapshot.data.orders.length, itemBuilder: (context, index ){
                         return Dismissible(
@@ -43,10 +45,14 @@ class _CartManager extends State<CartManager> {
                           onDismissed: (_) {
                             _cartBloc.removerOrderOfCart(snapshot.data.orders[index]);
                           },
-                          child: new Padding(padding: EdgeInsets.symmetric(vertical: 10), child: new OrderWidget(snapshot.data.orders[index], _gridSize)),
+                          child: new Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: new OrderWidget(snapshot.data.orders[index], _gridSize)
+                            ),
                         );
                       })
                     ),
+                    SeparatorLine(height: 1,color: Colors.grey,width: 10,),
                     new Container(
                     // margin: EdgeInsets.only(top: _gridSize*0.1),
                     height:40,
@@ -57,6 +63,7 @@ class _CartManager extends State<CartManager> {
                     )
                   ])
                 );
+                
             })
           ]),
           new Align(alignment: Alignment.bottomLeft, child:
@@ -65,10 +72,10 @@ class _CartManager extends State<CartManager> {
              bottom: _gridSize*0.02), 
               width: MediaQuery.of(context).size.width - 200, 
               height:80,
-              child:new RaisedButton(color: Colors.amber, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)), padding: EdgeInsets.all(20),
+              child:new RaisedButton(color: Colors.blueGrey, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)), padding: EdgeInsets.all(10),
                   onPressed: (){
                     if(_cartBloc.currentCart.isEmpty)
-                      Scaffold.of(context).showSnackBar(SnackBar(content: Text("空空如也～")));
+                      Scaffold.of(context).showSnackBar(SnackBar(content: Text("没有什么可以下载～～")));
                   },
                   child: new Text("批量下载", style: TextStyle(fontWeight: FontWeight.bold))
               )

@@ -122,7 +122,7 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
               setState(() {
               _showCart = !_showCart;
               });
-            }, backgroundColor: Colors.amber, child: new Icon(_showCart ? Icons.close : Icons.shopping_cart))
+            }, backgroundColor: Colors.blueGrey, child: new Icon(_showCart ? Icons.close : Icons.movie_filter))
           )
         )
       ])

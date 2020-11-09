@@ -49,7 +49,6 @@ class _headerState extends State<Header> {
             actions: <Widget>[
               // if (_searchHeaderShow)
                 Container(
-                  padding: const EdgeInsets.only(right: 2.0),
                   width: 280,
                   height: 60,
                   child: RoundedInputField(

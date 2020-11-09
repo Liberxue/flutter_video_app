@@ -59,8 +59,6 @@ class ProductWidget extends StatelessWidget {
                             ),
                           );
                         },
-                        // child: Image.network(_resourceSection.resourceAddress,
-                        //     fit: BoxFit.cover),
                         child:CachedNetworkImage(
                             imageUrl: _resourceSection.resourceAddress,
                             fit: BoxFit.cover,

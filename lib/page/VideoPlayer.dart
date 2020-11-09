@@ -120,7 +120,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
               new Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
                 new FlatButton.icon(onPressed: (){}, icon: new Icon(Icons.favorite_border), label: new Text("")),
                 new SizedBox(width: MediaQuery.of(context).size.width * 0.6, child:
-                  new RaisedButton(color: Colors.amber, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)), padding: EdgeInsets.all(20),
+                  new RaisedButton(color: Colors.blueGrey, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)), padding: EdgeInsets.all(20),
                       onPressed: (){
                         _cartBloc.addOrderToCart(widget._resourceSection);
                         Navigator.of(context).pop();

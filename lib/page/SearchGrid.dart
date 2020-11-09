@@ -58,7 +58,6 @@ class _SearchGridState extends State<SearchGrid> {
           )
         ])
       ),
-      SeparatorLine(color: Colors.white),
       new MinimalCart(_gridSize),
     ]);
   }
