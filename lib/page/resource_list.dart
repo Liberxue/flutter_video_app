@@ -9,7 +9,7 @@ import 'package:ciying/page/search_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ResourceList extends StatefulWidget {
+class resourceList extends StatefulWidget {
 
   var isShow = false;
   @override
@@ -18,7 +18,7 @@ class ResourceList extends StatefulWidget {
   
 }
 
-class _ResourceListState extends State<ResourceList>with TickerProviderStateMixin {
+class _ResourceListState extends State<resourceList>with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   //cart
@@ -103,26 +103,39 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
         ),
        backgroundColor: Colors.black, body:
       new Stack(children: <Widget>[
-        new CustomScrollView(physics: NeverScrollableScrollPhysics(), controller: _scrollController, slivers: <Widget>[
-          new SliverToBoxAdapter(child:
-            new SearchGrid(_resourceSection)
-          ),
-          new SliverToBoxAdapter(child:
-            new CartManager()
-          ),
+        new CustomScrollView(
+          physics: NeverScrollableScrollPhysics(), 
+          controller: _scrollController,
+          slivers: <Widget>[
+            new SliverToBoxAdapter(child:
+              new SearchGrid(_resourceSection)
+            ),
+            new SliverToBoxAdapter(child:
+              new CartManager()
+            ),
         ]),
-        new Align(alignment: Alignment.bottomRight, child:
-          new Container(margin: EdgeInsets.only(right: 15, bottom: 15),child:
-            new FloatingActionButton(onPressed: (){
+        new Align(
+            alignment: Alignment.bottomRight, child:
+            new Container(margin: EdgeInsets.only(right: 10, bottom: 10),child:
+              new FloatingActionButton(onPressed: (){
               if(_showCart)
-                _scrollController.animateTo(_scrollController.position.minScrollExtent, curve: Curves.fastOutSlowIn, duration: Duration(seconds: 2));
+                _scrollController.animateTo(
+                  _scrollController.position.minScrollExtent,
+                  curve: Curves.fastOutSlowIn,
+                  duration: Duration(seconds: 2));
               else
-                _scrollController.animateTo(_scrollController.position.maxScrollExtent, curve: Curves.fastOutSlowIn, duration: Duration(seconds: 2));
+                _scrollController.animateTo(
+                  _scrollController.position.maxScrollExtent, 
+                  curve: Curves.fastOutSlowIn,
+                  duration: Duration(seconds: 2));
 
               setState(() {
+
               _showCart = !_showCart;
+
               });
-            }, backgroundColor: Colors.blueGrey, child: new Icon(_showCart ? Icons.close : Icons.movie_filter))
+            }, backgroundColor: Colors.blueGrey, 
+               child: new Icon(_showCart ? Icons.close : Icons.movie))
           )
         )
       ])

@@ -10,6 +10,6 @@ class _SearchListState extends State<SearchList> {
 
   @override
   Widget build(BuildContext context) {
-    return ResourceList();
+    return resourceList();
   }
 }

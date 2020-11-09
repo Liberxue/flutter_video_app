@@ -1,7 +1,7 @@
-// 根据 downloadUrl 和 savePath 下载文件
 import 'package:flutter_downloader/flutter_downloader.dart';
 
-DdownloadFile(downloadUrl, savePath) async {
+downloadFile(List<String> downloadUrlList, savePath) async {
+  for(var downloadUrl in downloadUrlList) {
   await FlutterDownloader.enqueue(
     url: downloadUrl,
     savedDir: savePath,
@@ -10,4 +10,5 @@ DdownloadFile(downloadUrl, savePath) async {
     openFileFromNotification:
         true, // click on notification to open downloaded file (for Android)
   );
+  }
 }

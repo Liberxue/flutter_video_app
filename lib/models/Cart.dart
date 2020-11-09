@@ -17,6 +17,9 @@ class Cart{
     _orders.remove(order);
   }
 
+  void cleanOrder(){
+    _orders.clear();
+  }
   double totalPrice(){
     double total = 0;
     _orders.forEach((o){

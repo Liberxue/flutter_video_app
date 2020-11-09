@@ -48,6 +48,10 @@ class CartBloc{
     _updateCart();
   }
 
+  void cleanOrderOfCart(){
+    _currentCart.cleanOrder();
+
+  }
   Cart get currentCart => _currentCart;
 
   Order get lastOrder => _lastOrder;

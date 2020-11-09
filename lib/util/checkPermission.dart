@@ -27,11 +27,12 @@ Future<bool> checkPermission(BuildContext context) async {
 
 // 获取存储路径
 Future<String> findLocalPath(BuildContext context) async {
-  // 因为Apple没有外置存储，所以第一步我们需要先对所在平台进行判断
   // 如果是android，使用getExternalStorageDirectory
   // 如果是iOS，使用getApplicationSupportDirectory
   final directory = Theme.of(context).platform == TargetPlatform.android
       ? await getExternalStorageDirectory()
       : await getApplicationSupportDirectory();
+  print("findLocalPath");
+  print(directory.path);
   return directory.path;
 }
