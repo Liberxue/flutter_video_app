@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.ciying">
    <application
         android:label="词影"
@@ -46,6 +47,30 @@
                android:name="android.support.FILE_PROVIDER_PATHS"
                android:resource="@xml/provider_paths"/>
        </provider>
+       <provider
+           android:name="androidx.work.impl.WorkManagerInitializer"
+           android:authorities="${applicationId}.workmanager-init"
+           tools:node="remove" />
+
+       <provider
+           android:name="vn.hunghd.flutterdownloader.FlutterDownloaderInitializer"
+           android:authorities="${applicationId}.flutter-downloader-init"
+           android:exported="false">
+           <!-- changes this number to configure the maximum number of concurrent tasks -->
+           <meta-data
+               android:name="vn.hunghd.flutterdownloader.MAX_CONCURRENT_TASKS"
+               android:value="10" />
+       </provider>
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- video_player -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- grpc -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITER__EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
 </manifest>

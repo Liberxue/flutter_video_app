@@ -1,3 +1,6 @@
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:ciying/models/Cart.dart';
 import 'package:ciying/page/OrderWidget.dart';
 import 'package:ciying/page/bloc/CartBloc.dart';
@@ -5,6 +8,7 @@ import 'package:ciying/util/checkPermission.dart';
 import 'package:ciying/util/download.dart';
 import 'package:ciying/widgets/SeparatorLine.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 class CartManager extends StatefulWidget {
   @override
@@ -20,6 +24,57 @@ class _CartManager extends State<CartManager>  with SingleTickerProviderStateMix
 
   String downloadPath = "";
 
+  initDownloader() async {
+     WidgetsFlutterBinding.ensureInitialized();
+    await FlutterDownloader.initialize(debug: true);
+  }
+  List<TaskInfo> _tasks;
+  List<ItemHolder> _items;
+  ReceivePort _port = ReceivePort();
+
+ void _bindBackgroundIsolate() {
+    bool isSuccess = IsolateNameServer.registerPortWithName(
+        _port.sendPort, 'downloader_send_port');
+    if (!isSuccess) {
+      _unbindBackgroundIsolate();
+      _bindBackgroundIsolate();
+      return;
+    }
+    _port.listen((dynamic data) {
+      // if (debug) {
+      //   print('UI Isolate Callback: $data');
+      // }
+      String id = data[0];
+      DownloadTaskStatus status = data[1];
+      int progress = data[2];
+
+      if (_tasks != null && _tasks.isNotEmpty) {
+        final task = _tasks.firstWhere((task) => task.taskId == id);
+        if (task != null) {
+          setState(() {
+            task.status = status;
+            task.progress = progress;
+          });
+        }
+      }
+    });
+  }
+
+  void _unbindBackgroundIsolate() {
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
+  }
+
+  static void downloadCallback(
+      String id, DownloadTaskStatus status, int progress) {
+    // if (debug) {
+    //   print(
+    //       'Background Isolate Callback: task ($id) is in status ($status) and process ($progress)');
+    // }
+    final SendPort send =
+        IsolateNameServer.lookupPortByName('downloader_send_port');
+    send.send([id, status, progress]);
+  }
+
   @override
   void initState() {
     //动画执行时间3秒  
@@ -27,6 +82,7 @@ class _CartManager extends State<CartManager>  with SingleTickerProviderStateMix
         new AnimationController(vsync: this, duration: Duration(seconds: 3));
     _animationController.forward();
     _animationController.addListener(() => setState(() => {}));
+    initDownloader();
     super.initState();
   }
   @override
@@ -71,17 +127,17 @@ class _CartManager extends State<CartManager>  with SingleTickerProviderStateMix
                             children: <Widget>[
                             new OrderWidget(snapshot.data.orders[index], _gridSize),
                             // new SeparatorLine(height: 1,color: Colors.grey,width: 1),
-                            Container(
-                              child: Center(
-                                child: LinearProgressIndicator(
-                                  backgroundColor: Colors.black12,
-                                    valueColor: new AlwaysStoppedAnimation<Color>(
-                                      Colors.blueGrey,
-                                    ),
-                                    value: .5, 
-                                ),
-                             ),
-                            ),
+                            // Container(
+                            //   child: Center(
+                            //     child: LinearProgressIndicator(
+                            //       backgroundColor: Colors.black12,
+                            //         valueColor: new AlwaysStoppedAnimation<Color>(
+                            //           Colors.blueGrey,
+                            //         ),
+                            //         value: .5, 
+                            //     ),
+                            //  ),
+                            // ),
                           ],
                         ),
                         ),
@@ -123,12 +179,12 @@ class _CartManager extends State<CartManager>  with SingleTickerProviderStateMix
                       await findLocalPath(context).then((value) => 
                        downloadPath=value);
                        print(downloadPath);
-                      downloadFile(_urlList,downloadPath);
+                       downloadFile(_urlList,downloadPath);
                     // if downloadFinish 。。。。
                       _urlList.clear();
                       _cartBloc.cleanOrderOfCart();
                   },
-                  child: new Text("批量下载", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white))
+                  child: new Text("一键下载", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white))
               )
             )
           )

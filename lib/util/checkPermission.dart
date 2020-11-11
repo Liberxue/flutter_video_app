@@ -7,23 +7,21 @@ import 'package:permission_handler/permission_handler.dart';
 Future<bool> checkPermission(BuildContext context) async {
   // 先对所在平台进行判断
   if (Theme.of(context).platform == TargetPlatform.android) {
-    PermissionStatus permission = await PermissionHandler()
-        .checkPermissionStatus(PermissionGroup.storage);
-    if (permission != PermissionStatus.granted) {
-      Map<PermissionGroup, PermissionStatus> permissions =
-          await PermissionHandler()
-              .requestPermissions([PermissionGroup.storage]);
-      if (permissions[PermissionGroup.storage] == PermissionStatus.granted) {
+   final status = await Permission.storage.status;
+      if (status != PermissionStatus.granted) {
+        final result = await Permission.storage.request();
+        if (result == PermissionStatus.granted) {
+          return true;
+        }
+      } else {
         return true;
       }
     } else {
       return true;
     }
-  } else {
-    return true;
+    return false;
   }
-  return false;
-}
+
 
 // 获取存储路径
 Future<String> findLocalPath(BuildContext context) async {
@@ -32,7 +30,5 @@ Future<String> findLocalPath(BuildContext context) async {
   final directory = Theme.of(context).platform == TargetPlatform.android
       ? await getExternalStorageDirectory()
       : await getApplicationSupportDirectory();
-  print("findLocalPath");
-  print(directory.path);
   return directory.path;
 }
