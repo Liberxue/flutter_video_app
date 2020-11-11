@@ -19,9 +19,10 @@ class ItemHolder {
 }
 
 downloadFile(List<String> downloadUrlList, savePath) async {
-  for(var downloadUrl in downloadUrlList) {
+  // for(var downloadUrl in downloadUrlList) {
+  print(downloadUrlList[0]);
   await FlutterDownloader.enqueue(
-    url: downloadUrl,
+    url: downloadUrlList[0],
     fileName: "liber.jpg",
     savedDir: savePath,
     showNotification: true,
@@ -30,4 +31,4 @@ downloadFile(List<String> downloadUrlList, savePath) async {
         true, // click on notification to open downloaded file (for Android)
   );
   }
-}
+// }

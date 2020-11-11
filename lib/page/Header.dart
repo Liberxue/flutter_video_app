@@ -30,26 +30,26 @@ class _headerState extends State<Header> {
     return  PreferredSize(
           preferredSize: Size.fromHeight(65.0),
           child: AppBar(
-            automaticallyImplyLeading: true, // hides leading widget
-            leading: Builder(builder: (BuildContext context) {
-              return Container(
-                  child: new Center(
-                child: IconButton(
-                  icon: Image.asset("assets/images/logo.png"),
-                  onPressed: () {
-                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => SearchList(),
-                        ));                
-                  },
-                ),
-              ));
-            }),
+            // automaticallyImplyLeading: true, // hides leading widget
+            // leading: Builder(builder: (BuildContext context) {
+            //   return Container(
+            //       child: new Center(
+            //     child: IconButton(
+            //       icon: Image.asset("assets/images/logo.png"),
+            //       onPressed: () {
+            //          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //           builder: (context) => SearchList(),
+            //             ));                
+            //       },
+            //     ),
+            //   ));
+            // }),
             elevation: 1.2,
             backgroundColor: Colors.white,
             actions: <Widget>[
               // if (_searchHeaderShow)
                 Container(
-                  width: 280,
+                  width: 300,
                   height: 60,
                   child: RoundedInputField(
                     icon: Icons.search,

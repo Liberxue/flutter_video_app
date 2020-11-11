@@ -24,26 +24,12 @@ class ProductWidget extends StatelessWidget {
       letterSpacing: 1,
     );
     return new Stack(
-      
           children: <Widget>[
-          // padding: EdgeInsets.fromLTRB(2, 2, 2, 10),
-          // decoration: BoxDecoration(color: Colors.white, 
-          // borderRadius: BorderRadius.all(Radius.circular(2))),
-          // height: _tileHeight,
-          // width: double.infinity,
-          //  child:new Column(
-              //  mainAxisSize: MainAxisSize.max,
-              //  crossAxisAlignment: CrossAxisAlignment.start, 
-                // crossAxisAlignment: CrossAxisAlignment.end,
-                // mainAxisAlignment: MainAxisAlignment.start,
-              //  children: <Widget>[
-                  // new Center(child: new Hero(tag: "tagHero${this._resourceSection.sourceName}", 
-                  // child: new Image.network(this._resourceSection.resourceAddress, fit: BoxFit.cover, height: height * 0.23))),
                 Container(
                 child: Container(
                   height: _tileHeight,
                   width: double.infinity,
-                  padding: const EdgeInsets.all(2.6),
+                  padding: const EdgeInsets.all(5),
                   child: Hero(
                     tag: '${_resourceSection.sourceID}',
                     child: Material(
@@ -79,7 +65,7 @@ class ProductWidget extends StatelessWidget {
                         Flexible(
                           flex: 9,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(5.0),
                             child: Container(
                               height: 50.0,
                               width: double.infinity,

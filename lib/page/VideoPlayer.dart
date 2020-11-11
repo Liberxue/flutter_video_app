@@ -31,7 +31,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
   void initState() {
     super.initState();
     _videoPlayerController = VideoPlayerController.network(
-        'https://cn-sh-cc-bcache-03.bilivideo.com/upgcxcode/24/34/254173424/254173424-1-16.mp4?e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1605016074&gen=playurl&os=bcache&oi=3550606090&trid=c46d712f8a1c4179bd4e260ecdbed100h&platform=html5&upsig=d9e2635e00656d6732b96fa86cf1158c&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,platform&cdnid=2216&mid=179019967&cip=124.14.12.164&logo=80000000');
+        'https://y.yarn.co/11e873bc-2821-4f2e-a0e8-f28aca14e329_text.mp4');
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
       placeholder: Center(

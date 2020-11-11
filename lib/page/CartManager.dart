@@ -103,7 +103,7 @@ class _CartManager extends State<CartManager>  with SingleTickerProviderStateMix
                     new Padding(padding: EdgeInsets.only(top: _gridSize*0.15,bottom:_gridSize*0.02), child:
                       new Text("选集列表", style: TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold))
                     ),
-                    new Container( 
+                    new Container(
                       height: _gridSize*0.68, 
                       child: new ListView.builder(
                         itemCount: snapshot.data.orders.length,

@@ -5,7 +5,6 @@ import 'package:ciying/page/CartManager.dart';
 import 'package:ciying/page/SearchGrid.dart';
 import 'package:ciying/page/bloc/CartBloc.dart';
 import 'package:ciying/page/head_profile.dart';
-import 'package:ciying/page/search_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -67,39 +66,20 @@ class _ResourceListState extends State<resourceList>with TickerProviderStateMixi
        appBar: PreferredSize(
           preferredSize: Size.fromHeight(65.0),
           child: AppBar(
-            automaticallyImplyLeading: true, // hides leading widget
-            leading: Builder(builder: (BuildContext context) {
-              return Container(
-                  child: new Center(
-                child: IconButton(
-                  icon: Image.asset("assets/images/logo.png"),
-                  onPressed: () {
-                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => SearchList(),
-                    ));
-                  },
-                ),
-              ));
-            }),
-            elevation: 1.2,
-            backgroundColor: Colors.white,
-            actions: <Widget>[
-              // if (_searchHeaderShow)
-                Container(
-                  padding: const EdgeInsets.only(right: 2.0),
-                  width: 280,
-                  height: 60,
-                  child: RoundedInputField(
-                    icon: Icons.search,
-                    hintText: "搜索",
-                    onChanged: (value) {
-                      _performSearch();
-                    },
-                  ),
-                ),
-              UserHeaderProfile(),
-            ],
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.search, color: Colors.black), onPressed: () {})
+          ],
+          leading: IconButton(
+              icon: Icon(Icons.menu, color: Colors.black), onPressed: () {}),
+          title: Text(
+            "词影",
+            style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
           ),
+          centerTitle: true,
+        ),
         ),
        backgroundColor: Colors.black, body:
       new Stack(children: <Widget>[
@@ -107,7 +87,7 @@ class _ResourceListState extends State<resourceList>with TickerProviderStateMixi
           physics: NeverScrollableScrollPhysics(), 
           controller: _scrollController,
           slivers: <Widget>[
-            new SliverToBoxAdapter(child:
+              new SliverToBoxAdapter(child:
               new SearchGrid(_resourceSection)
             ),
             new SliverToBoxAdapter(child:

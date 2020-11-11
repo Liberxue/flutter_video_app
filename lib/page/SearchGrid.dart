@@ -1,6 +1,5 @@
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:ciying/page/CategoryDropMenu.dart';
-import 'package:ciying/page/MinimalCart.dart';
 import 'package:ciying/page/ProductWidget.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +24,7 @@ class _SearchGridState extends State<SearchGrid> {
       // new Header(),
       // new Container(height: _gridSize, decoration: BoxDecoration(color: const Color(0xFFeeeeee), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(_gridSize/10), bottomRight: Radius.circular(_gridSize/10))), padding: EdgeInsets.only(left: 10, right: 10),
         new Container(height: _gridSize,
-        color:  const Color(0xFFeeeeee), 
+        color:  Colors.white, 
         padding: EdgeInsets.only(left: 2, right: 2),
         child:new Column(children: <Widget>[
           new Container(margin: EdgeInsets.only(top: 2), child:
@@ -47,7 +46,7 @@ class _SearchGridState extends State<SearchGrid> {
                           itemBuilder: (BuildContext context, int index) {
                             return new Padding(
                                 // padding: EdgeInsets.only(top: index%2==0 ? 20 : 0, right: index%2==0 ? 5 : 0, left: index%2==1 ? 5 : 0, bottom: index%2==1 ? 20 : 0),
-                                padding: EdgeInsets.only(left: 2, right: 2,bottom:2),
+                                padding: EdgeInsets.only(left: 5, right: 5,bottom:5),
                                 child: ProductWidget(widget._resourceSection[index]));
                           }
                       )
