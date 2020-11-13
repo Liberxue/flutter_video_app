@@ -6,16 +6,16 @@ import 'package:flutter/rendering.dart';
 Widget likeIcon(
     IconData icon, {
     Color color =  Colors.white,
-    double size = 14,
-    double padding = 15,
+    double size = 12,
+    // double padding = 20,
     bool isOutLine = false,
     Function onPressed,
   }) {
     return Container(
-      height: 35,
-      width: 35,
+      // height: 31,
+      // width: 10,
       // padding: EdgeInsets.all(padding),
-      margin: EdgeInsets.all(padding),
+      // margin: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         border: Border.all(
             color: Colors.white,

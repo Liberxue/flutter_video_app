@@ -110,22 +110,22 @@ class CustomHeadeBar extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                 Column(
-                  children: <Widget>[
-                    Container(
-                      width: 100,
-                      height: 120,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(url)
-                          )
-                      ),
+                Column(
+                children: <Widget>[
+                  Container(
+                    width: 100,
+                    height: 120,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(url)
+                        )
                     ),
-                  ],
-                ),
-                
+                  ),
+                ],
+              ),
+              
                 Column(
                   children: <Widget>[
                     Text("收藏夹", style: TextStyle(

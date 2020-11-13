@@ -14,7 +14,7 @@ class Manager {
   static Manager get instance => _getInstance();
   static Manager _instance;
   ClientChannel channel;
-  Manager._internal() { 
+  Manager._internal() {
       channel = ClientChannel(
       APIConfig.Address,
       port: APIConfig.Port,

@@ -107,15 +107,22 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
                 right: 10.0,
                 top: 90,
               ),
-              child: Image.asset(
-                "assets/images/watarmar.png",
-                width: 120,
-                height: 50,
-                fit: BoxFit.fill,
+              child: PhysicalModel(
+                      color: Colors.transparent,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      elevation:10.1,
+                      shadowColor:Colors.red,
+                      child: Image.asset(
+                        "assets/images/watarmar.png",
+                        width: 120,
+                        height: 50,
+                        fit: BoxFit.fill,
+                      ),
               ),
             ),
           ],
         ),
+
     );
   }
 
