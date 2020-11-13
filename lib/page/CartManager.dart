@@ -24,10 +24,7 @@ class _CartManager extends State<CartManager>  with SingleTickerProviderStateMix
 
   String downloadPath = "";
 
-  initDownloader() async {
-     WidgetsFlutterBinding.ensureInitialized();
-    await FlutterDownloader.initialize(debug: true);
-  }
+
   List<TaskInfo> _tasks;
   List<ItemHolder> _items;
   ReceivePort _port = ReceivePort();
@@ -82,7 +79,6 @@ class _CartManager extends State<CartManager>  with SingleTickerProviderStateMix
         new AnimationController(vsync: this, duration: Duration(seconds: 3));
     _animationController.forward();
     _animationController.addListener(() => setState(() => {}));
-    initDownloader();
     super.initState();
   }
   @override

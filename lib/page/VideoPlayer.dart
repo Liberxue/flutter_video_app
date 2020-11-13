@@ -26,18 +26,15 @@ class VideoPlayer extends StatefulWidget {
   }
 }
 
-class _VideoPlayerState extends State<VideoPlayer> {
-  final CartBloc _cartBloc = new CartBloc();
-
-
-  TargetPlatform _platform;
+class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
+  // final CartBloc _cartBloc = new CartBloc();
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
 
-  ProgressDialog pr;
   String downloadId;
   String _localPath;
   ReceivePort _port = ReceivePort();
+  bool _permissionReady;
 
   @override
   void initState() {
@@ -55,13 +52,13 @@ class _VideoPlayerState extends State<VideoPlayer> {
       showControls: true,
       autoInitialize: true,
       customControls: MyChewieMaterialControls(),
-    );
-    _init();
+    ); 
+   _init();
   }
 
  Future<void> _init() async {
-    // await FlutterDownloader.initialize();
-    _port.listen((dynamic data) {
+      FlutterDownloader.registerCallback(downloadCallback);
+     _port.listen((dynamic data) {
       print('UI Isolate Callback: $data');
       String id = data[0];
       DownloadTaskStatus status = data[1];
@@ -71,14 +68,24 @@ class _VideoPlayerState extends State<VideoPlayer> {
       print("progress: $progress");
       print("id == downloadId: ${id == downloadId}");
     });
-    FlutterDownloader.registerCallback(downloadCallback);
-
-    _localPath = (await findLocalPath(context)) + '/Download';
+ }
+void _updateState(BuildContext context) async {
+     _permissionReady = await checkPermission(context);
+    _localPath = (await findLocalPath(context)) + Platform.pathSeparator + 'Download';
     final savedDir = Directory(_localPath);
     bool hasExisted = await savedDir.exists();
     if (!hasExisted) {
       savedDir.create();
     }
+    checkPermission(context).then((hasGranted) {
+    setState(() {
+      _permissionReady = hasGranted;
+      print("_permissionReady============\r\n");
+      print(_permissionReady);
+      print(_localPath);
+      _localPath=_localPath;
+    });
+  });
   }
 
   static void downloadCallback(
@@ -90,7 +97,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
     send.send([id, status, progress]);
   }
 
-
+ 
   @override
   void dispose() {
     _videoPlayerController.dispose();
@@ -100,11 +107,12 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    final platform = Theme.of(context).platform;
     return MaterialApp(
       title: widget._resourceSection.sourceName,
       debugShowCheckedModeBanner: IsdebugShowCheckedModeBanner,
       theme: ThemeData.light().copyWith(
-        platform: _platform ?? Theme.of(context).platform,
+        platform: platform,
       ),
       home: Scaffold(
       appBar: PreferredSize(
@@ -134,12 +142,10 @@ class _VideoPlayerState extends State<VideoPlayer> {
       ),
     body: SizedBox(
       child: new Card(
-        elevation: 1.0,  //设置阴影
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(24.0))),  //设置圆角
+        // elevation: 1.0,  //设置阴影
+        // shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(24.0))),  //设置圆角
         child: new Column(children: <Widget>[
          new Container(
-          // height:  MediaQuery.of(context).size.height*0.88,
-            // padding: EdgeInsets.all(10), 
             child:new Column(children: <Widget>[
               new Container(margin: EdgeInsets.only(top:0), child:
                  videoPlay(context),
@@ -181,18 +187,20 @@ class _VideoPlayerState extends State<VideoPlayer> {
                           child:new RaisedButton(
                             color: Colors.grey,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)),
-                            // padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(10),
                               onPressed: () async {
-                                 if (await checkPermission(context)) {
+                                _updateState(context);
+                                 if (_permissionReady) {
                                     final taskId = await FlutterDownloader.enqueue(
                                       url:  widget._resourceSection.resourceAddress,
+                                      // headers: {"auth": "test_for_sql_encoding"},
                                       savedDir: _localPath,
-                                      showNotification:
-                                          true, // show download progress in status bar (for Android)
-                                      openFileFromNotification:
-                                          true, // click on notification to open downloaded file (for Android)
+                                      showNotification:true, // show download progress in status bar (for Android)
+                                      openFileFromNotification:true, // click on notification to open downloaded file (for Android)
                                     );
                                     downloadId = taskId;
+                                  }else{
+                                    print("无权限");
                                   }
                                 // if(_cartBloc.currentCart.isEmpty || _urlList.length<=0)
                               },
