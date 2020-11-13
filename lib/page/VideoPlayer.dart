@@ -1,20 +1,24 @@
-import 'package:CiYing/common/constants.dart';
-import 'package:CiYing/page/search_list.dart';
-import 'package:CiYing/util/screenshots.dart';
+import 'dart:io';
+import 'dart:isolate';
+import 'dart:ui';
+
+import 'package:ciying/common/constants.dart';
+import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:chewie/chewie.dart';
-import 'package:chewie/src/chewie_player.dart';
+import 'package:ciying/util/checkPermission.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:video_player/video_player.dart';
-
+import 'bloc/CartBloc.dart';
 import 'head_profile.dart';
 import 'my_chewie_custom.dart';
 
 class VideoPlayer extends StatefulWidget {
-  VideoPlayer(this.url, this.title);
+  VideoPlayer(this._resourceSection);
 
-  final String title;
-  final String url;
+  final ResourceSection _resourceSection;
 
   @override
   State<StatefulWidget> createState() {
@@ -22,20 +26,25 @@ class VideoPlayer extends StatefulWidget {
   }
 }
 
-class _VideoPlayerState extends State<VideoPlayer> {
-  TargetPlatform _platform;
+class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
+  // final CartBloc _cartBloc = new CartBloc();
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
+
+  String downloadId;
+  String _localPath;
+  ReceivePort _port = ReceivePort();
+  bool _permissionReady;
 
   @override
   void initState() {
     super.initState();
     _videoPlayerController = VideoPlayerController.network(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4');
+        'https://y.yarn.co/11e873bc-2821-4f2e-a0e8-f28aca14e329_text.mp4');
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
       placeholder: Center(
-        child: Text("正在缓冲",style: TextStyle(color: Colors.white30),),
+        child: Text("正在缓冲",style: TextStyle(color: Colors.white),),
       ),
       aspectRatio: 3 / 2,
       autoPlay: true,
@@ -43,9 +52,52 @@ class _VideoPlayerState extends State<VideoPlayer> {
       showControls: true,
       autoInitialize: true,
       customControls: MyChewieMaterialControls(),
-    );
+    ); 
+   _init();
   }
 
+ Future<void> _init() async {
+      FlutterDownloader.registerCallback(downloadCallback);
+     _port.listen((dynamic data) {
+      print('UI Isolate Callback: $data');
+      String id = data[0];
+      DownloadTaskStatus status = data[1];
+      int progress = data[2];
+
+      print("status: $status");
+      print("progress: $progress");
+      print("id == downloadId: ${id == downloadId}");
+    });
+ }
+void _updateState(BuildContext context) async {
+     _permissionReady = await checkPermission(context);
+    _localPath = (await findLocalPath(context)) + Platform.pathSeparator + 'Download';
+    final savedDir = Directory(_localPath);
+    bool hasExisted = await savedDir.exists();
+    if (!hasExisted) {
+      savedDir.create();
+    }
+    checkPermission(context).then((hasGranted) {
+    setState(() {
+      _permissionReady = hasGranted;
+      print("_permissionReady============\r\n");
+      print(_permissionReady);
+      print(_localPath);
+      _localPath=_localPath;
+    });
+  });
+  }
+
+  static void downloadCallback(
+      String id, DownloadTaskStatus status, int progress) {
+    print(
+        'Background Isolate Callback: task ($id) is in status ($status) and process ($progress)');
+    final SendPort send =
+        IsolateNameServer.lookupPortByName('downloader_send_port');
+    send.send([id, status, progress]);
+  }
+
+ 
   @override
   void dispose() {
     _videoPlayerController.dispose();
@@ -55,11 +107,12 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    final platform = Theme.of(context).platform;
     return MaterialApp(
-      title: widget.title,
+      title: widget._resourceSection.sourceName,
       debugShowCheckedModeBanner: IsdebugShowCheckedModeBanner,
       theme: ThemeData.light().copyWith(
-        platform: _platform ?? Theme.of(context).platform,
+        platform: platform,
       ),
       home: Scaffold(
       appBar: PreferredSize(
@@ -67,7 +120,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
           child: AppBar(
                title: Container(
                 color: Colors.white10,
-                child:Text(widget.title, style: TextStyle(
+                child:Text(widget._resourceSection.sourceName, style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,
                   ),),
@@ -76,55 +129,98 @@ class _VideoPlayerState extends State<VideoPlayer> {
               return IconButton(
                 icon: Image.asset("assets/images/logo.png"),
                   onPressed: () {
-                          Navigator.pushNamed(context, '/UserProfile');
+                       Navigator.pushNamed(context, '/UserProfile');
                   },
               );
             }),
-            elevation: 1.5,
+            elevation: 0.0,
             backgroundColor: Colors.white,
             actions: <Widget>[
               UserHeaderProfile(),
             ],
           ),
       ),
-        body: Column(
-          children: <Widget>[
-            videoPlay(context),
-             Row(
-              children: <Widget>[
-                Expanded(
-                  child: FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        Navigator.pop(context);
-                      });
-                    },
-                    child: Padding(
-                      child: Text("返回"),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+    body: SizedBox(
+      child: new Card(
+        // elevation: 1.0,  //设置阴影
+        // shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(24.0))),  //设置圆角
+        child: new Column(children: <Widget>[
+         new Container(
+            child:new Column(children: <Widget>[
+              new Container(margin: EdgeInsets.only(top:0), child:
+                 videoPlay(context),
+              ),
+                new Container(margin: EdgeInsets.only(top: 10.0), child:
+                      new Text(widget._resourceSection.sourceName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40, color: Colors.black)),
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        // _platform = TargetPlatform.iOS;
-                      });
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text("收藏"),
+                    new Container(margin: EdgeInsets.only(top: 10), child:
+                      new Text("来源：${widget._resourceSection.source}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.grey)),
                     ),
+                  new Container(margin: EdgeInsets.only(top: 40, bottom: 40), child:
+                    new Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                      new Text("详细", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
+                      new Padding(padding: EdgeInsets.only(top: 10), child: new Text(widget._resourceSection.duration.toString(), style: TextStyle(color: Colors.grey, fontSize: 18)))
+                    ])
                   ),
-                )
+                new Container(
+                  decoration: BoxDecoration(
+                  boxShadow:  [
+                  BoxShadow(
+                    color: Colors.white,
+                    blurRadius: 30.0, // has the effect of softening the shadow
+                    spreadRadius: 5.0, // has the effect of extending the shadow
+                    offset: Offset(
+                      0.0, // horizontal, move right 10
+                      -20.0, // vertical, move down 10
+                    ),
+                  )
+                ]), 
+                padding: EdgeInsets.symmetric(horizontal: 20), 
+                height: MediaQuery.of(context).size.height/10, 
+                child:new Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+                    new FlatButton.icon(onPressed: (){}, icon: new Icon(Icons.favorite_border), label: new Text("")),
+                    new SizedBox(
+                        width: MediaQuery.of(context).size.width - 300, 
+                        height:40,
+                      child: new Align(alignment: Alignment.bottomCenter, 
+                      child:new Container(
+                          child:new RaisedButton(
+                            color: Colors.grey,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)),
+                            padding: EdgeInsets.all(10),
+                              onPressed: () async {
+                                _updateState(context);
+                                 if (_permissionReady) {
+                                    final taskId = await FlutterDownloader.enqueue(
+                                      url:  widget._resourceSection.resourceAddress,
+                                      // headers: {"auth": "test_for_sql_encoding"},
+                                      savedDir: _localPath,
+                                      showNotification:true, // show download progress in status bar (for Android)
+                                      openFileFromNotification:true, // click on notification to open downloaded file (for Android)
+                                    );
+                                    downloadId = taskId;
+                                  }else{
+                                    print("无权限");
+                                  }
+                                // if(_cartBloc.currentCart.isEmpty || _urlList.length<=0)
+                              },
+                              child: new Text("一键下载", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white))
+                          )
+                      ),  
+                    )
+                    )
+                  ]),
+              )
               ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
+            ),
+          ),
+          ]
+    )
+  )
+  )
+    ),
+);
+}
   Widget videoPlay(BuildContext context) {
     return Container(
               child: Center(
@@ -137,6 +233,6 @@ class _VideoPlayerState extends State<VideoPlayer> {
                 ),
               ),
             );
-  }
-  
-}
+          }
+          
+        }

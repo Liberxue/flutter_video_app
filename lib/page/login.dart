@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:CiYing/common/constants.dart';
-import 'package:CiYing/grpc/proto/common.pbenum.dart';
-import 'package:CiYing/grpc/proto/gateWay.pbgrpc.dart';
-import 'package:CiYing/models/signIn/signIn.dart';
-import 'package:CiYing/models/sign_up.dart';
-import 'package:CiYing/page/search_list.dart';
-import 'package:CiYing/page/userPrivacyAgreement.dart';
-import 'package:CiYing/page/userRegistrationAgreement.dart';
-import 'package:CiYing/util/exit.dart';
-import 'package:CiYing/util/store.dart';
-import 'package:CiYing/util/validation.dart';
+import 'package:ciying/common/constants.dart';
+import 'package:ciying/grpc/proto/common.pbenum.dart';
+import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
+import 'package:ciying/models/signIn/signIn.dart';
+import 'package:ciying/models/sign_up.dart';
+import 'package:ciying/page/search_list.dart';
+import 'package:ciying/page/userPrivacyAgreement.dart';
+import 'package:ciying/page/userRegistrationAgreement.dart';
+import 'package:ciying/util/exit.dart';
+import 'package:ciying/util/store.dart';
+import 'package:ciying/util/validation.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +24,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> with WidgetsBindingObserver {
 
-  // 输入框的焦点实例
-  FocusNode _focusNode;
-  // 当前键盘是否是激活状态
-  bool isKeyboardActived = false;
-
   ///RichText中隐私协议的手势
   TapGestureRecognizer _privacyProtocolRecognizer;
   ///RichText中注册协议的手势
@@ -41,46 +36,8 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
     _registProtocolRecognizer = TapGestureRecognizer();
     //隐私协议的手势
     _privacyProtocolRecognizer = TapGestureRecognizer();
-     _focusNode = FocusNode();
-    // 监听输入框焦点变化
-    _focusNode.addListener(_onFocus);
-    // 创建一个界面变化的观察者
-    WidgetsBinding.instance.addObserver(this);
+
   }
-
-// 焦点变化时触发的函数
-_onFocus() {
-    if (_focusNode.hasFocus) {
-    // 聚焦时候的操作
-    return;
-    }
-}
- 
-@override
-void didChangeMetrics() {
-    super.didChangeMetrics();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-        // 当前是安卓系统并且在焦点聚焦的情况下
-        if (Platform.isAndroid && _focusNode.hasFocus) {
-            if (isKeyboardActived) {
-                isKeyboardActived = false;
-                // 使输入框失去焦点
-                _focusNode.unfocus();
-                return;
-            }
-            isKeyboardActived = true;
-        }
-    });
-}
- 
-// 卸载，防止内存泄漏
-@override
-void dispose() {
-    super.dispose();
-    _focusNode.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-}
-
   
   ///复选框的选中标识
   bool checkIsSelect = false;
@@ -103,7 +60,7 @@ void dispose() {
     );
   }
   SignInResponse _signInResponse;
-  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
+  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 50);
   Future<String> _authUser(LoginData data) async {
 
     SignInRequest signInRequest =SignInRequest();
@@ -114,7 +71,7 @@ void dispose() {
     _signInResponse = await signIn(signInRequest);
     return Future.delayed(loginTime).then((_) async {
       if(_signInResponse.code!=ResponseCode.SUCCESSFUL){
-          return "登录失败，请检查账号密码"; // 多语言支持？#issue https://github.com/PomCloud/CiYing/issues/3
+          return "登录失败，请检查账号密码"; // 多语言支持？#issue https://github.com/PomCloud/ciying/issues/3
       }
       if (_signInResponse==null&&_signInResponse.token.length<1){ //mark check token
         return  "登录异常";
@@ -164,7 +121,6 @@ void dispose() {
                   RaisedButton(
                       child: Text('取消'),
                       onPressed: () => Navigator.of(context).pop(false)),
-                      
                 ],
               )),
       child: Stack(
@@ -304,5 +260,11 @@ void dispose() {
    ]
  )
     );
+  }
+
+
+@override
+  void dispose() {
+    super.dispose();
   }
 }

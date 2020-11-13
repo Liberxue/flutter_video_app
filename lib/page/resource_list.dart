@@ -1,26 +1,73 @@
-import 'package:CiYing/common/constants.dart';
-import 'package:CiYing/models/image_list.dart';
-import 'package:CiYing/models/image.dart' as DisplayImage;
-import 'package:CiYing/page/icon.dart';
+import 'dart:ui';
+
+import 'package:ciying/api/search.dart';
+import 'package:ciying/grpc/proto/search.pb.dart';
+import 'package:ciying/page/CartManager.dart';
+import 'package:ciying/page/SearchGrid.dart';
+import 'package:ciying/page/bloc/CartBloc.dart';
+import 'package:ciying/widgets/SlideContainer.dart';
+import 'package:ciying/widgets/UserDrawerPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ResourceList extends StatefulWidget {
-
-  var isShow = false;
-  final ImageList _images;
-  final bool searchPerformed;
-
-  ResourceList(this._images, {this.searchPerformed = false});
+class ResourceList extends StatelessWidget {
   @override
-  _ResourceListState createState() => _ResourceListState();
+  Widget build(BuildContext context) => MaterialApp(
+        home: Scaffold(
+        // appBar: PreferredSize(
+        //   preferredSize: Size.fromHeight(65.0),
+        //   child: AppBar(
+        //   backgroundColor: Colors.white,
+        //   elevation: 0.0,
+        //   actions: <Widget>[
+        //     IconButton(
+        //         icon: Icon(Icons.search, color: Colors.black), onPressed: () {})
+        //   ],
+        //   leading: IconButton(
+        //       icon: Icon(Icons.menu, color: Colors.black), onPressed: () {
+                
+        //   }),
+        //   title: Text(
+        //     "词影",
+        //     style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+        //   ),
+        //   centerTitle: true,
+        // ),
+        // ),
+       backgroundColor: Colors.black,
+          body: _Body(),
+        ),
+      );
 }
 
-class _ResourceListState extends State<ResourceList>with TickerProviderStateMixin {
-  bool isLiked = true;
+class _Body extends StatefulWidget {
+  @override
+  _State createState() => _State();
+}
+
+class _State extends State<_Body> with TickerProviderStateMixin {
+
   AnimationController controller;
   Animation<double> animation;
+  //cart
+  bool _showCart = false;
+  CartBloc _cartBloc;
+  ScrollController _scrollController = new ScrollController();
 
+  List<ResourceSection> _resourceSection;
+
+
+  Future _performSearch() async {
+    SearchRequest searchRequest=SearchRequest();
+    searchRequest.text="";
+    searchRequest.limit=100;
+    SearchResponse searchResponse=await Search.searchAPIRequest(searchRequest);
+    print(searchResponse.code);
+    print(searchResponse.resourceSection);
+    setState(() {
+      _resourceSection=searchResponse.resourceSection;
+    });
+  }
   @override
   void initState() {
        controller =
@@ -28,171 +75,153 @@ class _ResourceListState extends State<ResourceList>with TickerProviderStateMixi
     animation = Tween<double>(begin: 0, end: 1).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInToLinear));
     controller.forward();
-
+    // cart
+     _scrollController = new ScrollController();
+    _cartBloc = new CartBloc();
+    _performSearch();
     super.initState();
+  }
+  double position = 0.0;
+  double height = 0.0;
+
+  double get maxSlideDistance => MediaQuery.of(context).size.width * 0.88;
+
+  final GlobalKey<ContainerState> _slideKey = GlobalKey<ContainerState>();
+
+  void onSlide(double position) {
+    setState(() => this.position = position);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double statusBarHeight = MediaQuery.of(context).padding.top;
+    height = MediaQuery.of(context).size.height - statusBarHeight;
+
+    return Container(
+      margin: EdgeInsets.only(top: statusBarHeight),
+      child: SlideStack(
+        drawer: UserDrawerPage(),
+        child: SlideContainer(
+          key: _slideKey,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: height * (1 - position / 5),
+            child: Column(
+              children: <Widget>[
+                CustomAppBar(
+                  title: '词影',
+                  height: kToolbarHeight * (1 - position / 5),
+                  tapDrawer: () {
+                    _slideKey.currentState.openOrClose();
+                  },
+                ),
+                Expanded(
+                 child: Stack(children: <Widget>[
+                  new CustomScrollView(
+                    physics: NeverScrollableScrollPhysics(), 
+                    controller: _scrollController,
+                    slivers: <Widget>[
+                        new SliverToBoxAdapter(child:
+                        new SearchGrid(_resourceSection)
+                      ),
+                      new SliverToBoxAdapter(child:
+                        new CartManager()
+                      ),
+                  ]),
+                  new Align(
+                      alignment: Alignment.bottomRight, child:
+                      new Container(margin: EdgeInsets.only(right: 10, bottom: 10),child:
+                        new FloatingActionButton(onPressed: (){
+                        if(_showCart)
+                          _scrollController.animateTo(
+                            _scrollController.position.minScrollExtent,
+                            curve: Curves.fastOutSlowIn,
+                            duration: Duration(seconds: 2));
+                        else
+                          _scrollController.animateTo(
+                            _scrollController.position.maxScrollExtent, 
+                            curve: Curves.fastOutSlowIn,
+                            duration: Duration(seconds: 2));
+
+                        setState(() {
+
+                        _showCart = !_showCart;
+
+                        });
+                      }, backgroundColor: Colors.transparent, 
+                        child: new Icon(_showCart ? Icons.close : Icons.movie,size:50))
+                    )
+                  )
+                ])
+                )
+              ],
+            ),
+          ),
+          slideDirection: SlideDirection.left,
+          onSlide: onSlide,
+          drawerSize: maxSlideDistance,
+          transform:
+          Matrix4.translationValues(0.0, height * position / 10, 0.0),
+        ),
+      ),
+    );
   }
 
 
   @override
   void dispose() {
     controller.dispose();
+    _cartBloc.dispose();
     super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) => _getBuildWidget(context);
-
-  Widget _getBuildWidget(BuildContext context) {
-    Widget targetWidget;
-    if (widget._images == null && widget.searchPerformed == true) {
-      targetWidget = Container(
-        padding: EdgeInsets.all(16.0),
-        child: Text(
-          'Something went wrong. Please try again.',
-          style: TextStyle(
-              fontFamily: 'Roboto',
-              fontWeight: FontWeight.w400,
-              fontSize: 16.0),
-          textAlign: TextAlign.center,
-        ),
-      );
-    } else if (widget.searchPerformed == false) {
-      targetWidget = Container(
-        padding: EdgeInsets.all(16.0),
-        child: Text(
-          '词影精准台词搜索 \n \n 搜索结果来自Spider爬行 \n \n 不存储任何内容，只提供信息检索服务。',
-          style: TextStyle(
-              fontFamily: 'Roboto',
-              fontWeight: FontWeight.w400,
-              fontSize: 16.0),
-          textAlign: TextAlign.center,
-        ),
-      );
-    } else {
-      targetWidget = buildImagesGrid(context);
-    }
-
-    return targetWidget;
-  }
-
-  Widget buildImagesGrid(BuildContext context) {
-
-    List<DisplayImage.Image> displayImages = widget._images.images;
-    TextStyle authorStyle = TextStyle(
-      fontSize: 10,
-      color: Colors.white,
-      letterSpacing: 1,
-    );
-
-    // double deviceHeight = MediaQuery.of(context).size.height;
-    double deviceWidth = MediaQuery.of(context).size.width;
-    final double _tileHeight = MediaQuery.of(context).size.height / 3;
-
-    int noOfRows = 1;
-
-    if (deviceWidth > 800)
-      noOfRows = 5;
-    else if (deviceWidth > 200) noOfRows = 2;
-    return Expanded(
-      child: GridView.builder(
-        itemCount: displayImages.length,
-        padding: EdgeInsets.all(2.0),
-        scrollDirection: Axis.vertical,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: noOfRows),
-        itemBuilder: (BuildContext context, int index) {
-          return Stack(
-            children: <Widget>[
-              Container(
-                child: Container(
-                  height: _tileHeight,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(2.6),
-                  child: Hero(
-                    tag: '${displayImages[index].imageUrl}',
-                    child: Material(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.circular(14),
-                      shadowColor: Colors.grey.withOpacity(0.5),
-                      elevation: 24.0,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context,
-                              '/images/${widget._images.searchQuery}/$index');
-                        },
-                        child: Image.network(displayImages[index].imageUrl,
-                            fit: BoxFit.cover),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                  height: _tileHeight,
-                  width: double.infinity,
-                  child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Flexible(
-                          flex: 9,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 50.0,
-                              width: double.infinity,
-                              color: Colors.black38,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    "片名：${displayImages[index].photographer}",
-                                    style: authorStyle,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Divider(
-                                    height: 5,
-                                    color: Colors.white30,
-                                  ),
-                                  Text(
-                                    "时长：${displayImages[index].views}",
-                                    style: authorStyle,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    "来源：${displayImages[index].views}",
-                                    style: authorStyle,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        //likeIcon
-                          likeIcon(isLiked ? Icons.favorite : Icons.favorite_border,
-                            color: isLiked ? red : lightGrey,
-                            size: 40,
-                            padding: 15,
-                            isOutLine: false, onPressed: () {
-                              setState(() {
-                                print("${displayImages[index].imageUrl}");
-                                isLiked = !isLiked;
-                              });
-                          }),
-                      ])),
-            ],
-          );
-        },
-      ),
-    );
   }
 }
 
-void _flavModalBottomSheet(BuildContext context) {
-  print("_flavModalBottomSheet");
+class CustomAppBar extends StatelessWidget {
+  final String title;
+  final VoidCallback tapDrawer;
+  final double height;
+
+  const CustomAppBar({Key key, this.title, this.tapDrawer, this.height})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color:Colors.white,
+      height: height,
+      child: Row(
+        children: <Widget>[
+          GestureDetector(
+            onTap: tapDrawer,
+            child: Padding(
+              padding: EdgeInsets.only(left: 10.0, right: 20.0),
+              child: Icon(
+                Icons.dehaze,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+                GestureDetector(
+            onTap: tapDrawer,
+            child: Padding(
+              padding: EdgeInsets.only(left: 10.0, right: 20.0),
+              child: Icon(
+                Icons.dehaze,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+          Center(
+            child: Text(
+              title,
+              style: Theme.of(context)
+                  .textTheme
+                  .title
+                  .copyWith(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

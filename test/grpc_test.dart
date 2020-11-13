@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:CiYing/grpc/proto/gateWay.pbgrpc.dart';
+import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
 
 void main() => runApp(MyApp());

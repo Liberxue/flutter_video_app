@@ -15,7 +15,7 @@ class MyChewieMaterialControls extends StatefulWidget {
 
 class _MyChewieMaterialControlsState extends State<MyChewieMaterialControls> {
   VideoPlayerValue _latestValue;
-  double _latestVolume;
+  // double _latestVolume;
   bool _hideStuff = true;
   Timer _hideTimer;
   Timer _initTimer;
@@ -73,13 +73,6 @@ class _MyChewieMaterialControlsState extends State<MyChewieMaterialControls> {
       ),
     );
   }
-
-  @override
-  void dispose() {
-    _dispose();
-    super.dispose();
-  }
-
   void _dispose() {
     controller.removeListener(_updateState);
     _hideTimer?.cancel();
@@ -110,26 +103,33 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(
-                left: 300.0,
-                // right: 300.0,
-                // top: 100,
+                left: 10.0,
+                right: 10.0,
+                top: 90,
               ),
-              child: Image.asset(
-                "assets/images/watarmar.png",
-                // width: 400,
-                height: 50,
-                // fit: BoxFit.fill,
+              child: PhysicalModel(
+                      color: Colors.transparent,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      elevation:10.1,
+                      shadowColor:Colors.red,
+                      child: Image.asset(
+                        "assets/images/watarmar.png",
+                        width: 120,
+                        height: 50,
+                        fit: BoxFit.fill,
+                      ),
               ),
             ),
           ],
         ),
+
     );
   }
 
   AnimatedOpacity _buildBottomBar(
     BuildContext context,
   ) {
-    final iconColor = Theme.of(context).textTheme.button.color;
+    // final iconColor = Theme.of(context).textTheme.button.color;
     return AnimatedOpacity(
       opacity: _hideStuff ? 0.0 : 1,
       duration: Duration(milliseconds: 300),
@@ -183,60 +183,6 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
     );
   }
 
-  Expanded _buildHitArea() {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          if (_latestValue != null && _latestValue.isPlaying) {
-            if (_displayTapped) {
-              setState(() {
-                _hideStuff = true;
-              });
-            } else
-              _cancelAndRestartTimer();
-          } else {
-
-            setState(() {
-              _hideStuff = true;
-            });
-          }
-        },
-        onDoubleTap: (){
-          _playPause();
-        },
-        child: Container(
-          color: Colors.transparent,
-          child: Container(
-          alignment: Alignment.bottomRight,
-            child: AnimatedOpacity(
-              opacity:
-                  _latestValue != null && !_latestValue.isPlaying && !_dragging
-                      ? 0.8
-                      : 0.0,
-              duration: Duration(milliseconds: 300),
-              child: GestureDetector(
-                onTap: () {
-                  _playPause();
-                },
-                  child: Center(
-                    // margin: EdgeInsets.all(40),
-                  // decoration: BoxDecoration(
-                    // boxShadow: <BoxShadow>[
-                    //   BoxShadow(
-                    //     color: Colors.black54,
-                    //     blurRadius: 20
-                    //   ),
-                    // ],
-                  // ),
-                  child: Icon(Icons.play_arrow,size: 120.0,color: Colors.white,),
-                )
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
   // Expanded _buildHitArea() {
   //   return Expanded(
   //     child: GestureDetector(
@@ -249,18 +195,19 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
   //           } else
   //             _cancelAndRestartTimer();
   //         } else {
+
   //           setState(() {
   //             _hideStuff = true;
   //           });
   //         }
   //       },
-  //       onDoubleTap: () {
+  //       onDoubleTap: (){
   //         _playPause();
   //       },
   //       child: Container(
   //         color: Colors.transparent,
   //         child: Container(
-  //           alignment: Alignment.bottomRight,
+  //         alignment: Alignment.bottomRight,
   //           child: AnimatedOpacity(
   //             opacity:
   //                 _latestValue != null && !_latestValue.isPlaying && !_dragging
@@ -268,28 +215,82 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
   //                     : 0.0,
   //             duration: Duration(milliseconds: 300),
   //             child: GestureDetector(
-  //                 onTap: () {
-  //                   _playPause();
-  //                 },
-  //                 child: Container(
-  //                   margin: EdgeInsets.only(bottom: 10, right: 10),
-  //                   decoration: BoxDecoration(
-  //                     boxShadow: <BoxShadow>[
-  //                       BoxShadow(color: Colors.black54, blurRadius: 20),
-  //                     ],
-  //                   ),
-  //                   child: Icon(
-  //                     Icons.play_arrow,
-  //                     size: 40.0,
-  //                     color: Colors.white,
-  //                   ),
-  //                 )),
+  //               onTap: () {
+  //                 _playPause();
+  //               },
+  //                 child: Center(
+  //                   // margin: EdgeInsets.all(40),
+  //                 // decoration: BoxDecoration(
+  //                   // boxShadow: <BoxShadow>[
+  //                   //   BoxShadow(
+  //                   //     color: Colors.black54,
+  //                   //     blurRadius: 20
+  //                   //   ),
+  //                   // ],
+  //                 // ),
+  //                 child: Icon(Icons.play_arrow,size: 30.0,color: Colors.white,),
+  //               )
+  //             ),
   //           ),
   //         ),
   //       ),
   //     ),
   //   );
   // }
+  Expanded _buildHitArea() {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          if (_latestValue != null && _latestValue.isPlaying) {
+            if (_displayTapped) {
+              setState(() {
+                _hideStuff = true;
+              });
+            } else
+              _cancelAndRestartTimer();
+          } else {
+            setState(() {
+              _hideStuff = true;
+            });
+          }
+        },
+        onDoubleTap: () {
+          _playPause();
+        },
+        child: Container(
+          color: Colors.transparent,
+          child: Container(
+            alignment: Alignment.bottomRight,
+            child: AnimatedOpacity(
+              opacity:
+                  _latestValue != null && !_latestValue.isPlaying && !_dragging
+                      ? 0.8
+                      : 0.0,
+              duration: Duration(milliseconds: 300),
+              child: GestureDetector(
+                  onTap: () {
+                    _playPause();
+                  },
+                  // child: Container(
+                  //   margin: EdgeInsets.only(bottom: 10, right: 10),
+                  //   decoration: BoxDecoration(
+                  //     boxShadow: <BoxShadow>[
+                  //       BoxShadow(color: Colors.black54, blurRadius: 20),
+                  //     ],
+                  //   ),
+                  //   child: Icon(
+                  //     Icons.play_arrow,
+                  //     size: 40.0,
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
+                  ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
   GestureDetector _buildPlayPause(VideoPlayerController controller) {
     return GestureDetector(
       onTap: _playPause,
@@ -426,7 +427,6 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
             setState(() {
               _dragging = false;
             });
-
             _startHideTimer();
           },
           colors: ChewieProgressColors(
@@ -438,5 +438,11 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _dispose();
+    super.dispose();
   }
 }

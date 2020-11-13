@@ -53,16 +53,16 @@ const ResourceData$json = const {
   ],
 };
 
-const ReourceDownloadRequest$json = const {
-  '1': 'ReourceDownloadRequest',
+const ResourceDownloadRequest$json = const {
+  '1': 'ResourceDownloadRequest',
   '2': const [
     const {'1': 'UserId', '3': 1, '4': 1, '5': 9, '10': 'UserId'},
     const {'1': 'ResourceId', '3': 2, '4': 3, '5': 9, '10': 'ResourceId'},
   ],
 };
 
-const ReourceDownloadResponse$json = const {
-  '1': 'ReourceDownloadResponse',
+const ResourceDownloadResponse$json = const {
+  '1': 'ResourceDownloadResponse',
   '2': const [
     const {'1': 'Message', '3': 1, '4': 1, '5': 9, '10': 'Message'},
     const {'1': 'Code', '3': 2, '4': 1, '5': 14, '6': '.proto.ResponseCode', '10': 'Code'},
@@ -70,16 +70,16 @@ const ReourceDownloadResponse$json = const {
   ],
 };
 
-const ReourcePreviewRequest$json = const {
-  '1': 'ReourcePreviewRequest',
+const ResourcePreviewRequest$json = const {
+  '1': 'ResourcePreviewRequest',
   '2': const [
     const {'1': 'UserId', '3': 1, '4': 1, '5': 9, '10': 'UserId'},
     const {'1': 'Data', '3': 2, '4': 3, '5': 11, '6': '.proto.ResourceData', '10': 'Data'},
   ],
 };
 
-const ReourcePreviewResponse$json = const {
-  '1': 'ReourcePreviewResponse',
+const ResourcePreviewResponse$json = const {
+  '1': 'ResourcePreviewResponse',
   '2': const [
     const {'1': 'Message', '3': 1, '4': 1, '5': 9, '10': 'Message'},
     const {'1': 'Code', '3': 2, '4': 1, '5': 14, '6': '.proto.ResponseCode', '10': 'Code'},

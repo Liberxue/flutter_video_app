@@ -1,6 +1,6 @@
 
-import 'package:CiYing/page/login.dart';
-import 'package:CiYing/util/store.dart';
+import 'package:ciying/page/login.dart';
+import 'package:ciying/util/store.dart';
 import 'package:flutter/material.dart';
 
 
@@ -40,7 +40,7 @@ final String url = "https://avatars0.githubusercontent.com/u/5831248?s=460&u=cfe
 class CustomAppBar extends StatelessWidget
   with PreferredSizeWidget{
   @override
-  Size get preferredSize => Size(double.infinity, 40);
+  Size get preferredSize => Size(double.infinity, 60);
   @override
   Widget build(BuildContext context) {
     return  AppBar(
@@ -110,22 +110,22 @@ class CustomHeadeBar extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                 Column(
-                  children: <Widget>[
-                    Container(
-                      width: 100,
-                      height: 120,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(url)
-                          )
-                      ),
+                Column(
+                children: <Widget>[
+                  Container(
+                    width: 100,
+                    height: 120,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(url)
+                        )
                     ),
-                  ],
-                ),
-                
+                  ),
+                ],
+              ),
+              
                 Column(
                   children: <Widget>[
                     Text("收藏夹", style: TextStyle(

@@ -1,9 +1,8 @@
-import 'package:CiYing/components/rounded_input_field.dart';
-import 'package:CiYing/page/resource_list.dart';
-import 'package:CiYing/page/head_profile.dart';
+import 'dart:math';
+
+import 'package:flappy_search_bar/flappy_search_bar.dart';
+import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:CiYing/models/image_list.dart';
-import 'package:CiYing/util/network.dart';
 
 class SearchList extends StatefulWidget {
   @override
@@ -11,119 +10,124 @@ class SearchList extends StatefulWidget {
 }
 
 class _SearchListState extends State<SearchList> {
-  TextEditingController searchQueryController = TextEditingController();
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Home(),
+    );
+  }
+}
 
-  bool _isLoading = false;
-  ImageList _images;
-  bool _searchDone = false;
-  bool _searchHeaderShow = false;
+class Post {
+  final String title;
+  final String body;
 
-  Future _performSearch() async {
-    final String query = searchQueryController.text;
-    ImageList images = await Storage.getImagesForSearch(query);
+  Post(this.title, this.body);
+}
 
-    setState(() {
-      _images = images;
-      _searchDone = true;
-      _isLoading = false;
-    });
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final SearchBarController<Post> _searchBarController = SearchBarController();
+  bool isReplay = false;
+
+  Future<List<Post>> _getALlPosts(String text) async {
+    await Future.delayed(Duration(seconds: text.length == 4 ? 10 : 1));
+    if (isReplay) return [Post("Replaying !", "Replaying body")];
+    if (text.length == 5) throw Error();
+    if (text.length == 6) return [];
+    List<Post> posts = [];
+
+    var random = new Random();
+    for (int i = 0; i < 10; i++) {
+      posts.add(Post("$text $i", "body random number : ${random.nextInt(100)}"));
+    }
+    return posts;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(65.0),
-          child: AppBar(
-            automaticallyImplyLeading: true, // hides leading widget
-            leading: Builder(builder: (BuildContext context) {
-              return Container(
-                  child: new Center(
-                child: IconButton(
-                  icon: Image.asset("assets/images/logo.png"),
-                  onPressed: () {
-                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => SearchList(),
-                    ));
-                  },
-                ),
-              ));
-            }),
-            elevation: 1.2,
-            backgroundColor: Colors.white,
-            actions: <Widget>[
-              if (_searchHeaderShow)
-                Container(
-                  padding: const EdgeInsets.only(right: 2.0),
-                  width: 280,
-                  height: 60,
-                  child: RoundedInputField(
-                    icon: Icons.search,
-                    hintText: "搜索",
-                    onChanged: (value) {
-                      _performSearch();
-                    },
-                  ),
-                ),
-              UserHeaderProfile(),
+      body: SafeArea(
+        child: SearchBar<Post>(
+          searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
+          headerPadding: EdgeInsets.symmetric(horizontal: 10),
+          listPadding: EdgeInsets.symmetric(horizontal: 10),
+          onSearch: _getALlPosts,
+          searchBarController: _searchBarController,
+          placeHolder: Text("placeholder"),
+          cancellationWidget: Text("Cancel"),
+          emptyWidget: Text("empty"),
+          indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1),
+          header: Row(
+            children: <Widget>[
+              RaisedButton(
+                child: Text("sort"),
+                onPressed: () {
+                  _searchBarController.sortList((Post a, Post b) {
+                    return a.body.compareTo(b.body);
+                  });
+                },
+              ),
+              RaisedButton(
+                child: Text("Desort"),
+                onPressed: () {
+                  _searchBarController.removeSort();
+                },
+              ),
+              RaisedButton(
+                child: Text("Replay"),
+                onPressed: () {
+                  isReplay = !isReplay;
+                  _searchBarController.replayLastSearch();
+                },
+              ),
             ],
           ),
+          onCancelled: () {
+            print("Cancelled triggered");
+          },
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          crossAxisCount: 2,
+          onItemFound: (Post post, int index) {
+            return Container(
+              color: Colors.lightBlue,
+              child: ListTile(
+                title: Text(post.title),
+                isThreeLine: true,
+                subtitle: Text(post.body),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Detail()));
+                },
+              ),
+            );
+          },
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      ),
+    );
+  }
+}
+
+class Detail extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
           children: <Widget>[
-            if (!_searchHeaderShow)
-              Container(
-                  padding: EdgeInsets.all(25.0),
-                  margin: EdgeInsets.only(bottom: 5),
-                  alignment: Alignment.center,
-                  child: TextField(
-                    cursorWidth: 2.0,
-                    cursorRadius: Radius.circular(5.0),
-                    controller: searchQueryController,
-                    onEditingComplete: () async {
-                      setState(() {
-                        _isLoading = true;
-                        _searchHeaderShow = true;
-                      });
-                      await _performSearch();
-                    },
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                        labelText: '搜索',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black,
-                            fontSize: 12.0),
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.search),
-                          onPressed: () async {
-                            setState(() {
-                              _isLoading = true;
-                              _searchHeaderShow = true;
-                            });
-                            await _performSearch();
-                          },
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                          Radius.circular(24.0),
-                        ))),
-                  )),
-            if (_isLoading)
-              Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 45.0, horizontal: 50.0),
-                  child: SizedBox(
-                      height: 2.0,
-                      child: LinearProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            Theme.of(context).primaryColor),
-                      )))
-            else
-              ResourceList(_images, searchPerformed: _searchDone)
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            Text("Detail"),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

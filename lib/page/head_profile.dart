@@ -11,13 +11,13 @@ class _UserHeaderProfileState extends State<UserHeaderProfile>
   Widget build(BuildContext context) {
     return new GestureDetector(
         onTap: (){
-              Navigator.pushNamed(context, '/UserProfile');
-          // Navigator.push(
-          //  context, MaterialPageRoute(builder: (context) => UserProfile(),maintainState: false));
+                  // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  //     builder: (context) => UserProfile()));
+                  Navigator.pushNamed(context, '/UserProfile');
         },
           child:Container(
-        width: 50,
-        height: 50,
+            width: 50,
+            height: 50,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             image: DecorationImage(
