@@ -30,6 +30,7 @@ dependencies:
   permission_handler: ^5.0.1+1
   path_provider: ^1.6.24
   progress_dialog: ^1.2.4
+  flappy_search_bar: ^1.7.2
 
 
 dev_dependencies:

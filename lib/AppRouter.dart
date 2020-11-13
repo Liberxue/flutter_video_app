@@ -2,9 +2,8 @@ import 'package:ciying/common/constants.dart';
 import 'package:ciying/page/login.dart';
 import 'package:ciying/page/logout.dart';
 import 'package:ciying/page/profile/profile.dart';
-import 'package:ciying/util/store.dart';
+import 'package:ciying/page/resource_list.dart';
 import 'package:flutter/material.dart';
-import 'package:ciying/page/search_list.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
 import 'models/auth.dart';
@@ -41,7 +40,7 @@ class _AppRouterState extends State<AppRouter> {
           ),
       home: Consumer<AuthModel>(builder: (context, model, child) {
           // if (_isLogin) return SearchList();
-          return SearchList();
+          return ResourceList();
         }),
       // initialRoute: '/',
       routes: <String, WidgetBuilder>{
@@ -49,7 +48,7 @@ class _AppRouterState extends State<AppRouter> {
         // '/SearchList': (context) => _isLogin ? SearchList(): Login() ,
         // '/UserProfile':(context) => _isLogin ? UserProfile(): Login(),
         '/Login': (context) => Login(),
-        '/SearchList': (context) =>  SearchList(),
+        '/ResourceList': (context) =>  ResourceList(),
         '/UserProfile':(context) => UserProfile(),
         '/Logout':(context) => Logout(),
       },

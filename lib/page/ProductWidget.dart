@@ -124,7 +124,7 @@ class ProductWidget extends StatelessWidget {
     //           //       ])
     //           // )
     //         ]);
-    double height = MediaQuery.of(context).size.height/0.8;
+    double height = MediaQuery.of(context).size.height/0.82;
     double fontSize = (height/50).round().toDouble();
     bool isLiked = false;
     return new  GestureDetector(

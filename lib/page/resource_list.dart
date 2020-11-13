@@ -10,7 +10,7 @@ import 'package:ciying/widgets/UserDrawerPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class resourceList extends StatelessWidget {
+class ResourceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
