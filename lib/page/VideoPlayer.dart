@@ -60,9 +60,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
   }
 
  Future<void> _init() async {
-    await FlutterDownloader.initialize();
-    IsolateNameServer.registerPortWithName(
-        _port.sendPort, 'downloader_send_port');
+    // await FlutterDownloader.initialize();
     _port.listen((dynamic data) {
       print('UI Isolate Callback: $data');
       String id = data[0];

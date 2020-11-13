@@ -1,10 +1,14 @@
 import 'dart:io';
-
 import 'package:ciying/appRouter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
-void main() {
+Future<void> main() async {
+// fix https://github.com/fluttercommunity/flutter_downloader/issues/219
+  await setupLocator();
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize();
     // 强制竖屏
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -21,5 +25,8 @@ void main() {
           SystemUiOverlayStyle.dark.systemNavigationBarColor,
     ),
   );
-  runApp(AppRouter());
+        runApp(AppRouter());
+    }
+    
+    setupLocator() {
 }
