@@ -176,6 +176,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
           highlightElevation: 6.0,
         ),
       ),
+      
       emailValidator: (value) {
         if (value.isEmpty) {
           return '手机不能为空';

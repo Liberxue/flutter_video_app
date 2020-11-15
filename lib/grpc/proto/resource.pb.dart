@@ -3,7 +3,7 @@
 //  source: proto/resource.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
@@ -13,17 +13,17 @@ import 'package:protobuf/protobuf.dart' as $pb;
 import 'common.pbenum.dart' as $4;
 
 class UploadRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('UploadRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..e<$4.ResourceLangType>(1, 'ResourceLangType', $pb.PbFieldType.OE, protoName: 'ResourceLangType', defaultOrMaker: $4.ResourceLangType.ENGLISH, valueOf: $4.ResourceLangType.valueOf, enumValues: $4.ResourceLangType.values)
-    ..e<$4.FileType>(2, 'FileType', $pb.PbFieldType.OE, protoName: 'FileType', defaultOrMaker: $4.FileType.MP4, valueOf: $4.FileType.valueOf, enumValues: $4.FileType.values)
-    ..a<$core.List<$core.int>>(3, 'Data', $pb.PbFieldType.OY, protoName: 'Data')
-    ..aOS(4, 'DataID', protoName: 'DataID')
-    ..a<$core.int>(5, 'ChunkSize', $pb.PbFieldType.O3, protoName: 'ChunkSize')
-    ..a<$core.int>(6, 'StartOffset', $pb.PbFieldType.O3, protoName: 'StartOffset')
-    ..a<$core.int>(7, 'EndOffset', $pb.PbFieldType.O3, protoName: 'EndOffset')
-    ..a<$core.int>(8, 'CheckSum', $pb.PbFieldType.O3, protoName: 'CheckSum')
-    ..aInt64(9, 'TotalSize', protoName: 'TotalSize')
-    ..a<$core.int>(11, 'DataMd5', $pb.PbFieldType.O3, protoName: 'DataMd5')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UploadRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..e<$4.ResourceLangType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ResourceLangType', $pb.PbFieldType.OE, protoName: 'ResourceLangType', defaultOrMaker: $4.ResourceLangType.ENGLISH, valueOf: $4.ResourceLangType.valueOf, enumValues: $4.ResourceLangType.values)
+    ..e<$4.FileType>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'FileType', $pb.PbFieldType.OE, protoName: 'FileType', defaultOrMaker: $4.FileType.MP4, valueOf: $4.FileType.valueOf, enumValues: $4.FileType.values)
+    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Data', $pb.PbFieldType.OY, protoName: 'Data')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'DataID', protoName: 'DataID')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ChunkSize', $pb.PbFieldType.O3, protoName: 'ChunkSize')
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'StartOffset', $pb.PbFieldType.O3, protoName: 'StartOffset')
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'EndOffset', $pb.PbFieldType.O3, protoName: 'EndOffset')
+    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'CheckSum', $pb.PbFieldType.O3, protoName: 'CheckSum')
+    ..aInt64(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'TotalSize', protoName: 'TotalSize')
+    ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'DataMd5', $pb.PbFieldType.O3, protoName: 'DataMd5')
     ..hasRequiredFields = false
   ;
 
@@ -31,8 +31,16 @@ class UploadRequest extends $pb.GeneratedMessage {
   factory UploadRequest() => create();
   factory UploadRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory UploadRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   UploadRequest clone() => UploadRequest()..mergeFromMessage(this);
-  UploadRequest copyWith(void Function(UploadRequest) updates) => super.copyWith((message) => updates(message as UploadRequest));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UploadRequest copyWith(void Function(UploadRequest) updates) => super.copyWith((message) => updates(message as UploadRequest)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static UploadRequest create() => UploadRequest._();
@@ -134,9 +142,9 @@ class UploadRequest extends $pb.GeneratedMessage {
 }
 
 class UploadResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('UploadResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..e<$4.ResponseCode>(1, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
-    ..aOS(2, 'Message', protoName: 'Message')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UploadResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..e<$4.ResponseCode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Message', protoName: 'Message')
     ..hasRequiredFields = false
   ;
 
@@ -144,8 +152,16 @@ class UploadResponse extends $pb.GeneratedMessage {
   factory UploadResponse() => create();
   factory UploadResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory UploadResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   UploadResponse clone() => UploadResponse()..mergeFromMessage(this);
-  UploadResponse copyWith(void Function(UploadResponse) updates) => super.copyWith((message) => updates(message as UploadResponse));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UploadResponse copyWith(void Function(UploadResponse) updates) => super.copyWith((message) => updates(message as UploadResponse)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static UploadResponse create() => UploadResponse._();
@@ -175,9 +191,9 @@ class UploadResponse extends $pb.GeneratedMessage {
 }
 
 class OperationRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('OperationRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..pPS(1, 'ResourceID', protoName: 'ResourceID')
-    ..e<$4.ResouceAction>(2, 'ResourceAction', $pb.PbFieldType.OE, protoName: 'ResourceAction', defaultOrMaker: $4.ResouceAction.MERGE, valueOf: $4.ResouceAction.valueOf, enumValues: $4.ResouceAction.values)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'OperationRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ResourceID', protoName: 'ResourceID')
+    ..e<$4.ResouceAction>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ResourceAction', $pb.PbFieldType.OE, protoName: 'ResourceAction', defaultOrMaker: $4.ResouceAction.MERGE, valueOf: $4.ResouceAction.valueOf, enumValues: $4.ResouceAction.values)
     ..hasRequiredFields = false
   ;
 
@@ -185,8 +201,16 @@ class OperationRequest extends $pb.GeneratedMessage {
   factory OperationRequest() => create();
   factory OperationRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory OperationRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   OperationRequest clone() => OperationRequest()..mergeFromMessage(this);
-  OperationRequest copyWith(void Function(OperationRequest) updates) => super.copyWith((message) => updates(message as OperationRequest));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  OperationRequest copyWith(void Function(OperationRequest) updates) => super.copyWith((message) => updates(message as OperationRequest)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static OperationRequest create() => OperationRequest._();
@@ -210,9 +234,9 @@ class OperationRequest extends $pb.GeneratedMessage {
 }
 
 class OperationResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('OperationResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..e<$4.ResponseCode>(1, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
-    ..aOS(2, 'Message', protoName: 'Message')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'OperationResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..e<$4.ResponseCode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Message', protoName: 'Message')
     ..hasRequiredFields = false
   ;
 
@@ -220,8 +244,16 @@ class OperationResponse extends $pb.GeneratedMessage {
   factory OperationResponse() => create();
   factory OperationResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory OperationResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   OperationResponse clone() => OperationResponse()..mergeFromMessage(this);
-  OperationResponse copyWith(void Function(OperationResponse) updates) => super.copyWith((message) => updates(message as OperationResponse));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  OperationResponse copyWith(void Function(OperationResponse) updates) => super.copyWith((message) => updates(message as OperationResponse)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static OperationResponse create() => OperationResponse._();
@@ -251,8 +283,8 @@ class OperationResponse extends $pb.GeneratedMessage {
 }
 
 class DownloadRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('DownloadRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..pPS(1, 'ResourceID', protoName: 'ResourceID')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DownloadRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ResourceID', protoName: 'ResourceID')
     ..hasRequiredFields = false
   ;
 
@@ -260,8 +292,16 @@ class DownloadRequest extends $pb.GeneratedMessage {
   factory DownloadRequest() => create();
   factory DownloadRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DownloadRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   DownloadRequest clone() => DownloadRequest()..mergeFromMessage(this);
-  DownloadRequest copyWith(void Function(DownloadRequest) updates) => super.copyWith((message) => updates(message as DownloadRequest));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DownloadRequest copyWith(void Function(DownloadRequest) updates) => super.copyWith((message) => updates(message as DownloadRequest)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DownloadRequest create() => DownloadRequest._();
@@ -276,16 +316,16 @@ class DownloadRequest extends $pb.GeneratedMessage {
 }
 
 class DownloadResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('DownloadResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..e<$4.ResponseCode>(1, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
-    ..aOS(2, 'Message', protoName: 'Message')
-    ..a<$core.List<$core.int>>(3, 'Data', $pb.PbFieldType.OY, protoName: 'Data')
-    ..aOS(4, 'DataID', protoName: 'DataID')
-    ..a<$core.int>(5, 'ChunkSize', $pb.PbFieldType.O3, protoName: 'ChunkSize')
-    ..a<$core.int>(6, 'StartOffset', $pb.PbFieldType.O3, protoName: 'StartOffset')
-    ..a<$core.int>(7, 'EndOffset', $pb.PbFieldType.O3, protoName: 'EndOffset')
-    ..aInt64(8, 'TotalSize', protoName: 'TotalSize')
-    ..a<$core.int>(11, 'DataMd5', $pb.PbFieldType.O3, protoName: 'DataMd5')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DownloadResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..e<$4.ResponseCode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Message', protoName: 'Message')
+    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Data', $pb.PbFieldType.OY, protoName: 'Data')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'DataID', protoName: 'DataID')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ChunkSize', $pb.PbFieldType.O3, protoName: 'ChunkSize')
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'StartOffset', $pb.PbFieldType.O3, protoName: 'StartOffset')
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'EndOffset', $pb.PbFieldType.O3, protoName: 'EndOffset')
+    ..aInt64(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'TotalSize', protoName: 'TotalSize')
+    ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'DataMd5', $pb.PbFieldType.O3, protoName: 'DataMd5')
     ..hasRequiredFields = false
   ;
 
@@ -293,8 +333,16 @@ class DownloadResponse extends $pb.GeneratedMessage {
   factory DownloadResponse() => create();
   factory DownloadResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DownloadResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   DownloadResponse clone() => DownloadResponse()..mergeFromMessage(this);
-  DownloadResponse copyWith(void Function(DownloadResponse) updates) => super.copyWith((message) => updates(message as DownloadResponse));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DownloadResponse copyWith(void Function(DownloadResponse) updates) => super.copyWith((message) => updates(message as DownloadResponse)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DownloadResponse create() => DownloadResponse._();
