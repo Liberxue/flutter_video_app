@@ -29,19 +29,26 @@ dependencies:
   path_provider: ^1.6.24
   gallery_saver: ^2.0.1
   image_picker: ^0.6.7+14
-  flappy_search_bar: ^1.7.2
+  bot_toast: ^3.0.5
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.8.1
+
 
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
     - assets/icons/
-    
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
+  
 # fonts:
 #   - family: appIconFont
 #     fonts:

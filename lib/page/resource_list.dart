@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:bot_toast/bot_toast.dart';
 import 'package:ciying/api/search.dart';
 import 'package:ciying/common/custom_app_bar.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
@@ -50,8 +49,14 @@ class __ResourceListBodyState extends State<_ResourceListBody> with TickerProvid
     SearchResponse searchResponse=await Search.searchAPIRequest(searchRequest);
     print(searchResponse.code);
     print(searchResponse.resourceSection);
+    BotToast.showLoading(); 
+    if(searchResponse.code!=0){
+        BotToast.closeAllLoading();
+        BotToast.showText(text:"请求异常，请稍后重试");
+    }
     setState(() {
       _resourceSection=searchResponse.resourceSection;
+      BotToast.closeAllLoading();
     });
   }
   @override

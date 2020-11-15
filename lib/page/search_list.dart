@@ -158,7 +158,8 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                 ),
                 cursorColor: HexColor("#1C284E"),
                 decoration: InputDecoration(
-                  icon: Icon(Icons.search),
+                  icon: Icon(Icons.search,
+                 color:HexColor("#1C284E"),),
                   border: InputBorder.none,
                   hintText: '请输入搜索内容...',
                 ),
