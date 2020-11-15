@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:ciying/util/hexColor.dart';
 import 'package:flutter/material.dart';
 
 class _MenuInfo {
@@ -20,12 +21,14 @@ class UserDrawerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          backgroundBlendMode: BlendMode.plus,
-          image: DecorationImage(
-              image: AssetImage('assets/images/logo.png'),
-              fit: BoxFit.fill),
-          color: Colors.white),
+      // decoration: BoxDecoration(
+      //     backgroundBlendMode: BlendMode.plus,
+      //     image: DecorationImage(
+      //         image: AssetImage('assets/images/logo.png'),
+      //         fit: BoxFit.fill),
+          // color: Colors.white),
+
+      color: HexColor("#1C284E"),
       child: new BackdropFilter(
         filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: new Container(
@@ -113,9 +116,9 @@ class UserDrawerPage extends StatelessWidget {
             ),
           ),
             Container(
-                  width: 150,
+                  width: 250,
                   height: 40,  
-                  child: Center(child: Text("试用模式", style: TextStyle(
+                  child: Center(child: Text("试用模式,无法充值,请联系客服", style: TextStyle(
                     color:Color.fromRGBO(102, 51, 0, 0.9),
                     fontSize: 14
                   )),),
@@ -132,7 +135,8 @@ class UserDrawerPage extends StatelessWidget {
                 ),
             ],
           ),
-          decoration: new BoxDecoration(color: Colors.white.withOpacity(0.25)),
+          // decoration: new BoxDecoration(color: Colors.white.withOpacity(0.25)),
+          decoration: new BoxDecoration(color: Colors.white.withOpacity(0)),
         ),
       ),
     );

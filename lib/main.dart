@@ -2,14 +2,8 @@ import 'dart:io';
 import 'package:ciying/appRouter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
-
-const debug = true;
 
 Future<void> main() async {
-    // fix https://github.com/fluttercommunity/flutter_downloader/issues/219
-  WidgetsFlutterBinding.ensureInitialized();
-  await FlutterDownloader.initialize(debug: debug);
     // 强制竖屏
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -17,15 +11,23 @@ Future<void> main() async {
   ]);
    if (Platform.isAndroid) {
     // 设置沉浸式状态栏
-    SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.transparent);
-    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+    // SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.black);
+    // SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      systemNavigationBarColor:
-          SystemUiOverlayStyle.dark.systemNavigationBarColor,
-    ),
-  );
-  runApp(AppRouter());
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   SystemUiOverlayStyle(
+  //     systemNavigationBarColor:
+  //         SystemUiOverlayStyle.dark.systemNavigationBarColor,
+  //   ),
+  // );
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //     statusBarColor: Colors.transparent,
+  //     statusBarIconBrightness: Brightness.dark,
+  //     statusBarBrightness: Platform.isAndroid ? Brightness.dark : Brightness.light,
+  //     systemNavigationBarColor: Colors.black,
+  //     systemNavigationBarDividerColor: Colors.black,
+  //     systemNavigationBarIconBrightness: Brightness.dark,
+  // ));
+     runApp(AppRouter());
   }
   

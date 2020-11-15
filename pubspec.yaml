@@ -25,11 +25,10 @@ dependencies:
   persist_theme: ^1.6.0
   rxdart: ^0.24.1
   cached_network_image: ^2.3.3
-  dio: ^3.0.10
-  flutter_downloader: ^1.5.2
-  permission_handler: ^5.0.1+1
+  # permission_handler: ^5.0.1+1
   path_provider: ^1.6.24
-  progress_dialog: ^1.2.4
+  gallery_saver: ^2.0.1
+  image_picker: ^0.6.7+14
   flappy_search_bar: ^1.7.2
 
 

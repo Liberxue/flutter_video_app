@@ -208,7 +208,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
       await Cache.setCache("avatarImage", _signInResponse.data.avatarImage);
       print(Cache.getToken());
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => SearchList(),
+          builder: (context) => SearchPage(),
         ));
       },
     ),

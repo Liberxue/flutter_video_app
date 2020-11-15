@@ -2,7 +2,7 @@ import 'package:ciying/common/constants.dart';
 import 'package:ciying/page/login.dart';
 import 'package:ciying/page/logout.dart';
 import 'package:ciying/page/profile/profile.dart';
-import 'package:ciying/page/resource_list.dart';
+import 'package:ciying/page/search_list.dart';
 import 'package:flutter/material.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
@@ -28,27 +28,23 @@ class _AppRouterState extends State<AppRouter> {
       child: Consumer<ThemeModel>(
       builder: (context, model, child) => MaterialApp(
           title: APPNAME,
-          color: Colors.blueGrey,
+          // color: Colors.blueGrey,
           debugShowCheckedModeBanner: IsdebugShowCheckedModeBanner,
           theme: ThemeData(
             platform: TargetPlatform.iOS,
             primaryColor: Colors.blueGrey,
             scaffoldBackgroundColor: Colors.white,
-            cursorColor: Colors.blueGrey,
             accentColor: Colors.blueGrey,
             primarySwatch: Colors.blueGrey,
           ),
       home: Consumer<AuthModel>(builder: (context, model, child) {
           // if (_isLogin) return SearchList();
-          return ResourceList();
+          return SearchPage();
         }),
-      // initialRoute: '/',
+      initialRoute: '/',
       routes: <String, WidgetBuilder>{
-        // '/Login': (context) => _isLogin ? SearchList(): Login(),
-        // '/SearchList': (context) => _isLogin ? SearchList(): Login() ,
-        // '/UserProfile':(context) => _isLogin ? UserProfile(): Login(),
         '/Login': (context) => Login(),
-        '/ResourceList': (context) =>  ResourceList(),
+        '/Search': (context) =>  SearchPage(),
         '/UserProfile':(context) => UserProfile(),
         '/Logout':(context) => Logout(),
       },
