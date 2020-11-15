@@ -166,6 +166,15 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                   WhitelistingTextInputFormatter(RegExp("[a-z]")),
                   // LengthLimitingTextInputFormatter(5)
                   ],
+                  // 回车提交
+                  onEditingComplete:() {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ResourceList(_searchEtController.text),
+                        ),
+                      );
+                   },
               ),
             ),
           ),
@@ -204,7 +213,7 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                 // child: Icon(Icons.search,
                 //     size: 20,
                 //     color:HexColor("#1C284E"),),
-                child: Text(//
+                child: Text(
                       "搜索", style: TextStyle(
                         color:HexColor("#1C284E"),
                       fontSize: 18
