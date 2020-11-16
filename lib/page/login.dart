@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
@@ -60,7 +61,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
     );
   }
   SignInResponse _signInResponse;
-  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 50);
+  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2000);
   Future<String> _authUser(LoginData data) async {
 
     SignInRequest signInRequest =SignInRequest();
@@ -70,12 +71,16 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
 
     _signInResponse = await signIn(signInRequest);
     return Future.delayed(loginTime).then((_) async {
+      print(_signInResponse.token);
       if(_signInResponse.code!=ResponseCode.SUCCESSFUL){
+          BotToast.showText(text:"登录失败，请检查账号密码");
           return "登录失败，请检查账号密码"; // 多语言支持？#issue https://github.com/PomCloud/ciying/issues/3
       }
       if (_signInResponse==null&&_signInResponse.token.length<1){ //mark check token
+           BotToast.showText(text:"登录异常");
         return  "登录异常";
       }
+       BotToast.showText(text:"登录成功");
       return null;
     });
   }

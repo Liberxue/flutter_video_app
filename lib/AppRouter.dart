@@ -38,7 +38,11 @@ class _AppRouterState extends State<AppRouter> {
   }
 
   void navigationPage() {
-    Navigator.of(context).pushReplacementNamed('/Search');
+    // Navigator.of(context).pushReplacementNamed('/Search');
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => SearchPage(),
+         ));
   }
 
 
@@ -68,7 +72,7 @@ class _AppRouterState extends State<AppRouter> {
           '/Login': (context) => Login(),
           '/Search': (context) =>  SearchPage(),
           '/Logout':(context) => Logout(),
-      },
+            },
           ),
         ));
   }
