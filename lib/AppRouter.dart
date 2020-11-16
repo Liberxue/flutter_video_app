@@ -1,4 +1,3 @@
-
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/page/login.dart';
 import 'package:ciying/page/logout.dart';
@@ -27,9 +26,9 @@ class _AppRouterState extends State<AppRouter> {
     _getLoginState();
   }
 
-    _getLoginState() async {
+  _getLoginState() async {
     _isLogin = await Cache.checkLoginState();
-     _isLogin ? navigationPage(): Login();
+    _isLogin ? navigationPage() : Login();
   }
 
   @override
@@ -39,39 +38,37 @@ class _AppRouterState extends State<AppRouter> {
 
   void navigationPage() {
     // Navigator.of(context).pushReplacementNamed('/Search');
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => SearchPage(),
-         ));
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => SearchPage(),
+    ));
   }
-
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
+        providers: [
           ChangeNotifierProvider<ThemeModel>.value(value: _model),
           ChangeNotifierProvider<AuthModel>.value(value: _auth),
         ],
-      child: Consumer<ThemeModel>(
-      builder: (context, model, child) => MaterialApp(
-          title: APPNAME,
-          theme: ThemeData(
-            // platform: TargetPlatform.iOS,
-            primaryColor: Colors.white,
-            scaffoldBackgroundColor: Colors.white,
-            // accentColor: Colors.blueGrey,
-            // primarySwatch: Colors.blueGrey,
-          ),
-      home: Consumer<AuthModel>(builder: (context, model, child) {
-          if (_isLogin) return SearchPage();
-          return Login();
-        }),
-      initialRoute: '/',
-      routes: <String, WidgetBuilder>{
-            '/Login': (context) => Login(),
-            '/Search': (context) =>  SearchPage(),
-            '/Logout':(context) => Logout(),
+        child: Consumer<ThemeModel>(
+          builder: (context, model, child) => MaterialApp(
+            title: APPNAME,
+            theme: ThemeData(
+              // platform: TargetPlatform.iOS,
+              primaryColor: Colors.white,
+              scaffoldBackgroundColor: Colors.white,
+              // accentColor: Colors.blueGrey,
+              // primarySwatch: Colors.blueGrey,
+            ),
+            home: Consumer<AuthModel>(builder: (context, model, child) {
+              if (_isLogin) return SearchPage();
+              return Login();
+            }),
+            initialRoute: '/',
+            routes: <String, WidgetBuilder>{
+              '/Login': (context) => Login(),
+              '/Search': (context) => SearchPage(),
+              '/Logout': (context) => Logout(),
             },
           ),
         ));

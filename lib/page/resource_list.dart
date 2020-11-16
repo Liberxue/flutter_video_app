@@ -1,6 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:ciying/api/search.dart';
-import 'package:ciying/common/custom_app_bar.dart';
+import 'package:ciying/widgets/custom_app_bar.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:ciying/page/CartManager.dart';
 import 'package:ciying/page/SearchGrid.dart';
@@ -17,7 +17,7 @@ class ResourceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
-         backgroundColor:HexColor("#1C284E"),
+          backgroundColor: HexColor("#1C284E"),
           body: _ResourceListBody(searchText),
         ),
       );
@@ -30,8 +30,8 @@ class _ResourceListBody extends StatefulWidget {
   __ResourceListBodyState createState() => __ResourceListBodyState();
 }
 
-class __ResourceListBodyState extends State<_ResourceListBody> with TickerProviderStateMixin {
-
+class __ResourceListBodyState extends State<_ResourceListBody>
+    with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
   //cart
@@ -41,34 +41,36 @@ class __ResourceListBodyState extends State<_ResourceListBody> with TickerProvid
 
   List<ResourceSection> _resourceSection;
 
-
   Future _performSearch() async {
-    SearchRequest searchRequest=SearchRequest();
-    searchRequest.text=widget.searchText;
-    searchRequest.limit=100;
-    SearchResponse searchResponse=await Search.searchAPIRequest(searchRequest);
+    SearchRequest searchRequest = SearchRequest();
+    searchRequest.text = widget.searchText;
+    searchRequest.limit = 100;
+    SearchResponse searchResponse =
+        await Search.searchAPIRequest(searchRequest);
     // print(searchResponse.code);
     // print(searchResponse.resourceSection);
-    // BotToast.showLoading(); 
+    // BotToast.showLoading();
     // if(searchResponse.code!=0){
     // }
     setState(() {
-      _resourceSection=searchResponse.resourceSection;
+      _resourceSection = searchResponse.resourceSection;
     });
   }
+
   @override
   void initState() {
-       controller =
+    controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     animation = Tween<double>(begin: 0, end: 1).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInToLinear));
     controller.forward();
     // cart
-     _scrollController = new ScrollController();
+    _scrollController = new ScrollController();
     _cartBloc = new CartBloc();
     _performSearch();
     super.initState();
   }
+
   double position = 0.0;
   double height = 0.0;
 
@@ -82,7 +84,7 @@ class __ResourceListBodyState extends State<_ResourceListBody> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).padding.top-20;
+    double statusBarHeight = MediaQuery.of(context).padding.top - 20;
     height = MediaQuery.of(context).size.height - statusBarHeight;
     double widthBar = MediaQuery.of(context).size.width;
     return Container(
@@ -104,21 +106,20 @@ class __ResourceListBodyState extends State<_ResourceListBody> with TickerProvid
                   },
                 ),
                 Expanded(
-                 child: Stack(children: <Widget>[
+                    child: Stack(children: <Widget>[
                   new CustomScrollView(
-                    physics: NeverScrollableScrollPhysics(), 
-                    controller: _scrollController,
-                    slivers: <Widget>[
-                        new SliverToBoxAdapter(child:
-                        new SearchGrid(_resourceSection)
-                      ),
-                      // cart 上浮页面
-                      // new SliverToBoxAdapter(child:
-                      //   new CartManager()
-                      // ),
-                  ]),
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: _scrollController,
+                      slivers: <Widget>[
+                        new SliverToBoxAdapter(
+                            child: new SearchGrid(_resourceSection)),
+                        // cart 上浮页面
+                        // new SliverToBoxAdapter(child:
+                        //   new CartManager()
+                        // ),
+                      ]),
                   // new Align(
-                  //     alignment: Alignment.bottomRight, 
+                  //     alignment: Alignment.bottomRight,
                   //     child:new Container(
                   //       margin: EdgeInsets.only(right: 10, bottom: 10),
                   //     child: new FloatingActionButton(onPressed: (){
@@ -129,7 +130,7 @@ class __ResourceListBodyState extends State<_ResourceListBody> with TickerProvid
                   //           duration: Duration(seconds: 2));
                   //       else
                   //         _scrollController.animateTo(
-                  //           _scrollController.position.maxScrollExtent, 
+                  //           _scrollController.position.maxScrollExtent,
                   //           curve: Curves.fastOutSlowIn,
                   //           duration: Duration(seconds: 2));
 
@@ -138,12 +139,11 @@ class __ResourceListBodyState extends State<_ResourceListBody> with TickerProvid
                   //       _showCart = !_showCart;
 
                   //       });
-                  //     }, backgroundColor: Colors.transparent, 
+                  //     }, backgroundColor: Colors.transparent,
                   //       child: new Icon(_showCart ? Icons.close : Icons.movie,size:50))
                   //   )
                   // )
-                ])
-                )
+                ]))
               ],
             ),
           ),
@@ -151,12 +151,11 @@ class __ResourceListBodyState extends State<_ResourceListBody> with TickerProvid
           onSlide: onSlide,
           drawerSize: maxSlideDistance,
           transform:
-          Matrix4.translationValues(0.0, height * position / 10, 0.0),
+              Matrix4.translationValues(0.0, height * position / 10, 0.0),
         ),
       ),
     );
   }
-
 
   @override
   void dispose() {
