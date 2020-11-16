@@ -3,14 +3,14 @@
 //  source: proto/common.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
-// ignore_for_file: UNDEFINED_SHOWN_NAME,UNUSED_SHOWN_NAME
+// ignore_for_file: UNDEFINED_SHOWN_NAME
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class ResourceLangType extends $pb.ProtobufEnum {
-  static const ResourceLangType ENGLISH = ResourceLangType._(0, 'ENGLISH');
+  static const ResourceLangType ENGLISH = ResourceLangType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ENGLISH');
 
   static const $core.List<ResourceLangType> values = <ResourceLangType> [
     ENGLISH,
@@ -23,15 +23,15 @@ class ResourceLangType extends $pb.ProtobufEnum {
 }
 
 class FileType extends $pb.ProtobufEnum {
-  static const FileType MP4 = FileType._(0, 'MP4');
-  static const FileType M4P = FileType._(2, 'M4P');
-  static const FileType M4V = FileType._(3, 'M4V');
-  static const FileType AVI = FileType._(4, 'AVI');
-  static const FileType WMV = FileType._(5, 'WMV');
-  static const FileType MOV = FileType._(6, 'MOV');
-  static const FileType QT = FileType._(7, 'QT');
-  static const FileType FLV = FileType._(8, 'FLV');
-  static const FileType SWF = FileType._(9, 'SWF');
+  static const FileType MP4 = FileType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MP4');
+  static const FileType M4P = FileType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'M4P');
+  static const FileType M4V = FileType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'M4V');
+  static const FileType AVI = FileType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AVI');
+  static const FileType WMV = FileType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WMV');
+  static const FileType MOV = FileType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MOV');
+  static const FileType QT = FileType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'QT');
+  static const FileType FLV = FileType._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FLV');
+  static const FileType SWF = FileType._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SWF');
 
   static const $core.List<FileType> values = <FileType> [
     MP4,
@@ -52,16 +52,16 @@ class FileType extends $pb.ProtobufEnum {
 }
 
 class EmotionCode extends $pb.ProtobufEnum {
-  static const EmotionCode AMUSEMENT = EmotionCode._(0, 'AMUSEMENT');
-  static const EmotionCode CONTEMPT = EmotionCode._(1, 'CONTEMPT');
-  static const EmotionCode CONTENTMENT = EmotionCode._(2, 'CONTENTMENT');
-  static const EmotionCode EMBARRASSMENT = EmotionCode._(3, 'EMBARRASSMENT');
-  static const EmotionCode EXCITEMENT = EmotionCode._(4, 'EXCITEMENT');
-  static const EmotionCode GUILT = EmotionCode._(5, 'GUILT');
-  static const EmotionCode PRIDEINACHIEVEMENT = EmotionCode._(6, 'PRIDEINACHIEVEMENT');
-  static const EmotionCode RELIEF = EmotionCode._(7, 'RELIEF');
-  static const EmotionCode SATISFACTION = EmotionCode._(8, 'SATISFACTION');
-  static const EmotionCode SHAME = EmotionCode._(9, 'SHAME');
+  static const EmotionCode AMUSEMENT = EmotionCode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AMUSEMENT');
+  static const EmotionCode CONTEMPT = EmotionCode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CONTEMPT');
+  static const EmotionCode CONTENTMENT = EmotionCode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CONTENTMENT');
+  static const EmotionCode EMBARRASSMENT = EmotionCode._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'EMBARRASSMENT');
+  static const EmotionCode EXCITEMENT = EmotionCode._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'EXCITEMENT');
+  static const EmotionCode GUILT = EmotionCode._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GUILT');
+  static const EmotionCode PRIDEINACHIEVEMENT = EmotionCode._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRIDEINACHIEVEMENT');
+  static const EmotionCode RELIEF = EmotionCode._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RELIEF');
+  static const EmotionCode SATISFACTION = EmotionCode._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SATISFACTION');
+  static const EmotionCode SHAME = EmotionCode._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SHAME');
 
   static const $core.List<EmotionCode> values = <EmotionCode> [
     AMUSEMENT,
@@ -83,8 +83,8 @@ class EmotionCode extends $pb.ProtobufEnum {
 }
 
 class ResouceAction extends $pb.ProtobufEnum {
-  static const ResouceAction MERGE = ResouceAction._(0, 'MERGE');
-  static const ResouceAction FAVORITE = ResouceAction._(2, 'FAVORITE');
+  static const ResouceAction MERGE = ResouceAction._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MERGE');
+  static const ResouceAction FAVORITE = ResouceAction._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FAVORITE');
 
   static const $core.List<ResouceAction> values = <ResouceAction> [
     MERGE,
@@ -98,8 +98,8 @@ class ResouceAction extends $pb.ProtobufEnum {
 }
 
 class LevelType extends $pb.ProtobufEnum {
-  static const LevelType VIP = LevelType._(0, 'VIP');
-  static const LevelType SuperVIP = LevelType._(1, 'SuperVIP');
+  static const LevelType VIP = LevelType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIP');
+  static const LevelType SuperVIP = LevelType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SuperVIP');
 
   static const $core.List<LevelType> values = <LevelType> [
     VIP,
@@ -113,14 +113,14 @@ class LevelType extends $pb.ProtobufEnum {
 }
 
 class ResponseCode extends $pb.ProtobufEnum {
-  static const ResponseCode SUCCESSFUL = ResponseCode._(0, 'SUCCESSFUL');
-  static const ResponseCode FAILED = ResponseCode._(1, 'FAILED');
-  static const ResponseCode AccessDenied = ResponseCode._(2, 'AccessDenied');
-  static const ResponseCode InternalFault = ResponseCode._(3, 'InternalFault');
-  static const ResponseCode FrequentOperation = ResponseCode._(4, 'FrequentOperation');
-  static const ResponseCode PhoneNumberExisting = ResponseCode._(5, 'PhoneNumberExisting');
-  static const ResponseCode ParameterIsNotValid = ResponseCode._(6, 'ParameterIsNotValid');
-  static const ResponseCode AccountOrPasswordIsNotCorrect = ResponseCode._(7, 'AccountOrPasswordIsNotCorrect');
+  static const ResponseCode SUCCESSFUL = ResponseCode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SUCCESSFUL');
+  static const ResponseCode FAILED = ResponseCode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FAILED');
+  static const ResponseCode AccessDenied = ResponseCode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AccessDenied');
+  static const ResponseCode InternalFault = ResponseCode._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'InternalFault');
+  static const ResponseCode FrequentOperation = ResponseCode._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FrequentOperation');
+  static const ResponseCode PhoneNumberExisting = ResponseCode._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PhoneNumberExisting');
+  static const ResponseCode ParameterIsNotValid = ResponseCode._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ParameterIsNotValid');
+  static const ResponseCode AccountOrPasswordIsNotCorrect = ResponseCode._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AccountOrPasswordIsNotCorrect');
 
   static const $core.List<ResponseCode> values = <ResponseCode> [
     SUCCESSFUL,
@@ -140,10 +140,10 @@ class ResponseCode extends $pb.ProtobufEnum {
 }
 
 class LoginType extends $pb.ProtobufEnum {
-  static const LoginType ACCOUNT = LoginType._(0, 'ACCOUNT');
-  static const LoginType PHONEMESSAGEAUTHCODE = LoginType._(1, 'PHONEMESSAGEAUTHCODE');
-  static const LoginType WECHAT = LoginType._(2, 'WECHAT');
-  static const LoginType DOUYIN = LoginType._(3, 'DOUYIN');
+  static const LoginType ACCOUNT = LoginType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ACCOUNT');
+  static const LoginType PHONEMESSAGEAUTHCODE = LoginType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PHONEMESSAGEAUTHCODE');
+  static const LoginType WECHAT = LoginType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WECHAT');
+  static const LoginType DOUYIN = LoginType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DOUYIN');
 
   static const $core.List<LoginType> values = <LoginType> [
     ACCOUNT,
@@ -159,8 +159,8 @@ class LoginType extends $pb.ProtobufEnum {
 }
 
 class FavoriteType extends $pb.ProtobufEnum {
-  static const FavoriteType Confirm = FavoriteType._(0, 'Confirm');
-  static const FavoriteType Cancel = FavoriteType._(1, 'Cancel');
+  static const FavoriteType Confirm = FavoriteType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Confirm');
+  static const FavoriteType Cancel = FavoriteType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Cancel');
 
   static const $core.List<FavoriteType> values = <FavoriteType> [
     Confirm,
@@ -174,8 +174,8 @@ class FavoriteType extends $pb.ProtobufEnum {
 }
 
 class ResourceType extends $pb.ProtobufEnum {
-  static const ResourceType videoSearch = ResourceType._(0, 'videoSearch');
-  static const ResourceType videoProduce = ResourceType._(1, 'videoProduce');
+  static const ResourceType videoSearch = ResourceType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'videoSearch');
+  static const ResourceType videoProduce = ResourceType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'videoProduce');
 
   static const $core.List<ResourceType> values = <ResourceType> [
     videoSearch,

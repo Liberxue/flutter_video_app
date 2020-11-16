@@ -3,7 +3,7 @@
 //  source: proto/search.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
@@ -12,14 +12,14 @@ import 'package:protobuf/protobuf.dart' as $pb;
 import 'common.pbenum.dart' as $4;
 
 class ResourceSection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ResourceSection', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'Source', protoName: 'Source')
-    ..a<$core.double>(2, 'Duration', $pb.PbFieldType.OF, protoName: 'Duration')
-    ..e<$4.EmotionCode>(3, 'EmotionCode', $pb.PbFieldType.OE, protoName: 'EmotionCode', defaultOrMaker: $4.EmotionCode.AMUSEMENT, valueOf: $4.EmotionCode.valueOf, enumValues: $4.EmotionCode.values)
-    ..aOS(4, 'SourceName', protoName: 'SourceName')
-    ..aOS(5, 'ResourceAddress', protoName: 'ResourceAddress')
-    ..aOS(6, 'ResourceID', protoName: 'ResourceID')
-    ..aOS(7, 'SourceID', protoName: 'SourceID')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ResourceSection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Source', protoName: 'Source')
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Duration', $pb.PbFieldType.OF, protoName: 'Duration')
+    ..e<$4.EmotionCode>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'EmotionCode', $pb.PbFieldType.OE, protoName: 'EmotionCode', defaultOrMaker: $4.EmotionCode.AMUSEMENT, valueOf: $4.EmotionCode.valueOf, enumValues: $4.EmotionCode.values)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'SourceName', protoName: 'SourceName')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ResourceAddress', protoName: 'ResourceAddress')
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ResourceID', protoName: 'ResourceID')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'SourceID', protoName: 'SourceID')
     ..hasRequiredFields = false
   ;
 
@@ -27,8 +27,16 @@ class ResourceSection extends $pb.GeneratedMessage {
   factory ResourceSection() => create();
   factory ResourceSection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ResourceSection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   ResourceSection clone() => ResourceSection()..mergeFromMessage(this);
-  ResourceSection copyWith(void Function(ResourceSection) updates) => super.copyWith((message) => updates(message as ResourceSection));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ResourceSection copyWith(void Function(ResourceSection) updates) => super.copyWith((message) => updates(message as ResourceSection)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ResourceSection create() => ResourceSection._();
@@ -103,12 +111,12 @@ class ResourceSection extends $pb.GeneratedMessage {
 }
 
 class SearchRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('SearchRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'Text', protoName: 'Text')
-    ..a<$core.int>(2, 'Limit', $pb.PbFieldType.O3, protoName: 'Limit')
-    ..a<$core.int>(3, 'Offset', $pb.PbFieldType.O3, protoName: 'Offset')
-    ..pPS(4, 'Tags', protoName: 'Tags')
-    ..e<$4.EmotionCode>(5, 'EmotionCode', $pb.PbFieldType.OE, protoName: 'EmotionCode', defaultOrMaker: $4.EmotionCode.AMUSEMENT, valueOf: $4.EmotionCode.valueOf, enumValues: $4.EmotionCode.values)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SearchRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Text', protoName: 'Text')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Limit', $pb.PbFieldType.O3, protoName: 'Limit')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Offset', $pb.PbFieldType.O3, protoName: 'Offset')
+    ..pPS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Tags', protoName: 'Tags')
+    ..e<$4.EmotionCode>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'EmotionCode', $pb.PbFieldType.OE, protoName: 'EmotionCode', defaultOrMaker: $4.EmotionCode.AMUSEMENT, valueOf: $4.EmotionCode.valueOf, enumValues: $4.EmotionCode.values)
     ..hasRequiredFields = false
   ;
 
@@ -116,8 +124,16 @@ class SearchRequest extends $pb.GeneratedMessage {
   factory SearchRequest() => create();
   factory SearchRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SearchRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   SearchRequest clone() => SearchRequest()..mergeFromMessage(this);
-  SearchRequest copyWith(void Function(SearchRequest) updates) => super.copyWith((message) => updates(message as SearchRequest));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SearchRequest copyWith(void Function(SearchRequest) updates) => super.copyWith((message) => updates(message as SearchRequest)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SearchRequest create() => SearchRequest._();
@@ -168,11 +184,11 @@ class SearchRequest extends $pb.GeneratedMessage {
 }
 
 class SearchResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('SearchResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..e<$4.ResponseCode>(1, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
-    ..aOS(2, 'Message', protoName: 'Message')
-    ..a<$core.int>(3, 'Size', $pb.PbFieldType.O3, protoName: 'Size')
-    ..pc<ResourceSection>(4, 'ResourceSection', $pb.PbFieldType.PM, protoName: 'ResourceSection', subBuilder: ResourceSection.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SearchResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..e<$4.ResponseCode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Message', protoName: 'Message')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Size', $pb.PbFieldType.O3, protoName: 'Size')
+    ..pc<ResourceSection>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ResourceSection', $pb.PbFieldType.PM, protoName: 'ResourceSection', subBuilder: ResourceSection.create)
     ..hasRequiredFields = false
   ;
 
@@ -180,8 +196,16 @@ class SearchResponse extends $pb.GeneratedMessage {
   factory SearchResponse() => create();
   factory SearchResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SearchResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   SearchResponse clone() => SearchResponse()..mergeFromMessage(this);
-  SearchResponse copyWith(void Function(SearchResponse) updates) => super.copyWith((message) => updates(message as SearchResponse));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SearchResponse copyWith(void Function(SearchResponse) updates) => super.copyWith((message) => updates(message as SearchResponse)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SearchResponse create() => SearchResponse._();

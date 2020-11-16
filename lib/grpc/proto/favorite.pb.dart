@@ -3,7 +3,7 @@
 //  source: proto/favorite.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
@@ -13,10 +13,10 @@ import 'package:protobuf/protobuf.dart' as $pb;
 import 'common.pbenum.dart' as $4;
 
 class FavoriteActionRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FavoriteActionRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'ResourceID', protoName: 'ResourceID')
-    ..aOS(2, 'Userid', protoName: 'Userid')
-    ..aOB(3, 'IsFavorite', protoName: 'IsFavorite')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FavoriteActionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ResourceID', protoName: 'ResourceID')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Userid', protoName: 'Userid')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'IsFavorite', protoName: 'IsFavorite')
     ..hasRequiredFields = false
   ;
 
@@ -24,8 +24,16 @@ class FavoriteActionRequest extends $pb.GeneratedMessage {
   factory FavoriteActionRequest() => create();
   factory FavoriteActionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FavoriteActionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   FavoriteActionRequest clone() => FavoriteActionRequest()..mergeFromMessage(this);
-  FavoriteActionRequest copyWith(void Function(FavoriteActionRequest) updates) => super.copyWith((message) => updates(message as FavoriteActionRequest));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FavoriteActionRequest copyWith(void Function(FavoriteActionRequest) updates) => super.copyWith((message) => updates(message as FavoriteActionRequest)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FavoriteActionRequest create() => FavoriteActionRequest._();
@@ -64,9 +72,9 @@ class FavoriteActionRequest extends $pb.GeneratedMessage {
 }
 
 class FavoriteActionResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FavoriteActionResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'Message', protoName: 'Message')
-    ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FavoriteActionResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Message', protoName: 'Message')
+    ..e<$4.ResponseCode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
     ..hasRequiredFields = false
   ;
 
@@ -74,8 +82,16 @@ class FavoriteActionResponse extends $pb.GeneratedMessage {
   factory FavoriteActionResponse() => create();
   factory FavoriteActionResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FavoriteActionResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   FavoriteActionResponse clone() => FavoriteActionResponse()..mergeFromMessage(this);
-  FavoriteActionResponse copyWith(void Function(FavoriteActionResponse) updates) => super.copyWith((message) => updates(message as FavoriteActionResponse));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FavoriteActionResponse copyWith(void Function(FavoriteActionResponse) updates) => super.copyWith((message) => updates(message as FavoriteActionResponse)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FavoriteActionResponse create() => FavoriteActionResponse._();
@@ -105,11 +121,11 @@ class FavoriteActionResponse extends $pb.GeneratedMessage {
 }
 
 class FavoriteList extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FavoriteList', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'ResourceId', protoName: 'ResourceId')
-    ..aInt64(2, 'CreateTime', protoName: 'CreateTime')
-    ..aOS(3, 'UserId', protoName: 'UserId')
-    ..e<$4.ResourceType>(4, 'ResourceType', $pb.PbFieldType.OE, protoName: 'ResourceType', defaultOrMaker: $4.ResourceType.videoSearch, valueOf: $4.ResourceType.valueOf, enumValues: $4.ResourceType.values)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FavoriteList', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ResourceId', protoName: 'ResourceId')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'CreateTime', protoName: 'CreateTime')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'UserId', protoName: 'UserId')
+    ..e<$4.ResourceType>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ResourceType', $pb.PbFieldType.OE, protoName: 'ResourceType', defaultOrMaker: $4.ResourceType.videoSearch, valueOf: $4.ResourceType.valueOf, enumValues: $4.ResourceType.values)
     ..hasRequiredFields = false
   ;
 
@@ -117,8 +133,16 @@ class FavoriteList extends $pb.GeneratedMessage {
   factory FavoriteList() => create();
   factory FavoriteList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FavoriteList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   FavoriteList clone() => FavoriteList()..mergeFromMessage(this);
-  FavoriteList copyWith(void Function(FavoriteList) updates) => super.copyWith((message) => updates(message as FavoriteList));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FavoriteList copyWith(void Function(FavoriteList) updates) => super.copyWith((message) => updates(message as FavoriteList)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FavoriteList create() => FavoriteList._();
@@ -166,8 +190,8 @@ class FavoriteList extends $pb.GeneratedMessage {
 }
 
 class FavoriteListRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FavoriteListRequest', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..pc<FavoriteList>(1, 'FavoriteList', $pb.PbFieldType.PM, protoName: 'FavoriteList', subBuilder: FavoriteList.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FavoriteListRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..pc<FavoriteList>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'FavoriteList', $pb.PbFieldType.PM, protoName: 'FavoriteList', subBuilder: FavoriteList.create)
     ..hasRequiredFields = false
   ;
 
@@ -175,8 +199,16 @@ class FavoriteListRequest extends $pb.GeneratedMessage {
   factory FavoriteListRequest() => create();
   factory FavoriteListRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FavoriteListRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   FavoriteListRequest clone() => FavoriteListRequest()..mergeFromMessage(this);
-  FavoriteListRequest copyWith(void Function(FavoriteListRequest) updates) => super.copyWith((message) => updates(message as FavoriteListRequest));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FavoriteListRequest copyWith(void Function(FavoriteListRequest) updates) => super.copyWith((message) => updates(message as FavoriteListRequest)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FavoriteListRequest create() => FavoriteListRequest._();
@@ -191,10 +223,10 @@ class FavoriteListRequest extends $pb.GeneratedMessage {
 }
 
 class FavoriteListResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FavoriteListResponse', package: const $pb.PackageName('proto'), createEmptyInstance: create)
-    ..aOS(1, 'Message', protoName: 'Message')
-    ..e<$4.ResponseCode>(2, 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
-    ..pc<FavoriteList>(3, 'Data', $pb.PbFieldType.PM, protoName: 'Data', subBuilder: FavoriteList.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FavoriteListResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Message', protoName: 'Message')
+    ..e<$4.ResponseCode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Code', $pb.PbFieldType.OE, protoName: 'Code', defaultOrMaker: $4.ResponseCode.SUCCESSFUL, valueOf: $4.ResponseCode.valueOf, enumValues: $4.ResponseCode.values)
+    ..pc<FavoriteList>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Data', $pb.PbFieldType.PM, protoName: 'Data', subBuilder: FavoriteList.create)
     ..hasRequiredFields = false
   ;
 
@@ -202,8 +234,16 @@ class FavoriteListResponse extends $pb.GeneratedMessage {
   factory FavoriteListResponse() => create();
   factory FavoriteListResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FavoriteListResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   FavoriteListResponse clone() => FavoriteListResponse()..mergeFromMessage(this);
-  FavoriteListResponse copyWith(void Function(FavoriteListResponse) updates) => super.copyWith((message) => updates(message as FavoriteListResponse));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FavoriteListResponse copyWith(void Function(FavoriteListResponse) updates) => super.copyWith((message) => updates(message as FavoriteListResponse)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FavoriteListResponse create() => FavoriteListResponse._();

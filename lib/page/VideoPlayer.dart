@@ -1,15 +1,13 @@
 import 'dart:io';
-import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:chewie/chewie.dart';
-import 'package:ciying/util/checkPermission.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 import 'bloc/CartBloc.dart';
 import 'head_profile.dart';
@@ -31,16 +29,16 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
 
-  String downloadId;
-  String _localPath;
-  ReceivePort _port = ReceivePort();
-  bool _permissionReady;
+  String firstButtonText = 'Take photo';
+  String secondButtonText = 'Record video';
+  double textSize = 20;
+  String albumName ='CiYing';
 
   @override
   void initState() {
     super.initState();
     _videoPlayerController = VideoPlayerController.network(
-        'https://y.yarn.co/11e873bc-2821-4f2e-a0e8-f28aca14e329_text.mp4');
+        'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4');
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
       placeholder: Center(
@@ -53,51 +51,17 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
       autoInitialize: true,
       customControls: MyChewieMaterialControls(),
     ); 
-   _init();
   }
-
- Future<void> _init() async {
-      FlutterDownloader.registerCallback(downloadCallback);
-     _port.listen((dynamic data) {
-      print('UI Isolate Callback: $data');
-      String id = data[0];
-      DownloadTaskStatus status = data[1];
-      int progress = data[2];
-
-      print("status: $status");
-      print("progress: $progress");
-      print("id == downloadId: ${id == downloadId}");
+  void _saveNetworkVideo() async {
+    String path =
+        'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4';
+    GallerySaver.saveVideo(path).then((bool success) {
+      setState(() {
+        print('Video is saved');
+      });
     });
- }
-void _updateState(BuildContext context) async {
-     _permissionReady = await checkPermission(context);
-    _localPath = (await findLocalPath(context)) + Platform.pathSeparator + 'Download';
-    final savedDir = Directory(_localPath);
-    bool hasExisted = await savedDir.exists();
-    if (!hasExisted) {
-      savedDir.create();
-    }
-    checkPermission(context).then((hasGranted) {
-    setState(() {
-      _permissionReady = hasGranted;
-      print("_permissionReady============\r\n");
-      print(_permissionReady);
-      print(_localPath);
-      _localPath=_localPath;
-    });
-  });
   }
 
-  static void downloadCallback(
-      String id, DownloadTaskStatus status, int progress) {
-    print(
-        'Background Isolate Callback: task ($id) is in status ($status) and process ($progress)');
-    final SendPort send =
-        IsolateNameServer.lookupPortByName('downloader_send_port');
-    send.send([id, status, progress]);
-  }
-
- 
   @override
   void dispose() {
     _videoPlayerController.dispose();
@@ -189,20 +153,7 @@ void _updateState(BuildContext context) async {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)),
                             padding: EdgeInsets.all(10),
                               onPressed: () async {
-                                _updateState(context);
-                                 if (_permissionReady) {
-                                    final taskId = await FlutterDownloader.enqueue(
-                                      url:  widget._resourceSection.resourceAddress,
-                                      // headers: {"auth": "test_for_sql_encoding"},
-                                      savedDir: _localPath,
-                                      showNotification:true, // show download progress in status bar (for Android)
-                                      openFileFromNotification:true, // click on notification to open downloaded file (for Android)
-                                    );
-                                    downloadId = taskId;
-                                  }else{
-                                    print("无权限");
-                                  }
-                                // if(_cartBloc.currentCart.isEmpty || _urlList.length<=0)
+                                 _saveNetworkVideo();
                               },
                               child: new Text("一键下载", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white))
                           )

@@ -1,133 +1,227 @@
-import 'dart:math';
-
-import 'package:flappy_search_bar/flappy_search_bar.dart';
-import 'package:flappy_search_bar/scaled_tile.dart';
+import 'package:ciying/widgets/custom_app_bar.dart';
+import 'package:ciying/page/resource_list.dart';
+import 'package:ciying/util/hexColor.dart';
+import 'package:ciying/widgets/SlideContainer.dart';
+import 'package:ciying/widgets/UserDrawerPage.dart';
 import 'package:flutter/material.dart';
 
-class SearchList extends StatefulWidget {
+class SearchPage extends StatelessWidget {
   @override
-  _SearchListState createState() => _SearchListState();
+  Widget build(BuildContext context) => MaterialApp(
+        home: Scaffold(
+          backgroundColor: HexColor("#E5E7EB"), //apptopbar colors
+          // backgroundColor:Colors.transparent,
+          body: _SearchListBody(),
+        ),
+      );
 }
 
-class _SearchListState extends State<SearchList> {
-  // This widget is the root of your application.
+class _SearchListBody extends StatefulWidget {
+  @override
+  _SearchListBodyState createState() => _SearchListBodyState();
+}
+
+class _SearchListBodyState extends State<_SearchListBody>
+    with TickerProviderStateMixin {
+  double position = 0.0;
+  double height = 0.0;
+
+  double get maxSlideDistance => MediaQuery.of(context).size.width * 0.75;
+
+  final GlobalKey<ContainerState> _slideKey = GlobalKey<ContainerState>();
+
+  void onSlide(double position) {
+    setState(() => this.position = position);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Home(),
+    double statusBarHeight = MediaQuery.of(context).padding.top - 20;
+    height = MediaQuery.of(context).size.height - statusBarHeight;
+    double widthBar = MediaQuery.of(context).size.width;
+    return Container(
+      margin: EdgeInsets.only(top: statusBarHeight),
+      child: SlideStack(
+        drawer: UserDrawerPage(),
+        child: SlideContainer(
+          key: _slideKey,
+          child: Container(
+            width: widthBar,
+            height: height * (1 - position / 5),
+            color: Colors.white,
+            child: Column(
+              children: <Widget>[
+                CustomAppBar(
+                  title: '词影',
+                  height: kToolbarHeight * (1 - position / 5),
+                  tapDrawer: () {
+                    _slideKey.currentState.openOrClose();
+                  },
+                  isSearch: true,
+                ),
+                Expanded(
+                    child: Stack(children: <Widget>[
+                  // new CustomScrollView(
+                  //   slivers: <Widget>[
+                  //       new SliverToBoxAdapter(child:new getSearchBarUI()),
+                  // ]),
+                  getSearchBarUI(),
+                ]))
+              ],
+            ),
+          ),
+          slideDirection: SlideDirection.left,
+          onSlide: onSlide,
+          drawerSize: maxSlideDistance,
+          transform:
+              Matrix4.translationValues(0.9, height * position / 10, 0.0),
+        ),
+      ),
     );
   }
 }
 
-class Post {
-  final String title;
-  final String body;
-
-  Post(this.title, this.body);
-}
-
-class Home extends StatefulWidget {
+class getSearchBarUI extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _getSearchBarUIState createState() => new _getSearchBarUIState();
 }
 
-class _HomeState extends State<Home> {
-  final SearchBarController<Post> _searchBarController = SearchBarController();
-  bool isReplay = false;
-
-  Future<List<Post>> _getALlPosts(String text) async {
-    await Future.delayed(Duration(seconds: text.length == 4 ? 10 : 1));
-    if (isReplay) return [Post("Replaying !", "Replaying body")];
-    if (text.length == 5) throw Error();
-    if (text.length == 6) return [];
-    List<Post> posts = [];
-
-    var random = new Random();
-    for (int i = 0; i < 10; i++) {
-      posts.add(Post("$text $i", "body random number : ${random.nextInt(100)}"));
-    }
-    return posts;
-  }
+class _getSearchBarUIState extends State<getSearchBarUI> {
+  TextEditingController _searchEtController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SearchBar<Post>(
-          searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
-          headerPadding: EdgeInsets.symmetric(horizontal: 10),
-          listPadding: EdgeInsets.symmetric(horizontal: 10),
-          onSearch: _getALlPosts,
-          searchBarController: _searchBarController,
-          placeHolder: Text("placeholder"),
-          cancellationWidget: Text("Cancel"),
-          emptyWidget: Text("empty"),
-          indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1),
-          header: Row(
+    // double heightUI = MediaQuery.of(context).size.height;
+    double widthUI = MediaQuery.of(context).size.width;
+    return new Container(
+        padding: const EdgeInsets.only(top: 120, bottom: 4),
+        color: HexColor("#E5E7EB"),
+        child: Column(children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              RaisedButton(
-                child: Text("sort"),
-                onPressed: () {
-                  _searchBarController.sortList((Post a, Post b) {
-                    return a.body.compareTo(b.body);
-                  });
-                },
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    image: DecorationImage(
+                        fit: BoxFit.contain,
+                        image: AssetImage('assets/images/logo.png'))),
               ),
-              RaisedButton(
-                child: Text("Desort"),
-                onPressed: () {
-                  _searchBarController.removeSort();
-                },
-              ),
-              RaisedButton(
-                child: Text("Replay"),
-                onPressed: () {
-                  isReplay = !isReplay;
-                  _searchBarController.replayLastSearch();
-                },
+              Text(
+                "IYING",
+                style: TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
+                  color: HexColor("#1C284E"),
+                  letterSpacing: 1,
+                ),
               ),
             ],
           ),
-          onCancelled: () {
-            print("Cancelled triggered");
-          },
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          crossAxisCount: 2,
-          onItemFound: (Post post, int index) {
-            return Container(
-              color: Colors.lightBlue,
-              child: ListTile(
-                title: Text(post.title),
-                isThreeLine: true,
-                subtitle: Text(post.body),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Detail()));
-                },
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class Detail extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            Text("Detail"),
-          ],
-        ),
-      ),
-    );
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 16, top: 60, bottom: 8),
+                  child: Container(
+                    width: widthUI / 1.35,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(12.0),
+                      ),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: Colors.white.withOpacity(0.9),
+                            offset: const Offset(0, 2),
+                            blurRadius: 8.0),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 2, right: 2, top: 4, bottom: 4),
+                      child: TextField(
+                        onChanged: (String txt) {
+                          _searchEtController.text = txt;
+                        },
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
+                        cursorColor: HexColor("#1C284E"),
+                        decoration: InputDecoration(
+                          icon: Icon(
+                            Icons.search,
+                            color: HexColor("#1C284E"),
+                          ),
+                          border: InputBorder.none,
+                          hintText: '请输入搜索内容...',
+                        ),
+                        inputFormatters: [
+                          // WhitelistingTextInputFormatter(RegExp("^[ZA-ZZa-z0-9_]")),
+                          // WhitelistingTextInputFormatter(RegExp("^[ZA-ZZa-z_]")),
+                          // LengthLimitingTextInputFormatter(5)
+                        ],
+                        // 回车提交
+                        onEditingComplete: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          //   Navigator.of(context).push(
+                          //   MaterialPageRoute(
+                          //     builder: (context) => ResourceList(_searchEtController.text),
+                          //   ),
+                          // );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 60, bottom: 8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.9),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(12.0),
+                        ),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: Colors.white.withOpacity(0.9),
+                              offset: const Offset(0, 2),
+                              blurRadius: 12.0),
+                        ],
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(12.0),
+                          ),
+                          onTap: () {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ResourceList(_searchEtController.text),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              // child: Icon(Icons.search,
+                              //     size: 20,
+                              //     color:HexColor("#1C284E"),),
+                              child: Text("搜索",
+                                  style: TextStyle(
+                                      color: HexColor("#1C284E"),
+                                      fontSize: 18))),
+                        ),
+                      ),
+                    ))
+              ])
+        ]));
   }
 }

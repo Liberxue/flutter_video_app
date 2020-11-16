@@ -3,7 +3,7 @@
 //  source: proto/gateWay.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:async' as $async;
 
@@ -56,64 +56,48 @@ class GateWayClient extends $grpc.Client {
       ($core.List<$core.int> value) =>
           $1.ResourceDownloadResponse.fromBuffer(value));
 
-  GateWayClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
-      : super(channel, options: options);
+  GateWayClient($grpc.ClientChannel channel,
+      {$grpc.CallOptions options,
+      $core.Iterable<$grpc.ClientInterceptor> interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseFuture<$1.SignInResponse> signIn($1.SignInRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$signIn, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$signIn, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.SignUpResponse> signUp($1.SignUpRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$signUp, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$signUp, request, options: options);
   }
 
   $grpc.ResponseFuture<$2.SearchResponse> search($2.SearchRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$search, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$search, request, options: options);
   }
 
   $grpc.ResponseFuture<$3.FavoriteActionResponse> favoriteAction(
       $3.FavoriteActionRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$favoriteAction, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$favoriteAction, request, options: options);
   }
 
   $grpc.ResponseFuture<$3.FavoriteListResponse> favoriteList(
       $3.FavoriteListRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$favoriteList, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$favoriteList, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.ResourcePreviewResponse> resourcePreview(
       $1.ResourcePreviewRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$resourcePreview, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$resourcePreview, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.ResourceDownloadResponse> resourceDownload(
       $1.ResourceDownloadRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$resourceDownload, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$resourceDownload, request, options: options);
   }
 }
 

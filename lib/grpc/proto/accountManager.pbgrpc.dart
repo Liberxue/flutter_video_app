@@ -3,7 +3,7 @@
 //  source: proto/accountManager.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:async' as $async;
 
@@ -45,52 +45,39 @@ class AccountManagerClient extends $grpc.Client {
           ($core.List<$core.int> value) =>
               $0.RechargeCoinResponse.fromBuffer(value));
 
-  AccountManagerClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
-      : super(channel, options: options);
+  AccountManagerClient($grpc.ClientChannel channel,
+      {$grpc.CallOptions options,
+      $core.Iterable<$grpc.ClientInterceptor> interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseFuture<$0.CreateAccountResponse> createAccount(
       $0.CreateAccountRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$createAccount, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$createAccount, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.UpdateProfileResponse> updateProfile(
       $0.UpdateProfileRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$updateProfile, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$updateProfile, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.UpdatePassWordResponse> updatePassWord(
       $0.UpdatePassWordRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$updatePassWord, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$updatePassWord, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.LoginAccountResponse> loginAccount(
       $0.LoginAccountRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$loginAccount, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$loginAccount, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.RechargeCoinResponse> rechargeCoin(
       $0.RechargeCoinRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$rechargeCoin, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$rechargeCoin, request, options: options);
   }
 }
 

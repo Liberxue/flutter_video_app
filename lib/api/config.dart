@@ -1,12 +1,5 @@
+import 'package:ciying/common/constants.dart';
 import 'package:grpc/grpc.dart';
-
-class APIConfig {
-  static const Address = "192.168.31.151";
-  // static const Address = "123.58.211.129";
-
-  // static const Address = "192.168.1.100";
-  static const Port = 5003;
-}
 
 class Manager {
   // 工厂模式
@@ -15,10 +8,15 @@ class Manager {
   static Manager _instance;
   ClientChannel channel;
   Manager._internal() {
-      channel = ClientChannel(
-      APIConfig.Address,
-      port: APIConfig.Port,
-      options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
+    channel = ClientChannel(
+      GrpcConfig.ConfGrpcServerAddress,
+      port: GrpcConfig.ConfGrpcPort,
+      options: const ChannelOptions(
+        credentials: ChannelCredentials.insecure(),
+        connectionTimeout: GrpcConfig.ConfconnectionTimeout,
+        idleTimeout: GrpcConfig.ConfIdleTimeout,
+        // backoffStrategy: backOffstrategy,
+      ),
     );
   }
   static Manager _getInstance() {
