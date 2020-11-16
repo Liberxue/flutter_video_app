@@ -47,16 +47,13 @@ class __ResourceListBodyState extends State<_ResourceListBody> with TickerProvid
     searchRequest.text=widget.searchText;
     searchRequest.limit=100;
     SearchResponse searchResponse=await Search.searchAPIRequest(searchRequest);
-    print(searchResponse.code);
-    print(searchResponse.resourceSection);
-    BotToast.showLoading(); 
-    if(searchResponse.code!=0){
-        BotToast.closeAllLoading();
-        BotToast.showText(text:"请求异常，请稍后重试");
-    }
+    // print(searchResponse.code);
+    // print(searchResponse.resourceSection);
+    // BotToast.showLoading(); 
+    // if(searchResponse.code!=0){
+    // }
     setState(() {
       _resourceSection=searchResponse.resourceSection;
-      BotToast.closeAllLoading();
     });
   }
   @override
@@ -85,7 +82,7 @@ class __ResourceListBodyState extends State<_ResourceListBody> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).padding.top;
+    double statusBarHeight = MediaQuery.of(context).padding.top-20;
     height = MediaQuery.of(context).size.height - statusBarHeight;
     double widthBar = MediaQuery.of(context).size.width;
     return Container(

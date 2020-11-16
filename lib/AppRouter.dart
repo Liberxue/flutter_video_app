@@ -58,20 +58,20 @@ class _AppRouterState extends State<AppRouter> {
           title: APPNAME,
           theme: ThemeData(
             // platform: TargetPlatform.iOS,
-            primaryColor: Colors.blueGrey,
+            primaryColor: Colors.white,
             scaffoldBackgroundColor: Colors.white,
-            accentColor: Colors.blueGrey,
-            primarySwatch: Colors.blueGrey,
+            // accentColor: Colors.blueGrey,
+            // primarySwatch: Colors.blueGrey,
           ),
       home: Consumer<AuthModel>(builder: (context, model, child) {
           if (_isLogin) return SearchPage();
           return Login();
         }),
-      initialRoute: '/Login',
+      initialRoute: '/',
       routes: <String, WidgetBuilder>{
-          '/Login': (context) => Login(),
-          '/Search': (context) =>  SearchPage(),
-          '/Logout':(context) => Logout(),
+            '/Login': (context) => Login(),
+            '/Search': (context) =>  SearchPage(),
+            '/Logout':(context) => Logout(),
             },
           ),
         ));

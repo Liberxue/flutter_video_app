@@ -15,9 +15,10 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-          height: height,
+          height: height+20,
           color: HexColor("#E5E7EB"),
-          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
              children: <Widget>[
                 GestureDetector(
                 onTap: tapDrawer,

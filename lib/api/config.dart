@@ -18,7 +18,10 @@ class Manager {
       channel = ClientChannel(
       APIConfig.Address,
       port: APIConfig.Port,
-      options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
+      options: const ChannelOptions(credentials: ChannelCredentials.insecure(),
+      // connectionTimeout:Duration(milliseconds: timeDilation.ceil() * 100),
+      // backoffStrategy:true,
+      ),
     );
   }
   static Manager _getInstance() {

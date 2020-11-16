@@ -5,29 +5,30 @@ import 'package:flutter/services.dart';
 
 Future<void> main() async {
     // 强制竖屏
-  // SystemChrome.setPreferredOrientations([
-  //   DeviceOrientation.portraitUp,
-  //   DeviceOrientation.portraitDown
-  // ]);
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
    if (Platform.isAndroid) {
     // 设置沉浸式状态栏
-    // SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.black);
-    // SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+    SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.white);
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
-  // SystemChrome.setSystemUIOverlayStyle(
-  //   SystemUiOverlayStyle(
-  //     systemNavigationBarColor:
-  //         SystemUiOverlayStyle.dark.systemNavigationBarColor,
-  //   ),
-  // );
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  //     statusBarColor: Colors.transparent,
-  //     statusBarIconBrightness: Brightness.dark,
-  //     statusBarBrightness: Platform.isAndroid ? Brightness.dark : Brightness.light,
-  //     systemNavigationBarColor: Colors.black,
-  //     systemNavigationBarDividerColor: Colors.black,
-  //     systemNavigationBarIconBrightness: Brightness.dark,
-  // ));
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Platform.isAndroid ? Brightness.dark : Brightness.light,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarDividerColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.light,
+  ));
+   SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      systemNavigationBarColor:
+          SystemUiOverlayStyle.dark.systemNavigationBarColor,
+    ),
+  );
      runApp(AppRouter());
   }
   

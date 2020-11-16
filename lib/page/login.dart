@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:bot_toast/bot_toast.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
@@ -61,26 +58,21 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
     );
   }
   SignInResponse _signInResponse;
-  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2000);
+  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 100);
   Future<String> _authUser(LoginData data) async {
-
-    SignInRequest signInRequest =SignInRequest();
-    signInRequest.loginType=LoginType.PHONEMESSAGEAUTHCODE;
-    signInRequest.passWord=data.password;
-    signInRequest.phoneNumber=Int64(int.parse(data.name));
+    SignInRequest signInRequest = SignInRequest();
+    signInRequest.loginType = LoginType.PHONEMESSAGEAUTHCODE;
+    signInRequest.passWord = data.password;
+    signInRequest.phoneNumber = Int64(int.parse(data.name));
 
     _signInResponse = await signIn(signInRequest);
     return Future.delayed(loginTime).then((_) async {
-      print(_signInResponse.token);
-      if(_signInResponse.code!=ResponseCode.SUCCESSFUL){
-          BotToast.showText(text:"登录失败，请检查账号密码");
-          return "登录失败，请检查账号密码"; // 多语言支持？#issue https://github.com/PomCloud/ciying/issues/3
+      if(_signInResponse==null){
+          return "登录异常,请稍后重试"; // 多语言支持？#issue https://github.com/PomCloud/ciying/issues/3
       }
-      if (_signInResponse==null&&_signInResponse.token.length<1){ //mark check token
-           BotToast.showText(text:"登录异常");
-        return  "登录异常";
+      if (_signInResponse.code!=ResponseCode.SUCCESSFUL&&_signInResponse.token.length<1){ //mark check token
+        return  "登录失败，请检查账号密码";
       }
-       BotToast.showText(text:"登录成功");
       return null;
     });
   }
@@ -92,8 +84,11 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
     signUpRequest.passWord=data.password;
     _signUpResponse=await signUp(signUpRequest);
       return Future.delayed(loginTime).then((_) async {
-      if (_signUpResponse==null&&_signUpResponse.code!=ResponseCode.SUCCESSFUL){ 
-        return  "注册异常";
+      if (_signUpResponse==null){ 
+        return  "注册异常,请稍后重试";
+      }
+      if (_signUpResponse.code!=ResponseCode.SUCCESSFUL){ //mark check token
+        return  "注册失败,请稍后重试";
       }
       return null;
     });
@@ -132,7 +127,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
     children: <Widget>[
       FlutterLogin(
       title: APPNAME,
-      // logo: 'assets/images/logo.png',
+      logo: 'assets/images/logo.png',
       messages: LoginMessages(
         usernameHint: '请输入11位手机号',
         passwordHint: '请输入6-12密码',
@@ -148,13 +143,13 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
         recoverPasswordSuccess: '密码重置成功',
       ),
       theme: LoginTheme(
-        // primaryColor: Colors.blueGrey,
+        primaryColor: Colors.blueGrey,
         errorColor: Colors.deepOrange,
         pageColorLight: Colors.white,
         pageColorDark: Colors.white,
         titleStyle: TextStyle(
           color: Colors.blueGrey,
-          fontFamily: 'OpenSans',
+          fontFamily: 'Quicksand',
           letterSpacing: 4,
         ),
         beforeHeroFontSize: 50,
@@ -167,9 +162,10 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
           color: Colors.white,
           elevation: 0.0,
           margin: EdgeInsets.only(top: 10),
-          // shape: ContinuousRectangleBorder(
-          //     borderRadius: BorderRadius.circular(100.0)),
+          shape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.circular(100.0)),
         ),
+        
         textFieldStyle: TextStyle(
           color: Colors.blueGrey,
         ),
@@ -200,15 +196,9 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
         }
         return null;
       },
-      onLogin: (loginData) {
-        return _authUser(loginData);
-      },
-      onSignup: (loginData) {
-        return _singUp(loginData);
-      },
-      onRecoverPassword: (name) {
-        return _recoverPassword(name);
-      },
+      onLogin: _authUser,
+      onSignup: _singUp,
+      onRecoverPassword:_recoverPassword,
       onSubmitAnimationCompleted: () async {
       await Cache.setCache("token",_signInResponse.token);
       await Cache.setCache("avatarImage", _signInResponse.data.avatarImage);
@@ -224,13 +214,13 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
     alignment:Alignment.center,
     children: <Widget>[
       Positioned(
-        left: 30.0,
-        bottom: 25.0,
+        left: 40.0,
+        bottom: 65.0,
         child: buildCircleCheckBox(),
       ),
         Positioned(
-         left: 60.0,
-          bottom: 25.0,
+         left: 90.0,
+          bottom: 65.0,
             child: RichText(
                 ///文字区域
                 text: TextSpan(

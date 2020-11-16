@@ -28,26 +28,27 @@ class UserDrawerPage extends StatelessWidget {
       //         fit: BoxFit.fill),
           // color: Colors.white),
 
-      color: HexColor("#1C284E"),
+      color: HexColor("#1C284E"),//
       child: new BackdropFilter(
         filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: new Container(
-          padding: EdgeInsets.only(top: 80.0, left: 20.0),
+          padding: EdgeInsets.only(top:80.0, left: 20.0),
           child: Column(
             children: <Widget>[
               Row(
                 children: <Widget>[
-                   Container(
-                      width: 100,
-                      height: 120,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage('https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3964385028,2410370823&fm=26&gp=0.jpg')
-                          )
-                      ),
-                    ),
+                  // 第三方登录显示用户头像？
+                  //  Container(
+                  //     width: 100,
+                  //     height: 120,
+                  //     decoration: BoxDecoration(
+                  //         shape: BoxShape.circle,
+                  //         image: DecorationImage(
+                  //             fit: BoxFit.cover,
+                  //             image: NetworkImage('https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3964385028,2410370823&fm=26&gp=0.jpg')
+                  //         )
+                  //     ),
+                  //   ),
                   Padding(
                     padding: EdgeInsets.all(20.0),
                     child: Text(
@@ -64,7 +65,11 @@ class UserDrawerPage extends StatelessWidget {
                 child: ListView.builder(
                     itemCount: menus.length,
                     itemBuilder: (context, index) {
-                      return Container(
+                      return InkWell(
+                         onTap: (){
+                            print("Container clicked");
+                         },
+                      child: Ink(
                         height: 60.0,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -90,6 +95,7 @@ class UserDrawerPage extends StatelessWidget {
                             ),
                           ],
                         ),
+                      ),
                       );
                     }),
               ),
