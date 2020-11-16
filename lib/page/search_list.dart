@@ -1,3 +1,4 @@
+import 'package:ciying/common/constants.dart';
 import 'package:ciying/widgets/custom_app_bar.dart';
 import 'package:ciying/page/resource_list.dart';
 import 'package:ciying/util/hexColor.dart';
@@ -36,11 +37,19 @@ class _SearchListBodyState extends State<_SearchListBody>
 
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).padding.top - 20;
+    double statusBarHeight;
+    // Platform.isIOS 刘海屏。。。。。
+    // print(MediaQuery.of(context).padding.top)
+    if (MediaQuery.of(context).padding.top == null ||
+        MediaQuery.of(context).padding.top == 0) {
+      statusBarHeight = MediaQuery.of(context).padding.top - 80;
+    } else {
+      statusBarHeight = MediaQuery.of(context).padding.top - 25;
+    }
     height = MediaQuery.of(context).size.height - statusBarHeight;
     double widthBar = MediaQuery.of(context).size.width;
     return Container(
-      margin: EdgeInsets.only(top: statusBarHeight),
+      margin: EdgeInsets.only(top: 0),
       child: SlideStack(
         drawer: UserDrawerPage(),
         child: SlideContainer(
@@ -52,7 +61,7 @@ class _SearchListBodyState extends State<_SearchListBody>
             child: Column(
               children: <Widget>[
                 CustomAppBar(
-                  title: '词影',
+                  title: CommonConfig.ConfAppName,
                   height: kToolbarHeight * (1 - position / 5),
                   tapDrawer: () {
                     _slideKey.currentState.openOrClose();
@@ -74,7 +83,7 @@ class _SearchListBodyState extends State<_SearchListBody>
           onSlide: onSlide,
           drawerSize: maxSlideDistance,
           transform:
-              Matrix4.translationValues(0.9, height * position / 10, 0.0),
+              Matrix4.translationValues(0.0, height * position / 10, 0.0),
         ),
       ),
     );
@@ -102,8 +111,8 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                width: 60,
-                height: 60,
+                width: 48,
+                height: 48,
                 decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     image: DecorationImage(
@@ -153,11 +162,13 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                           fontSize: 18,
                         ),
                         cursorColor: HexColor("#1C284E"),
+
                         decoration: InputDecoration(
-                          icon: Icon(
-                            Icons.search,
-                            color: HexColor("#1C284E"),
-                          ),
+                          contentPadding: EdgeInsets.only(left: 20.0),
+                          // icon: Icon(
+                          //   Icons.search,
+                          //   color: HexColor("#1C284E"),
+                          // ),
                           border: InputBorder.none,
                           hintText: '请输入搜索内容...',
                         ),

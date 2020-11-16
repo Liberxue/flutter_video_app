@@ -52,7 +52,7 @@ class _AppRouterState extends State<AppRouter> {
         ],
         child: Consumer<ThemeModel>(
           builder: (context, model, child) => MaterialApp(
-            title: APPNAME,
+            title: CommonConfig.ConfAppName,
             theme: ThemeData(
               // platform: TargetPlatform.iOS,
               primaryColor: Colors.white,
@@ -64,7 +64,7 @@ class _AppRouterState extends State<AppRouter> {
               if (_isLogin) return SearchPage();
               return Login();
             }),
-            initialRoute: '/',
+            initialRoute: '/Search',
             routes: <String, WidgetBuilder>{
               '/Login': (context) => Login(),
               '/Search': (context) => SearchPage(),

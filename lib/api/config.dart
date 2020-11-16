@@ -1,4 +1,4 @@
-import 'package:ciying/common/constants.dart';
+import 'package:ciying/common/grpc_conf.dart';
 import 'package:grpc/grpc.dart';
 
 class Manager {

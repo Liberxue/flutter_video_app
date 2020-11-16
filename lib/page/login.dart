@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
@@ -7,6 +9,7 @@ import 'package:ciying/page/search_list.dart';
 import 'package:ciying/page/userPrivacyAgreement.dart';
 import 'package:ciying/page/userRegistrationAgreement.dart';
 import 'package:ciying/util/exit.dart';
+import 'package:ciying/util/logger.dart';
 import 'package:ciying/util/store.dart';
 import 'package:ciying/util/validation.dart';
 import 'package:fixnum/fixnum.dart';
@@ -104,7 +107,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
   }
 
   Future<String> _recoverPassword(String name) {
-    print('Name: $name');
+    logger.d("_recoverPassword name", '$name');
     // return Future.delayed(loginTime).then((_) {
     //   if (!users.containsKey(name)) {
     //     return '手机号码不存在!';
@@ -134,7 +137,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
                 )),
         child: Stack(children: <Widget>[
           FlutterLogin(
-            title: APPNAME,
+            title: CommonConfig.ConfAppName,
             logo: 'assets/images/logo.png',
             messages: LoginMessages(
               usernameHint: '请输入11位手机号',
