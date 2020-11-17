@@ -17,6 +17,8 @@ class _SearchGridState extends State<SearchGrid> {
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   ScrollController _scrollController;
   int page = 1;
+  bool loading = true;
+
   @override
   void initState() {
     super.initState();
@@ -27,17 +29,19 @@ class _SearchGridState extends State<SearchGrid> {
       _refreshIndicatorKey.currentState?.show();
     });
 
-    this._onRefresh();
-
+    _onRefresh();
     _scrollController.addListener(() {
+      print("_onRefresh");
+      print(_scrollController.position.pixels);
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
+        print('滑动到了最底部');
         _onLoadmore();
       }
     });
   }
 
-  _fetchData() async {
+  Future _fetchData() async {
     SearchRequest searchRequest = SearchRequest();
     searchRequest.text = "hhhh";
     searchRequest.limit = 100;
@@ -53,8 +57,8 @@ class _SearchGridState extends State<SearchGrid> {
 
   Future<dynamic> _onRefresh() {
     widget._resourceSection.clear();
-    this.page = 1;
-    print(1);
+    this.page += 1;
+    print(page);
     return _fetchData().then((data) {
       setState(() => this.widget._resourceSection.addAll(data));
     });
@@ -64,19 +68,16 @@ class _SearchGridState extends State<SearchGrid> {
     this.page++;
     return _fetchData().then((data) {
       setState(() {
+        print(data);
         this.widget._resourceSection.addAll(data);
       });
     });
   }
 
   @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    var length = widget._resourceSection?.length - 1 ?? 0;
+
     double _gridSize = MediaQuery.of(context).size.height - 80; //88% of screen
     // double _gridSize = MediaQuery.of(context).size.height*0.78; //88% of screen
 
@@ -91,9 +92,6 @@ class _SearchGridState extends State<SearchGrid> {
             height: _gridSize,
             decoration: BoxDecoration(
               color: HexColor("#E5E6EA"),
-              // borderRadius: BorderRadius.only(
-              //     bottomLeft: Radius.circular(_gridSize / 10),
-              //     bottomRight: Radius.circular(_gridSize / 10))
             ),
             padding: EdgeInsets.only(left: 4, right: 4),
             child: new Column(children: <Widget>[
@@ -118,9 +116,10 @@ class _SearchGridState extends State<SearchGrid> {
                                   crossAxisCount: 2,
                                   childAspectRatio: childAspectRatio),
                           itemBuilder: (BuildContext context, int index) {
-                            if (index == widget._resourceSection.length - 1)
-                              return LoadMoreWidget();
-                            else
+                            if (index == length) {
+                              _onRefresh();
+                              LoadMoreWidget();
+                            } else
                               return new Padding(
                                   // padding: EdgeInsets.only(top: index%2==0 ? 20 : 0, right: index%2==0 ? 5 : 0, left: index%2==1 ? 5 : 0, bottom: index%2==1 ? 20 : 0),
                                   padding: EdgeInsets.only(
@@ -133,5 +132,11 @@ class _SearchGridState extends State<SearchGrid> {
             ])),
         // new MinimalCart(_gridSize)
       ]);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }

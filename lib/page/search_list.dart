@@ -42,14 +42,14 @@ class _SearchListBodyState extends State<_SearchListBody>
     // print(MediaQuery.of(context).padding.top)
     if (MediaQuery.of(context).padding.top == null ||
         MediaQuery.of(context).padding.top == 0) {
-      statusBarHeight = MediaQuery.of(context).padding.top - 80;
+      statusBarHeight = MediaQuery.of(context).padding.top - 50;
     } else {
       statusBarHeight = MediaQuery.of(context).padding.top - 25;
     }
     height = MediaQuery.of(context).size.height - statusBarHeight;
     double widthBar = MediaQuery.of(context).size.width;
     return Container(
-      margin: EdgeInsets.only(top: 0),
+      margin: EdgeInsets.only(top: 1),
       child: SlideStack(
         drawer: UserDrawerPage(),
         child: SlideContainer(
@@ -100,9 +100,10 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
 
   @override
   Widget build(BuildContext context) {
-    // double heightUI = MediaQuery.of(context).size.height;
+    double heightUI = MediaQuery.of(context).size.height;
     double widthUI = MediaQuery.of(context).size.width;
     return new Container(
+        height: heightUI,
         padding: const EdgeInsets.only(top: 120, bottom: 4),
         color: HexColor("#E5E7EB"),
         child: Column(children: <Widget>[

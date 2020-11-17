@@ -144,7 +144,7 @@ class ProductWidget extends StatelessWidget {
                     tag: _resourceSection.sourceID,
                     child: Container(
                       width: 200,
-                      height: 120,
+                      height: 95,
                       child: CachedNetworkImage(
                         imageUrl: _resourceSection.resourceAddress,
                         fit: BoxFit.cover,

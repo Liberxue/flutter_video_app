@@ -9,7 +9,6 @@ import 'package:ciying/page/bloc/CartBloc.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/widgets/SlideContainer.dart';
 import 'package:ciying/widgets/UserDrawerPage.dart';
-import 'package:ciying/widgets/custom_loading.dart';
 import 'package:ciying/widgets/loadMoreWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +97,7 @@ class __ResourceListBodyState extends State<_ResourceListBody>
       return LoadMoreWidget();
     else
       return Container(
-        margin: EdgeInsets.only(top: statusBarHeight),
+        // margin: EdgeInsets.only(top: statusBarHeight),
         child: SlideStack(
           drawer: UserDrawerPage(),
           child: SlideContainer(
@@ -115,22 +114,6 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                       _slideKey.currentState.openOrClose();
                     },
                   ),
-                  // if (_isLoading)
-                  //   Expanded(
-                  //       //child: Container(
-                  //       //   margin: EdgeInsets.symmetric(horizontal: 10),
-                  //       //   child: RaisedButton(
-                  //       //     onPressed: () {
-                  //       //       Navigator.push(
-                  //       //           context,
-                  //       //           MaterialPageRoute(
-                  //       //               builder: (_) => CustomLoading()));
-                  //       //     },
-                  //       //     child: Text("CustomLoading"),
-                  //       //   ),
-                  //       // ),
-                  //       )
-                  // else
                   Expanded(
                       child: Stack(children: <Widget>[
                     new CustomScrollView(
