@@ -3,7 +3,7 @@ import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:ciying/models/signIn/signIn.dart';
 import 'package:ciying/page/User/Register.dart';
-import 'package:ciying/page/search_list.dart';
+import 'package:ciying/page/Search/search_list.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/util/store.dart';
 import 'package:ciying/util/validation.dart';
@@ -148,6 +148,12 @@ class LoginState extends State<Login>
     super.dispose();
 
     //解绑
+    logoAnimatController.stop();
+    registerAnimatController.stop();
+    inputAnimaton.removeStatusListener((status) {
+      Stopwatch();
+    });
+    inputAnimatController.stop();
     WidgetsBinding.instance.removeObserver(this);
   }
 

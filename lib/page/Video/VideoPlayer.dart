@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
-import 'bloc/CartBloc.dart';
-import 'head_profile.dart';
+import '../bloc/CartBloc.dart';
+import '../User/head_profile.dart';
 import 'my_chewie_custom.dart';
 
 class VideoPlayer extends StatefulWidget {

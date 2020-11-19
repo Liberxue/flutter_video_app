@@ -1,7 +1,7 @@
 import 'package:ciying/common/constants.dart';
 // import 'package:ciying/page/login.dart';
 import 'package:ciying/page/User/logout.dart';
-import 'package:ciying/page/search_list.dart';
+import 'package:ciying/page/Search/search_list.dart';
 import 'package:ciying/page/User/Login.dart';
 import 'package:ciying/util/store.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-import 'package:ciying/page/search_list.dart';
+import 'package:ciying/page/Search/search_list.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:flutter/material.dart';
 

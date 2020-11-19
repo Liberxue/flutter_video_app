@@ -3,8 +3,8 @@ import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/gateWay.pb.dart';
 import 'package:ciying/models/sign_up.dart';
 import 'package:ciying/page/User/Login.dart';
-import 'package:ciying/page/userPrivacyAgreement.dart';
-import 'package:ciying/page/userRegistrationAgreement.dart';
+import 'package:ciying/page/User/userPrivacyAgreement.dart';
+import 'package:ciying/page/User/userRegistrationAgreement.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/util/validation.dart';
 import 'package:ciying/widgets/CustomDialog.dart';
@@ -168,6 +168,12 @@ class RegisterState extends State<Register>
     super.dispose();
 
     //解绑
+    logoAnimatController.stop();
+    registerAnimatController.stop();
+    inputAnimaton.removeStatusListener((status) {
+      Stopwatch();
+    });
+    inputAnimatController.stop();
     WidgetsBinding.instance.removeObserver(this);
   }
 
