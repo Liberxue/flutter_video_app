@@ -1,11 +1,4 @@
-
-
-import 'package:ciying/util/exit.dart';
-import 'package:ciying/util/store.dart';
 import 'package:flutter/material.dart';
-
-import 'login.dart';
-
 
 import 'package:flutter/material.dart';
 
@@ -17,42 +10,46 @@ class Logout extends StatefulWidget {
 class _LogoutState extends State<Logout> {
   @override
   Widget build(BuildContext context) {
-    Future myDialog(context){
-  return showDialog<Null>(
+    Future myDialog(context) {
+      return showDialog<Null>(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-            return GestureDetector(							// 手势处理事件
-              onTap: (){
-                Navigator.of(context).pop();				//退出弹出框
+          return GestureDetector(
+              // 手势处理事件
+              onTap: () {
+                Navigator.of(context).pop(); //退出弹出框
               },
-              child: Container(								//弹出框的具体事件
+              child: Container(
+                //弹出框的具体事件
                 child: Material(
                   color: Color.fromRGBO(0, 0, 0, 0.1),
                   child: Center(
-                    child: Text('具体操作',style:TextStyle(color: Colors.white),),
+                    child: Text(
+                      '具体操作',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
-              )
-            );
-            
+              ));
         },
-    );
-}
+      );
+    }
+
     return Scaffold(
-        body: Container(
+      body: Container(
+        child: Center(
+          child: GestureDetector(
+            onTap: () {
+              myDialog(context);
+            },
+            //  点击执行弹窗
             child: Center(
-                child: GestureDetector(
-                  onTap: (){
-                      myDialog(context);
-                  },
-                //  点击执行弹窗
-                 child: Center(
-                   child: Text("弹窗"),
-                 ), 
-                ),
-            ),     
-    ),
+              child: Text("弹窗"),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -81,13 +78,13 @@ class _LogoutState extends State<Logout> {
 //                       //onPressed: () => Navigator.of(context).pop(true)),
 //                     onPressed:() async {
 //                         loginOut(context);
-//                       }),                      
+//                       }),
 //                   RaisedButton(
 //                       child: Text('取消'),
 //                       onPressed: () => Navigator.of(context).pop(false)),
 //                 ],
 //               )), child: null,
-//           );   
+//           );
 //         },
 //     );
 //   }

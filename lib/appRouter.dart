@@ -1,7 +1,8 @@
 import 'package:ciying/common/constants.dart';
-import 'package:ciying/page/login.dart';
-import 'package:ciying/page/logout.dart';
+// import 'package:ciying/page/login.dart';
+import 'package:ciying/page/User/logout.dart';
 import 'package:ciying/page/search_list.dart';
+import 'package:ciying/page/User/Login.dart';
 import 'package:ciying/util/store.dart';
 import 'package:flutter/material.dart';
 import 'package:persist_theme/persist_theme.dart';
@@ -64,7 +65,7 @@ class _AppRouterState extends State<AppRouter> {
               if (_isLogin) return SearchPage();
               return Login();
             }),
-            initialRoute: '/Search',
+            initialRoute: '/',
             routes: <String, WidgetBuilder>{
               '/Login': (context) => Login(),
               '/Search': (context) => SearchPage(),

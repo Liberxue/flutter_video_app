@@ -1,4 +1,3 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:ciying/api/search.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/widgets/custom_app_bar.dart';

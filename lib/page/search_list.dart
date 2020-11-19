@@ -103,7 +103,7 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
     double heightUI = MediaQuery.of(context).size.height;
     double widthUI = MediaQuery.of(context).size.width;
     return new Container(
-        height: heightUI,
+        // height: heightUI,
         padding: const EdgeInsets.only(top: 120, bottom: 4),
         color: HexColor("#E5E7EB"),
         child: Column(children: <Widget>[

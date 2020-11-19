@@ -20,10 +20,10 @@ class CustomAppBar extends StatelessWidget {
         MediaQuery.of(context).padding.top == 0) {
       paddingTop = 30;
     } else {
-      paddingTop = 55;
+      paddingTop = 50;
     }
     return Container(
-      padding: EdgeInsets.only(top: paddingTop),
+      padding: EdgeInsets.only(top: paddingTop, left: 10, bottom: 20),
       color: HexColor("#E5E7EB"),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

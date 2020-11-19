@@ -28,12 +28,6 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
   // final CartBloc _cartBloc = new CartBloc();
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
-
-  String firstButtonText = 'Take photo';
-  String secondButtonText = 'Record video';
-  double textSize = 20;
-  String albumName = 'CiYing';
-
   @override
   void initState() {
     super.initState();

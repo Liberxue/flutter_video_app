@@ -35,7 +35,6 @@ class _SearchGridState extends State<SearchGrid> {
       print(_scrollController.position.pixels);
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        print('滑动到了最底部');
         _onLoadmore();
       }
     });
@@ -57,18 +56,16 @@ class _SearchGridState extends State<SearchGrid> {
 
   Future<dynamic> _onRefresh() {
     widget._resourceSection.clear();
-    this.page += 1;
-    print(page);
+    this.page = 1;
     return _fetchData().then((data) {
       setState(() => this.widget._resourceSection.addAll(data));
     });
   }
 
   Future<dynamic> _onLoadmore() {
-    this.page++;
+    this.page += 1;
     return _fetchData().then((data) {
       setState(() {
-        print(data);
         this.widget._resourceSection.addAll(data);
       });
     });
@@ -86,7 +83,7 @@ class _SearchGridState extends State<SearchGrid> {
         (MediaQuery.of(context).size.height / 2.1);
     if (widget._resourceSection == null)
       return LoadMoreWidget();
-    else
+    else {
       return new Column(children: <Widget>[
         new Container(
             height: _gridSize,
@@ -107,8 +104,6 @@ class _SearchGridState extends State<SearchGrid> {
                     // margin: EdgeInsets.only(top: 5),
                     child: new PhysicalModel(
                         color: Colors.transparent,
-                        // borderRadius:  BorderRadius.only(bottomLeft: Radius.circular(_gridSize/10 - 10), bottomRight: Radius.circular(_gridSize/10 - 10)),
-                        // clipBehavior: Clip.antiAlias,
                         child: new GridView.builder(
                           itemCount: widget._resourceSection.length,
                           gridDelegate:
@@ -117,11 +112,10 @@ class _SearchGridState extends State<SearchGrid> {
                                   childAspectRatio: childAspectRatio),
                           itemBuilder: (BuildContext context, int index) {
                             if (index == length) {
-                              _onRefresh();
-                              LoadMoreWidget();
+                              _onLoadmore();
+                              return LoadMoreWidget();
                             } else
                               return new Padding(
-                                  // padding: EdgeInsets.only(top: index%2==0 ? 20 : 0, right: index%2==0 ? 5 : 0, left: index%2==1 ? 5 : 0, bottom: index%2==1 ? 20 : 0),
                                   padding: EdgeInsets.only(
                                       left: 5, right: 5, bottom: 5),
                                   child: ProductWidget(
@@ -132,6 +126,7 @@ class _SearchGridState extends State<SearchGrid> {
             ])),
         // new MinimalCart(_gridSize)
       ]);
+    }
   }
 
   @override
