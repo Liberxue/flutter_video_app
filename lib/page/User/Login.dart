@@ -381,7 +381,7 @@ class LoginState extends State<Login>
             right: 22,
           ),
           decoration: BoxDecoration(
-            // color: HexColor('#F4F5F7'),
+            color: HexColor('#F4F5F7'),
             borderRadius: BorderRadius.all(Radius.circular(30)),
             border: Border.all(
                 color: focusNode.hasFocus ? selectColor : normalColor),
@@ -497,7 +497,7 @@ class LoginState extends State<Login>
 
         ///获取输入的电话号码
         String inputPhone = _userPhoneTextController.text;
-        if (inputPhone.length < 11)
+        if (inputPhone.length < 11) {
           showDialog(
               context: context,
               barrierDismissible: false,
@@ -514,7 +514,8 @@ class LoginState extends State<Login>
                   },
                 );
               });
-        else if (!isChinaPhoneLegal(inputPhone))
+          return;
+        } else if (!isChinaPhoneLegal(inputPhone)) {
           showDialog(
               context: context,
               barrierDismissible: false,
@@ -530,7 +531,8 @@ class LoginState extends State<Login>
                   },
                 );
               });
-        else {
+          return;
+        } else {
           isPhoneError = false;
         }
 
@@ -590,7 +592,7 @@ class LoginState extends State<Login>
                     },
                   );
                 });
-
+            return;
             // 多语言支持？#issue https://github.com/PomCloud/ciying/issues/3
           } else if (_signInResponse.code != ResponseCode.SUCCESSFUL &&
               _signInResponse.token.length < 1) {
@@ -614,12 +616,22 @@ class LoginState extends State<Login>
                     },
                   );
                 });
+            return;
           } else {
             currentRestureStatus = RestureStatus.success;
             setState(() {});
             Future.delayed(Duration(milliseconds: 2000), () async {
-              await Cache.setCache("token", _signInResponse.token);
-              print(Cache.getToken());
+              await Cache.setCache("Token", _signInResponse.token);
+              await Cache.setCache("User", _signInResponse.data.name);
+              await Cache.setCache(
+                  "AvatarImage", _signInResponse.data.avatarImage);
+              await Cache.setCache(
+                  "PhoneNumber", _signInResponse.data.phoneNumber.toString());
+              await Cache.setCache(
+                  "Coin", _signInResponse.data.coin.toString());
+              await Cache.setCache(
+                  "AccountLevel", _signInResponse.data.accountLevel);
+
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (context) => SearchPage(),
               ));

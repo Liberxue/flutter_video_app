@@ -10,7 +10,10 @@ Future<SignInResponse> signInRequest(SignInRequest data) async {
   final stub = GateWayClient(manager.channel);
   data.deviceType = getDeviceInfo();
   try {
-    response = await stub.signIn(data,options: CallOptions(metadata: {'authorization': 'bearer grpc.auth.token'}));
+    response = await stub.signIn(data,
+        options:
+            CallOptions(metadata: {'authorization': 'bearer grpc.auth.token'}));
+    print(response);
   } catch (e) {
     logger.e('Error! SignInRequest Caught error:', '$e');
     await manager.channel.shutdown();

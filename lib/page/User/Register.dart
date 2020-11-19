@@ -1,9 +1,14 @@
 import 'package:ciying/common/constants.dart';
+import 'package:ciying/grpc/proto/common.pbenum.dart';
+import 'package:ciying/grpc/proto/gateWay.pb.dart';
+import 'package:ciying/models/sign_up.dart';
 import 'package:ciying/page/User/Login.dart';
 import 'package:ciying/page/userPrivacyAgreement.dart';
 import 'package:ciying/page/userRegistrationAgreement.dart';
 import 'package:ciying/util/hexColor.dart';
+import 'package:ciying/util/validation.dart';
 import 'package:ciying/widgets/CustomDialog.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -76,6 +81,9 @@ class RegisterState extends State<Register>
   /// 6-12位为合格，此值为false 否则为true不合格
   bool isPasswordError = false;
 
+  ///复选框的选中标识
+  bool checkIsSelect = false;
+
   ///生命周期函数 页面创建时执行一次
   @override
   void initState() {
@@ -124,7 +132,7 @@ class RegisterState extends State<Register>
 
     ///添加监听，动画执行的每一帧都会回调这里
     inputAnimatController.addListener(() {
-      double value = inputAnimatController.value;
+      // double value = inputAnimatController.value;
       // print("变化比率 $value");
       setState(() {});
     });
@@ -132,13 +140,13 @@ class RegisterState extends State<Register>
     ///添加动画执行状态监听
     inputAnimatController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        print("正向执行完毕 调用 forward方法动画执行完毕的回调");
+        // print("正向执行完毕 调用 forward方法动画执行完毕的回调");
         inputAnimationNumber++;
 
         ///反向执行动画
         inputAnimatController.reverse();
       } else if (status == AnimationStatus.dismissed) {
-        print("反向执行完毕 调用reverse方法动画执行完毕的回调");
+        // print("反向执行完毕 调用reverse方法动画执行完毕的回调");
 
         ///重置动画
         inputAnimatController.reset();
@@ -460,7 +468,7 @@ class RegisterState extends State<Register>
             },
 
             ///键盘回车键的样式
-            textInputAction: TextInputAction.next,
+            textInputAction: TextInputAction.newline,
 
             ///输入文本格式过滤
             inputFormatters: [
@@ -554,9 +562,6 @@ class RegisterState extends State<Register>
     );
   }
 
-  ///复选框的选中标识
-  bool checkIsSelect = false;
-
   ///使用图片素材自定义圆形自选框
   buildCircleCheckBox() {
     return Container(
@@ -589,10 +594,39 @@ class RegisterState extends State<Register>
 
         ///获取输入的电话号码
         String inputPhone = _userPhoneTextController.text;
-        if (inputPhone.length != 11) {
-          ///更新标识 触发抖动动画
-          isPhoneError = true;
-          inputAnimatController.forward();
+        if (inputPhone.length < 11) {
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) {
+                return CustomDialog(
+                  content: '手机号码格式不正确',
+                  isCancel: false,
+                  outsideDismiss: true,
+                  confirmCallback: () {
+                    registerAnimatController.reverse();
+                    isPhoneError = true;
+                    inputAnimatController.forward();
+                  },
+                );
+              });
+          return;
+        } else if (!isChinaPhoneLegal(inputPhone)) {
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) {
+                return CustomDialog(
+                  content: '手机号码格式不正确',
+                  isCancel: false,
+                  outsideDismiss: true,
+                  confirmCallback: () {
+                    registerAnimatController.reverse();
+                    isPhoneError = true;
+                    inputAnimatController.forward();
+                  },
+                );
+              });
           return;
         } else {
           isPhoneError = false;
@@ -600,15 +634,45 @@ class RegisterState extends State<Register>
 
         ///获取输入的密码
         String inputPassword = _userPasswrodtController.text;
+        String repeatInputPassword = _userRepeatPasswrodtController.text;
         if (inputPassword.length < 6) {
-          ///更新标识 触发抖动动画
-          isPasswordError = true;
-          inputAnimatController.forward();
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) {
+                return CustomDialog(
+                  content: '密码长度需在6-12位',
+                  isCancel: false,
+                  outsideDismiss: true,
+                  confirmCallback: () {
+                    registerAnimatController.reverse();
+                    isPasswordError = true;
+                    inputAnimatController.forward();
+                  },
+                );
+              });
           return;
-        } else {
+        } else if (repeatInputPassword != inputPassword) {
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) {
+                return CustomDialog(
+                  content: '两次输入密码不一致',
+                  isCancel: false,
+                  outsideDismiss: true,
+                  confirmCallback: () {
+                    registerAnimatController.reverse();
+                    isPasswordError = true;
+                    inputAnimatController.forward();
+                  },
+                );
+              });
+          return;
+        } else
           isPasswordError = false;
-        }
-        if (!checkIsSelect)
+
+        if (!checkIsSelect) {
           showDialog(
               context: context,
               barrierDismissible: false,
@@ -619,29 +683,75 @@ class RegisterState extends State<Register>
                   outsideDismiss: true,
                   confirmCallback: () {
                     registerAnimatController.reverse();
-                    isPhoneError = true;
+                    checkIsSelect = false;
                     inputAnimatController.forward();
                   },
                 );
               });
+          return;
+        }
 
         ///提交数据
         registerAnimatController.forward();
 
-        Future.delayed(Duration(milliseconds: 8000), () {
-          ///模拟失败
-//          currentRestureStatus = RestureStatus.error;
-//          setState(() {
-//
-//          });
-          Future.delayed(Duration(milliseconds: 2000), () {
-            registerAnimatController.reverse();
-          });
-
+        Future.delayed(Duration(milliseconds: 2000), () async {
+          SignUpResponse _signUpResponse;
+          SignUpRequest signUpRequest = SignUpRequest();
+          signUpRequest.phoneNumber = Int64(int.parse(inputPhone));
+          signUpRequest.passWord = inputPassword;
+          _signUpResponse = await signUp(signUpRequest);
+          if (_signUpResponse == null) {
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) {
+                  return CustomDialog(
+                    title: '注册异常',
+                    content: '请稍后重试',
+                    isCancel: false,
+                    outsideDismiss: true,
+                    confirmCallback: () {
+                      Future.delayed(Duration(milliseconds: 2000), () {
+                        registerAnimatController.reverse();
+                      });
+                      currentRestureStatus = RestureStatus.error;
+                      setState(() {
+                        MediaQuery.of(context).viewInsets.bottom == 0;
+                      });
+                    },
+                  );
+                });
+            return;
+          }
+          if (_signUpResponse.code != ResponseCode.SUCCESSFUL) {
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) {
+                  return CustomDialog(
+                    title: '注册失败',
+                    content: '请稍后重试',
+                    isCancel: false,
+                    outsideDismiss: true,
+                    confirmCallback: () {
+                      Future.delayed(Duration(milliseconds: 2000), () {
+                        registerAnimatController.reverse();
+                      });
+                      currentRestureStatus = RestureStatus.error;
+                      setState(() {
+                        MediaQuery.of(context).viewInsets.bottom == 0;
+                      });
+                    },
+                  );
+                });
+            return;
+          }
           currentRestureStatus = RestureStatus.success;
           setState(() {});
           Future.delayed(Duration(milliseconds: 2000), () {
-            //跳转首页面
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => Login(),
+            ));
           });
         });
       },
