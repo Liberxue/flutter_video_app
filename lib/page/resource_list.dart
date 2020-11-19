@@ -7,7 +7,7 @@ import 'package:ciying/page/Search/SearchGrid.dart';
 import 'package:ciying/page/bloc/CartBloc.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/widgets/SlideContainer.dart';
-import 'package:ciying/widgets/UserDrawerPage.dart';
+import 'package:ciying/page/User/UserDrawerPage.dart';
 import 'package:ciying/widgets/loadMoreWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

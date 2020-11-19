@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:ciying/util/hexColor.dart';
+import 'package:ciying/util/store.dart';
 import 'package:flutter/material.dart';
 
 class _MenuInfo {
@@ -17,7 +18,44 @@ final List<_MenuInfo> menus = [
   _MenuInfo(title: '退出登录', icon: Icons.photo_album),
 ];
 
-class UserDrawerPage extends StatelessWidget {
+class _UserInfo {
+  String token;
+  String avatarImage;
+  String phoneNumber;
+  String coin;
+  String accountLevel;
+  _UserInfo(
+      {this.token,
+      this.avatarImage,
+      this.phoneNumber,
+      this.coin,
+      this.accountLevel});
+}
+
+class UserDrawerPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _UserDrawerPageState();
+  }
+}
+
+class _UserDrawerPageState extends State<UserDrawerPage> {
+  _UserInfo _user = new _UserInfo();
+
+  @override
+  void initState() {
+    super.initState();
+    _onLoadUserCache();
+  }
+
+  _onLoadUserCache() async {
+    _user.token = await Cache.getCache("Token");
+    _user.avatarImage = await Cache.getCache("AvatarImage");
+    _user.phoneNumber = await Cache.getCache("PhoneNumber");
+    _user.coin = await Cache.getCache("Coin");
+    _user.accountLevel = await Cache.getCache("AccountLevel");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,19 +77,18 @@ class UserDrawerPage extends StatelessWidget {
                 children: <Widget>[
                   // 第三方登录显示用户头像？
                   // Container(
-                  //   width: 100,
-                  //   height: 120,
+                  //   width: 50,
+                  //   height: 20,
                   //   decoration: BoxDecoration(
                   //       shape: BoxShape.circle,
                   //       image: DecorationImage(
                   //           fit: BoxFit.cover,
-                  //           image: NetworkImage(
-                  //               'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3964385028,2410370823&fm=26&gp=0.jpg'))),
+                  //           image: NetworkImage(_user.avatarImage))),
                   // ),
                   Padding(
                       padding: EdgeInsets.all(20.0),
                       child: Text(
-                        'LiberDemo',
+                        "用户_" + _user.phoneNumber,
                         style: Theme.of(context)
                             .textTheme
                             .title
@@ -140,7 +177,7 @@ class UserDrawerPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                         Text(
-                          "400000",
+                          _user.coin,
                           style: TextStyle(
                             fontSize: 26,
                             color: Color.fromRGBO(255, 178, 102, 0.9),

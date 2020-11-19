@@ -3,7 +3,7 @@ import 'package:ciying/widgets/custom_app_bar.dart';
 import 'package:ciying/page/resource_list.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/widgets/SlideContainer.dart';
-import 'package:ciying/widgets/UserDrawerPage.dart';
+import 'package:ciying/page/User/UserDrawerPage.dart';
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatelessWidget {
