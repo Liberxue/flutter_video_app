@@ -1,7 +1,7 @@
 import 'package:ciying/common/constants.dart';
 // import 'package:ciying/page/login.dart';
-import 'package:ciying/page/User/logout.dart';
-import 'package:ciying/page/Search/search_list.dart';
+import 'package:ciying/page/User/Login_out.dart';
+import 'package:ciying/page/Search/search.dart';
 import 'package:ciying/page/User/Login.dart';
 import 'package:ciying/util/store.dart';
 import 'package:flutter/material.dart';
@@ -67,9 +67,8 @@ class _AppRouterState extends State<AppRouter> {
             }),
             initialRoute: '/',
             routes: <String, WidgetBuilder>{
-              '/Login': (context) => Login(),
-              '/Search': (context) => SearchPage(),
-              '/Logout': (context) => Logout(),
+              '/Login': (context) => _isLogin ? Login() : SearchPage(),
+              '/Search': (context) => _isLogin ? SearchPage() : Login(),
             },
           ),
         ));

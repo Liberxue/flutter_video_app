@@ -3,7 +3,7 @@ import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:ciying/models/signIn/signIn.dart';
 import 'package:ciying/page/User/Register.dart';
-import 'package:ciying/page/Search/search_list.dart';
+import 'package:ciying/page/Search/search.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/util/store.dart';
 import 'package:ciying/util/validation.dart';
@@ -577,6 +577,8 @@ class LoginState extends State<Login>
           signInRequest.phoneNumber = Int64(int.parse(inputPhone));
 
           _signInResponse = await signIn(signInRequest);
+          print(_signInResponse);
+          print(_signInResponse.code);
           if (_signInResponse == null) {
             showDialog(
                 context: context,

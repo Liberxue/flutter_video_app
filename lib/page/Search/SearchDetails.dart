@@ -143,8 +143,8 @@ class ProductWidget extends StatelessWidget {
                       child: new Hero(
                     tag: _resourceSection.sourceID,
                     child: Container(
-                      width: 200,
-                      height: 95,
+                      // width: 200,
+                      // height: height * 0.12,
                       child: CachedNetworkImage(
                         imageUrl: _resourceSection.resourceAddress,
                         fit: BoxFit.cover,
@@ -161,7 +161,7 @@ class ProductWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                         new Container(
-                            margin: EdgeInsets.only(top: 5, bottom: 5),
+                            margin: EdgeInsets.only(top: 5),
                             child: new Text(this._resourceSection.sourceName,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,

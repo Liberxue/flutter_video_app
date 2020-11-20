@@ -102,8 +102,8 @@ class __ResourceListBodyState extends State<_ResourceListBody>
           child: SlideContainer(
             key: _slideKey,
             child: Container(
-              width: widthBar,
-              height: height * (1 - position / 5),
+              // width: widthBar,
+              // height: height * (1 - position / 5),
               child: Column(
                 children: <Widget>[
                   CustomAppBar(
@@ -120,37 +120,38 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                         controller: _scrollController,
                         slivers: <Widget>[
                           new SliverToBoxAdapter(
-                              child: new SearchGrid(_resourceSection)),
+                              child: new SearchGrid(
+                                  _resourceSection, widget.searchText)),
                           // cart 上浮页面
-                          // new SliverToBoxAdapter(child:
-                          //   new CartManager()
-                          // ),
+                          // new SliverToBoxAdapter(child: new CartManager()),
                         ]),
                     // new Align(
                     //     alignment: Alignment.bottomRight,
-                    //     child:new Container(
-                    //       margin: EdgeInsets.only(right: 10, bottom: 10),
-                    //     child: new FloatingActionButton(onPressed: (){
-                    //       if(_showCart)
-                    //         _scrollController.animateTo(
-                    //           _scrollController.position.minScrollExtent,
-                    //           curve: Curves.fastOutSlowIn,
-                    //           duration: Duration(seconds: 2));
-                    //       else
-                    //         _scrollController.animateTo(
-                    //           _scrollController.position.maxScrollExtent,
-                    //           curve: Curves.fastOutSlowIn,
-                    //           duration: Duration(seconds: 2));
+                    //     child: new Container(
+                    //         margin: EdgeInsets.only(right: 10, bottom: 10),
+                    //         child: new FloatingActionButton(
+                    //             onPressed: () {
+                    //               if (_showCart)
+                    //                 _scrollController.animateTo(
+                    //                     _scrollController
+                    //                         .position.minScrollExtent,
+                    //                     curve: Curves.fastOutSlowIn,
+                    //                     duration: Duration(seconds: 2));
+                    //               else
+                    //                 _scrollController.animateTo(
+                    //                     _scrollController
+                    //                         .position.maxScrollExtent,
+                    //                     curve: Curves.fastOutSlowIn,
+                    //                     duration: Duration(seconds: 2));
 
-                    //       setState(() {
-
-                    //       _showCart = !_showCart;
-
-                    //       });
-                    //     }, backgroundColor: Colors.transparent,
-                    //       child: new Icon(_showCart ? Icons.close : Icons.movie,size:50))
-                    //   )
-                    // )
+                    //               setState(() {
+                    //                 _showCart = !_showCart;
+                    //               });
+                    //             },
+                    //             backgroundColor: Colors.transparent,
+                    //             child: new Icon(
+                    //                 _showCart ? Icons.close : Icons.movie,
+                    //                 size: 50))))
                   ]))
                 ],
               ),

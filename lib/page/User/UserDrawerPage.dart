@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:ui';
 
+import 'package:ciying/page/User/Login_out.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/util/store.dart';
+import 'package:ciying/widgets/CustomDialog.dart';
 import 'package:flutter/material.dart';
 
 class _MenuInfo {
@@ -41,7 +44,6 @@ class UserDrawerPage extends StatefulWidget {
 
 class _UserDrawerPageState extends State<UserDrawerPage> {
   _UserInfo _user = new _UserInfo();
-
   @override
   void initState() {
     super.initState();
@@ -132,6 +134,24 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
+                          if (index == 3) {
+                            showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (_) {
+                                  return CustomDialog(
+                                    title: '温馨提示',
+                                    content: '是否确认退出登陆',
+                                    isCancel: true,
+                                    // cancelColor: Colors.green[400],
+                                    // confirmColor: Colors.red[400],
+                                    outsideDismiss: true,
+                                    confirmCallback: () {
+                                      LoginOut(context);
+                                    },
+                                  );
+                                });
+                          }
                           print("Container clicked");
                         },
                         child: Ink(

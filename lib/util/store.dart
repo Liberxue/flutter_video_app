@@ -19,9 +19,9 @@ class Cache {
     return _rememberMe;
   }
 
-  static deleteCache(String key) async {
+  static Future<bool> deleteCache(String key) async {
     SharedPreferences sharePre = await SharedPreferences.getInstance();
-    sharePre.remove(key);
+    return sharePre.remove(key);
   }
 
   static Future<bool> checkLoginState() async {

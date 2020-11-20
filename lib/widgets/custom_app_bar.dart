@@ -1,4 +1,4 @@
-import 'package:ciying/page/Search/search_list.dart';
+import 'package:ciying/page/Search/search.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:flutter/material.dart';
 
@@ -18,12 +18,12 @@ class CustomAppBar extends StatelessWidget {
     double paddingTop;
     if (MediaQuery.of(context).padding.top == null ||
         MediaQuery.of(context).padding.top == 0) {
-      paddingTop = 30;
+      paddingTop = 15;
     } else {
-      paddingTop = 50;
+      paddingTop = 40;
     }
     return Container(
-      padding: EdgeInsets.only(top: paddingTop, left: 10, bottom: 20),
+      padding: EdgeInsets.only(top: paddingTop, left: 10),
       color: HexColor("#E5E7EB"),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

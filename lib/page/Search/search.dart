@@ -1,6 +1,6 @@
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/widgets/custom_app_bar.dart';
-import 'package:ciying/page/resource_list.dart';
+import 'package:ciying/page/Search/SearchList.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/widgets/SlideContainer.dart';
 import 'package:ciying/page/User/UserDrawerPage.dart';
@@ -42,9 +42,9 @@ class _SearchListBodyState extends State<_SearchListBody>
     // print(MediaQuery.of(context).padding.top)
     if (MediaQuery.of(context).padding.top == null ||
         MediaQuery.of(context).padding.top == 0) {
-      statusBarHeight = MediaQuery.of(context).padding.top - 50;
+      statusBarHeight = MediaQuery.of(context).padding.top - 40;
     } else {
-      statusBarHeight = MediaQuery.of(context).padding.top - 25;
+      statusBarHeight = MediaQuery.of(context).padding.top - 15;
     }
     height = MediaQuery.of(context).size.height - statusBarHeight;
     double widthBar = MediaQuery.of(context).size.width;
@@ -56,7 +56,7 @@ class _SearchListBodyState extends State<_SearchListBody>
           key: _slideKey,
           child: Container(
             width: widthBar,
-            height: height * (1 - position / 5),
+            // height: height * (1 - position / 5),
             color: Colors.white,
             child: Column(
               children: <Widget>[
@@ -100,7 +100,7 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
 
   @override
   Widget build(BuildContext context) {
-    double heightUI = MediaQuery.of(context).size.height;
+    // double heightUI = MediaQuery.of(context).size.height;
     double widthUI = MediaQuery.of(context).size.width;
     return new Container(
         // height: heightUI,
@@ -181,11 +181,12 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                         // 回车提交
                         onEditingComplete: () {
                           FocusScope.of(context).requestFocus(FocusNode());
-                          //   Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (context) => ResourceList(_searchEtController.text),
-                          //   ),
-                          // );
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ResourceList(_searchEtController.text),
+                            ),
+                          );
                         },
                       ),
                     ),
