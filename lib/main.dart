@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 Future<void> main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // fix [VERBOSE-2:ui_dart_state.cc Unhandled Exception: ServicesBinding.defaultBinaryMessenger was accessed before the binding was initialized.
-
   // 强制竖屏
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);

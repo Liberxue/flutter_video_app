@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:ciying/page/User/Login_out.dart';
+import 'package:ciying/page/User/UserCache.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/util/store.dart';
 import 'package:ciying/widgets/CustomDialog.dart';
@@ -21,20 +22,6 @@ final List<_MenuInfo> menus = [
   _MenuInfo(title: '退出登录', icon: Icons.photo_album),
 ];
 
-class _UserInfo {
-  String token;
-  String avatarImage;
-  String phoneNumber;
-  String coin;
-  String accountLevel;
-  _UserInfo(
-      {this.token,
-      this.avatarImage,
-      this.phoneNumber,
-      this.coin,
-      this.accountLevel});
-}
-
 class UserDrawerPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -43,19 +30,14 @@ class UserDrawerPage extends StatefulWidget {
 }
 
 class _UserDrawerPageState extends State<UserDrawerPage> {
-  _UserInfo _user = new _UserInfo();
+  UserInfo userInfo;
   @override
   void initState() {
     super.initState();
-    _onLoadUserCache();
   }
 
-  _onLoadUserCache() async {
-    _user.token = await Cache.getCache("Token");
-    _user.avatarImage = await Cache.getCache("AvatarImage");
-    _user.phoneNumber = await Cache.getCache("PhoneNumber");
-    _user.coin = await Cache.getCache("Coin");
-    _user.accountLevel = await Cache.getCache("AccountLevel");
+  void onSlide() {
+    setState(() => LoadUserCache().then((value) => userInfo));
   }
 
   @override
@@ -87,15 +69,16 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                   //           fit: BoxFit.cover,
                   //           image: NetworkImage(_user.avatarImage))),
                   // ),
-                  Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: Text(
-                        "用户_" + _user.phoneNumber,
-                        style: Theme.of(context)
-                            .textTheme
-                            .title
-                            .copyWith(color: Colors.white),
-                      )),
+                  if (userInfo != null)
+                    Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: Text(
+                          userInfo.phoneNumber,
+                          style: Theme.of(context)
+                              .textTheme
+                              .title
+                              .copyWith(color: Colors.white),
+                        )),
                 ],
               ),
               // new Container(
@@ -152,7 +135,6 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                                   );
                                 });
                           }
-                          print("Container clicked");
                         },
                         child: Ink(
                           height: 60.0,
@@ -197,7 +179,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                           style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                         Text(
-                          _user.coin,
+                          "userInfo.coin",
                           style: TextStyle(
                             fontSize: 26,
                             color: Color.fromRGBO(255, 178, 102, 0.9),

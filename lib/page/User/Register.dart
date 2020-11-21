@@ -23,7 +23,7 @@ class Register extends StatefulWidget {
 class RegisterState extends State<Register>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   ///正在输入TextField的边框颜色
-  Color selectColor = Colors.blueGrey;
+  Color selectColor = HexColor("#252C4E");
 
   ///未在输入TextField的边框颜色
   Color normalColor = Color.fromARGB(
@@ -220,6 +220,7 @@ class RegisterState extends State<Register>
           //输入框失去焦点
           userPhoneFieldNode.unfocus();
           userPasswordFieldNode.unfocus();
+          userRepeatPasswordFieldNode.unfocus();
         },
         child: Stack(
           children: [
@@ -249,7 +250,7 @@ class RegisterState extends State<Register>
       //   fit: BoxFit.fill,
       // ),
       child: Container(
-        color: HexColor("#E5E7EB"),
+        color: HexColor("#fff"),
       ),
     );
   }
@@ -417,10 +418,17 @@ class RegisterState extends State<Register>
             right: 22,
           ),
           decoration: BoxDecoration(
-            color: HexColor('#F4F5F7'),
+            color:
+                focusNode.hasFocus ? HexColor('#AFB0BC') : HexColor('#E5E6EA'),
             borderRadius: BorderRadius.all(Radius.circular(30)),
-            border: Border.all(
-                color: focusNode.hasFocus ? selectColor : normalColor),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: focusNode.hasFocus
+                      ? HexColor('#AFB0BC')
+                      : HexColor('#E5E6EA'),
+                  offset: const Offset(0, 2),
+                  blurRadius: 30.0),
+            ],
           ),
           child: buildInputItemRow(
               preIconData, hintText, isPasswordInput, focusNode, controller),
@@ -597,6 +605,7 @@ class RegisterState extends State<Register>
         ///隐藏输入框焦点
         userPasswordFieldNode.unfocus();
         userPhoneFieldNode.unfocus();
+        userRepeatPasswordFieldNode.unfocus();
 
         ///获取输入的电话号码
         String inputPhone = _userPhoneTextController.text;
@@ -781,16 +790,22 @@ class RegisterState extends State<Register>
 
                 ///圆角矩形背景
                 decoration: BoxDecoration(
-                    color: Colors.blueGrey,
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    border: Border.all(color: normalColor)),
+                  color: HexColor("#252C4E"),
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                        color: HexColor("#252C4E"),
+                        offset: const Offset(0, 2),
+                        blurRadius: 12.0),
+                  ],
+                ),
 
                 ///透明度
                 child: Text(
                   "注册",
                   style: TextStyle(
                       fontSize: 18,
-                      color: Colors.white,
+                      color: HexColor("#E5E6EA"),
                       fontWeight: FontWeight.w500),
                 ),
               )),

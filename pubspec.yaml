@@ -30,6 +30,8 @@ dependencies:
   gallery_saver: ^2.0.1
   image_picker: ^0.6.7+14
   logger: ^0.9.4
+  fluttertoast: ^7.1.1
+  flutter_cache_manager: ^2.0.0
 
 
 

@@ -1,14 +1,14 @@
-import 'dart:io';
 import 'dart:ui';
-
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:chewie/chewie.dart';
+import 'package:ciying/page/Search/search.dart';
+import 'package:ciying/util/hexColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:video_player/video_player.dart';
-import '../User/head_profile.dart';
 import 'my_chewie_custom.dart';
 
 class VideoPlayer extends StatefulWidget {
@@ -22,15 +22,21 @@ class VideoPlayer extends StatefulWidget {
   }
 }
 
+FToast fToast;
+
 class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
-  // final CartBloc _cartBloc = new CartBloc();
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
   @override
   void initState() {
     super.initState();
+    //
+    fToast = FToast();
+    fToast.init(context);
+
+    //  _videoPlayerController = VideoPlayerController.file(file)
     _videoPlayerController = VideoPlayerController.network(
-        'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4');
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4');
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
       placeholder: Center(
@@ -49,9 +55,10 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
   }
 
   void _saveNetworkVideo() async {
+    String albumName = "CiYing";
     String path =
-        'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4';
-    GallerySaver.saveVideo(path).then((bool success) {
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+    GallerySaver.saveVideo(path, albumName: albumName).then((bool success) {
       setState(() {
         print('Video is saved');
       });
@@ -90,17 +97,24 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
               ),
               leading: Builder(builder: (BuildContext context) {
                 return IconButton(
-                  icon: Image.asset("assets/images/logo.png"),
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    size: 20,
+                    color: HexColor("#252C4E"),
+                  ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/UserProfile');
+                    // Navigator.of(context).pop();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => SearchPage(),
+                    ));
                   },
                 );
               }),
               elevation: 0.0,
               backgroundColor: Colors.white,
-              actions: <Widget>[
-                UserHeaderProfile(),
-              ],
+              // actions: <Widget>[
+              //   // UserHeaderProfile(),
+              // ],
             ),
           ),
           body: SizedBox(
@@ -170,27 +184,39 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
                           new FlatButton.icon(
                               onPressed: () {},
                               icon: new Icon(Icons.favorite_border),
-                              label: new Text("")),
-                          new SizedBox(
-                              width: MediaQuery.of(context).size.width - 280,
-                              height: 40,
-                              child: new Align(
-                                alignment: Alignment.bottomCenter,
-                                child: new Container(
-                                    child: new RaisedButton(
-                                        color: Colors.grey,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(60)),
-                                        padding: EdgeInsets.all(10),
-                                        onPressed: () async {
-                                          _saveNetworkVideo();
-                                        },
-                                        child: new Text("一键下载",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white)))),
-                              ))
+                              label: new Text("收藏")),
+                          new FlatButton.icon(
+                              onPressed: () {
+                                _saveNetworkVideo();
+                                print("无水印下载");
+                                // DialogPage();
+                                fToast.showToast(
+                                    child: new SizedBox(
+                                      //限制进度条的高度
+                                      height: 40.0,
+                                      //限制进度条的宽度
+                                      width: 40,
+                                      child: new CircularProgressIndicator(
+                                          //0~1的浮点数，用来表示进度多少;如果 value 为 null 或空，则显示一个动画，否则显示一个定值
+                                          value: 0.3,
+                                          //背景颜色
+                                          backgroundColor: Colors.yellow,
+                                          //进度颜色
+                                          valueColor:
+                                              new AlwaysStoppedAnimation<Color>(
+                                                  Colors.red)),
+                                    ),
+                                    toastDuration: Duration(seconds: 2),
+                                    positionedToastBuilder: (context, child) {
+                                      return Positioned(
+                                        child: child,
+                                        top: 16.0,
+                                        left: 16.0,
+                                      );
+                                    });
+                              },
+                              icon: new Icon(Icons.download_outlined),
+                              label: new Text("无水印下载")),
                         ]),
                   )
                 ],

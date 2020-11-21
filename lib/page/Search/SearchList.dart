@@ -18,7 +18,7 @@ class ResourceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
-          backgroundColor: HexColor("#1C284E"),
+          backgroundColor: HexColor("#fff"),
           body: _ResourceListBody(searchText),
         ),
       );
@@ -89,14 +89,21 @@ class __ResourceListBodyState extends State<_ResourceListBody>
 
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).padding.top - 50;
+    double statusBarHeight;
+
+    if (MediaQuery.of(context).padding.top == null ||
+        MediaQuery.of(context).padding.top == 0) {
+      statusBarHeight = MediaQuery.of(context).padding.top - 40;
+    } else {
+      statusBarHeight = MediaQuery.of(context).padding.top - 15;
+    }
     height = MediaQuery.of(context).size.height - statusBarHeight;
-    double widthBar = MediaQuery.of(context).size.width;
     if (_isLoading)
       return LoadMoreWidget();
     else
       return Container(
-        // margin: EdgeInsets.only(top: statusBarHeight),
+        // color: Colors.white,
+        // margin: EdgeInsets.only(top: 1),
         child: SlideStack(
           drawer: UserDrawerPage(),
           child: SlideContainer(

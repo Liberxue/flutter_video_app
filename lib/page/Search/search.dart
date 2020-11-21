@@ -10,7 +10,7 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
-          backgroundColor: HexColor("#E5E7EB"), //apptopbar colors
+          backgroundColor: HexColor("#fff"), //apptopbar colors
           // backgroundColor:Colors.transparent,
           body: _SearchListBody(),
         ),
@@ -51,7 +51,7 @@ class _SearchListBodyState extends State<_SearchListBody>
     return Container(
       margin: EdgeInsets.only(top: 1),
       child: SlideStack(
-        drawer: UserDrawerPage(),
+        drawer: new UserDrawerPage(),
         child: SlideContainer(
           key: _slideKey,
           child: Container(
@@ -105,7 +105,7 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
     return new Container(
         // height: heightUI,
         padding: const EdgeInsets.only(top: 120, bottom: 4),
-        color: HexColor("#E5E7EB"),
+        color: HexColor("#fff"),
         child: Column(children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -136,20 +136,21 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(right: 16, top: 60, bottom: 8),
+                  padding: const EdgeInsets.only(right: 0, top: 60, bottom: 8),
                   child: Container(
                     width: widthUI / 1.35,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(12.0),
+                      color: HexColor("#E5E6EA"),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        bottomLeft: Radius.circular(12),
                       ),
                       boxShadow: <BoxShadow>[
                         BoxShadow(
-                            color: Colors.white.withOpacity(0.9),
+                            color: HexColor("#E5E6EA"),
                             offset: const Offset(0, 2),
-                            blurRadius: 8.0),
+                            blurRadius: 12.0),
                       ],
                     ),
                     child: Padding(
@@ -193,16 +194,18 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(top: 60, bottom: 8),
+                    padding: const EdgeInsets.only(top: 60, bottom: 9),
                     child: Container(
+                      height: 60,
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(12.0),
+                        color: HexColor("#252C4E"),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(12),
+                          bottomRight: Radius.circular(12),
                         ),
                         boxShadow: <BoxShadow>[
                           BoxShadow(
-                              color: Colors.white.withOpacity(0.9),
+                              color: HexColor("#E5E6EA"),
                               offset: const Offset(0, 2),
                               blurRadius: 12.0),
                         ],
@@ -223,14 +226,18 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                             );
                           },
                           child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              // child: Icon(Icons.search,
-                              //     size: 20,
-                              //     color:HexColor("#1C284E"),),
-                              child: Text("搜索",
-                                  style: TextStyle(
-                                      color: HexColor("#1C284E"),
-                                      fontSize: 18))),
+                            padding: const EdgeInsets.all(20.0),
+                            child: Icon(
+                              Icons.search,
+                              size: 20,
+                              color: HexColor("#E5E6EA"),
+                            ),
+                            // child: Text("搜索",
+                            //     style: TextStyle(
+                            //       color: HexColor("#E5E6EA"),
+                            //       fontSize: 18,
+                            //     ))
+                          ),
                         ),
                       ),
                     ))

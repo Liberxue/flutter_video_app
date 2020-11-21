@@ -23,7 +23,7 @@ class Login extends StatefulWidget {
 class LoginState extends State<Login>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   ///正在输入TextField的边框颜色
-  Color selectColor = Colors.blueGrey;
+  Color selectColor = HexColor("#252C4E");
 
   ///未在输入TextField的边框颜色
   Color normalColor = Color.fromARGB(
@@ -229,7 +229,7 @@ class LoginState extends State<Login>
       //   fit: BoxFit.fill,
       // ),
       child: Container(
-        color: HexColor("#E5E7EB"),
+        color: HexColor("#fff"),
       ),
     );
   }
@@ -387,11 +387,24 @@ class LoginState extends State<Login>
             right: 22,
           ),
           decoration: BoxDecoration(
-            color: HexColor('#F4F5F7'),
+            color:
+                focusNode.hasFocus ? HexColor('#AFB0BC') : HexColor('#E5E6EA'),
             borderRadius: BorderRadius.all(Radius.circular(30)),
-            border: Border.all(
-                color: focusNode.hasFocus ? selectColor : normalColor),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: focusNode.hasFocus
+                      ? HexColor('#AFB0BC')
+                      : HexColor('#E5E6EA'),
+                  offset: const Offset(0, 2),
+                  blurRadius: 30.0),
+            ],
           ),
+          // decoration: BoxDecoration(
+          //   color: HexColor('#F4F5F7'),
+          //   borderRadius: BorderRadius.all(Radius.circular(30)),
+          //   border: Border.all(
+          //       color: focusNode.hasFocus ? selectColor : HexColor('#F4F5F7')),
+          // ),
           child: buildInputItemRow(
               preIconData, hintText, isPasswordInput, focusNode, controller),
         ));
@@ -417,7 +430,7 @@ class LoginState extends State<Login>
       },
 
       ///键盘回车键的样式
-      textInputAction: TextInputAction.next,
+      textInputAction: TextInputAction.done,
 
       ///输入文本格式过滤
       inputFormatters: [
@@ -433,7 +446,7 @@ class LoginState extends State<Login>
       ///输入文本的样式
       style: TextStyle(
         fontSize: 16.0,
-        color: Colors.black,
+        color: HexColor("#1C284E"),
       ),
       decoration: InputDecoration(
         hintText: hintText,
@@ -441,6 +454,10 @@ class LoginState extends State<Login>
           color: normalColor,
         ),
         border: InputBorder.none,
+        // suffixIcon: Icon(
+        //   Icons.remove_red_eye,
+        // ),
+        // suffixText: "suffixText",
       ),
     );
     return Row(
@@ -666,17 +683,27 @@ class LoginState extends State<Login>
                 ),
 
                 ///圆角矩形背景
+                // decoration: BoxDecoration(
+                //     color: HexColor("#252C4E"),
+                //     borderRadius: BorderRadius.all(Radius.circular(30)),
+                //     border: Border.all(color: normalColor)),
                 decoration: BoxDecoration(
-                    color: Colors.blueGrey,
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    border: Border.all(color: normalColor)),
+                  color: HexColor("#252C4E"),
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                        color: HexColor("#252C4E"),
+                        offset: const Offset(0, 2),
+                        blurRadius: 12.0),
+                  ],
+                ),
 
                 ///透明度
                 child: Text(
                   "登陆",
                   style: TextStyle(
                       fontSize: 18,
-                      color: Colors.white70,
+                      color: HexColor("#E5E6EA"),
                       fontWeight: FontWeight.w500),
                 ),
               )),

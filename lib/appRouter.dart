@@ -55,11 +55,8 @@ class _AppRouterState extends State<AppRouter> {
           builder: (context, model, child) => MaterialApp(
             title: CommonConfig.ConfAppName,
             theme: ThemeData(
-              // platform: TargetPlatform.iOS,
               primaryColor: Colors.white,
               scaffoldBackgroundColor: Colors.white,
-              // accentColor: Colors.blueGrey,
-              // primarySwatch: Colors.blueGrey,
             ),
             home: Consumer<AuthModel>(builder: (context, model, child) {
               if (_isLogin) return SearchPage();

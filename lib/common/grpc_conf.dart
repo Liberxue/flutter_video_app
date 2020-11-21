@@ -1,6 +1,6 @@
 class GrpcConfig {
   // grpc GrpcServerAddress
-  static const ConfGrpcServerAddress = "192.168.31.151";
+  static const ConfGrpcServerAddress = "192.168.2.189";
   static const ConfGrpcPort = 5003;
   //grpc connection Timeout
   static const ConfconnectionTimeout = Duration(seconds: 90);

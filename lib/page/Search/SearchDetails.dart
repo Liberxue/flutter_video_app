@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:ciying/page/Video/VideoPlayer.dart';
-import 'package:ciying/page/icon.dart';
+import 'package:ciying/page/Favorites/FavoritesIcon.dart';
 import 'package:flutter/material.dart';
 
 class ProductWidget extends StatelessWidget {
@@ -131,65 +131,60 @@ class ProductWidget extends StatelessWidget {
               builder: (context) => VideoPlayer(_resourceSection)));
         },
         child: new Container(
-            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-            decoration: BoxDecoration(
-                color: Color.fromRGBO(255, 255, 255, 0.48),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
+            // padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+            // decoration: BoxDecoration(
+            //     color: Color.fromRGBO(255, 255, 255, 0.48),
+            //     borderRadius: BorderRadius.all(Radius.circular(10))),
             child: new Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  new Center(
-                      child: new Hero(
-                    tag: _resourceSection.sourceID,
-                    child: Container(
-                      // width: 200,
-                      // height: height * 0.12,
-                      child: CachedNetworkImage(
-                        imageUrl: _resourceSection.resourceAddress,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-                      ),
-                    ),
-                  )),
-                  new Container(
-                      // margin: EdgeInsets.all(5),
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                        new Container(
-                            margin: EdgeInsets.only(top: 5),
-                            child: new Text(this._resourceSection.sourceName,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: fontSize * 0.65))),
-                        new Container(
-                            child: new Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                              new Text(
-                                  this._resourceSection.duration.toString(),
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: fontSize * 0.7)),
-                              likeIcon(
-                                  isLiked
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: isLiked ? Colors.red : Colors.grey,
-                                  size: fontSize * 0.9,
-                                  isOutLine: false, onPressed: () {
-                                // setState(() {
-                                //   print("${_resourceSectionList[index].resourceID}");
-                                isLiked = !isLiked;
-                              }),
-                            ]))
-                      ]))
-                ])));
+              new Center(
+                  child: new Hero(
+                tag: _resourceSection.sourceID,
+                child: Container(
+                  // width: 200,
+                  // height: height * 0.12,
+                  child: CachedNetworkImage(
+                    imageUrl: _resourceSection.resourceAddress,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                ),
+              )),
+              new Container(
+                  // margin: EdgeInsets.all(5),
+                  child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                    new Container(
+                        margin: EdgeInsets.only(top: 5),
+                        child: new Text(this._resourceSection.sourceName,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: fontSize * 0.65))),
+                    new Container(
+                        child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                          new Text(this._resourceSection.duration.toString(),
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: fontSize * 0.7)),
+                          likeIcon(
+                              isLiked ? Icons.favorite : Icons.favorite_border,
+                              color: isLiked ? Colors.red : Colors.grey,
+                              size: fontSize * 0.9,
+                              isOutLine: false, onPressed: () {
+                            // setState(() {
+                            //   print("${_resourceSectionList[index].resourceID}");
+                            isLiked = !isLiked;
+                          }),
+                        ]))
+                  ]))
+            ])));
   }
 }

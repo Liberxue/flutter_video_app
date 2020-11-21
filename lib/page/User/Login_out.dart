@@ -9,3 +9,7 @@ void LoginOut(BuildContext context) async {
         MaterialPageRoute(builder: (context) => Login(), maintainState: false));
   }
 }
+
+// void CleanCache() {
+//   bool result = await Cache.deleteCache("Token");
+// }

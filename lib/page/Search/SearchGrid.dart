@@ -1,7 +1,6 @@
 import 'package:ciying/api/search.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
-import 'package:ciying/page/ProductWidget.dart';
-import 'package:ciying/util/hexColor.dart';
+import 'package:ciying/page/Search/SearchDetails.dart';
 import 'package:ciying/widgets/loadMoreWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -32,8 +31,6 @@ class _SearchGridState extends State<SearchGrid> {
 
     _onRefresh();
     _scrollController.addListener(() {
-      print("_onRefresh");
-      print(_scrollController.position.pixels);
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         _onLoadmore();
@@ -44,7 +41,7 @@ class _SearchGridState extends State<SearchGrid> {
   Future _fetchData() async {
     SearchRequest searchRequest = SearchRequest();
     searchRequest.text = widget.searchText;
-    searchRequest.limit = 100;
+    searchRequest.limit = 4;
     SearchResponse searchResponse =
         await Search.searchAPIRequest(searchRequest);
     // print(searchResponse.code);
@@ -81,14 +78,15 @@ class _SearchGridState extends State<SearchGrid> {
 
     // double childAspectRatio =  MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 2.3);
     double childAspectRatio = MediaQuery.of(context).size.width /
-        (MediaQuery.of(context).size.height / 2.1);
+        (MediaQuery.of(context).size.height);
+    print(childAspectRatio);
     return new Column(children: <Widget>[
       new Container(
-          height: _gridSize,
-          decoration: BoxDecoration(
-            color: HexColor("#E5E6EA"),
-          ),
-          // padding: EdgeInsets.only(left: 4, right: 4),
+          // height: _gridSize,
+          // decoration: BoxDecoration(
+          //   color: HexColor("#FFF"),
+          // ),
+          padding: EdgeInsets.only(left: 4, right: 4),
           child: new Column(children: <Widget>[
             new Container(
                 child: new Column(children: <Widget>[
@@ -101,14 +99,14 @@ class _SearchGridState extends State<SearchGrid> {
                   height: _gridSize,
                   // margin: EdgeInsets.only(top: 5),
                   child: new PhysicalModel(
-                      color: Colors.transparent,
+                      color: Colors.white,
                       child: new GridView.builder(
                         itemCount: widget._resourceSection.length,
                         gridDelegate:
                             new SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio: childAspectRatio * 1.25,
-                          // childAspectRatio: 1.1,
+                          // childAspectRatio: childAspectRatio * 2.8,
+                          childAspectRatio: 1.25,
                         ),
                         itemBuilder: (BuildContext context, int index) {
                           if (index == length) {
