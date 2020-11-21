@@ -86,7 +86,7 @@ class _SearchGridState extends State<SearchGrid> {
           // decoration: BoxDecoration(
           //   color: HexColor("#FFF"),
           // ),
-          padding: EdgeInsets.only(left: 4, right: 4),
+          padding: EdgeInsets.only(left: 4, right: 4, top: 1),
           child: new Column(children: <Widget>[
             new Container(
                 child: new Column(children: <Widget>[
@@ -114,10 +114,11 @@ class _SearchGridState extends State<SearchGrid> {
                             return LoadMoreWidget();
                           } else
                             return new Padding(
-                                padding: EdgeInsets.only(
-                                    left: 5, right: 5, bottom: 5),
-                                child: ProductWidget(
-                                    widget._resourceSection[index]));
+                              padding:
+                                  EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                              child: SearchDetails(widget.searchText,
+                                  widget._resourceSection[index]),
+                            );
                         },
                       )))
             ]))

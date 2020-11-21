@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CommonConfig {
+  static const UserInfo = null;
   static const String ConfAppName = "词影";
   static const kPrimaryColor = Colors.black;
   static const kPrimaryLightColor = Color(0xFFACACAC);

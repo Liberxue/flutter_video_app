@@ -3,6 +3,8 @@ import 'package:ciying/common/constants.dart';
 import 'package:ciying/page/User/Login_out.dart';
 import 'package:ciying/page/Search/search.dart';
 import 'package:ciying/page/User/Login.dart';
+import 'package:ciying/page/User/UserCache.dart';
+import 'package:ciying/page/Video/VideoPlayer.dart';
 import 'package:ciying/util/store.dart';
 import 'package:flutter/material.dart';
 import 'package:persist_theme/persist_theme.dart';
@@ -24,6 +26,7 @@ class _AppRouterState extends State<AppRouter> {
 
   @override
   void initState() {
+    super.initState();
     _getLoginState();
   }
 
@@ -38,10 +41,10 @@ class _AppRouterState extends State<AppRouter> {
   }
 
   void navigationPage() {
-    // Navigator.of(context).pushReplacementNamed('/Search');
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => SearchPage(),
-    ));
+    Navigator.of(context).pushReplacementNamed('/Search');
+    // Navigator.of(context).push(MaterialPageRoute(
+    //   builder: (context) => SearchPage(),
+    // ));
   }
 
   @override
@@ -64,9 +67,20 @@ class _AppRouterState extends State<AppRouter> {
             }),
             initialRoute: '/',
             routes: <String, WidgetBuilder>{
-              '/Login': (context) => _isLogin ? Login() : SearchPage(),
+              '/Login': (context) => _isLogin ? SearchPage() : Login(),
               '/Search': (context) => _isLogin ? SearchPage() : Login(),
             },
+            // onGenerateRoute: (RouteSettings settings) {
+            //   final List<String> pathElements = settings.name.split('/');
+            //   if (pathElements[1] == 'VideoPlayer') {
+            //     // String query = pathElements[2];
+            //     return MaterialPageRoute(builder: (BuildContext context) {
+            //       return _isLogin ? VideoPlayer(null) : Login();
+            //     });
+            //   } else {
+            //     return null;
+            //   }
+            // },
           ),
         ));
   }

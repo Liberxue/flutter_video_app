@@ -49,6 +49,7 @@ class _SearchListBodyState extends State<_SearchListBody>
     height = MediaQuery.of(context).size.height - statusBarHeight;
     double widthBar = MediaQuery.of(context).size.width;
     return Container(
+      color: Colors.white,
       margin: EdgeInsets.only(top: 1),
       child: SlideStack(
         drawer: new UserDrawerPage(),
@@ -182,12 +183,10 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                         // 回车提交
                         onEditingComplete: () {
                           FocusScope.of(context).requestFocus(FocusNode());
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ResourceList(_searchEtController.text),
-                            ),
-                          );
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ResourceList(_searchEtController.text),
+                          ));
                         },
                       ),
                     ),

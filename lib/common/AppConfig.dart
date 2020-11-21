@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class AppDesignCourseAppTheme {
@@ -9,7 +7,7 @@ class AppDesignCourseAppTheme {
   static const UnReadMsgNotifyDotSize = 20.0;
   static const CibversationMuteIconSize = 12.0;
 
-   AppDesignCourseAppTheme._();
+  AppDesignCourseAppTheme._();
 
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0xFFFFFFFF);

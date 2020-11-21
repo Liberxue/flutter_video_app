@@ -1,12 +1,11 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:ciying/page/User/Login_out.dart';
 import 'package:ciying/page/User/UserCache.dart';
 import 'package:ciying/util/hexColor.dart';
-import 'package:ciying/util/store.dart';
 import 'package:ciying/widgets/CustomDialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class _MenuInfo {
   final String title;
@@ -30,14 +29,22 @@ class UserDrawerPage extends StatefulWidget {
 }
 
 class _UserDrawerPageState extends State<UserDrawerPage> {
+  bool _isLogin = false;
   UserInfo userInfo;
+
   @override
   void initState() {
     super.initState();
+    _getLoginState();
   }
 
-  void onSlide() {
-    setState(() => LoadUserCache().then((value) => userInfo));
+  _getLoginState() async {
+    var userInfo = await LoadUserCache();
+
+    setState(() {
+      this.userInfo = userInfo;
+      this._isLogin = true;
+    });
   }
 
   @override
@@ -178,13 +185,14 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                           "当前积分",
                           style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
-                        Text(
-                          "userInfo.coin",
-                          style: TextStyle(
-                            fontSize: 26,
-                            color: Color.fromRGBO(255, 178, 102, 0.9),
-                          ),
-                        )
+                        if (userInfo != null)
+                          Text(
+                            userInfo.coin,
+                            style: TextStyle(
+                              fontSize: 26,
+                              color: Color.fromRGBO(255, 178, 102, 0.9),
+                            ),
+                          )
                       ],
                     ),
                   ],

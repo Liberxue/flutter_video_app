@@ -4,10 +4,11 @@ import 'package:ciying/page/Video/VideoPlayer.dart';
 import 'package:ciying/page/Favorites/FavoritesIcon.dart';
 import 'package:flutter/material.dart';
 
-class ProductWidget extends StatelessWidget {
+class SearchDetails extends StatelessWidget {
+  final String searchText;
   final ResourceSection _resourceSection;
 
-  ProductWidget(this._resourceSection);
+  SearchDetails(this.searchText, this._resourceSection);
 
   @override
   Widget build(BuildContext context) {
@@ -128,13 +129,10 @@ class ProductWidget extends StatelessWidget {
     return new GestureDetector(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => VideoPlayer(_resourceSection)));
+              builder: (context) => VideoPlayer(searchText, _resourceSection)));
+          // Navigator.pushNamed(context, '/VideoPlayer/$_resourceSection');
         },
         child: new Container(
-            // padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-            // decoration: BoxDecoration(
-            //     color: Color.fromRGBO(255, 255, 255, 0.48),
-            //     borderRadius: BorderRadius.all(Radius.circular(10))),
             child: new Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,8 +141,6 @@ class ProductWidget extends StatelessWidget {
                   child: new Hero(
                 tag: _resourceSection.sourceID,
                 child: Container(
-                  // width: 200,
-                  // height: height * 0.12,
                   child: CachedNetworkImage(
                     imageUrl: _resourceSection.resourceAddress,
                     fit: BoxFit.cover,
@@ -154,7 +150,6 @@ class ProductWidget extends StatelessWidget {
                 ),
               )),
               new Container(
-                  // margin: EdgeInsets.all(5),
                   child: new Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +175,7 @@ class ProductWidget extends StatelessWidget {
                               size: fontSize * 0.9,
                               isOutLine: false, onPressed: () {
                             // setState(() {
-                            //   print("${_resourceSectionList[index].resourceID}");
+                            print("${_resourceSection.resourceID}");
                             isLiked = !isLiked;
                           }),
                         ]))

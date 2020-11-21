@@ -102,8 +102,8 @@ class __ResourceListBodyState extends State<_ResourceListBody>
       return LoadMoreWidget();
     else
       return Container(
-        // color: Colors.white,
-        // margin: EdgeInsets.only(top: 1),
+        color: Colors.white,
+        margin: EdgeInsets.only(top: 1),
         child: SlideStack(
           drawer: UserDrawerPage(),
           child: SlideContainer(
@@ -111,6 +111,7 @@ class __ResourceListBodyState extends State<_ResourceListBody>
             child: Container(
               // width: widthBar,
               // height: height * (1 - position / 5),
+              color: Colors.white,
               child: Column(
                 children: <Widget>[
                   CustomAppBar(

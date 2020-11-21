@@ -4,6 +4,7 @@ import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:ciying/models/signIn/signIn.dart';
 import 'package:ciying/page/User/Register.dart';
 import 'package:ciying/page/Search/search.dart';
+import 'package:ciying/util/exit.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/util/store.dart';
 import 'package:ciying/util/validation.dart';
@@ -187,31 +188,49 @@ class LoginState extends State<Login>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //阻止界面resize
-      resizeToAvoidBottomInset: false,
+    return WillPopScope(
+      onWillPop: () async => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('你确定要退出吗？'),
+                actions: <Widget>[
+                  RaisedButton(
+                      child: Text('退出'),
+                      //onPressed: () => Navigator.of(context).pop(true)),
+                      onPressed: () async {
+                        await ExitApp();
+                      }),
+                  RaisedButton(
+                      child: Text('取消'),
+                      onPressed: () => Navigator.of(context).pop(false)),
+                ],
+              )),
+      child: Scaffold(
+        //阻止界面resize
+        resizeToAvoidBottomInset: false,
 
-      ///层叠布局
-      ///全局的手势
-      body: GestureDetector(
-        onTap: () {
-          //隐藏键盘
-          SystemChannels.textInput.invokeMethod('TextInput.hide');
-          //输入框失去焦点
-          userPhoneFieldNode.unfocus();
-          userPasswordFieldNode.unfocus();
-        },
-        child: Stack(
-          children: [
-            ///构建背景
-            buildBgWidget(),
+        ///层叠布局
+        ///全局的手势
+        body: GestureDetector(
+          onTap: () {
+            //隐藏键盘
+            SystemChannels.textInput.invokeMethod('TextInput.hide');
+            //输入框失去焦点
+            userPhoneFieldNode.unfocus();
+            userPasswordFieldNode.unfocus();
+          },
+          child: Stack(
+            children: [
+              ///构建背景
+              buildBgWidget(),
 
-            ///构建阴影层
-            // buildBlurBg(),
+              ///构建阴影层
+              // buildBlurBg(),
 
-            ///构建用户信息输入框
-            buildLoginInputWidget(context),
-          ],
+              ///构建用户信息输入框
+              buildLoginInputWidget(context),
+            ],
+          ),
         ),
       ),
     );
@@ -315,8 +334,12 @@ class LoginState extends State<Login>
                         borderRadius: BorderRadius.circular(60)),
                     padding: EdgeInsets.all(10),
                     onPressed: () async {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => Register()));
+                      // Navigator.of(context).pushReplacement(
+                      //     MaterialPageRoute(builder: (context) => Register()));
+                      Navigator.of(context).pushAndRemoveUntil(
+                          new MaterialPageRoute(
+                              builder: (context) => new Register()),
+                          (route) => route == null);
                     },
                     child: new Text("没有账号？注册",
                         style: TextStyle(
@@ -586,7 +609,7 @@ class LoginState extends State<Login>
         ///提交数据
         registerAnimatController.forward();
 
-        Future.delayed(Duration(milliseconds: 8000), () async {
+        Future.delayed(Duration(milliseconds: 10), () async {
           SignInResponse _signInResponse;
           SignInRequest signInRequest = SignInRequest();
           signInRequest.loginType = LoginType.PHONEMESSAGEAUTHCODE;
@@ -594,8 +617,6 @@ class LoginState extends State<Login>
           signInRequest.phoneNumber = Int64(int.parse(inputPhone));
 
           _signInResponse = await signIn(signInRequest);
-          print(_signInResponse);
-          print(_signInResponse.code);
           if (_signInResponse == null) {
             showDialog(
                 context: context,
@@ -645,7 +666,7 @@ class LoginState extends State<Login>
           } else {
             currentRestureStatus = RestureStatus.success;
             setState(() {});
-            Future.delayed(Duration(milliseconds: 2000), () async {
+            Future.delayed(Duration(milliseconds: 1), () async {
               await Cache.setCache("Token", _signInResponse.token);
               await Cache.setCache("User", _signInResponse.data.name);
               await Cache.setCache(
@@ -656,7 +677,6 @@ class LoginState extends State<Login>
                   "Coin", _signInResponse.data.coin.toString());
               await Cache.setCache(
                   "AccountLevel", _signInResponse.data.accountLevel);
-
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (context) => SearchPage(),
               ));

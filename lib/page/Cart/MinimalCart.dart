@@ -69,11 +69,11 @@ class MinimalCart extends StatelessWidget {
               ),
             ),
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => VideoPlayer(order.resourceSection),
-                ),
-              );
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (context) => VideoPlayer(order.resourceSection),
+              //   ),
+              // );
             },
           ));
     }).toList());
