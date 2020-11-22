@@ -27,11 +27,11 @@ class VideoPlayer extends StatefulWidget {
 }
 
 FToast fToast;
+VideoPlayerController _videoPlayerController;
+ChewieController _chewieController;
+List<ResourceData> resourceDataList;
 
 class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
-  VideoPlayerController _videoPlayerController;
-  ChewieController _chewieController;
-  List<ResourceData> resourceDataList;
   @override
   void initState() {
     super.initState();
@@ -50,22 +50,22 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
         await Resource.resourcePreviewAPIRequest(resourcePreviewRequest);
     print(resourcePreviewResponse.code);
     if (resourcePreviewResponse.code != ResponseCode.SUCCESSFUL) {
-      // print("resourcePreviewResponse.code !=0");
+      print("resourcePreviewResponse.code !=0");
       // EasyLoading.showSuccess('Use in initState');
     }
     setState(() {
       resourceDataList = resourcePreviewResponse.data;
       if (resourceDataList != null) {
-        print(resourceDataList[0].resourceId);
         print(resourceDataList[0].resourceAddress);
         _video();
       }
-      EasyLoading.showSuccess('Use in initState');
+      // EasyLoading.showSuccess('Use in initState');
       // _isLoading = false;
     });
   }
 
   void _video() {
+    _downloadFile();
     //  _videoPlayerController = VideoPlayerController.file(file)
     _videoPlayerController =
         VideoPlayerController.network(resourceDataList[0].resourceAddress);
@@ -86,16 +86,33 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
     );
   }
 
-  void _saveNetworkVideo() async {
+  Stream<FileResponse> fileStream;
+
+  void _downloadFile() {
     print("cache");
-    String albumName = CommonConfig.ConfAppName;
-    var file = await DefaultCacheManager()
-        .getSingleFile(resourceDataList[0].resourceAddress);
-    print(file);
-    print(file.path);
-    // getFileStream(url)
+
+    setState(() {
+      fileStream = DefaultCacheManager().getFileStream(
+          resourceDataList[0].resourceAddress,
+          withProgress: true);
+    });
+    print(fileStream);
     print("cache end");
-    GallerySaver.saveVideo(file.path, albumName: albumName)
+  }
+
+  void _clearCache() {
+    DefaultCacheManager().emptyCache();
+    setState(() {
+      fileStream = null;
+    });
+  }
+
+  void _saveNetworkVideo() async {
+    String albumName = CommonConfig.ConfAppName;
+    // getFileStream(url)
+
+    GallerySaver.saveVideo(resourceDataList[0].resourceAddress,
+            albumName: albumName)
         .then((bool success) {
       setState(() {
         print('Video is saved');

@@ -299,7 +299,7 @@ class LoginState extends State<Login>
                 userPhoneFieldNode, _userPhoneTextController, isPhoneError),
             //间隔
             SizedBox(
-              height: 10,
+              height: 12,
             ),
 
             ///构建启用输入密码UI
@@ -310,7 +310,6 @@ class LoginState extends State<Login>
                 userPasswordFieldNode,
                 _userPasswrodtController,
                 isPasswordError),
-
             // buildAgreementWidget(),
 
             ///间隔
@@ -326,7 +325,7 @@ class LoginState extends State<Login>
             ),
             Container(
                 // alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width / 2.5,
+                width: MediaQuery.of(context).size.width * 0.5,
                 // height: 48,
                 child: new RaisedButton(
                     color: Colors.grey[80],
