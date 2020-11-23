@@ -28,6 +28,10 @@
 	<string>public.app-category.video</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict/>
 	<key>NSCameraUsageDescription</key>
 	<string>词影保存视频</string>
 	<key>NSMicrophoneUsageDescription</key>
