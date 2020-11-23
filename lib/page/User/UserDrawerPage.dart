@@ -5,7 +5,6 @@ import 'package:ciying/page/User/UserCache.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/widgets/CustomDialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class _MenuInfo {
   final String title;
@@ -137,7 +136,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                                     // confirmColor: Colors.red[400],
                                     outsideDismiss: true,
                                     confirmCallback: () {
-                                      LoginOut(context);
+                                      loginOut(context);
                                     },
                                   );
                                 });

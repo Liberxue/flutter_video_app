@@ -1,3 +1,4 @@
+import 'package:ciying/common/AppConfig.dart';
 import 'package:ciying/common/constants.dart';
 // import 'package:ciying/page/login.dart';
 import 'package:ciying/page/User/Login_out.dart';
@@ -58,8 +59,8 @@ class _AppRouterState extends State<AppRouter> {
           builder: (context, model, child) => MaterialApp(
             title: CommonConfig.ConfAppName,
             theme: ThemeData(
-              primaryColor: Colors.white,
-              scaffoldBackgroundColor: Colors.white,
+              primaryColor: AppDesignCourseAppTheme.BackgroundColor,
+              scaffoldBackgroundColor: AppDesignCourseAppTheme.BackgroundColor,
             ),
             home: Consumer<AuthModel>(builder: (context, model, child) {
               if (_isLogin) return SearchPage();

@@ -125,7 +125,7 @@ class SearchDetails extends StatelessWidget {
     //         ]);
     double height = MediaQuery.of(context).size.height;
     double fontSize = (height / 50).round().toDouble();
-    bool isLiked = false;
+    bool isFavorite = false;
     return new GestureDetector(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
@@ -169,14 +169,19 @@ class SearchDetails extends StatelessWidget {
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: fontSize * 0.7)),
-                          likeIcon(
-                              isLiked ? Icons.favorite : Icons.favorite_border,
-                              color: isLiked ? Colors.red : Colors.grey,
+                          favoritesIcon(
+                              this._resourceSection.isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: this._resourceSection.isFavorite
+                                  ? Colors.red
+                                  : Colors.grey,
                               size: fontSize * 0.9,
                               isOutLine: false, onPressed: () {
                             // setState(() {
                             print("${_resourceSection.resourceID}");
-                            isLiked = !isLiked;
+                            isFavorite = !isFavorite;
+                            // FavoritesModels.favoriteAction(null);
                           }),
                         ]))
                   ]))

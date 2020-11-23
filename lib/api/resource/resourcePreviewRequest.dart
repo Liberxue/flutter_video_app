@@ -1,8 +1,7 @@
+import 'package:ciying/api/call_config.dart';
 import 'package:ciying/api/config.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:ciying/util/logger.dart';
-import 'package:ciying/util/store.dart';
-import 'package:grpc/grpc.dart';
 
 class Resource {
   static Future<ResourcePreviewResponse> resourcePreviewAPIRequest(
@@ -10,14 +9,16 @@ class Resource {
     ResourcePreviewResponse resourcePreviewResponse;
     Manager manager = Manager.instance;
     final stub = GateWayClient(manager.channel);
-    var _token = await Cache.getToken();
-    try {
-      resourcePreviewResponse = await stub.resourcePreview(data,
-          options: CallOptions(
-              metadata: {"authorization": "bearer " + _token.toString()}));
-    } catch (e) {
-      logger.e("resourcePreviewAPIRequest Caught error", '$e');
+    var callConfig = await callOptionsConf();
+    if (callConfig.metadata.map != null) {
+      try {
+        resourcePreviewResponse =
+            await stub.resourcePreview(data, options: callConfig);
+      } catch (e) {
+        logger.e("resourcePreviewAPIRequest Caught error", '$e');
+        return null;
+      }
+      return resourcePreviewResponse;
     }
-    return resourcePreviewResponse;
   }
 }

@@ -2,7 +2,7 @@ import 'package:ciying/page/User/Login.dart';
 import 'package:ciying/util/store.dart';
 import 'package:flutter/material.dart';
 
-Future<bool> LoginOut(BuildContext context) async {
+Future<bool> loginOut(BuildContext context) async {
   bool result = await Cache.deleteCache("Token");
   if (result) {
     // Navigator.push(context,
@@ -12,6 +12,10 @@ Future<bool> LoginOut(BuildContext context) async {
         (route) => route == null); //修复退出右滑返回首页
   } else {
     result = await Cache.deleteCache("Token");
+    if (result)
+      Navigator.of(context).pushAndRemoveUntil(
+          new MaterialPageRoute(builder: (context) => new Login()),
+          (route) => route == null); //修复退出右滑返回首页
   }
   return result;
 }

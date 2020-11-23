@@ -15,7 +15,7 @@ class Manager {
         credentials: ChannelCredentials.insecure(),
         connectionTimeout: GrpcConfig.ConfconnectionTimeout,
         idleTimeout: GrpcConfig.ConfIdleTimeout,
-        // backoffStrategy: backOffstrategy,
+        //   // backoffStrategy: backOffstrategy,
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:ciying/common/AppConfig.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
@@ -6,6 +7,7 @@ import 'package:ciying/page/User/Register.dart';
 import 'package:ciying/page/Search/search.dart';
 import 'package:ciying/util/exit.dart';
 import 'package:ciying/util/hexColor.dart';
+import 'package:ciying/util/response_code_enum.dart';
 import 'package:ciying/util/store.dart';
 import 'package:ciying/util/validation.dart';
 import 'package:ciying/widgets/CustomDialog.dart';
@@ -83,20 +85,26 @@ class LoginState extends State<Login>
     _userPasswrodtController = TextEditingController();
 
     userPhoneFieldNode.addListener(() {
-      setState(() {});
+      if (this
+          .mounted) //fix lifecycle state: defunct, not mounted, tickers: tracking 3 tickers
+        setState(() {});
     });
     registerAnimatController = AnimationController(
         duration: const Duration(milliseconds: 400), vsync: this);
     registerAnimatController.addListener(() {
       // double value = registerAnimatController.value;
       // print("登陆变化比率 $value");
-      setState(() {});
+      if (this
+          .mounted) //fix lifecycle state: defunct, not mounted, tickers: tracking 3 tickers
+        setState(() {});
     });
 
     logoAnimatController = AnimationController(
         duration: const Duration(milliseconds: 400), vsync: this);
     logoAnimatController.addListener(() {
-      setState(() {});
+      if (this
+          .mounted) //fix lifecycle state: defunct, not mounted, tickers: tracking 3 tickers
+        setState(() {});
     });
     logoAnimation = Tween(begin: 1.0, end: 0.0).animate(logoAnimatController);
 
@@ -115,7 +123,9 @@ class LoginState extends State<Login>
     inputAnimatController.addListener(() {
       // double value = inputAnimatController.value;
       // print("变化比率 $value");
-      setState(() {});
+      if (this
+          .mounted) //fix lifecycle state: defunct, not mounted, tickers: tracking 3 tickers
+        setState(() {});
     });
 
     ///添加动画执行状态监听
@@ -169,20 +179,22 @@ class LoginState extends State<Login>
      */
     WidgetsBinding.instance.addPostFrameCallback((_) {
       //注意，不要在此类回调中再触发新的Frame，这可以会导致循环刷新。
-      setState(() {
-        ///获取底部遮挡区域的高度
-        // double keyboderFlexHeight = MediaQuery.of(context).viewInsets.bottom;
-        // print("键盘的高度 keyboderFlexHeight $keyboderFlexHeight");
-        if (MediaQuery.of(context).viewInsets.bottom == 0) {
-          //关闭键盘 启动logo动画反向执行 0.0 -1.0
-          // logo 布局区域显示出来
-          logoAnimatController.reverse();
-        } else {
-          //显示键盘 启动logo动画正向执行 1.0-0.0
-          // logo布局区域缩放隐藏
-          logoAnimatController.forward();
-        }
-      });
+      if (this
+          .mounted) //fix lifecycle state: defunct, not mounted, tickers: tracking 3 tickers
+        setState(() {
+          ///获取底部遮挡区域的高度
+          // double keyboderFlexHeight = MediaQuery.of(context).viewInsets.bottom;
+          // print("键盘的高度 keyboderFlexHeight $keyboderFlexHeight");
+          if (MediaQuery.of(context).viewInsets.bottom == 0) {
+            //关闭键盘 启动logo动画反向执行 0.0 -1.0
+            // logo 布局区域显示出来
+            logoAnimatController.reverse();
+          } else {
+            //显示键盘 启动logo动画正向执行 1.0-0.0
+            // logo布局区域缩放隐藏
+            logoAnimatController.forward();
+          }
+        });
     });
   }
 
@@ -247,9 +259,7 @@ class LoginState extends State<Login>
       //   "assets/images/bg_kyzg_login.png",
       //   fit: BoxFit.fill,
       // ),
-      child: Container(
-        color: HexColor("#fff"),
-      ),
+      child: Container(color: AppDesignCourseAppTheme.BackgroundColor),
     );
   }
 
@@ -631,23 +641,24 @@ class LoginState extends State<Login>
                         registerAnimatController.reverse();
                       });
                       currentRestureStatus = RestureStatus.error;
-                      setState(() {
-                        MediaQuery.of(context).viewInsets.bottom == 0;
-                      });
+                      if (this
+                          .mounted) //fix lifecycle state: defunct, not mounted, tickers: tracking 3 tickers
+                        setState(() {
+                          MediaQuery.of(context).viewInsets.bottom == 0;
+                        });
                     },
                   );
                 });
             return;
             // 多语言支持？#issue https://github.com/PomCloud/ciying/issues/3
-          } else if (_signInResponse.code != ResponseCode.SUCCESSFUL &&
-              _signInResponse.token.length < 1) {
+          } else if (_signInResponse.code != ResponseCode.SUCCESSFUL) {
             showDialog(
                 context: context,
                 barrierDismissible: false,
                 builder: (_) {
                   return CustomDialog(
-                    title: '登录失败',
-                    content: '请检查账号密码',
+                    title: '登录提示',
+                    content: responseCodeEnum(_signInResponse.code),
                     isCancel: false,
                     outsideDismiss: true,
                     confirmCallback: () {
@@ -655,16 +666,20 @@ class LoginState extends State<Login>
                         registerAnimatController.reverse();
                       });
                       currentRestureStatus = RestureStatus.error;
-                      setState(() {
-                        MediaQuery.of(context).viewInsets.bottom == 0;
-                      });
+                      if (this
+                          .mounted) //fix lifecycle state: defunct, not mounted, tickers: tracking 3 tickers
+                        setState(() {
+                          MediaQuery.of(context).viewInsets.bottom == 0;
+                        });
                     },
                   );
                 });
             return;
           } else {
             currentRestureStatus = RestureStatus.success;
-            setState(() {});
+            if (this
+                .mounted) //fix lifecycle state: defunct, not mounted, tickers: tracking 3 tickers
+              setState(() {});
             Future.delayed(Duration(milliseconds: 1), () async {
               await Cache.setCache("Token", _signInResponse.token);
               await Cache.setCache("User", _signInResponse.data.name);
@@ -675,7 +690,7 @@ class LoginState extends State<Login>
               await Cache.setCache(
                   "Coin", _signInResponse.data.coin.toString());
               await Cache.setCache(
-                  "AccountLevel", _signInResponse.data.accountLevel);
+                  "AccountLevelName", _signInResponse.data.accountLevelName);
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (context) => SearchPage(),
               ));

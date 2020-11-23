@@ -1,17 +1,21 @@
+import 'package:ciying/common/AppConfig.dart';
 import 'package:ciying/common/constants.dart';
+import 'package:ciying/util/wordCount.dart';
 import 'package:ciying/widgets/custom_app_bar.dart';
 import 'package:ciying/page/Search/SearchList.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/widgets/SlideContainer.dart';
 import 'package:ciying/page/User/UserDrawerPage.dart';
+import 'package:ciying/widgets/dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 
 class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
-          backgroundColor: HexColor("#fff"), //apptopbar colors
-          // backgroundColor:Colors.transparent,
+          backgroundColor: AppDesignCourseAppTheme.BackgroundColor,
           body: _SearchListBody(),
         ),
       );
@@ -49,7 +53,7 @@ class _SearchListBodyState extends State<_SearchListBody>
     height = MediaQuery.of(context).size.height - statusBarHeight;
     double widthBar = MediaQuery.of(context).size.width;
     return Container(
-      color: Colors.white,
+      color: AppDesignCourseAppTheme.BackgroundColor,
       margin: EdgeInsets.only(top: 1),
       child: SlideStack(
         drawer: new UserDrawerPage(),
@@ -58,7 +62,7 @@ class _SearchListBodyState extends State<_SearchListBody>
           child: Container(
             width: widthBar,
             // height: height * (1 - position / 5),
-            color: Colors.white,
+            color: AppDesignCourseAppTheme.BackgroundColor,
             child: Column(
               children: <Widget>[
                 CustomAppBar(
@@ -99,14 +103,16 @@ class getSearchBarUI extends StatefulWidget {
 class _getSearchBarUIState extends State<getSearchBarUI> {
   TextEditingController _searchEtController = TextEditingController();
 
+  // search Validate start
+  int _searchWordCount = 2;
+
   @override
   Widget build(BuildContext context) {
-    // double heightUI = MediaQuery.of(context).size.height;
+    YYDialog.init(context);
     double widthUI = MediaQuery.of(context).size.width;
     return new Container(
-        // height: heightUI,
         padding: const EdgeInsets.only(top: 120, bottom: 4),
-        color: HexColor("#fff"),
+        color: AppDesignCourseAppTheme.BackgroundColor,
         child: Column(children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -172,21 +178,28 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                           //   Icons.search,
                           //   color: HexColor("#1C284E"),
                           // ),
+                          // errorText: _searchValidate ? "至少需要3个单词哦～" : null,
                           border: InputBorder.none,
                           hintText: '请输入搜索内容...',
                         ),
                         inputFormatters: [
-                          // WhitelistingTextInputFormatter(RegExp("^[ZA-ZZa-z0-9_]")),
-                          // WhitelistingTextInputFormatter(RegExp("^[ZA-ZZa-z_]")),
-                          // LengthLimitingTextInputFormatter(5)
+                          WhitelistingTextInputFormatter(
+                              RegExp("[a-zA-Z’]+[ ]*")),
+                          LengthLimitingTextInputFormatter(50)
                         ],
                         // 回车提交
                         onEditingComplete: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                ResourceList(_searchEtController.text),
-                          ));
+                          if (WordCount()
+                                  .getWordCount(_searchEtController.text) >=
+                              _searchWordCount) {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  SearchList(_searchEtController.text),
+                            ));
+                          } else {
+                            dialogShow("单词不能少于2个哦");
+                          }
                         },
                       ),
                     ),
@@ -216,13 +229,17 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                             Radius.circular(12.0),
                           ),
                           onTap: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
+                            if (WordCount()
+                                    .getWordCount(_searchEtController.text) >=
+                                _searchWordCount) {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>
-                                    ResourceList(_searchEtController.text),
-                              ),
-                            );
+                                    SearchList(_searchEtController.text),
+                              ));
+                            } else {
+                              dialogShow("单词不能少于2个哦");
+                            }
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),

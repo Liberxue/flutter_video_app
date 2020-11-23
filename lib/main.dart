@@ -9,12 +9,12 @@ Future<void> main() async {
   // 强制竖屏
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  // if (Platform.isAndroid) {
-  //   // 设置沉浸式状态栏
-  //   SystemUiOverlayStyle systemUiOverlayStyle =
-  //       SystemUiOverlayStyle(statusBarColor: Colors.white);
-  //   SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-  // }
+  if (Platform.isAndroid) {
+    // 设置沉浸式状态栏
+    SystemUiOverlayStyle systemUiOverlayStyle =
+        SystemUiOverlayStyle(statusBarColor: Colors.white);
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  }
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,

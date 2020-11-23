@@ -1,3 +1,4 @@
+import 'package:ciying/common/AppConfig.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/gateWay.pb.dart';
@@ -6,6 +7,8 @@ import 'package:ciying/page/User/Login.dart';
 import 'package:ciying/page/User/userPrivacyAgreement.dart';
 import 'package:ciying/page/User/userRegistrationAgreement.dart';
 import 'package:ciying/util/hexColor.dart';
+import 'package:ciying/util/response_code_enum.dart';
+import 'package:ciying/util/systemInfo.dart';
 import 'package:ciying/util/validation.dart';
 import 'package:ciying/widgets/CustomDialog.dart';
 import 'package:fixnum/fixnum.dart';
@@ -249,9 +252,7 @@ class RegisterState extends State<Register>
       //   "assets/images/bg_kyzg_login.png",
       //   fit: BoxFit.fill,
       // ),
-      child: Container(
-        color: HexColor("#fff"),
-      ),
+      child: Container(color: AppDesignCourseAppTheme.BackgroundColor),
     );
   }
 
@@ -709,11 +710,19 @@ class RegisterState extends State<Register>
         ///提交数据
         registerAnimatController.forward();
 
-        Future.delayed(Duration(milliseconds: 2000), () async {
+        Future.delayed(Duration(milliseconds: 1000), () async {
+          var _deveiceInfo = await GetDeviceInfo().getAllDeviceInfo();
+          var _isPhysicalDevice = await GetDeviceInfo().isPhysicalDevice();
+          var _deviceVersion = await GetDeviceInfo().deviceVersion();
+          var _deviceType = await GetDeviceInfo().deviceType();
           SignUpResponse _signUpResponse;
           SignUpRequest signUpRequest = SignUpRequest();
           signUpRequest.phoneNumber = Int64(int.parse(inputPhone));
           signUpRequest.passWord = inputPassword;
+          signUpRequest.deviceType = _deviceType.toString();
+          signUpRequest.deviceVersion = _deviceVersion.toString();
+          signUpRequest.isPhysicalDevice = _isPhysicalDevice;
+          signUpRequest.deviceInfo = _deveiceInfo.toString();
           _signUpResponse = await signUp(signUpRequest);
           if (_signUpResponse == null) {
             showDialog(
@@ -737,15 +746,36 @@ class RegisterState extends State<Register>
                   );
                 });
             return;
-          }
-          if (_signUpResponse.code != ResponseCode.SUCCESSFUL) {
+          } else if (_signUpResponse.code != ResponseCode.SUCCESSFUL) {
             showDialog(
                 context: context,
                 barrierDismissible: false,
                 builder: (_) {
                   return CustomDialog(
-                    title: '注册失败',
-                    content: '请稍后重试',
+                    title: '注册提示',
+                    content: responseCodeEnum(_signUpResponse.code),
+                    isCancel: false,
+                    outsideDismiss: true,
+                    confirmCallback: () {
+                      Future.delayed(Duration(milliseconds: 2000), () {
+                        registerAnimatController.reverse();
+                      });
+                      currentRestureStatus = RestureStatus.error;
+                      setState(() {
+                        MediaQuery.of(context).viewInsets.bottom == 0;
+                      });
+                    },
+                  );
+                });
+            return;
+          } else {
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) {
+                  return CustomDialog(
+                    title: '注册成功',
+                    content: '注册成功,请登陆~',
                     isCancel: false,
                     outsideDismiss: true,
                     confirmCallback: () {

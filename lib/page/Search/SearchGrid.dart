@@ -1,14 +1,17 @@
 import 'package:ciying/api/search.dart';
+import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:ciying/page/Search/SearchDetails.dart';
-import 'package:ciying/widgets/loadMoreWidget.dart';
+import 'package:ciying/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 
 class SearchGrid extends StatefulWidget {
   final List<ResourceSection> _resourceSection;
   final String searchText;
-  SearchGrid(this._resourceSection, this.searchText);
+  final bool _isLoading;
+  SearchGrid(this._resourceSection, this.searchText, this._isLoading);
   @override
   _SearchGridState createState() => new _SearchGridState();
 }
@@ -41,7 +44,7 @@ class _SearchGridState extends State<SearchGrid> {
   Future _fetchData() async {
     SearchRequest searchRequest = SearchRequest();
     searchRequest.text = widget.searchText;
-    searchRequest.limit = 4;
+    searchRequest.limit = CommonConfig.SearchRequestDefaultLimit;
     SearchResponse searchResponse =
         await Search.searchAPIRequest(searchRequest);
     // print(searchResponse.code);
@@ -111,7 +114,7 @@ class _SearchGridState extends State<SearchGrid> {
                         itemBuilder: (BuildContext context, int index) {
                           if (index == length) {
                             _onLoadmore();
-                            return LoadMoreWidget();
+                            dialogShow("正在加载");
                           } else
                             return new Padding(
                               padding:

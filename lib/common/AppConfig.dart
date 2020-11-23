@@ -6,9 +6,8 @@ class AppDesignCourseAppTheme {
   static const DividerWidth = 1.0;
   static const UnReadMsgNotifyDotSize = 20.0;
   static const CibversationMuteIconSize = 12.0;
-
   AppDesignCourseAppTheme._();
-
+  static const Color BackgroundColor = Colors.white;
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0xFFFFFFFF);
   static const Color nearlyBlue = Color(0xFF00B6F0);
