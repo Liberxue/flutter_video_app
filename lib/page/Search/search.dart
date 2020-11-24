@@ -31,6 +31,20 @@ class _SearchListBodyState extends State<_SearchListBody>
   double position = 0.0;
   double height = 0.0;
 
+  /// search ipunt focus
+  FocusNode searchInputFieldNode = new FocusNode();
+  //search TextField
+  TextEditingController _searchEtController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchEtController = TextEditingController();
+    searchInputFieldNode.addListener(() {
+      if (this.mounted) setState(() {});
+    });
+  }
+
   double get maxSlideDistance => MediaQuery.of(context).size.width * 0.75;
 
   final GlobalKey<ContainerState> _slideKey = GlobalKey<ContainerState>();
@@ -52,9 +66,15 @@ class _SearchListBodyState extends State<_SearchListBody>
     }
     height = MediaQuery.of(context).size.height - statusBarHeight;
     double widthBar = MediaQuery.of(context).size.width;
-    return Container(
-      color: AppDesignCourseAppTheme.BackgroundColor,
-      margin: EdgeInsets.only(top: 1),
+    return GestureDetector(
+      onTap: () {
+        //隐藏键盘
+        SystemChannels.textInput.invokeMethod('TextInput.hide');
+        //输入框失去焦点
+        searchInputFieldNode.unfocus();
+      },
+      // color: AppDesignCourseAppTheme.BackgroundColor,
+      // margin: EdgeInsets.only(top: 1),
       child: SlideStack(
         drawer: new UserDrawerPage(),
         child: SlideContainer(
@@ -105,7 +125,6 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
 
   // search Validate start
   int _searchWordCount = 2;
-
   @override
   Widget build(BuildContext context) {
     YYDialog.init(context);
@@ -164,9 +183,19 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                       padding: const EdgeInsets.only(
                           left: 2, right: 2, top: 4, bottom: 4),
                       child: TextField(
+                        // controller: _searchEtController, //_searchEtController
+                        // focusNode: searchInputFieldNode,
                         onChanged: (String txt) {
                           _searchEtController.text = txt;
                         },
+                        // onSubmitted: (value) {
+                        //   searchInputFieldNode.unfocus(); //search input unfocus
+                        // },
+                        // 键盘样式
+                        textInputAction: TextInputAction.done,
+                        //设置键盘的类型
+                        keyboardType: TextInputType.multiline,
+
                         style: const TextStyle(
                           fontSize: 18,
                         ),
@@ -182,6 +211,7 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                           border: InputBorder.none,
                           hintText: '请输入搜索内容...',
                         ),
+
                         inputFormatters: [
                           WhitelistingTextInputFormatter(
                               RegExp("[a-zA-Z’]+[ ]*")),
