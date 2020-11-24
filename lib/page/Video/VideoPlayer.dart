@@ -6,6 +6,7 @@ import 'package:ciying/grpc/proto/gateWay.pb.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:chewie/chewie.dart';
 import 'package:ciying/page/Search/SearchList.dart';
+import 'package:ciying/page/Video/my_chewie_custom.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/widgets/loading_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,7 +15,6 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:video_player/video_player.dart';
-import 'my_chewie_custom.dart';
 
 class VideoPlayer extends StatefulWidget {
   final String searchText;
@@ -50,6 +50,9 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
     if (resourcePreviewResponse.code != ResponseCode.SUCCESSFUL) {
       // print("resourcePreviewResponse.code !=0");
       // EasyLoading.showSuccess('Use in initState');
+      setState(() {
+        _isLoading = true;
+      });
     }
     setState(() {
       resourceDataList = resourcePreviewResponse.data;
@@ -92,8 +95,8 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
           resourceDataList[0].resourceAddress,
           withProgress: true);
     });
-    print(fileStream);
-    print("cache end");
+    // print(fileStream);
+    // print("cache end");
   }
 
   // void _clearCache() {
@@ -168,10 +171,7 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
                     new Container(
                       child: new Column(
                         children: <Widget>[
-                          new Container(
-                            margin: EdgeInsets.only(top: 0),
-                            child: videoPlay(context),
-                          ),
+                          videoPlay(context),
                           new Container(
                             margin: EdgeInsets.only(top: 10.0),
                             child: new Text(widget._resourceSection.sourceName,
@@ -274,14 +274,8 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
 
   Widget videoPlay(BuildContext context) {
     return Container(
-      child: Center(
-        child: Expanded(
-          child: Center(
-            child: Chewie(
-              controller: _chewieController,
-            ),
-          ),
-        ),
+      child: Chewie(
+        controller: _chewieController,
       ),
     );
   }

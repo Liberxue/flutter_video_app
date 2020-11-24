@@ -59,8 +59,8 @@ class _MyChewieMaterialControlsState extends State<MyChewieMaterialControls> {
               _latestValue != null &&
                           !_latestValue.isPlaying &&
                           _latestValue.duration == null ||
-                      _latestValue.isBuffering?
-                  const Expanded(
+                      _latestValue.isBuffering
+                  ? const Expanded(
                       child: const Center(
                         child: const CircularProgressIndicator(),
                       ),
@@ -73,6 +73,7 @@ class _MyChewieMaterialControlsState extends State<MyChewieMaterialControls> {
       ),
     );
   }
+
   void _dispose() {
     controller.removeListener(_updateState);
     _hideTimer?.cancel();
@@ -94,35 +95,34 @@ class _MyChewieMaterialControlsState extends State<MyChewieMaterialControls> {
     super.didChangeDependencies();
   }
 
-AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
+  AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
     return AnimatedOpacity(
-      opacity: _dragging ? 0.0 : 1,
+      opacity: _dragging ? 0.0 : 0.9,
       duration: Duration(milliseconds: 300),
       child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(
-                left: 10.0,
-                right: 10.0,
-                top: 90,
-              ),
-              child: PhysicalModel(
-                      color: Colors.transparent,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      elevation:10.1,
-                      shadowColor:Colors.red,
-                      child: Image.asset(
-                        "assets/images/watarmar.png",
-                        width: 120,
-                        height: 50,
-                        fit: BoxFit.fill,
-                      ),
+        alignment: AlignmentDirectional.center,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(
+              left: 10.0,
+              right: 10.0,
+              top: 90,
+            ),
+            child: PhysicalModel(
+              color: Colors.transparent,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              elevation: 10.1,
+              shadowColor: Colors.red,
+              child: Image.asset(
+                "assets/images/watarmar.png",
+                width: 120,
+                height: 50,
+                fit: BoxFit.fill,
               ),
             ),
-          ],
-        ),
-
+          ),
+        ],
+      ),
     );
   }
 
@@ -146,9 +146,13 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
             _buildPlayPause(controller),
             chewieController.isLive ? const SizedBox() : _buildProgressBar(),
             // chewieController.isLive
-            //     ? Expanded(child: const Text('直播',style: TextStyle(color: Colors.white),))
+            //     ? Expanded(
+            //         child: const Text(
+            //         '直播',
+            //         style: TextStyle(color: Colors.white),
+            //       ))
             //     : _buildPosition(context),
-            chewieController.allowFullScreen==false
+            chewieController.allowFullScreen == false
                 ? _buildExpandButton()
                 : Container(),
           ],
@@ -175,7 +179,7 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
               chewieController.isFullScreen
                   ? Icons.fullscreen_exit
                   : Icons.fullscreen,
-                  color: Colors.white,
+              color: Colors.white,
             ),
           ),
         ),
@@ -268,29 +272,30 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
                       : 0.0,
               duration: Duration(milliseconds: 300),
               child: GestureDetector(
-                  onTap: () {
-                    _playPause();
-                  },
-                  // child: Container(
-                  //   margin: EdgeInsets.only(bottom: 10, right: 10),
-                  //   decoration: BoxDecoration(
-                  //     boxShadow: <BoxShadow>[
-                  //       BoxShadow(color: Colors.black54, blurRadius: 20),
-                  //     ],
-                  //   ),
-                  //   child: Icon(
-                  //     Icons.play_arrow,
-                  //     size: 40.0,
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
-                  ),
+                onTap: () {
+                  _playPause();
+                },
+                // child: Container(
+                //   margin: EdgeInsets.only(bottom: 10, right: 10),
+                //   decoration: BoxDecoration(
+                //     boxShadow: <BoxShadow>[
+                //       BoxShadow(color: Colors.black54, blurRadius: 20),
+                //     ],
+                //   ),
+                //   child: Icon(
+                //     Icons.play_arrow,
+                //     size: 40.0,
+                //     color: Colors.white,
+                //   ),
+                // ),
+              ),
             ),
           ),
         ),
       ),
     );
   }
+
   GestureDetector _buildPlayPause(VideoPlayerController controller) {
     return GestureDetector(
       onTap: _playPause,
@@ -321,10 +326,7 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
     return Center(
       child: Text(
         '哈哈哈哈哈哈哈哈哈哈',
-        style: TextStyle(
-          fontSize: 12.0,
-          color: Colors.white
-        ),
+        style: TextStyle(fontSize: 12.0, color: Colors.white),
       ),
     );
   }
@@ -414,28 +416,24 @@ AnimatedOpacity _buildWatarmarkBar(BuildContext context) {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.only(right: 20.0),
-        child: MaterialVideoProgressBar(
-          controller,
-          onDragStart: () {
-            setState(() {
-              _dragging = true;
-            });
+        child: MaterialVideoProgressBar(controller, onDragStart: () {
+          setState(() {
+            _dragging = true;
+          });
 
-            _hideTimer?.cancel();
-          },
-          onDragEnd: () {
-            setState(() {
-              _dragging = false;
-            });
-            _startHideTimer();
-          },
-          colors: ChewieProgressColors(
-                  playedColor: Theme.of(context).primaryColor,
-                  handleColor: Colors.white,
-                  bufferedColor: Colors.white70,
-                  backgroundColor: Colors.white30,
-          )
-        ),
+          _hideTimer?.cancel();
+        }, onDragEnd: () {
+          setState(() {
+            _dragging = false;
+          });
+          _startHideTimer();
+        },
+            colors: ChewieProgressColors(
+              playedColor: Theme.of(context).primaryColor,
+              handleColor: Colors.white,
+              bufferedColor: Colors.white70,
+              backgroundColor: Colors.white30,
+            )),
       ),
     );
   }
