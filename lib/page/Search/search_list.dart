@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:ciying/api/search.dart';
+import 'package:ciying/api/search/search.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/widgets/custom_app_bar.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
-import 'package:ciying/page/Search/SearchGrid.dart';
+import 'package:ciying/page/Search/search_grid.dart';
 import 'package:ciying/page/bloc/CartBloc.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/widgets/SlideContainer.dart';
@@ -169,7 +169,7 @@ class __ResourceListBodyState extends State<_ResourceListBody>
           onSlide: onSlide,
           drawerSize: maxSlideDistance,
           transform:
-              Matrix4.translationValues(0.0, height * position / 10, 0.0),
+              Matrix4.translationValues(0.0, height * position / 150, 0.0),
         ),
       ),
     );

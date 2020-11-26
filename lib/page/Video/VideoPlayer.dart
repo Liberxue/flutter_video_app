@@ -5,7 +5,7 @@ import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/gateWay.pb.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:chewie/chewie.dart';
-import 'package:ciying/page/Search/SearchList.dart';
+import 'package:ciying/page/Search/search_list.dart';
 import 'package:ciying/page/Video/my_chewie_custom.dart';
 import 'package:ciying/util/hexColor.dart';
 import 'package:ciying/widgets/loading_widget.dart';

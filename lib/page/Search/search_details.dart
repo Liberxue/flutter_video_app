@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:ciying/models/Favorites/favorites.dart';
 import 'package:ciying/page/Video/VideoPlayer.dart';
-import 'package:ciying/page/Favorites/FavoritesIcon.dart';
+import 'package:ciying/page/Favorites/favoritesIcon.dart';
 import 'package:flutter/material.dart';
 
 class SearchDetails extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:ciying/models/Cart.dart';
-import 'package:ciying/page/Order/OrderWidget.dart';
+import 'package:ciying/page/Order/order_widget.dart';
 import 'package:ciying/page/bloc/CartBloc.dart';
 import 'package:ciying/widgets/SeparatorLine.dart';
 import 'package:flutter/material.dart';

@@ -14,10 +14,22 @@ class _MenuInfo {
 }
 
 final List<_MenuInfo> menus = [
-  _MenuInfo(title: '收藏列表', icon: Icons.photo_album),
-  _MenuInfo(title: '隐私设置', icon: Icons.photo_album),
-  _MenuInfo(title: '关于我们', icon: Icons.photo_album),
-  _MenuInfo(title: '退出登录', icon: Icons.photo_album),
+  _MenuInfo(title: '隐私设置', icon: Icons.lock),
+  _MenuInfo(title: '关于我们', icon: Icons.center_focus_strong),
+  _MenuInfo(title: '退出登录', icon: Icons.logout),
+];
+
+class _UserInfo {
+  final String title;
+  final bool isButton;
+
+  _UserInfo({this.title, this.isButton});
+}
+
+final List<_UserInfo> user = [
+  _UserInfo(title: '积分', isButton: true),
+  _UserInfo(title: '收藏夹', isButton: false),
+  _UserInfo(title: '下载', isButton: false),
 ];
 
 class UserDrawerPage extends StatefulWidget {
@@ -56,169 +68,198 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
       //         fit: BoxFit.fill),
       // color: Colors.white),
 
-      color: HexColor("#1C284E"), //
+      color: HexColor("#283362"), //
       child: new BackdropFilter(
         filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-        child: new Container(
-          padding: EdgeInsets.only(top: 80.0, left: 20.0),
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  // 第三方登录显示用户头像？
-                  // Container(
-                  //   width: 50,
-                  //   height: 20,
-                  //   decoration: BoxDecoration(
-                  //       shape: BoxShape.circle,
-                  //       image: DecorationImage(
-                  //           fit: BoxFit.cover,
-                  //           image: NetworkImage(_user.avatarImage))),
-                  // ),
-                  if (userInfo != null)
-                    Padding(
-                        padding: EdgeInsets.all(20.0),
+        child: Stack(
+          children: [
+            Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    // 第三方登录显示用户头像？
+                    // Container(
+                    //   width: 50,
+                    //   height: 20,
+                    //   decoration: BoxDecoration(
+                    //       shape: BoxShape.circle,
+                    //       image: DecorationImage(
+                    //           fit: BoxFit.cover,
+                    //           image: NetworkImage(
+                    //               'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png'))),
+                    // ),
+                    if (userInfo != null)
+                      Padding(
+                        padding: EdgeInsets.only(top: 120.0, left: 20),
                         child: Text(
                           userInfo.phoneNumber,
                           style: Theme.of(context)
                               .textTheme
-                              .title
+                              .headline5
                               .copyWith(color: Colors.white),
-                        )),
-                ],
-              ),
-              // new Container(
-              //     // margin: EdgeInsets.only(top: _gridSize*0.1),
-              //     height: 40,
-              //     child: new Row(
-              //         mainAxisAlignment: MainAxisAlignment.start,
-              //         crossAxisAlignment: CrossAxisAlignment.end,
-              //         children: <Widget>[
-              //           new Container(
-              //             width: 40,
-              //             color: Colors.transparent,
-              //             child: Text(' ', style: TextStyle(fontSize: 100)),
-              //           ),
-              //           new Container(
-              //             width: 50,
-              //             height: 30,
-              //             child: Center(
-              //               child: Text("充值",
-              //                   style: TextStyle(
-              //                       color: Color.fromRGBO(102, 51, 0, 0.9),
-              //                       fontSize: 14)),
-              //             ),
-              //             decoration: BoxDecoration(
-              //                 color: Color.fromRGBO(255, 178, 102, 0.9),
-              //                 borderRadius: BorderRadius.circular(16),
-              //                 boxShadow: [
-              //                   BoxShadow(color: Colors.blueGrey, blurRadius: 5)
-              //                 ]),
-              //           ),
-              //         ]),
-              //         ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: menus.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          if (index == 3) {
-                            showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (_) {
-                                  return CustomDialog(
-                                    title: '温馨提示',
-                                    content: '是否确认退出登陆',
-                                    isCancel: true,
-                                    // cancelColor: Colors.green[400],
-                                    // confirmColor: Colors.red[400],
-                                    outsideDismiss: true,
-                                    confirmCallback: () {
-                                      loginOut(context);
-                                    },
-                                  );
-                                });
-                          }
-                        },
-                        child: Ink(
-                          height: 60.0,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(right: 10.0),
-                                child: Icon(
-                                  menus[index].icon,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Center(
-                                child: Text(
-                                  menus[index].title,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subhead
-                                      .copyWith(
-                                        color: Colors.white,
-                                      ),
-                                ),
-                              ),
-                            ],
-                          ),
                         ),
-                      );
-                    }),
-              ),
-              Container(
-                height: 70.0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          "当前积分",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                        if (userInfo != null)
-                          Text(
-                            userInfo.coin,
-                            style: TextStyle(
-                              fontSize: 26,
-                              color: Color.fromRGBO(255, 178, 102, 0.9),
-                            ),
-                          )
-                      ],
-                    ),
+                      ),
                   ],
                 ),
-              ),
-              Container(
-                width: 250,
-                height: 40,
-                child: Center(
-                  child: Text("试用模式,无法充值,请联系客服",
-                      style: TextStyle(
-                          color: Color.fromRGBO(102, 51, 0, 0.9),
-                          fontSize: 14)),
-                ),
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 178, 102, 0.9),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(color: Colors.blueGrey, blurRadius: 5)
-                    ]),
-              ),
-            ],
-          ),
-          // decoration: new BoxDecoration(color: Colors.white.withOpacity(0.25)),
-          decoration: new BoxDecoration(color: Colors.white.withOpacity(0)),
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 180, left: 10),
+              child: ListView.builder(
+                  itemCount: user.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        // if (index == 1) {
+                        //   showDialog(
+                        //       context: context,
+                        //       barrierDismissible: false,
+                        //       builder: (_) {
+                        //         return CustomDialog(
+                        //           title: '温馨提示',
+                        //           content: '是否确认退出登陆',
+                        //           isCancel: true,
+                        //           // cancelColor: Colors.green[400],
+                        //           // confirmColor: Colors.red[400],
+                        //           outsideDismiss: true,
+                        //           confirmCallback: () {
+                        //             // loginOut(context);
+                        //           },
+                        //         );
+                        //       });
+                        // }
+                      },
+                      child: Ink(
+                        height: 50.0,
+                        width: 100,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            if (user[index].title == "积分")
+                              new Container(
+                                padding: EdgeInsets.only(left: 10.0),
+                                height: 30,
+                                color: Colors.transparent,
+                                child: Text('10000000',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: HexColor("#CFD0D1"))),
+                              ),
+                            new Container(
+                              width: 10,
+                              color: Colors.transparent,
+                            ),
+                            new Container(
+                              width: 80,
+                              height: 33,
+                              color: Colors.transparent,
+                              child: Text(
+                                user[index].title,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
+                            ),
+                            new Container(
+                              width: 20,
+                              color: Colors.transparent,
+                            ),
+                            if (user[index].title == "积分")
+                              new Container(
+                                width: 60,
+                                child: new Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      0.0, 0.0, 0.0, 15.0),
+                                  child: new RaisedButton(
+                                    onPressed: () {
+                                      print('button click');
+                                    },
+                                    child: new Text("充值",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 14)),
+                                    color: HexColor("#DF9833"),
+                                  ),
+                                ),
+                              ),
+                            if (user[index].title != "积分")
+                              new Container(
+                                width: 120,
+                                color: Colors.transparent,
+                              ),
+                            if (user[index].title != "积分")
+                              new Container(
+                                width: 100,
+                                height: 30,
+                                color: Colors.transparent,
+                                child: Text(
+                                  '100',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 320, left: 20),
+              child: ListView.builder(
+                  itemCount: menus.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        if (index == 3) {
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (_) {
+                                return CustomDialog(
+                                  title: '温馨提示',
+                                  content: '是否确认退出登陆',
+                                  isCancel: true,
+                                  // cancelColor: Colors.green[400],
+                                  // confirmColor: Colors.red[400],
+                                  outsideDismiss: true,
+                                  confirmCallback: () {
+                                    loginOut(context);
+                                  },
+                                );
+                              });
+                        }
+                      },
+                      child: Ink(
+                        height: 60.0,
+                        width: 100,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(right: 20.0),
+                              child: Icon(
+                                menus[index].icon,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Center(
+                              child: Text(
+                                menus[index].title,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+          ],
         ),
       ),
+      // decoration: new BoxDecoration(color: Colors.white.withOpacity(0.0)), //透明度
     );
   }
 }
