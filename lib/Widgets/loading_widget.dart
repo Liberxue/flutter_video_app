@@ -1,4 +1,4 @@
-import 'package:ciying/util/hexColor.dart';
+import 'package:ciying/Utils/hexColor.dart';
 import 'package:flutter/material.dart';
 
 Widget loadingWidget(BuildContext context, bool isError) {

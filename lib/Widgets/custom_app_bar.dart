@@ -1,5 +1,5 @@
 import 'package:ciying/page/Search/search.dart';
-import 'package:ciying/util/hexColor.dart';
+import 'package:ciying/Utils/hexColor.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -7,7 +7,6 @@ class CustomAppBar extends StatelessWidget {
   final VoidCallback tapDrawer;
   final double height;
   final bool isSearch;
-
   const CustomAppBar(
       {Key key, this.title, this.tapDrawer, this.height, this.isSearch = false})
       : super(key: key);
@@ -38,6 +37,21 @@ class CustomAppBar extends StatelessWidget {
                 ),
               ),
             ),
+            if (!isSearch)
+              Container(
+                width: MediaQuery.of(context).size.width * 0.5,
+                color: Colors.white10,
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
             if (!isSearch)
               GestureDetector(
                 onTap: () {

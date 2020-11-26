@@ -1,7 +1,7 @@
 import 'package:ciying/common/AppConfig.dart';
 import 'package:ciying/page/Search/search_list.dart';
-import 'package:ciying/util/hexColor.dart';
-import 'package:ciying/util/wordCount.dart';
+import 'package:ciying/Utils/hexColor.dart';
+import 'package:ciying/Utils/wordCount.dart';
 import 'package:ciying/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -105,19 +105,19 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                           LengthLimitingTextInputFormatter(50)
                         ],
                         // 回车提交
-                        onEditingComplete: () {
-                          if (WordCount()
-                                  .getWordCount(_searchEtController.text) >=
-                              _searchWordCount) {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  SearchList(_searchEtController.text),
-                            ));
-                          } else {
-                            dialogShow("单词不能少于2个哦");
-                          }
-                        },
+                        // onEditingComplete: () {
+                        //   if (WordCount()
+                        //           .getWordCount(_searchEtController.text) >=
+                        //       _searchWordCount) {
+                        //     FocusScope.of(context).requestFocus(FocusNode());
+                        //     Navigator.of(context).push(MaterialPageRoute(
+                        //       builder: (context) =>
+                        //           SearchList(_searchEtController.text),
+                        //     ));
+                        //   } else {
+                        //     dialogShow("单词不能少于2个哦");
+                        //   }
+                        // },
                       ),
                     ),
                   ),

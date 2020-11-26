@@ -1,12 +1,9 @@
 import 'package:ciying/common/AppConfig.dart';
 import 'package:ciying/common/constants.dart';
 // import 'package:ciying/page/login.dart';
-import 'package:ciying/page/User/Login_out.dart';
 import 'package:ciying/page/Search/search.dart';
 import 'package:ciying/page/User/Login.dart';
-import 'package:ciying/page/User/UserCache.dart';
-import 'package:ciying/page/Video/VideoPlayer.dart';
-import 'package:ciying/util/store.dart';
+import 'package:ciying/Utils/store.dart';
 import 'package:flutter/material.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';

@@ -1,5 +1,4 @@
 import 'package:ciying/api/favorites/favorites.dart';
-import 'package:ciying/api/signIn/signUp.dart';
 import 'package:ciying/grpc/proto/favorite.pb.dart';
 
 class FavoritesModels {

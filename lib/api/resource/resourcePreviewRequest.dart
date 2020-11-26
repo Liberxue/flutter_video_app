@@ -1,7 +1,7 @@
 import 'package:ciying/api/call_config.dart';
 import 'package:ciying/api/config.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
-import 'package:ciying/util/logger.dart';
+import 'package:ciying/Utils/logger.dart';
 
 class Resource {
   static Future<ResourcePreviewResponse> resourcePreviewAPIRequest(
@@ -20,5 +20,6 @@ class Resource {
       }
       return resourcePreviewResponse;
     }
+    return null;
   }
 }

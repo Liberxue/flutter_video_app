@@ -1,6 +1,6 @@
 import 'package:ciying/common/grpc_conf.dart';
-import 'package:ciying/util/store.dart';
-import 'package:ciying/util/systemInfo.dart';
+import 'package:ciying/Utils/store.dart';
+import 'package:ciying/Utils/systemInfo.dart';
 import 'package:grpc/service_api.dart';
 
 Future<CallOptions> callOptionsConf() async {

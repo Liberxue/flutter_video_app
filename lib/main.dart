@@ -1,7 +1,11 @@
 import 'dart:io';
 import 'package:ciying/appRouter.dart';
+import 'package:ciying/cache/database.dart';
+import 'package:ciying/cache/sqlite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'cache/entity/person.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding
@@ -32,4 +36,17 @@ Future<void> main() async {
     ),
   );
   runApp(AppRouter());
+  CacheDb();
+}
+
+Future<void> CacheDb() async {
+  final database =
+      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  final personDao = database.personDao;
+
+  final person = Person(1, 'Frank');
+  await personDao.insertPerson(person);
+
+  final result = await personDao.findPersonById(1);
+  print(result);
 }

@@ -1,7 +1,5 @@
 import 'package:ciying/models/Cart.dart';
-import 'package:ciying/page/Video/VideoPlayer.dart';
 import 'package:ciying/page/bloc/CartBloc.dart';
-import 'package:ciying/widgets/SeparatorLine.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 

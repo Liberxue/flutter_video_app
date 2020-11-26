@@ -2,10 +2,11 @@ import 'package:ciying/api/call_config.dart';
 import 'package:ciying/api/config.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
-import 'package:ciying/util/logger.dart';
+import 'package:ciying/Utils/logger.dart';
 
 class SearchTagsApi {
-  static Future<SearchTagResponse> searchTagsAPIRequest(SearchTagRequest data) async {
+  static Future<SearchTagResponse> searchTagsAPIRequest(
+      SearchTagRequest data) async {
     SearchTagResponse searchTagResponse;
     Manager manager = Manager.instance;
     final stub = GateWayClient(manager.channel);
@@ -19,5 +20,6 @@ class SearchTagsApi {
       }
       return searchTagResponse;
     }
+    return searchTagResponse;
   }
 }

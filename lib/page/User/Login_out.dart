@@ -1,5 +1,5 @@
 import 'package:ciying/page/User/Login.dart';
-import 'package:ciying/util/store.dart';
+import 'package:ciying/Utils/store.dart';
 import 'package:flutter/material.dart';
 
 Future<bool> loginOut(BuildContext context) async {

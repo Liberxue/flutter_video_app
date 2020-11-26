@@ -1,4 +1,4 @@
-import 'package:ciying/util/store.dart';
+import 'package:ciying/Utils/store.dart';
 
 class UserInfo {
   String token;

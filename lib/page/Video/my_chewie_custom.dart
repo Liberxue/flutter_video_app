@@ -315,22 +315,6 @@ class _MyChewieMaterialControlsState extends State<MyChewieMaterialControls> {
     );
   }
 
-  Widget _buildPosition(BuildContext context) {
-    // final position = _latestValue != null && _latestValue.position != null
-    //     ? _latestValue.position
-    //     : Duration.zero;
-    // final duration = _latestValue != null && _latestValue.duration != null
-    //     ? _latestValue.duration
-    //     : Duration.zero;
-
-    return Center(
-      child: Text(
-        '哈哈哈哈哈哈哈哈哈哈',
-        style: TextStyle(fontSize: 12.0, color: Colors.white),
-      ),
-    );
-  }
-
   void _cancelAndRestartTimer() {
     _hideTimer?.cancel();
     _startHideTimer();

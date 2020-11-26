@@ -1,8 +1,9 @@
 import 'dart:ui';
 
+import 'package:ciying/page/Favorites/favorite_timeline.dart';
 import 'package:ciying/page/User/Login_out.dart';
 import 'package:ciying/page/User/UserCache.dart';
-import 'package:ciying/util/hexColor.dart';
+import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/widgets/CustomDialog.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class _UserInfo {
 final List<_UserInfo> user = [
   _UserInfo(title: '积分', isButton: true),
   _UserInfo(title: '收藏夹', isButton: false),
-  _UserInfo(title: '下载', isButton: false),
+  // _UserInfo(title: '下载', isButton: false),
 ];
 
 class UserDrawerPage extends StatefulWidget {
@@ -41,8 +42,8 @@ class UserDrawerPage extends StatefulWidget {
 
 class _UserDrawerPageState extends State<UserDrawerPage> {
   bool _isLogin = false;
+  bool _isLoading = true;
   UserInfo userInfo;
-
   @override
   void initState() {
     super.initState();
@@ -51,11 +52,14 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
 
   _getLoginState() async {
     var userInfo = await LoadUserCache();
-
     setState(() {
       this.userInfo = userInfo;
       this._isLogin = true;
+      this._isLoading = false;
     });
+    if (userInfo == null && _isLogin) {
+      loginOut(context);
+    }
   }
 
   @override
@@ -78,27 +82,32 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                 Row(
                   children: <Widget>[
                     // 第三方登录显示用户头像？
-                    // Container(
-                    //   width: 50,
-                    //   height: 20,
-                    //   decoration: BoxDecoration(
+                    // Padding(
+                    //   padding: EdgeInsets.only(top: 120.0, left: 20),
+                    //   child: Container(
+                    //     width: 300,
+                    //     height: 80,
+                    //     decoration: BoxDecoration(
                     //       shape: BoxShape.circle,
                     //       image: DecorationImage(
-                    //           fit: BoxFit.cover,
-                    //           image: NetworkImage(
-                    //               'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png'))),
+                    //         fit: BoxFit.cover,
+                    //         image: AssetImage('assets/images/alert.png'),
+                    //       ),
+                    //     ),
+                    //   ),
                     // ),
-                    if (userInfo != null)
-                      Padding(
-                        padding: EdgeInsets.only(top: 120.0, left: 20),
-                        child: Text(
-                          userInfo.phoneNumber,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5
-                              .copyWith(color: Colors.white),
-                        ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 140.0, left: 20),
+                      child: Text(
+                        !_isLoading || userInfo != null
+                            ? "       " + userInfo.phoneNumber
+                            : "未知",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            .copyWith(color: Colors.white),
                       ),
+                    ),
                   ],
                 ),
               ],
@@ -110,24 +119,13 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        // if (index == 1) {
-                        //   showDialog(
-                        //       context: context,
-                        //       barrierDismissible: false,
-                        //       builder: (_) {
-                        //         return CustomDialog(
-                        //           title: '温馨提示',
-                        //           content: '是否确认退出登陆',
-                        //           isCancel: true,
-                        //           // cancelColor: Colors.green[400],
-                        //           // confirmColor: Colors.red[400],
-                        //           outsideDismiss: true,
-                        //           confirmCallback: () {
-                        //             // loginOut(context);
-                        //           },
-                        //         );
-                        //       });
-                        // }
+                        if (index == 1) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FavoriteTimeline(),
+                                  maintainState: false));
+                        }
                       },
                       child: Ink(
                         height: 50.0,
@@ -141,7 +139,10 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                                 padding: EdgeInsets.only(left: 10.0),
                                 height: 30,
                                 color: Colors.transparent,
-                                child: Text('10000000',
+                                child: Text(
+                                    !_isLoading || userInfo != null
+                                        ? userInfo.coin
+                                        : "0",
                                     style: TextStyle(
                                         fontSize: 20,
                                         color: HexColor("#CFD0D1"))),
@@ -172,7 +173,23 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                                       0.0, 0.0, 0.0, 15.0),
                                   child: new RaisedButton(
                                     onPressed: () {
-                                      print('button click');
+                                      showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (_) {
+                                            return CustomDialog(
+                                              title: '温馨提示',
+                                              content: '公测版本暂不支持充值',
+                                              isCancel: false,
+                                              confirmContent: "知道啦",
+                                              // cancelColor: Colors.green[400],
+                                              // confirmColor: Colors.red[400],
+                                              outsideDismiss: true,
+                                              // confirmCallback: () {
+                                              //   loginOut(context);
+                                              // },
+                                            );
+                                          });
                                     },
                                     child: new Text("充值",
                                         style: TextStyle(
@@ -210,7 +227,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        if (index == 3) {
+                        if (index == 2) {
                           showDialog(
                               context: context,
                               barrierDismissible: false,

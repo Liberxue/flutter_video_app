@@ -1,8 +1,8 @@
 import 'package:ciying/api/call_config.dart';
 import 'package:ciying/api/config.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
-import 'package:ciying/util/logger.dart';
-import 'package:ciying/util/systemInfo.dart';
+import 'package:ciying/Utils/logger.dart';
+import 'package:ciying/Utils/systemInfo.dart';
 
 Future<SignInResponse> signInRequest(SignInRequest data) async {
   var _deveiceInfo = await GetDeviceInfo().getAllDeviceInfo();

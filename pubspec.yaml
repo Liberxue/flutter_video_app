@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   cupertino_icons: ^1.0.0
   http: ^0.12.0+2
   chewie: ^0.9.10
@@ -32,12 +31,17 @@ dependencies:
   logger: ^0.9.4
   flutter_cache_manager: ^2.0.0 #https://github.com/tekartik/sqflite/issues/536
   flutter_custom_dialog: ^1.0.20 
+  timeline_tile: ^1.0.0
+  google_fonts: ^1.1.0
+  floor: ^0.17.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.8.1
-
+  floor_generator: ^0.17.0
+  build_runner: ^1.10.3
 
 flutter:
   uses-material-design: true

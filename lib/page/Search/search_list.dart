@@ -1,12 +1,11 @@
-import 'dart:async';
-
 import 'package:ciying/api/search/search.dart';
+import 'package:ciying/cache/cache_search.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/widgets/custom_app_bar.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:ciying/page/Search/search_grid.dart';
 import 'package:ciying/page/bloc/CartBloc.dart';
-import 'package:ciying/util/hexColor.dart';
+import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/widgets/SlideContainer.dart';
 import 'package:ciying/page/User/UserDrawerPage.dart';
 import 'package:ciying/widgets/loading_widget.dart';
@@ -73,6 +72,7 @@ class __ResourceListBodyState extends State<_ResourceListBody>
     else
       setState(() {
         _resourceSection.addAll(searchResponse.resourceSection);
+        CacheSearch().saveSearchData(_resourceSection);
         _isLoading = false;
         _isError = false;
       });
@@ -113,7 +113,7 @@ class __ResourceListBodyState extends State<_ResourceListBody>
             child: Column(
               children: <Widget>[
                 CustomAppBar(
-                  title: CommonConfig.ConfAppName,
+                  title: widget.searchText,
                   height: kToolbarHeight * (1 - position / 5),
                   tapDrawer: () {
                     _slideKey.currentState.openOrClose();

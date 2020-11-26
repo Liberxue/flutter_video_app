@@ -7,7 +7,7 @@ import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:chewie/chewie.dart';
 import 'package:ciying/page/Search/search_list.dart';
 import 'package:ciying/page/Video/my_chewie_custom.dart';
-import 'package:ciying/util/hexColor.dart';
+import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/widgets/loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -89,15 +89,15 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
 
   Stream<FileResponse> fileStream;
 
-  void _downloadFile() {
-    setState(() {
-      fileStream = DefaultCacheManager().getFileStream(
-          resourceDataList[0].resourceAddress,
-          withProgress: true);
-    });
-    // print(fileStream);
-    // print("cache end");
-  }
+  // void _downloadFile() {
+  //   setState(() {
+  //     fileStream = DefaultCacheManager().getFileStream(
+  //         resourceDataList[0].resourceAddress,
+  //         withProgress: true);
+  //   });
+  //   // print(fileStream);
+  //   // print("cache end");
+  // }
 
   // void _clearCache() {
   //   DefaultCacheManager().emptyCache();

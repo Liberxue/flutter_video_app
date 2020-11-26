@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ciying/page/extentions.dart';
+import 'package:ciying/Widgets/extentions.dart';
 import 'package:flutter/rendering.dart';
 
 Widget favoritesIcon(
@@ -9,6 +9,7 @@ Widget favoritesIcon(
   // double padding = 20,
   bool isOutLine = false,
   Function onPressed,
+  String resourceId,
 }) {
   return Container(
     // height: 31,
@@ -33,6 +34,9 @@ Widget favoritesIcon(
   ).ripple(() {
     if (onPressed != null) {
       onPressed();
+      // onPressed);
+      print(resourceId);
+      return "333333";
     }
   }, borderRadius: BorderRadius.all(Radius.circular(13)));
 }

@@ -2,7 +2,7 @@ import 'package:ciying/api/call_config.dart';
 import 'package:ciying/api/config.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
-import 'package:ciying/util/logger.dart';
+import 'package:ciying/Utils/logger.dart';
 
 class Search {
   static Future<SearchResponse> searchAPIRequest(SearchRequest data) async {
@@ -19,5 +19,6 @@ class Search {
       }
       return searchResponse;
     }
+    return searchResponse;
   }
 }
