@@ -190,12 +190,150 @@ class _$ResourceSectionDao extends ResourceSectionDao {
   }
 
   @override
-  Stream<ResourceSection> findPersonById(String resourceId) {
+  Stream<ResourceSection> findResourceSectionById(String resourceId) {
     return _queryAdapter.queryStream(
         'SELECT * FROM ResourceSection WHERE resourceId = ?',
         arguments: <dynamic>[resourceId],
         queryableName: 'ResourceSection',
         isView: false,
+        mapper: (Map<String, dynamic> row) => ResourceSection(
+            row['resourceId'] as int,
+            row['duration'] as double,
+            row['sourceName'] as String,
+            row['emotionCode'] as int,
+            row['resourceAddress'] as String,
+            row['sourceId'] as String,
+            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
+            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
+            row['name'] as String,
+            row['resourceAddressCachePath'] as String));
+  }
+
+  @override
+  Future<void> deleteAllResourceSection() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM ResourceSection');
+  }
+
+  @override
+  Future<ResourceSection> findResourceSectionByIdAndName(
+      String resourceId, String name) async {
+    return _queryAdapter.query(
+        'SELECT * FROM ResourceSection WHERE resourceId = ? AND name = ?',
+        arguments: <dynamic>[resourceId, name],
+        mapper: (Map<String, dynamic> row) => ResourceSection(
+            row['resourceId'] as int,
+            row['duration'] as double,
+            row['sourceName'] as String,
+            row['emotionCode'] as int,
+            row['resourceAddress'] as String,
+            row['sourceId'] as String,
+            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
+            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
+            row['name'] as String,
+            row['resourceAddressCachePath'] as String));
+  }
+
+  @override
+  Future<List<ResourceSection>> findResourceSectionsWithIds(
+      List<String> resourceIds) async {
+    final valueList0 = resourceIds.map((value) => "'$value'").join(', ');
+    return _queryAdapter.queryList(
+        'SELECT * FROM ResourceSection WHERE resourceId IN ($valueList0)',
+        mapper: (Map<String, dynamic> row) => ResourceSection(
+            row['resourceId'] as int,
+            row['duration'] as double,
+            row['sourceName'] as String,
+            row['emotionCode'] as int,
+            row['resourceAddress'] as String,
+            row['sourceId'] as String,
+            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
+            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
+            row['name'] as String,
+            row['resourceAddressCachePath'] as String));
+  }
+
+  @override
+  Future<List<ResourceSection>> findResourceSectionsWithNamesLike(
+      String name) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM ResourceSection WHERE name LIKE ?',
+        arguments: <dynamic>[name],
+        mapper: (Map<String, dynamic> row) => ResourceSection(
+            row['resourceId'] as int,
+            row['duration'] as double,
+            row['sourceName'] as String,
+            row['emotionCode'] as int,
+            row['resourceAddress'] as String,
+            row['sourceId'] as String,
+            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
+            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
+            row['name'] as String,
+            row['resourceAddressCachePath'] as String));
+  }
+
+  @override
+  Future<List<ResourceSection>> findResourceSectionsByIsFavorite(
+      bool isFavorite) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM ResourceSection WHERE isFavorite = ?',
+        arguments: <dynamic>[isFavorite == null ? null : (isFavorite ? 1 : 0)],
+        mapper: (Map<String, dynamic> row) => ResourceSection(
+            row['resourceId'] as int,
+            row['duration'] as double,
+            row['sourceName'] as String,
+            row['emotionCode'] as int,
+            row['resourceAddress'] as String,
+            row['sourceId'] as String,
+            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
+            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
+            row['name'] as String,
+            row['resourceAddressCachePath'] as String));
+  }
+
+  @override
+  Future<List<ResourceSection>> findResourceSectionsByIsDownload(
+      bool isDownload) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM ResourceSection WHERE isDownload = ?',
+        arguments: <dynamic>[isDownload == null ? null : (isDownload ? 1 : 0)],
+        mapper: (Map<String, dynamic> row) => ResourceSection(
+            row['resourceId'] as int,
+            row['duration'] as double,
+            row['sourceName'] as String,
+            row['emotionCode'] as int,
+            row['resourceAddress'] as String,
+            row['sourceId'] as String,
+            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
+            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
+            row['name'] as String,
+            row['resourceAddressCachePath'] as String));
+  }
+
+  @override
+  Future<List<ResourceSection>> findResourceSectionsByDuration(
+      String duration) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM ResourceSection WHERE duration = ?',
+        arguments: <dynamic>[duration],
+        mapper: (Map<String, dynamic> row) => ResourceSection(
+            row['resourceId'] as int,
+            row['duration'] as double,
+            row['sourceName'] as String,
+            row['emotionCode'] as int,
+            row['resourceAddress'] as String,
+            row['sourceId'] as String,
+            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
+            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
+            row['name'] as String,
+            row['resourceAddressCachePath'] as String));
+  }
+
+  @override
+  Future<List<ResourceSection>> findResourceSectionsByEmotionCode(
+      List<int> emotionCodes) async {
+    final valueList0 = emotionCodes.map((value) => "'$value'").join(', ');
+    return _queryAdapter.queryList(
+        'SELECT * FROM ResourceSection WHERE emotionCode IN ()?)',
         mapper: (Map<String, dynamic> row) => ResourceSection(
             row['resourceId'] as int,
             row['duration'] as double,
