@@ -80,7 +80,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `ResourceSection` (`resourceId` INTEGER, `duration` REAL, `sourceName` TEXT, `emotionCode` INTEGER, `resourceAddress` TEXT, `sourceId` TEXT, `isFavorite` INTEGER, `isDownload` INTEGER, `name` TEXT, `resourceAddressCachePath` TEXT, PRIMARY KEY (`resourceId`))');
+            'CREATE TABLE IF NOT EXISTS `ResourceSection` (`resourceId` TEXT, `duration` REAL, `sourceName` TEXT, `emotionCode` INTEGER, `resourceAddress` TEXT, `sourceId` TEXT, `isFavorite` INTEGER, `isDownload` INTEGER, `name` TEXT, `resourceAddressCachePath` TEXT, PRIMARY KEY (`resourceId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -177,7 +177,7 @@ class _$ResourceSectionDao extends ResourceSectionDao {
   Future<List<ResourceSection>> findAllResourceSection() async {
     return _queryAdapter.queryList('SELECT * FROM ResourceSection',
         mapper: (Map<String, dynamic> row) => ResourceSection(
-            row['resourceId'] as int,
+            row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
             row['emotionCode'] as int,
@@ -197,7 +197,7 @@ class _$ResourceSectionDao extends ResourceSectionDao {
         queryableName: 'ResourceSection',
         isView: false,
         mapper: (Map<String, dynamic> row) => ResourceSection(
-            row['resourceId'] as int,
+            row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
             row['emotionCode'] as int,
@@ -221,7 +221,7 @@ class _$ResourceSectionDao extends ResourceSectionDao {
         'SELECT * FROM ResourceSection WHERE resourceId = ? AND name = ?',
         arguments: <dynamic>[resourceId, name],
         mapper: (Map<String, dynamic> row) => ResourceSection(
-            row['resourceId'] as int,
+            row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
             row['emotionCode'] as int,
@@ -240,7 +240,7 @@ class _$ResourceSectionDao extends ResourceSectionDao {
     return _queryAdapter.queryList(
         'SELECT * FROM ResourceSection WHERE resourceId IN ($valueList0)',
         mapper: (Map<String, dynamic> row) => ResourceSection(
-            row['resourceId'] as int,
+            row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
             row['emotionCode'] as int,
@@ -259,7 +259,7 @@ class _$ResourceSectionDao extends ResourceSectionDao {
         'SELECT * FROM ResourceSection WHERE name LIKE ?',
         arguments: <dynamic>[name],
         mapper: (Map<String, dynamic> row) => ResourceSection(
-            row['resourceId'] as int,
+            row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
             row['emotionCode'] as int,
@@ -278,7 +278,7 @@ class _$ResourceSectionDao extends ResourceSectionDao {
         'SELECT * FROM ResourceSection WHERE isFavorite = ?',
         arguments: <dynamic>[isFavorite == null ? null : (isFavorite ? 1 : 0)],
         mapper: (Map<String, dynamic> row) => ResourceSection(
-            row['resourceId'] as int,
+            row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
             row['emotionCode'] as int,
@@ -297,7 +297,7 @@ class _$ResourceSectionDao extends ResourceSectionDao {
         'SELECT * FROM ResourceSection WHERE isDownload = ?',
         arguments: <dynamic>[isDownload == null ? null : (isDownload ? 1 : 0)],
         mapper: (Map<String, dynamic> row) => ResourceSection(
-            row['resourceId'] as int,
+            row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
             row['emotionCode'] as int,
@@ -316,7 +316,7 @@ class _$ResourceSectionDao extends ResourceSectionDao {
         'SELECT * FROM ResourceSection WHERE duration = ?',
         arguments: <dynamic>[duration],
         mapper: (Map<String, dynamic> row) => ResourceSection(
-            row['resourceId'] as int,
+            row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
             row['emotionCode'] as int,
@@ -335,7 +335,7 @@ class _$ResourceSectionDao extends ResourceSectionDao {
     return _queryAdapter.queryList(
         'SELECT * FROM ResourceSection WHERE emotionCode IN ()?)',
         mapper: (Map<String, dynamic> row) => ResourceSection(
-            row['resourceId'] as int,
+            row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
             row['emotionCode'] as int,

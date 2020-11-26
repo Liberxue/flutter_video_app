@@ -7,7 +7,7 @@ import 'package:floor/floor.dart';
 @entity
 class ResourceSection {
   @primaryKey
-  final int resourceId;
+  final String resourceId;
 
   final double duration;
 
