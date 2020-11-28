@@ -10,7 +10,8 @@ import 'entity/resource_section.dart';
 
 part 'database.g.dart'; // the generated code will be there
 
-@Database(version: 1, entities: [ResourceSection])
+@Database(version: 1, entities: [CacheResourceSection])
 abstract class AppDatabase extends FloorDatabase {
-  ResourceSectionDao get resourceSectionDao;
+  CacheResourceSectionDao get resourceSectionDao;
+  // UserInfoDao get userInfoDao;
 }

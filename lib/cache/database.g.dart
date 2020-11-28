@@ -60,7 +60,7 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
-  ResourceSectionDao _resourceSectionDaoInstance;
+  CacheResourceSectionDao _resourceSectionDaoInstance;
 
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback callback]) async {
@@ -80,7 +80,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `ResourceSection` (`resourceId` TEXT, `duration` REAL, `sourceName` TEXT, `emotionCode` INTEGER, `resourceAddress` TEXT, `sourceId` TEXT, `isFavorite` INTEGER, `isDownload` INTEGER, `name` TEXT, `resourceAddressCachePath` TEXT, PRIMARY KEY (`resourceId`))');
+            'CREATE TABLE IF NOT EXISTS `CacheResourceSection` (`resourceId` TEXT, `duration` REAL, `sourceName` TEXT, `emotionCode` INTEGER, `resourceAddress` TEXT, `sourceId` TEXT, `isFavorite` INTEGER, `isDownload` INTEGER, `name` TEXT, `searchText` TEXT, `resourceAddressCachePath` TEXT, PRIMARY KEY (`resourceId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -89,19 +89,19 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
-  ResourceSectionDao get resourceSectionDao {
+  CacheResourceSectionDao get resourceSectionDao {
     return _resourceSectionDaoInstance ??=
-        _$ResourceSectionDao(database, changeListener);
+        _$CacheResourceSectionDao(database, changeListener);
   }
 }
 
-class _$ResourceSectionDao extends ResourceSectionDao {
-  _$ResourceSectionDao(this.database, this.changeListener)
+class _$CacheResourceSectionDao extends CacheResourceSectionDao {
+  _$CacheResourceSectionDao(this.database, this.changeListener)
       : _queryAdapter = QueryAdapter(database, changeListener),
-        _resourceSectionInsertionAdapter = InsertionAdapter(
+        _cacheResourceSectionInsertionAdapter = InsertionAdapter(
             database,
-            'ResourceSection',
-            (ResourceSection item) => <String, dynamic>{
+            'CacheResourceSection',
+            (CacheResourceSection item) => <String, dynamic>{
                   'resourceId': item.resourceId,
                   'duration': item.duration,
                   'sourceName': item.sourceName,
@@ -115,14 +115,15 @@ class _$ResourceSectionDao extends ResourceSectionDao {
                       ? null
                       : (item.isDownload ? 1 : 0),
                   'name': item.name,
+                  'searchText': item.searchText,
                   'resourceAddressCachePath': item.resourceAddressCachePath
                 },
             changeListener),
-        _resourceSectionUpdateAdapter = UpdateAdapter(
+        _cacheResourceSectionUpdateAdapter = UpdateAdapter(
             database,
-            'ResourceSection',
+            'CacheResourceSection',
             ['resourceId'],
-            (ResourceSection item) => <String, dynamic>{
+            (CacheResourceSection item) => <String, dynamic>{
                   'resourceId': item.resourceId,
                   'duration': item.duration,
                   'sourceName': item.sourceName,
@@ -136,14 +137,15 @@ class _$ResourceSectionDao extends ResourceSectionDao {
                       ? null
                       : (item.isDownload ? 1 : 0),
                   'name': item.name,
+                  'searchText': item.searchText,
                   'resourceAddressCachePath': item.resourceAddressCachePath
                 },
             changeListener),
-        _resourceSectionDeletionAdapter = DeletionAdapter(
+        _cacheResourceSectionDeletionAdapter = DeletionAdapter(
             database,
-            'ResourceSection',
+            'CacheResourceSection',
             ['resourceId'],
-            (ResourceSection item) => <String, dynamic>{
+            (CacheResourceSection item) => <String, dynamic>{
                   'resourceId': item.resourceId,
                   'duration': item.duration,
                   'sourceName': item.sourceName,
@@ -157,6 +159,7 @@ class _$ResourceSectionDao extends ResourceSectionDao {
                       ? null
                       : (item.isDownload ? 1 : 0),
                   'name': item.name,
+                  'searchText': item.searchText,
                   'resourceAddressCachePath': item.resourceAddressCachePath
                 },
             changeListener);
@@ -167,16 +170,18 @@ class _$ResourceSectionDao extends ResourceSectionDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<ResourceSection> _resourceSectionInsertionAdapter;
+  final InsertionAdapter<CacheResourceSection>
+      _cacheResourceSectionInsertionAdapter;
 
-  final UpdateAdapter<ResourceSection> _resourceSectionUpdateAdapter;
+  final UpdateAdapter<CacheResourceSection> _cacheResourceSectionUpdateAdapter;
 
-  final DeletionAdapter<ResourceSection> _resourceSectionDeletionAdapter;
+  final DeletionAdapter<CacheResourceSection>
+      _cacheResourceSectionDeletionAdapter;
 
   @override
-  Future<List<ResourceSection>> findAllResourceSection() async {
-    return _queryAdapter.queryList('SELECT * FROM ResourceSection',
-        mapper: (Map<String, dynamic> row) => ResourceSection(
+  Future<List<CacheResourceSection>> findAllResourceSection() async {
+    return _queryAdapter.queryList('SELECT * FROM CacheResourceSection',
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
             row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
@@ -186,17 +191,18 @@ class _$ResourceSectionDao extends ResourceSectionDao {
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
             row['name'] as String,
+            row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
 
   @override
-  Stream<ResourceSection> findResourceSectionById(String resourceId) {
+  Stream<CacheResourceSection> findResourceSectionById(String resourceId) {
     return _queryAdapter.queryStream(
-        'SELECT * FROM ResourceSection WHERE resourceId = ?',
+        'SELECT * FROM CacheResourceSection WHERE resourceId = ?',
         arguments: <dynamic>[resourceId],
-        queryableName: 'ResourceSection',
+        queryableName: 'CacheResourceSection',
         isView: false,
-        mapper: (Map<String, dynamic> row) => ResourceSection(
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
             row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
@@ -206,21 +212,22 @@ class _$ResourceSectionDao extends ResourceSectionDao {
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
             row['name'] as String,
+            row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
 
   @override
   Future<void> deleteAllResourceSection() async {
-    await _queryAdapter.queryNoReturn('DELETE FROM ResourceSection');
+    await _queryAdapter.queryNoReturn('DELETE FROM CacheResourceSection');
   }
 
   @override
-  Future<ResourceSection> findResourceSectionByIdAndName(
+  Future<CacheResourceSection> findResourceSectionByIdAndName(
       String resourceId, String name) async {
     return _queryAdapter.query(
-        'SELECT * FROM ResourceSection WHERE resourceId = ? AND name = ?',
+        'SELECT * FROM CacheResourceSection WHERE resourceId = ? AND name = ?',
         arguments: <dynamic>[resourceId, name],
-        mapper: (Map<String, dynamic> row) => ResourceSection(
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
             row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
@@ -230,16 +237,17 @@ class _$ResourceSectionDao extends ResourceSectionDao {
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
             row['name'] as String,
+            row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
 
   @override
-  Future<List<ResourceSection>> findResourceSectionsWithIds(
+  Future<List<CacheResourceSection>> findResourceSectionsWithIds(
       List<String> resourceIds) async {
     final valueList0 = resourceIds.map((value) => "'$value'").join(', ');
     return _queryAdapter.queryList(
-        'SELECT * FROM ResourceSection WHERE resourceId IN ($valueList0)',
-        mapper: (Map<String, dynamic> row) => ResourceSection(
+        'SELECT * FROM CacheResourceSection WHERE resourceId IN ($valueList0)',
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
             row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
@@ -249,16 +257,17 @@ class _$ResourceSectionDao extends ResourceSectionDao {
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
             row['name'] as String,
+            row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
 
   @override
-  Future<List<ResourceSection>> findResourceSectionsWithNamesLike(
+  Future<List<CacheResourceSection>> findResourceSectionsWithNamesLike(
       String name) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM ResourceSection WHERE name LIKE ?',
+        'SELECT * FROM CacheResourceSection WHERE name LIKE ?',
         arguments: <dynamic>[name],
-        mapper: (Map<String, dynamic> row) => ResourceSection(
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
             row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
@@ -268,16 +277,17 @@ class _$ResourceSectionDao extends ResourceSectionDao {
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
             row['name'] as String,
+            row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
 
   @override
-  Future<List<ResourceSection>> findResourceSectionsByIsFavorite(
+  Future<List<CacheResourceSection>> findResourceSectionsByIsFavorite(
       bool isFavorite) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM ResourceSection WHERE isFavorite = ?',
+        'SELECT * FROM CacheResourceSection WHERE isFavorite = ?',
         arguments: <dynamic>[isFavorite == null ? null : (isFavorite ? 1 : 0)],
-        mapper: (Map<String, dynamic> row) => ResourceSection(
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
             row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
@@ -287,16 +297,86 @@ class _$ResourceSectionDao extends ResourceSectionDao {
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
             row['name'] as String,
+            row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
 
   @override
-  Future<List<ResourceSection>> findResourceSectionsByIsDownload(
+  Future<List<CacheResourceSection>>
+      updateIsFavoriteResourceSectionsByResourceId(
+          bool isFavorite, String resourceId) async {
+    return _queryAdapter.queryList(
+        'UPDATE CacheResourceSection SET isFavorite = ? WHERE resourceId = ?',
+        arguments: <dynamic>[
+          isFavorite == null ? null : (isFavorite ? 1 : 0),
+          resourceId
+        ],
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
+            row['resourceId'] as String,
+            row['duration'] as double,
+            row['sourceName'] as String,
+            row['emotionCode'] as int,
+            row['resourceAddress'] as String,
+            row['sourceId'] as String,
+            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
+            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
+            row['name'] as String,
+            row['searchText'] as String,
+            row['resourceAddressCachePath'] as String));
+  }
+
+  @override
+  Future<List<CacheResourceSection>>
+      updateIsDownloadResourceSectionsByResourceId(
+          bool isDownload, String resourceId) async {
+    return _queryAdapter.queryList(
+        'UPDATE CacheResourceSection SET isDownload = ? WHERE resourceId = ?',
+        arguments: <dynamic>[
+          isDownload == null ? null : (isDownload ? 1 : 0),
+          resourceId
+        ],
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
+            row['resourceId'] as String,
+            row['duration'] as double,
+            row['sourceName'] as String,
+            row['emotionCode'] as int,
+            row['resourceAddress'] as String,
+            row['sourceId'] as String,
+            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
+            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
+            row['name'] as String,
+            row['searchText'] as String,
+            row['resourceAddressCachePath'] as String));
+  }
+
+  @override
+  Future<List<CacheResourceSection>>
+      updateDownloadPathResourceSectionsByResourceId(
+          String resourceAddressCachePath, String resourceId) async {
+    return _queryAdapter.queryList(
+        'UPDATE CacheResourceSection SET resourceAddressCachePath=? WHERE resourceId = ?',
+        arguments: <dynamic>[resourceAddressCachePath, resourceId],
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
+            row['resourceId'] as String,
+            row['duration'] as double,
+            row['sourceName'] as String,
+            row['emotionCode'] as int,
+            row['resourceAddress'] as String,
+            row['sourceId'] as String,
+            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
+            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
+            row['name'] as String,
+            row['searchText'] as String,
+            row['resourceAddressCachePath'] as String));
+  }
+
+  @override
+  Future<List<CacheResourceSection>> findResourceSectionsByIsDownload(
       bool isDownload) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM ResourceSection WHERE isDownload = ?',
+        'SELECT * FROM CacheResourceSection WHERE isDownload = ?',
         arguments: <dynamic>[isDownload == null ? null : (isDownload ? 1 : 0)],
-        mapper: (Map<String, dynamic> row) => ResourceSection(
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
             row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
@@ -306,16 +386,17 @@ class _$ResourceSectionDao extends ResourceSectionDao {
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
             row['name'] as String,
+            row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
 
   @override
-  Future<List<ResourceSection>> findResourceSectionsByDuration(
+  Future<List<CacheResourceSection>> findResourceSectionsByDuration(
       String duration) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM ResourceSection WHERE duration = ?',
+        'SELECT * FROM CacheResourceSection WHERE duration = ?',
         arguments: <dynamic>[duration],
-        mapper: (Map<String, dynamic> row) => ResourceSection(
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
             row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
@@ -325,16 +406,17 @@ class _$ResourceSectionDao extends ResourceSectionDao {
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
             row['name'] as String,
+            row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
 
   @override
-  Future<List<ResourceSection>> findResourceSectionsByEmotionCode(
+  Future<List<CacheResourceSection>> findResourceSectionsByEmotionCode(
       List<int> emotionCodes) async {
     final valueList0 = emotionCodes.map((value) => "'$value'").join(', ');
     return _queryAdapter.queryList(
-        'SELECT * FROM ResourceSection WHERE emotionCode IN ()?)',
-        mapper: (Map<String, dynamic> row) => ResourceSection(
+        'SELECT * FROM CacheResourceSection WHERE emotionCode IN ()?)',
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
             row['resourceId'] as String,
             row['duration'] as double,
             row['sourceName'] as String,
@@ -344,43 +426,68 @@ class _$ResourceSectionDao extends ResourceSectionDao {
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
             row['name'] as String,
+            row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
 
   @override
-  Future<void> insertResourceSection(ResourceSection resourceSection) async {
-    await _resourceSectionInsertionAdapter.insert(
-        resourceSection, OnConflictStrategy.abort);
+  Future<List<CacheResourceSection>> findResourceSectionsBySearchText(
+      String searchText) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM CacheResourceSection WHERE searchText = ?',
+        arguments: <dynamic>[searchText],
+        mapper: (Map<String, dynamic> row) => CacheResourceSection(
+            row['resourceId'] as String,
+            row['duration'] as double,
+            row['sourceName'] as String,
+            row['emotionCode'] as int,
+            row['resourceAddress'] as String,
+            row['sourceId'] as String,
+            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
+            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
+            row['name'] as String,
+            row['searchText'] as String,
+            row['resourceAddressCachePath'] as String));
+  }
+
+  @override
+  Future<void> insertResourceSection(
+      CacheResourceSection cacheResourceSection) async {
+    await _cacheResourceSectionInsertionAdapter.insert(
+        cacheResourceSection, OnConflictStrategy.abort);
   }
 
   @override
   Future<void> insertResourceSections(
-      List<ResourceSection> resourceSections) async {
-    await _resourceSectionInsertionAdapter.insertList(
-        resourceSections, OnConflictStrategy.abort);
+      List<CacheResourceSection> cacheResourceSections) async {
+    await _cacheResourceSectionInsertionAdapter.insertList(
+        cacheResourceSections, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> updateResourceSection(ResourceSection resourceSection) async {
-    await _resourceSectionUpdateAdapter.update(
-        resourceSection, OnConflictStrategy.abort);
+  Future<void> updateResourceSection(
+      CacheResourceSection cacheResourceSection) async {
+    await _cacheResourceSectionUpdateAdapter.update(
+        cacheResourceSection, OnConflictStrategy.abort);
   }
 
   @override
   Future<void> updateResourceSections(
-      List<ResourceSection> resourceSections) async {
-    await _resourceSectionUpdateAdapter.updateList(
-        resourceSections, OnConflictStrategy.abort);
+      List<CacheResourceSection> cacheResourceSections) async {
+    await _cacheResourceSectionUpdateAdapter.updateList(
+        cacheResourceSections, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> deleteResourceSection(ResourceSection resourceSection) async {
-    await _resourceSectionDeletionAdapter.delete(resourceSection);
+  Future<void> deleteResourceSection(
+      CacheResourceSection cacheResourceSection) async {
+    await _cacheResourceSectionDeletionAdapter.delete(cacheResourceSection);
   }
 
   @override
   Future<void> deleteResourceSections(
-      List<ResourceSection> resourceSections) async {
-    await _resourceSectionDeletionAdapter.deleteList(resourceSections);
+      List<CacheResourceSection> cacheResourceSections) async {
+    await _cacheResourceSectionDeletionAdapter
+        .deleteList(cacheResourceSections);
   }
 }

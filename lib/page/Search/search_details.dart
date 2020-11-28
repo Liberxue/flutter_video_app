@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ciying/grpc/proto/search.pb.dart';
+import 'package:ciying/cache/entity/resource_section.dart';
 import 'package:ciying/page/Video/VideoPlayer.dart';
 import 'package:ciying/page/Favorites/favoritesIcon.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ typedef StringValue = String Function(String);
 
 class SearchDetails extends StatelessWidget {
   final String searchText;
-  final ResourceSection _resourceSection;
+  final CacheResourceSection _resourceSection;
 
   SearchDetails(this.searchText, this._resourceSection);
 
@@ -30,7 +30,7 @@ class SearchDetails extends StatelessWidget {
                 children: <Widget>[
               new Center(
                   child: new Hero(
-                tag: _resourceSection.sourceID,
+                tag: _resourceSection.sourceId,
                 child: Container(
                   child: CachedNetworkImage(
                     imageUrl: _resourceSection.resourceAddress,
@@ -74,7 +74,7 @@ class SearchDetails extends StatelessWidget {
                               isFavorite = !isFavorite;
                               // FavoritesModels.favoriteAction(null);
                             },
-                            resourceId: this._resourceSection.resourceID,
+                            resourceId: this._resourceSection.resourceId,
                           ),
                         ]))
                   ]))

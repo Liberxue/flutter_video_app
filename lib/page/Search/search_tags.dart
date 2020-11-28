@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:ciying/Widgets/CustomDialog.dart';
 import 'package:ciying/api/search/search_tags.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';

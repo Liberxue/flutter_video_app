@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:ciying/api/resource/resourcePreviewRequest.dart';
+import 'package:ciying/cache/entity/resource_section.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/gateWay.pb.dart';
@@ -18,7 +19,7 @@ import 'package:video_player/video_player.dart';
 
 class VideoPlayer extends StatefulWidget {
   final String searchText;
-  final ResourceSection _resourceSection;
+  final CacheResourceSection _resourceSection;
   VideoPlayer(this.searchText, this._resourceSection);
   @override
   State<StatefulWidget> createState() {
@@ -41,7 +42,7 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
 
   void _resourcePreviewRequest() async {
     List<String> resourceIdList = List<String>(1);
-    resourceIdList[0] = widget._resourceSection.sourceID;
+    resourceIdList[0] = widget._resourceSection.sourceId;
     ResourcePreviewRequest resourcePreviewRequest = ResourcePreviewRequest();
     resourceIdList = resourcePreviewRequest.resourceId;
     ResourcePreviewResponse resourcePreviewResponse =
@@ -183,7 +184,7 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
                           new Container(
                             margin: EdgeInsets.only(top: 10),
                             child: new Text(
-                                "来源：${widget._resourceSection.source}",
+                                "来源：${widget._resourceSection.sourceName}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,

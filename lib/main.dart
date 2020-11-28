@@ -1,11 +1,7 @@
 import 'dart:io';
 import 'package:ciying/appRouter.dart';
-import 'package:ciying/cache/database.dart';
-import 'package:ciying/cache/sqlite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'cache/entity/resource_section.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding
@@ -36,29 +32,4 @@ Future<void> main() async {
     ),
   );
   runApp(AppRouter());
-  CacheDb();
-}
-
-Future<void> CacheDb() async {
-  final database =
-      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  final resourceSectionDao = database.resourceSectionDao;
-
-  final resourceSection = ResourceSection(
-    "resourceId",
-    0.1,
-    "sourceName",
-    1,
-    "resourceAddress",
-    "sourceId",
-    true,
-    false,
-    "name",
-    "resourceAddressCachePath",
-  );
-  await resourceSectionDao.insertResourceSection(resourceSection);
-
-  final result = await resourceSectionDao.findAllResourceSection();
-  List<ResourceSection> resourceSectionData = result;
-  print(resourceSectionData);
 }

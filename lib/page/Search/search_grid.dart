@@ -1,14 +1,14 @@
 import 'package:ciying/api/search/search.dart';
+import 'package:ciying/cache/entity/resource_section.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:ciying/page/Search/search_details.dart';
 import 'package:ciying/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 
 class SearchGrid extends StatefulWidget {
-  final List<ResourceSection> _resourceSection;
+  final List<CacheResourceSection> _resourceSection;
   final String searchText;
   final bool _isLoading;
   SearchGrid(this._resourceSection, this.searchText, this._isLoading);

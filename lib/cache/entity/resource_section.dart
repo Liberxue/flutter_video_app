@@ -5,7 +5,7 @@ import 'dart:ffi';
 import 'package:floor/floor.dart';
 
 @entity
-class ResourceSection {
+class CacheResourceSection {
   @primaryKey
   final String resourceId;
 
@@ -25,9 +25,11 @@ class ResourceSection {
 
   final String name;
 
+  final String searchText;
+
   final String resourceAddressCachePath;
 
-  ResourceSection(
+  CacheResourceSection(
       this.resourceId,
       this.duration,
       this.sourceName,
@@ -37,5 +39,6 @@ class ResourceSection {
       this.isFavorite,
       this.isDownload,
       this.name,
+      this.searchText,
       this.resourceAddressCachePath);
 }

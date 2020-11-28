@@ -1,8 +1,6 @@
-import 'package:ciying/api/search/search.dart';
 import 'package:ciying/cache/cache_search.dart';
-import 'package:ciying/common/constants.dart';
+import 'package:ciying/cache/entity/resource_section.dart';
 import 'package:ciying/widgets/custom_app_bar.dart';
-import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:ciying/page/Search/search_grid.dart';
 import 'package:ciying/page/bloc/CartBloc.dart';
 import 'package:ciying/Utils/hexColor.dart';
@@ -41,7 +39,8 @@ class __ResourceListBodyState extends State<_ResourceListBody>
   CartBloc _cartBloc = new CartBloc();
   ScrollController _scrollController = new ScrollController();
 
-  List<ResourceSection> _resourceSection = new List<ResourceSection>();
+  List<CacheResourceSection> _resourceSection =
+      new List<CacheResourceSection>();
 
   @override
   void initState() {
@@ -60,19 +59,19 @@ class __ResourceListBodyState extends State<_ResourceListBody>
   }
 
   void _performSearch() async {
-    SearchRequest searchRequest = SearchRequest();
-    searchRequest.text = widget.searchText;
-    searchRequest.limit = 100;
-    SearchResponse searchResponse =
-        await Search.searchAPIRequest(searchRequest);
-    if (searchResponse == null || searchResponse.resourceSection == null)
+    // SearchRequest searchRequest = SearchRequest();
+    // searchRequest.text = widget.searchText;
+    // searchRequest.limit = 100;
+    // SearchResponse searchResponse =
+    //     await Search.searchAPIRequest(searchRequest);
+    CacheSearch().cacheSearchBySearchText(widget.searchText);
+    if (_resourceSection == null)
       setState(() {
         _isError = true;
       });
     else
       setState(() {
-        _resourceSection.addAll(searchResponse.resourceSection);
-        CacheSearch().saveSearchData(_resourceSection);
+        _resourceSection.addAll(_resourceSection);
         _isLoading = false;
         _isError = false;
       });
@@ -93,11 +92,11 @@ class __ResourceListBodyState extends State<_ResourceListBody>
   Widget build(BuildContext context) {
     double statusBarHeight;
     if (MediaQuery.of(context).padding.top == null ||
-        MediaQuery.of(context).padding.top == 0) {
+        MediaQuery.of(context).padding.top == 0)
       statusBarHeight = MediaQuery.of(context).padding.top - 40;
-    } else {
+    else
       statusBarHeight = MediaQuery.of(context).padding.top - 15;
-    }
+
     height = MediaQuery.of(context).size.height - statusBarHeight;
     return Container(
       color: Colors.white,

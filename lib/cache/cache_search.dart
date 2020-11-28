@@ -1,30 +1,57 @@
-import 'dart:convert';
-
+import 'package:ciying/cache/database.dart';
+import 'package:ciying/cache/entity/resource_section.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheSearch {
-  Future<void> saveSearchData(List<ResourceSection> _resourceSection) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool result =
-        await prefs.setString('resourceSection', json.encode(_resourceSection));
-    print(result);
+  getDatabaseInstance() async {
+    return await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   }
 
-  // Future<User> getSearchData() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  // first seachCache by searchText
+  Future<List<CacheResourceSection>> cacheSearchBySearchText(
+      String searchText) async {
+    final resourceSectionDao = getDatabaseInstance().resourceSectionDao;
+    return await resourceSectionDao
+        .findResourceSectionsBySearchText(searchText);
+  }
 
-  //   Map<String, dynamic> userMap;
-  //   final String userStr = prefs.getString('user');
-  //   if (userStr != null) {
-  //     userMap = jsonDecode(userStr) as Map<String, dynamic>;
-  //   }
+  //  cache by duration is null ; start request remote and save remote response to cache
+  Future<void> saveSearchData(
+      List<ResourceSection> _resourceSection, String searchText) async {
+    final resourceSectionDao = getDatabaseInstance().resourceSectionDao;
+    List<CacheResourceSection> _cacheResourceSectionData =
+        new List<CacheResourceSection>();
+    _resourceSection.forEach((element) {
+      _cacheResourceSectionData.add(CacheResourceSection(
+        element.resourceID,
+        element.duration,
+        element.sourceName,
+        element.emotionCode.value,
+        element.resourceAddress,
+        element.sourceID,
+        element.isFavorite,
+        element.isDownload,
+        element.sourceName,
+        searchText,
+        null,
+      ));
+    });
+    await resourceSectionDao.insertResourceSections(_cacheResourceSectionData);
+    final result = await resourceSectionDao.findAllResourceSection();
+    List<CacheResourceSection> resourceSectionData = result;
+    print(resourceSectionData);
+  }
 
-  //   if (userMap != null) {
-  //     final User user = User.fromJson(userMap);
-  //     print(user);
-  //     return user;
-  //   }
-  //   return null;
-  // }
+  Future<void> updateIsFavorite(bool isFavorite, String resourceId) async {
+    final resourceSectionDao = getDatabaseInstance().resourceSectionDao;
+    return await resourceSectionDao
+        .updateIsFavoriteResourceSectionsByResourceId(isFavorite, resourceId);
+  }
+
+  Future<void> updateIsDownload(
+      bool isDownload, String resourceId, String cachePath) async {
+    final resourceSectionDao = getDatabaseInstance().resourceSectionDao;
+    return resourceSectionDao.updateIsDownloadResourceSectionsByResourceId(
+        isDownload, resourceId, cachePath);
+  }
 }
