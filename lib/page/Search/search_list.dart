@@ -1,5 +1,6 @@
 import 'package:ciying/cache/cache_search.dart';
 import 'package:ciying/cache/entity/resource_section.dart';
+import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:ciying/widgets/custom_app_bar.dart';
 import 'package:ciying/page/Search/search_grid.dart';
 import 'package:ciying/page/bloc/CartBloc.dart';
@@ -59,19 +60,21 @@ class __ResourceListBodyState extends State<_ResourceListBody>
   }
 
   void _performSearch() async {
-    // SearchRequest searchRequest = SearchRequest();
-    // searchRequest.text = widget.searchText;
-    // searchRequest.limit = 100;
+    SearchRequest searchRequest = SearchRequest();
+    searchRequest.text = widget.searchText;
+    searchRequest.limit = 1;
+    searchRequest.offset = 20;
     // SearchResponse searchResponse =
     //     await Search.searchAPIRequest(searchRequest);
-    CacheSearch().cacheSearchBySearchText(widget.searchText);
-    if (_resourceSection == null)
+    var resourceSection =
+        await CacheSearch().cacheSearchBySearchText(searchRequest);
+    if (resourceSection == null)
       setState(() {
         _isError = true;
       });
     else
       setState(() {
-        _resourceSection.addAll(_resourceSection);
+        _resourceSection.addAll(resourceSection);
         _isLoading = false;
         _isError = false;
       });

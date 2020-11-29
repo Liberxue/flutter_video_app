@@ -327,12 +327,13 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
 
   @override
   Future<List<CacheResourceSection>>
-      updateIsDownloadResourceSectionsByResourceId(
-          bool isDownload, String resourceId) async {
+      updateIsDownloadResourceSectionsByResourceId(bool isDownload,
+          String resourceAddressCachePath, String resourceId) async {
     return _queryAdapter.queryList(
-        'UPDATE CacheResourceSection SET isDownload = ? WHERE resourceId = ?',
+        'UPDATE CacheResourceSection SET isDownload = ? AND resourceAddressCachePath = ? WHERE resourceId = ?',
         arguments: <dynamic>[
           isDownload == null ? null : (isDownload ? 1 : 0),
+          resourceAddressCachePath,
           resourceId
         ],
         mapper: (Map<String, dynamic> row) => CacheResourceSection(
@@ -415,7 +416,7 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
       List<int> emotionCodes) async {
     final valueList0 = emotionCodes.map((value) => "'$value'").join(', ');
     return _queryAdapter.queryList(
-        'SELECT * FROM CacheResourceSection WHERE emotionCode IN ()?)',
+        'SELECT * FROM CacheResourceSection WHERE emotionCode IN ($valueList0)',
         mapper: (Map<String, dynamic> row) => CacheResourceSection(
             row['resourceId'] as String,
             row['duration'] as double,
@@ -432,10 +433,10 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
 
   @override
   Future<List<CacheResourceSection>> findResourceSectionsBySearchText(
-      String searchText) async {
+      String searchText, int limit, int offset) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM CacheResourceSection WHERE searchText = ?',
-        arguments: <dynamic>[searchText],
+        'SELECT * FROM CacheResourceSection WHERE searchText = ? order by resourceId LIMIT ? OFFSET ?',
+        arguments: <dynamic>[searchText, limit, offset],
         mapper: (Map<String, dynamic> row) => CacheResourceSection(
             row['resourceId'] as String,
             row['duration'] as double,

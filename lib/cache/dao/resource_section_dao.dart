@@ -41,10 +41,13 @@ abstract class CacheResourceSectionDao {
 
 // update isDownload
   @Query(
-      'UPDATE CacheResourceSection SET isDownload = :isDownload WHERE resourceId = :resourceId')
+      'UPDATE CacheResourceSection SET isDownload = :isDownload AND resourceAddressCachePath = :resourceAddressCachePath WHERE resourceId = :resourceId')
   Future<List<CacheResourceSection>>
       updateIsDownloadResourceSectionsByResourceId(
-          bool isDownload, String resourceId);
+    bool isDownload,
+    String resourceAddressCachePath,
+    String resourceId,
+  );
 
 // update isDownload cache path
   @Query(
@@ -63,14 +66,18 @@ abstract class CacheResourceSectionDao {
       String duration);
 
   @Query(
-      'SELECT * FROM CacheResourceSection WHERE emotionCode IN ():emotionCode)')
+      'SELECT * FROM CacheResourceSection WHERE emotionCode IN (:emotionCode)')
   Future<List<CacheResourceSection>> findResourceSectionsByEmotionCode(
       List<int> emotionCodes);
 
-  // check local cache by searchText;
-  @Query('SELECT * FROM CacheResourceSection WHERE searchText = :searchText')
+  // check local cache by searchText; // no support 。。。https://github.com/vitusortner/floor/issues/310
+  @Query(
+      'SELECT * FROM CacheResourceSection WHERE searchText = :searchText order by resourceId LIMIT :limit OFFSET :offset')
   Future<List<CacheResourceSection>> findResourceSectionsBySearchText(
-      String searchText);
+      String searchText, int limit, int offset);
+  // @Query('SELECT * FROM CacheResourceSection WHERE searchText = :searchText')
+  // Future<List<CacheResourceSection>> findResourceSectionsBySearchText(
+  //     String searchText);
 
   @insert
   Future<void> insertResourceSection(CacheResourceSection cacheResourceSection);

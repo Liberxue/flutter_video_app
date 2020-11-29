@@ -6,24 +6,25 @@ Future<void> CacheDb() async {
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   final resourceSectionDao = database.resourceSectionDao;
 
-  final resourceSection = CacheResourceSection(
-    "resourceId",
-    0.1,
-    "sourceName",
-    1,
-    "resourceAddress",
-    "sourceId",
-    true,
-    false,
-    "name",
-    "resourceAddressCachePath",
-  );
-  await resourceSectionDao.insertResourceSection(resourceSection);
+//   final resourceSection = CacheResourceSection(
+//     "resourceId",
+//     0.1,
+//     "sourceName",
+//     1,
+//     "resourceAddress",
+//     "sourceId",
+//     true,
+//     false,
+//     "name",
+//     "resourceAddressCachePath",
+//   );
+//   await resourceSectionDao.insertResourceSection(resourceSection);
 
-  final result = await resourceSectionDao.findAllResourceSection();
-  List<CacheResourceSection> resourceSectionData = result;
-  print(resourceSectionData);
-}
+//   final result = await resourceSectionDao.findAllResourceSection();
+//   List<CacheResourceSection> resourceSectionData = result;
+//   print(resourceSectionData);
+// }
 
 // single
 // batch
+}

@@ -1,4 +1,5 @@
 import 'package:ciying/api/search/search.dart';
+import 'package:ciying/cache/cache_search.dart';
 import 'package:ciying/cache/entity/resource_section.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
@@ -41,31 +42,36 @@ class _SearchGridState extends State<SearchGrid> {
     });
   }
 
-  Future _fetchData() async {
+  Future _fetchData(int page) async {
+    // SearchRequest searchRequest = SearchRequest();
+    // searchRequest.text = widget.searchText;
+    // searchRequest.limit = CommonConfig.SearchRequestDefaultLimit;
+    // SearchResponse searchResponse =
+    //     await Search.searchAPIRequest(searchRequest);
+    // // print(searchResponse.code);
+    // // print(searchResponse.resourceSection);
+    // // BotToast.showLoading();
+    // // if(searchResponse.code!=0){
+    // // }
+    // return searchResponse.resourceSection;
     SearchRequest searchRequest = SearchRequest();
     searchRequest.text = widget.searchText;
-    searchRequest.limit = CommonConfig.SearchRequestDefaultLimit;
-    SearchResponse searchResponse =
-        await Search.searchAPIRequest(searchRequest);
-    // print(searchResponse.code);
-    // print(searchResponse.resourceSection);
-    // BotToast.showLoading();
-    // if(searchResponse.code!=0){
-    // }
-    return searchResponse.resourceSection;
+    searchRequest.limit = page;
+    searchRequest.offset = 20;
+    return await CacheSearch().cacheSearchBySearchText(searchRequest);
   }
 
   Future<dynamic> _onRefresh() {
     widget._resourceSection.clear();
     this.page = 1;
-    return _fetchData().then((data) {
+    return _fetchData(page).then((data) {
       setState(() => this.widget._resourceSection.addAll(data));
     });
   }
 
   Future<dynamic> _onLoadmore() {
     this.page += 1;
-    return _fetchData().then((data) {
+    return _fetchData(page).then((data) {
       setState(() {
         this.widget._resourceSection.addAll(data);
       });
