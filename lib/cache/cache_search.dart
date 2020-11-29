@@ -1,6 +1,7 @@
 import 'package:ciying/api/search/search.dart';
 import 'package:ciying/cache/database.dart';
 import 'package:ciying/cache/entity/resource_section.dart';
+import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 
 class CacheSearch {
@@ -23,16 +24,18 @@ class CacheSearch {
     // cache by duration is null ;
     if (cacheResourceSection.length <= 0) {
       //start request remote
-      print("start search request");
       SearchResponse searchResponse =
           await Search.searchAPIRequest(searchRequest);
       // check searchResponse status
       print(searchResponse);
       print(searchResponse.code);
-      if (SearchResponse != null)
+      if (SearchResponse == null) {
+        return null;
+      } else if (searchResponse.code == ResponseCode.SUCCESSFUL) {
         _resourceSection.addAll(searchResponse.resourceSection);
-      // save remote response to cache
-      return await saveSearchData(_resourceSection, searchRequest.text);
+        // save remote response to cache
+        return await saveSearchData(_resourceSection, searchRequest.text);
+      }
     }
     return cacheResourceSection;
 
