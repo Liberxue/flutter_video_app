@@ -10,16 +10,99 @@ import 'package:ciying/page/User/UserDrawerPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SearchList extends StatelessWidget {
+class SearchList extends StatefulWidget {
   final String searchText;
   SearchList(this.searchText);
+
   @override
-  Widget build(BuildContext context) => new MaterialApp(
-        home: Scaffold(
-          backgroundColor: HexColor("#fff"),
-          body: _ResourceListBody(searchText),
+  _SearchListState createState() => _SearchListState();
+}
+
+class _SearchListState extends State<SearchList> {
+  int _selectedIndex = 0;
+  List<BottomNavigationBarItem> _barItem = [
+    BottomNavigationBarItem(
+        icon: Icon(Icons.search_sharp), title: Text('聚合搜索')),
+    BottomNavigationBarItem(icon: Icon(Icons.cut_sharp), title: Text('定制化搜索')),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: HexColor("#fff"),
+        body: getList(widget.searchText, this._selectedIndex),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (int index) {
+            setState(() {
+              this._selectedIndex = index;
+            });
+          },
+          currentIndex: this._selectedIndex,
+          items: _barItem,
+          fixedColor: Colors.blue[600],
+          selectedFontSize: 12,
+          type: BottomNavigationBarType.fixed,
         ),
-      );
+      ),
+    );
+  }
+
+  getList(String search, int selectedIndex) {
+    if (selectedIndex == 0) {
+      return _ResourceListBody(search);
+    } else if (selectedIndex == 1) {
+      return VipCustomPageContent();
+    } else {}
+  }
+  //   List<Widget> _pageList = [
+  //   _ResourceListBody(search),
+  //   // NewsPage(),
+  // ];
+}
+
+// 定制化。。。。。
+class VipCustomPageContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Colors.white,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Column(children: <Widget>[
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.15,
+          ),
+          Container(
+            alignment: Alignment.topCenter,
+            width: MediaQuery.of(context).size.width,
+            child: Image.asset(
+              'assets/images/vipCustom.png',
+              // fit: ,
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Text(
+            "请在企业微信-联系我们",
+            style: TextStyle(
+                fontSize: 18,
+                color: HexColor("#252C4E"),
+                fontWeight: FontWeight.w500),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: Image.asset(
+              'assets/images/support.png',
+              height: 200,
+            ),
+          ),
+        ]));
+  }
 }
 
 class _ResourceListBody extends StatefulWidget {
@@ -39,7 +122,6 @@ class __ResourceListBodyState extends State<_ResourceListBody> {
   @override
   void initState() {
     super.initState();
-    // request search
     _performSearch();
   }
 

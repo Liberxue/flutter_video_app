@@ -9,4 +9,5 @@ class CommonConfig {
   static const red = Color(0xffF72804);
   static const grey = Colors.grey;
   static const IsdebugShowCheckedModeBanner = false;
+  static const int DefaultCoin = 6;
 }

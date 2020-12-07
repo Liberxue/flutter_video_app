@@ -685,6 +685,7 @@ class LoginState extends State<Login>
               setState(() {});
             Future.delayed(Duration(milliseconds: 1), () async {
               await Cache.setCache("Token", _signInResponse.token);
+              await Cache.setCache("UserId", _signInResponse.data.id);
               await Cache.setCache("User", _signInResponse.data.name);
               await Cache.setCache(
                   "AvatarImage", _signInResponse.data.avatarImage);

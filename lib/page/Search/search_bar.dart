@@ -96,7 +96,7 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: 20.0),
                           border: InputBorder.none,
-                          hintText: '搜索80,000+视频片段内容...',
+                          hintText: '请输入感兴趣的英语台词...',
                         ),
                         // 回车提交
                         // onEditingComplete: () {

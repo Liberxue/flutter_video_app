@@ -39,4 +39,10 @@ class Cache {
     String _tokenKey = "Token";
     return sp.get(_tokenKey) as String;
   }
+
+  static Future<String> getUserId() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    String _userIdKey = "UserId";
+    return sp.get(_userIdKey) as String;
+  }
 }

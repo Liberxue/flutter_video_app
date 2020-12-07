@@ -41,26 +41,6 @@ class AuthModel extends ChangeNotifier {
   }
 
   void loadSettings() async {
-    var _prefs = await SharedPreferences.getInstance();
-    try {
-      _useBio = _prefs.getBool("use_bio") ?? false;
-    } catch (e) {
-      print(e);
-      _useBio = false;
-    }
-    try {
-      _rememberMe = _prefs.getBool("remember_me") ?? false;
-    } catch (e) {
-      print(e);
-      _rememberMe = false;
-    }
-    try {
-      _stayLoggedIn = _prefs.getBool("stay_logged_in") ?? false;
-    } catch (e) {
-      print(e);
-      _stayLoggedIn = false;
-    }
-
     if (_stayLoggedIn) {
       // User _savedUser;
       // try {

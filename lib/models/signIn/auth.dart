@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class AuthModel extends ChangeNotifier {
   String errorMessage = "";
 
@@ -39,28 +38,5 @@ class AuthModel extends ChangeNotifier {
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool("stay_logged_in", value);
     });
-  }
-
-  void loadSettings() async {
-    var _prefs = await SharedPreferences.getInstance();
-    try {
-      _useBio = _prefs.getBool("use_bio") ?? false;
-    } catch (e) {
-      print(e);
-      _useBio = false;
-    }
-    try {
-      _rememberMe = _prefs.getBool("remember_me") ?? false;
-    } catch (e) {
-      print(e);
-      _rememberMe = false;
-    }
-    try {
-      _stayLoggedIn = _prefs.getBool("stay_logged_in") ?? false;
-    } catch (e) {
-      print(e);
-      _stayLoggedIn = false;
-    }
-    notifyListeners();
   }
 }

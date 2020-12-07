@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:ciying/page/Video/VideoPlayer.dart';
-import 'package:ciying/page/Favorites/favoritesIcon.dart';
 import 'package:flutter/material.dart';
 
 typedef StringValue = String Function(String);
@@ -21,7 +20,6 @@ class _SearchDetailsState extends State<SearchDetails> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double fontSize = (height / 50).round().toDouble();
-    print(widget._resourceSection.resourceID);
     return new InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
@@ -48,9 +46,10 @@ class _SearchDetailsState extends State<SearchDetails> {
                       fit: BoxFit.cover,
                       width: 230,
                       height: 128,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      // placeholder: (context, url) =>
+                      //     CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          Icon(Icons.error_sharp),
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -59,9 +58,9 @@ class _SearchDetailsState extends State<SearchDetails> {
                     margin: EdgeInsets.all(1),
                   ),
                   new Container(
-                    margin: EdgeInsets.only(top: 5, left: 5, right: 5),
+                    margin: EdgeInsets.only(top: 5, left: 5, right: 10),
                     child: new Text(
-                      widget._resourceSection.sourceName,
+                      widget._resourceSection.transcript,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -71,7 +70,8 @@ class _SearchDetailsState extends State<SearchDetails> {
                     ),
                   ),
                   new Container(
-                      margin: EdgeInsets.only(top: 5, left: 10, right: 10),
+                      margin: EdgeInsets.only(
+                          top: 5, left: 10, right: 10, bottom: 5),
                       child: new Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -85,30 +85,30 @@ class _SearchDetailsState extends State<SearchDetails> {
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: fontSize * 0.8)),
-                            favoritesIcon(
-                              widget._resourceSection.isFavorite
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              color: widget._resourceSection.isFavorite
-                                  ? Colors.red
-                                  : Colors.grey,
-                              size: fontSize * 1.2,
-                              isOutLine: false,
-                              onPressed: () {
-                                setState(() {
-                                  widget._resourceSection.isFavorite =
-                                      !widget._resourceSection.isFavorite;
-                                });
-                                // first update cache isFavorite status
-                                // after  update caceh isFavorite remote  status; mark ~~~
+                            // favoritesIcon(
+                            //   widget._resourceSection.isFavorite
+                            //       ? Icons.favorite
+                            //       : Icons.favorite_border,
+                            //   color: widget._resourceSection.isFavorite
+                            //       ? Colors.red
+                            //       : Colors.grey,
+                            //   size: fontSize * 1.2,
+                            //   isOutLine: false,
+                            //   onPressed: () {
+                            //     setState(() {
+                            //       widget._resourceSection.isFavorite =
+                            //           !widget._resourceSection.isFavorite;
+                            //     });
+                            //     // first update cache isFavorite status
+                            //     // after  update caceh isFavorite remote  status; mark ~~~
 
-                                // updateFavoriteStatus().updateIsFavorite(
-                                //   widget._resourceSection.isFavorite,
-                                //   widget._resourceSection.resourceID,
-                                // );
-                              },
-                              resourceId: widget._resourceSection.resourceID,
-                            ),
+                            //     // updateFavoriteStatus().updateIsFavorite(
+                            //     //   widget._resourceSection.isFavorite,
+                            //     //   widget._resourceSection.resourceID,
+                            //     // );
+                            //   },
+                            //   resourceId: widget._resourceSection.resourceID,
+                            // ),
                           ]))
                 ])));
   }

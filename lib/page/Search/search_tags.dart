@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:ciying/api/search/search_tags.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
@@ -68,13 +66,13 @@ class _SearchTagsState extends State<SearchTags> {
                     : 0,
                 gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
                     //单个子Widget的水平最大宽度
-                    maxCrossAxisExtent: 180,
+                    maxCrossAxisExtent: 200,
                     //水平单个子Widget之间间距
-                    mainAxisSpacing: .5,
+                    // mainAxisSpacing: 1.5,
                     //垂直单个子Widget之间间距
-                    crossAxisSpacing: 2.5,
+                    crossAxisSpacing: 1.5,
                     // //子组件宽高长度比例
-                    childAspectRatio: 1.9),
+                    childAspectRatio: 4.0),
                 itemBuilder: (BuildContext context, int index) {
                   return Wrap(
                     // spacing: 2.0, // 主轴(水平)方向间距
@@ -83,7 +81,6 @@ class _SearchTagsState extends State<SearchTags> {
                     children: <Widget>[
                       InkWell(
                           onTap: () {
-                            // print(this.searchTags[index]);
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
                                   SearchList(this.searchTags[index]),

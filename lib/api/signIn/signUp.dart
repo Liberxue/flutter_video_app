@@ -8,7 +8,6 @@ Future<SignUpResponse> signUpRequest(SignUpRequest signUpRequest) async {
   ClientChannel manager = await Manager().clientChannel();
   final stub = GateWayClient(manager);
   try {
-    print("signUpRequest signUpRequest ====================");
     signUpResponse = await stub.signUp(signUpRequest);
   } catch (e) {
     logger.e("signInResponse Caught error", "$e");

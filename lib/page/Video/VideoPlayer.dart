@@ -1,6 +1,10 @@
+import 'package:ciying/Utils/store.dart';
 import 'package:ciying/Widgets/dialog.dart';
+import 'package:ciying/api/coin/get_coin.dart';
+import 'package:ciying/api/resource/resourceDownload.dart';
 import 'package:ciying/api/resource/resourcePreviewRequest.dart';
 import 'package:ciying/common/constants.dart';
+import 'package:ciying/grpc/proto/accountManager.pb.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:chewie/chewie.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
@@ -8,12 +12,14 @@ import 'package:ciying/page/Search/search_list.dart';
 import 'package:ciying/page/Video/my_chewie_custom.dart';
 import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/widgets/loading_widget.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:video_player/video_player.dart';
+import 'package:ciying/widgets/CustomDialog.dart';
 
 class VideoPlayer extends StatefulWidget {
   final String searchText;
@@ -32,9 +38,13 @@ List<ResourceData> resourceDataList;
 class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
   bool _isDownload = false;
   bool _isLoading = true;
+  Int64 _coin = Int64(0);
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _getCoin().then((value) => _coin = value);
+    });
     _resourcePreviewRequest();
   }
 
@@ -56,6 +66,7 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
         _isLoading = false;
       });
     }
+
     setState(() {
       resourceDataList = resourcePreviewResponse.data;
       if (resourceDataList != null) {
@@ -111,11 +122,18 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
   Future<bool> _saveNetworkVideo() async {
     String albumName = CommonConfig.ConfAppName;
     // getFileStream(url)
+    ResourceDownloadRequest resourceDownloadRequest =
+        new ResourceDownloadRequest();
+    var _userId = await Cache.getUserId();
+    resourceDownloadRequest.resourceId = widget._resourceSection.resourceID;
+    resourceDownloadRequest.accountId = _userId;
+    ResourceDownload.resourceresourceDownloadAPIRequest(
+        resourceDownloadRequest);
+    setState(() {
+      _getCoin().then((value) => _coin = value);
+    });
     return GallerySaver.saveVideo(resourceDataList[0].resourceAddress,
         albumName: albumName);
-    //   .then((bool success) {
-    // YYProgressDialogBody().dismiss();
-    // });
   }
 
   @override
@@ -123,6 +141,23 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
     _videoPlayerController.dispose();
     _chewieController.dispose();
     super.dispose();
+  }
+
+  Future<Int64> _getCoin() async {
+    GetAccountCoinByAccountIdRequest getAccountCoinByAccountIdRequest =
+        new GetAccountCoinByAccountIdRequest();
+    // getAccountCoinByAccountIdRequest.accountId = "";
+    GetAccountCoinByAccountIdResponse getAccountCoinByAccountIdResponse;
+    getAccountCoinByAccountIdResponse =
+        await GetAcountCoin.getAccountCoinByAccountIdRequest(
+            getAccountCoinByAccountIdRequest);
+    if (getAccountCoinByAccountIdResponse != null) {
+      if (getAccountCoinByAccountIdResponse.code == ResponseCode.SUCCESSFUL) {
+        return getAccountCoinByAccountIdResponse.coin;
+      }
+      return Int64(0);
+    }
+    return Int64(0);
   }
 
   @override
@@ -150,7 +185,6 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
                 color: HexColor("#252C4E"),
               ),
               onPressed: () {
-                // Navigator.of(context).pop();
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => SearchList(widget.searchText),
                 ));
@@ -181,36 +215,45 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
                           "台词：${widget._resourceSection.transcript}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: 17,
                               color: Colors.grey)),
                     ),
                     new Container(
-                      margin: EdgeInsets.only(top: 2),
+                      margin: EdgeInsets.only(top: 10),
                       child: new Text("来源：${widget._resourceSection.source}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: 17,
                               color: Colors.grey)),
                     ),
                     new Container(
-                      margin: EdgeInsets.only(top: 2, bottom: 40),
+                      margin: EdgeInsets.only(top: 10, bottom: 40),
                       child: new Text(
                           "时长：${widget._resourceSection.duration} 秒",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: 17,
                               color: Colors.grey)),
                     ),
                     new Container(
                       margin: EdgeInsets.only(top: 2.0),
-                      child: new Text(widget._resourceSection.sourceName,
+                      child: new Text(
+                          "片名:" + widget._resourceSection.sourceName,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: 17,
                               color: Colors.black)),
                     ),
                     new Container(
-                      margin: EdgeInsets.only(top: 5.0),
+                      margin: EdgeInsets.only(top: 5.0, bottom: 40),
+                      child: new Text("当前积分:" + _coin.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.red)),
+                    ),
+                    new Container(
+                      margin: EdgeInsets.only(top: 2.0, bottom: 40),
                       decoration: BoxDecoration(boxShadow: [
                         BoxShadow(
                           color: Colors.white,
@@ -227,15 +270,20 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       height: MediaQuery.of(context).size.height / 10,
                       child: new Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            new FlatButton.icon(
-                                onPressed: () {},
-                                icon: new Icon(Icons.favorite_border),
-                                label: new Text("收藏")),
+                            // new FlatButton.icon(
+                            //     onPressed: () {},
+                            //     icon: new Icon(Icons.favorite_border),
+                            //     label: new Text("收藏")),
                             new FlatButton.icon(
                                 onPressed: () {
                                   // check 积分。。。。
+                                  if (_coin < Int64(CommonConfig.DefaultCoin)) {
+                                    dialogShow("无法下载 积分不足");
+                                    return;
+                                  }
                                   var yyDialog = progressDialogBody();
                                   yyDialog.show();
                                   var result = _saveNetworkVideo();
@@ -249,21 +297,26 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
                                 icon: !_isDownload
                                     ? Icon(
                                         Icons.download_outlined,
+                                        color: Colors.blue,
                                       )
                                     : Icon(
                                         Icons.download_done_rounded,
                                         color: Colors.red,
                                       ),
                                 label: !_isDownload
-                                    ? Text("无水印下载",
+                                    ? Text(
+                                        "无水印下载;消耗" +
+                                            CommonConfig.DefaultCoin
+                                                .toString() +
+                                            "积分",
                                         style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
+                                          color: Colors.blue,
+                                          fontSize: 18,
                                         ))
                                     : Text("已下载,请在相册查看",
                                         style: TextStyle(
                                           color: Colors.red,
-                                          fontSize: 16,
+                                          fontSize: 18,
                                         ))),
                           ]),
                     )

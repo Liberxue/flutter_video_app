@@ -1,11 +1,15 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ciying/api/coin/get_coin.dart';
+import 'package:ciying/grpc/proto/accountManager.pb.dart';
+import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/page/Favorites/favorite_timeline.dart';
 import 'package:ciying/page/User/Login_out.dart';
 import 'package:ciying/page/User/UserCache.dart';
 import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/widgets/CustomDialog.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 
 class _MenuInfo {
@@ -16,8 +20,8 @@ class _MenuInfo {
 }
 
 final List<_MenuInfo> menus = [
-  _MenuInfo(title: '隐私设置', icon: Icons.lock),
-  _MenuInfo(title: '关于我们', icon: Icons.center_focus_strong),
+  // _MenuInfo(title: '隐私设置', icon: Icons.lock),
+  // _MenuInfo(title: '关于我们', icon: Icons.center_focus_strong),
   _MenuInfo(title: '退出登录', icon: Icons.logout),
 ];
 
@@ -30,7 +34,7 @@ class _UserInfo {
 
 final List<_UserInfo> user = [
   _UserInfo(title: '积分', isButton: true),
-  _UserInfo(title: '收藏夹', isButton: false),
+  // _UserInfo(title: '收藏夹', isButton: false),
   // _UserInfo(title: '下载', isButton: false),
 ];
 
@@ -44,15 +48,20 @@ class UserDrawerPage extends StatefulWidget {
 class _UserDrawerPageState extends State<UserDrawerPage> {
   bool _isLogin = false;
   bool _isLoading = true;
+  Int64 _coin = Int64(0);
+
   UserInfo userInfo;
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _getCoin().then((value) => _coin = value);
+    });
     _getLoginState();
   }
 
   _getLoginState() async {
-    var userInfo = await loadUserCache();
+    userInfo = await loadUserCache();
     setState(() {
       this.userInfo = userInfo;
       this._isLogin = true;
@@ -63,8 +72,28 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
     }
   }
 
+  Future<Int64> _getCoin() async {
+    GetAccountCoinByAccountIdRequest getAccountCoinByAccountIdRequest =
+        new GetAccountCoinByAccountIdRequest();
+    getAccountCoinByAccountIdRequest.accountId = "";
+    GetAccountCoinByAccountIdResponse getAccountCoinByAccountIdResponse;
+    getAccountCoinByAccountIdResponse =
+        await GetAcountCoin.getAccountCoinByAccountIdRequest(
+            getAccountCoinByAccountIdRequest);
+    if (getAccountCoinByAccountIdResponse != null) {
+      if (getAccountCoinByAccountIdResponse.code == ResponseCode.SUCCESSFUL) {
+        return getAccountCoinByAccountIdResponse.coin;
+      }
+      return Int64(0);
+    }
+    return Int64(0);
+  }
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      _getCoin().then((value) => _coin = value);
+    });
     return Container(
       // decoration: BoxDecoration(
       //     backgroundBlendMode: BlendMode.plus,
@@ -142,7 +171,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                                 color: Colors.transparent,
                                 child: Text(
                                     !_isLoading || userInfo != null
-                                        ? userInfo.coin
+                                        ? _coin.toString()
                                         : "0",
                                     style: TextStyle(
                                         fontSize: 20,
@@ -159,7 +188,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                               child: Text(
                                 user[index].title,
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 18),
+                                    color: Colors.white, fontSize: 14),
                               ),
                             ),
                             new Container(
@@ -168,10 +197,10 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                             ),
                             if (user[index].title == "积分")
                               new Container(
-                                width: 60,
+                                width: 85,
                                 child: new Padding(
                                   padding: const EdgeInsets.fromLTRB(
-                                      0.0, 0.0, 0.0, 15.0),
+                                      0.0, 0.0, 0.0, 10.0),
                                   child: new RaisedButton(
                                     onPressed: () {
                                       showDialog(
@@ -202,7 +231,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                                                       SizedBox(height: 10.0),
                                                       Text("请添加微信，联系客服充值",
                                                           style: TextStyle(
-                                                              fontSize: 16.0)),
+                                                              fontSize: 14.0)),
                                                     ],
                                                   ),
                                                 ),
@@ -212,7 +241,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                                     },
                                     child: new Text("充值",
                                         style: TextStyle(
-                                            color: Colors.white, fontSize: 14)),
+                                            color: Colors.white, fontSize: 12)),
                                     color: HexColor("#DF9833"),
                                   ),
                                 ),
@@ -246,7 +275,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        if (index == 2) {
+                        if (index == 0) {
                           showDialog(
                               context: context,
                               barrierDismissible: false,
