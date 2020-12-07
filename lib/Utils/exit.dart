@@ -1,6 +1,6 @@
- import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
 
-Future<void> ExitApp() async {
-    SystemNavigator.pop();
-    await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+Future<void> exitApp() async {
+  SystemNavigator.pop();
+  await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
 }

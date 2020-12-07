@@ -1,14 +1,11 @@
 import 'package:ciying/api/search/search.dart';
 import 'package:ciying/cache/database.dart';
 import 'package:ciying/cache/entity/resource_section.dart';
+import 'package:ciying/cache/get_cache_db_Instance.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 
 class CacheSearch {
-  getDatabaseInstance() async {
-    return await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  }
-
   // first seachCache by searchText
   Future<List<CacheResourceSection>> cacheSearchBySearchText(
       SearchRequest searchRequest) async {
@@ -16,27 +13,41 @@ class CacheSearch {
     List<ResourceSection> _resourceSection = new List<ResourceSection>();
 
     List<CacheResourceSection> cacheResourceSection;
-    AppDatabase _database = await getDatabaseInstance();
+    AppDatabase _database = await getCacheDbInstance().getDatabaseInstance();
     final resourceSectionDao = _database.resourceSectionDao;
+    print(
+        "text $searchRequest.text, limit $searchRequest.limit, offest $searchRequest.offset");
     cacheResourceSection =
         await resourceSectionDao.findResourceSectionsBySearchText(
             searchRequest.text, searchRequest.limit, searchRequest.offset);
+    cacheResourceSection.forEach((element) {
+      print(element.isFavorite);
+      print(element.resourceAddress);
+      print(element.resourceId);
+      print("searchText $element.searchText");
+      print(element.sourceId);
+      print(element.sourceName);
+    });
     // cache by duration is null ;
     if (cacheResourceSection.length <= 0) {
       //start request remote
       SearchResponse searchResponse =
           await Search.searchAPIRequest(searchRequest);
       // check searchResponse status
-      print(searchResponse);
-      print(searchResponse.code);
+      // print(searchResponse);
+      // print(searchResponse.code);
       if (SearchResponse == null) {
         return null;
       } else if (searchResponse.code == ResponseCode.SUCCESSFUL) {
+        print(_resourceSection.map((e) => print("_resourceSection $e")));
         _resourceSection.addAll(searchResponse.resourceSection);
+        print(_resourceSection.map((e) => print(e)));
         // save remote response to cache
         return await saveSearchData(_resourceSection, searchRequest.text);
       }
     }
+    // _database.close();
+    print(cacheResourceSection);
     return cacheResourceSection;
 
     //@Query(
@@ -56,7 +67,8 @@ class CacheSearch {
   //  cache by duration is null ; start request remote and save remote response to cache
   Future<List<CacheResourceSection>> saveSearchData(
       List<ResourceSection> _resourceSection, String searchText) async {
-    AppDatabase _database = await getDatabaseInstance();
+    AppDatabase _database =
+        await await getCacheDbInstance().getDatabaseInstance();
     final resourceSectionDao = _database.resourceSectionDao;
     List<CacheResourceSection> _cacheResourceSectionData =
         new List<CacheResourceSection>();
@@ -70,7 +82,6 @@ class CacheSearch {
         element.sourceID,
         element.isFavorite,
         element.isDownload,
-        element.sourceName,
         searchText,
         null,
       ));
@@ -79,23 +90,7 @@ class CacheSearch {
     final result = await resourceSectionDao.findAllResourceSection();
     List<CacheResourceSection> resourceSectionData = result;
     // print(resourceSectionData);
+    _database.close();
     return resourceSectionData;
-  }
-
-  Future<List<CacheResourceSection>> updateIsFavorite(
-      bool isFavorite, String resourceId) async {
-    AppDatabase _database = await getDatabaseInstance();
-    final resourceSectionDao = _database.resourceSectionDao;
-    return await resourceSectionDao
-        .updateIsFavoriteResourceSectionsByResourceId(isFavorite, resourceId);
-  }
-
-  Future<List<CacheResourceSection>> updateIsDownload(
-      bool isDownload, String resourceId, String cachePath) async {
-    AppDatabase _database = await getDatabaseInstance();
-    final resourceSectionDao = _database.resourceSectionDao;
-    return await resourceSectionDao
-        .updateIsDownloadResourceSectionsByResourceId(
-            isDownload, cachePath, resourceId);
   }
 }

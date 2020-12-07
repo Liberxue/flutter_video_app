@@ -121,8 +121,3 @@ class _SearchTagsState extends State<SearchTags> {
     );
   }
 }
-
-Color randomColor() {
-  return Color.fromARGB(255, Random().nextInt(256) + 0,
-      Random().nextInt(256) + 0, Random().nextInt(256) + 0);
-}

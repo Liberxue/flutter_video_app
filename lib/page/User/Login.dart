@@ -164,6 +164,9 @@ class LoginState extends State<Login>
     inputAnimaton.removeStatusListener((status) {
       Stopwatch();
     });
+    logoAnimation.removeListener(() {
+      Stopwatch();
+    });
     inputAnimatController.stop();
     WidgetsBinding.instance.removeObserver(this);
   }
@@ -210,7 +213,7 @@ class LoginState extends State<Login>
                       child: Text('退出'),
                       //onPressed: () => Navigator.of(context).pop(true)),
                       onPressed: () async {
-                        await ExitApp();
+                        await exitApp();
                       }),
                   RaisedButton(
                       child: Text('取消'),

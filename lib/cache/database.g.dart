@@ -80,7 +80,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `CacheResourceSection` (`resourceId` TEXT, `duration` REAL, `sourceName` TEXT, `emotionCode` INTEGER, `resourceAddress` TEXT, `sourceId` TEXT, `isFavorite` INTEGER, `isDownload` INTEGER, `name` TEXT, `searchText` TEXT, `resourceAddressCachePath` TEXT, PRIMARY KEY (`resourceId`))');
+            'CREATE TABLE IF NOT EXISTS `CacheResourceSection` (`resourceId` TEXT, `duration` REAL, `sourceName` TEXT, `emotionCode` INTEGER, `resourceAddress` TEXT, `sourceId` TEXT, `isFavorite` INTEGER, `isDownload` INTEGER, `searchText` TEXT, `resourceAddressCachePath` TEXT, PRIMARY KEY (`resourceId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -114,7 +114,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
                   'isDownload': item.isDownload == null
                       ? null
                       : (item.isDownload ? 1 : 0),
-                  'name': item.name,
                   'searchText': item.searchText,
                   'resourceAddressCachePath': item.resourceAddressCachePath
                 },
@@ -136,7 +135,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
                   'isDownload': item.isDownload == null
                       ? null
                       : (item.isDownload ? 1 : 0),
-                  'name': item.name,
                   'searchText': item.searchText,
                   'resourceAddressCachePath': item.resourceAddressCachePath
                 },
@@ -158,7 +156,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
                   'isDownload': item.isDownload == null
                       ? null
                       : (item.isDownload ? 1 : 0),
-                  'name': item.name,
                   'searchText': item.searchText,
                   'resourceAddressCachePath': item.resourceAddressCachePath
                 },
@@ -190,7 +187,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
             row['sourceId'] as String,
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
             row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
@@ -211,7 +207,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
             row['sourceId'] as String,
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
             row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
@@ -236,7 +231,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
             row['sourceId'] as String,
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
             row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
@@ -256,7 +250,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
             row['sourceId'] as String,
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
             row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
@@ -276,7 +269,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
             row['sourceId'] as String,
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
             row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
@@ -296,58 +288,31 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
             row['sourceId'] as String,
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
             row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
 
   @override
-  Future<List<CacheResourceSection>>
-      updateIsFavoriteResourceSectionsByResourceId(
-          bool isFavorite, String resourceId) async {
-    return _queryAdapter.queryList(
+  Future<void> updateIsFavoriteResourceSectionsByResourceId(
+      bool isFavorite, String resourceId) async {
+    await _queryAdapter.queryNoReturn(
         'UPDATE CacheResourceSection SET isFavorite = ? WHERE resourceId = ?',
         arguments: <dynamic>[
           isFavorite == null ? null : (isFavorite ? 1 : 0),
           resourceId
-        ],
-        mapper: (Map<String, dynamic> row) => CacheResourceSection(
-            row['resourceId'] as String,
-            row['duration'] as double,
-            row['sourceName'] as String,
-            row['emotionCode'] as int,
-            row['resourceAddress'] as String,
-            row['sourceId'] as String,
-            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
-            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
-            row['searchText'] as String,
-            row['resourceAddressCachePath'] as String));
+        ]);
   }
 
   @override
-  Future<List<CacheResourceSection>>
-      updateIsDownloadResourceSectionsByResourceId(bool isDownload,
-          String resourceAddressCachePath, String resourceId) async {
-    return _queryAdapter.queryList(
+  Future<void> updateIsDownloadResourceSectionsByResourceId(bool isDownload,
+      String resourceAddressCachePath, String resourceId) async {
+    await _queryAdapter.queryNoReturn(
         'UPDATE CacheResourceSection SET isDownload = ? AND resourceAddressCachePath = ? WHERE resourceId = ?',
         arguments: <dynamic>[
           isDownload == null ? null : (isDownload ? 1 : 0),
           resourceAddressCachePath,
           resourceId
-        ],
-        mapper: (Map<String, dynamic> row) => CacheResourceSection(
-            row['resourceId'] as String,
-            row['duration'] as double,
-            row['sourceName'] as String,
-            row['emotionCode'] as int,
-            row['resourceAddress'] as String,
-            row['sourceId'] as String,
-            row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
-            row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
-            row['searchText'] as String,
-            row['resourceAddressCachePath'] as String));
+        ]);
   }
 
   @override
@@ -366,7 +331,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
             row['sourceId'] as String,
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
             row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
@@ -386,7 +350,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
             row['sourceId'] as String,
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
             row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
@@ -406,7 +369,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
             row['sourceId'] as String,
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
             row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
@@ -426,7 +388,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
             row['sourceId'] as String,
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
             row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }
@@ -435,7 +396,7 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
   Future<List<CacheResourceSection>> findResourceSectionsBySearchText(
       String searchText, int limit, int offset) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM CacheResourceSection WHERE searchText = ? order by resourceId LIMIT ? OFFSET ?',
+        'SELECT * FROM CacheResourceSection WHERE searchText = ? order by resourceId ASC LIMIT ? OFFSET ?',
         arguments: <dynamic>[searchText, limit, offset],
         mapper: (Map<String, dynamic> row) => CacheResourceSection(
             row['resourceId'] as String,
@@ -446,7 +407,6 @@ class _$CacheResourceSectionDao extends CacheResourceSectionDao {
             row['sourceId'] as String,
             row['isFavorite'] == null ? null : (row['isFavorite'] as int) != 0,
             row['isDownload'] == null ? null : (row['isDownload'] as int) != 0,
-            row['name'] as String,
             row['searchText'] as String,
             row['resourceAddressCachePath'] as String));
   }

@@ -1,13 +1,12 @@
-import 'package:ciying/cache/cache_search.dart';
-import 'package:ciying/cache/entity/resource_section.dart';
+import 'package:ciying/Widgets/dialog.dart';
+import 'package:ciying/api/search/search.dart';
+import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
-import 'package:ciying/widgets/custom_app_bar.dart';
 import 'package:ciying/page/Search/search_grid.dart';
-import 'package:ciying/page/bloc/CartBloc.dart';
+import 'package:ciying/widgets/custom_app_bar.dart';
 import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/widgets/SlideContainer.dart';
 import 'package:ciying/page/User/UserDrawerPage.dart';
-import 'package:ciying/widgets/loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,31 +29,16 @@ class _ResourceListBody extends StatefulWidget {
   __ResourceListBodyState createState() => __ResourceListBodyState();
 }
 
-class __ResourceListBodyState extends State<_ResourceListBody>
-    with TickerProviderStateMixin {
+class __ResourceListBodyState extends State<_ResourceListBody> {
   bool _isLoading = true;
-  AnimationController controller;
-  Animation<double> animation;
-  //cart
-  bool _showCart, _isError = false;
-  CartBloc _cartBloc = new CartBloc();
-  ScrollController _scrollController = new ScrollController();
-
-  List<CacheResourceSection> _resourceSection =
-      new List<CacheResourceSection>();
+  bool _isError = false;
+  // List<CacheResourceSection> _resourceSection =
+  //     new List<CacheResourceSection>();
+  List<ResourceSection> _resourceSection = new List<ResourceSection>();
 
   @override
   void initState() {
     super.initState();
-    controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-    animation = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: controller, curve: Curves.easeInToLinear));
-    controller.forward();
-    // cart
-    _scrollController = new ScrollController();
-    _cartBloc = new CartBloc();
-
     // request search
     _performSearch();
   }
@@ -62,19 +46,32 @@ class __ResourceListBodyState extends State<_ResourceListBody>
   void _performSearch() async {
     SearchRequest searchRequest = SearchRequest();
     searchRequest.text = widget.searchText;
-    searchRequest.limit = 1;
-    searchRequest.offset = 20;
-    // SearchResponse searchResponse =
-    //     await Search.searchAPIRequest(searchRequest);
-    var resourceSection =
-        await CacheSearch().cacheSearchBySearchText(searchRequest);
-    if (resourceSection == null)
+    searchRequest.limit = 32;
+    searchRequest.offset = 0;
+    SearchResponse searchResponse =
+        await Search.searchAPIRequest(searchRequest);
+    // var resourceSection =
+    //     await CacheSearch().cacheSearchBySearchText(searchRequest);
+    if (searchResponse == null) {
       setState(() {
         _isError = true;
       });
-    else
+      dialogShow("请求超时，请检查网络");
+    }
+    if (searchResponse.code != ResponseCode.SUCCESSFUL) {
+      dialogShow("搜索结果不存在");
       setState(() {
-        _resourceSection.addAll(resourceSection);
+        _isError = true;
+      });
+    }
+    if (searchResponse.resourceSection == null) {
+      dialogShow("请求失败，请稍后再试");
+      setState(() {
+        _isError = true;
+      });
+    } else
+      setState(() {
+        _resourceSection.addAll(searchResponse.resourceSection);
         _isLoading = false;
         _isError = false;
       });
@@ -93,77 +90,58 @@ class __ResourceListBodyState extends State<_ResourceListBody>
 
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight;
-    if (MediaQuery.of(context).padding.top == null ||
-        MediaQuery.of(context).padding.top == 0)
-      statusBarHeight = MediaQuery.of(context).padding.top - 40;
-    else
-      statusBarHeight = MediaQuery.of(context).padding.top - 15;
-
-    height = MediaQuery.of(context).size.height - statusBarHeight;
+    // var childrenHeader = <Widget>[
+    //   CustomAppBar(
+    //     title: widget.searchText,
+    //     tapDrawer: () {
+    //       _slideKey.currentState.openOrClose();
+    //     },
+    //   ),
+    //   SearchGrid(_resourceSection, widget.searchText, _isLoading),
+    // ];
     return Container(
-      color: Colors.white,
-      margin: EdgeInsets.only(top: 1),
       child: SlideStack(
         drawer: UserDrawerPage(),
         child: SlideContainer(
           key: _slideKey,
           child: Container(
-            // width: widthBar,
-            // height: height * (1 - position / 5),
+            padding: const EdgeInsets.only(top: 6, left: 5, right: 5),
             color: Colors.white,
-            child: Column(
+            // child: Column(
+            //   // children: <Widget>[
+            //   //   CustomAppBar(
+            //   //     title: widget.searchText,
+            //   //     // height: kToolbarHeight * (1 - position / 5),
+            //   //     tapDrawer: () {
+            //   //       _slideKey.currentState.openOrClose();
+            //   //     },
+            //   //     isSearch: false,
+            //   //   ),
+            //   //   Expanded(
+            //   //       child: Stack(children: <Widget>[
+            //   //     new CustomScrollView(slivers: <Widget>[
+            //   //       new SliverToBoxAdapter(
+            //   //           child: new SearchGrid(
+            //   //               _resourceSection, widget.searchText, _isLoading)),
+            //   //     ]),
+            //   //     // getSearchBarUI(),
+            //   //     // SearchTags(),
+            //   //   ]))
+            //   // ],
+            // ),
+            child: Wrap(
+              spacing: 1.0, // 主轴(水平)方向间距
+              runSpacing: 4.0, // 纵轴（垂直）方向间距
+              alignment: WrapAlignment.center, //沿主轴方向居中
               children: <Widget>[
                 CustomAppBar(
                   title: widget.searchText,
-                  height: kToolbarHeight * (1 - position / 5),
                   tapDrawer: () {
                     _slideKey.currentState.openOrClose();
                   },
+                  isSearch: false,
                 ),
-                Expanded(
-                    child: Stack(children: <Widget>[
-                  new CustomScrollView(
-                      physics: NeverScrollableScrollPhysics(),
-                      controller: _scrollController,
-                      slivers: <Widget>[
-                        new SliverToBoxAdapter(
-                          child: this._isLoading
-                              ? loadingWidget(context, _isError)
-                              : new SearchGrid(_resourceSection,
-                                  widget.searchText, _isLoading),
-                        ),
-                        // cart 上浮页面
-                        // new SliverToBoxAdapter(child: new CartManager()),
-                      ]),
-                  // new Align(
-                  //     alignment: Alignment.bottomRight,
-                  //     child: new Container(
-                  //         margin: EdgeInsets.only(right: 10, bottom: 10),
-                  //         child: new FloatingActionButton(
-                  //             onPressed: () {
-                  //               if (_showCart)
-                  //                 _scrollController.animateTo(
-                  //                     _scrollController
-                  //                         .position.minScrollExtent,
-                  //                     curve: Curves.fastOutSlowIn,
-                  //                     duration: Duration(seconds: 2));
-                  //               else
-                  //                 _scrollController.animateTo(
-                  //                     _scrollController
-                  //                         .position.maxScrollExtent,
-                  //                     curve: Curves.fastOutSlowIn,
-                  //                     duration: Duration(seconds: 2));
-
-                  //               setState(() {
-                  //                 _showCart = !_showCart;
-                  //               });
-                  //             },
-                  //             backgroundColor: Colors.transparent,
-                  //             child: new Icon(
-                  //                 _showCart ? Icons.close : Icons.movie,
-                  //                 size: 50))))
-                ]))
+                new SearchGrid(_resourceSection, widget.searchText),
               ],
             ),
           ),
@@ -179,8 +157,6 @@ class __ResourceListBodyState extends State<_ResourceListBody>
 
   @override
   void dispose() {
-    controller.dispose();
-    _cartBloc.dispose();
     super.dispose();
   }
 }

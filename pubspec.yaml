@@ -31,10 +31,9 @@ dependencies:
   logger: ^0.9.4
   flutter_cache_manager: ^2.0.0 #https://github.com/tekartik/sqflite/issues/536
   flutter_custom_dialog: ^1.0.20 
-  timeline_tile: ^1.0.0
-  google_fonts: ^1.1.0
   floor: ^0.17.0
-
+  synchronized: ^2.2.0+2
+  drawing_animation: ^0.1.4
 
 dev_dependencies:
   flutter_test:

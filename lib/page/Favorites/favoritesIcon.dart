@@ -34,8 +34,8 @@ Widget favoritesIcon(
   ).ripple(() {
     if (onPressed != null) {
       onPressed();
-      // onPressed);
-      print(resourceId);
+      // // onPressed);
+      // print(resourceId);
       return "333333";
     }
   }, borderRadius: BorderRadius.all(Radius.circular(13)));

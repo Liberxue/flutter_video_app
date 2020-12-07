@@ -3,13 +3,14 @@ import 'package:ciying/api/config.dart';
 import 'package:ciying/grpc/proto/favorite.pb.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:ciying/Utils/logger.dart';
+import 'package:grpc/grpc_connection_interface.dart';
 
 class Favorites {
   static Future<FavoriteActionResponse> favoriteActionAPIRequest(
       FavoriteActionRequest data) async {
     FavoriteActionResponse favoriteActionResponse;
-    Manager manager = Manager.instance;
-    final stub = GateWayClient(manager.channel);
+    ClientChannel manager = await Manager().clientChannel();
+    final stub = GateWayClient(manager);
     var callConfig = await callOptionsConf();
     if (callConfig.metadata.map != null) {
       try {

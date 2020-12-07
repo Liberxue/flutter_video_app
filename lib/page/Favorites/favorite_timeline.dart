@@ -1,10 +1,9 @@
+import 'package:ciying/Utils/color.dart';
 import 'package:ciying/common/AppConfig.dart';
 import 'package:ciying/widgets/custom_app_bar.dart';
 import 'package:ciying/widgets/SlideContainer.dart';
 import 'package:ciying/page/User/UserDrawerPage.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:timeline_tile/timeline_tile.dart';
 
 class FavoriteTimeline extends StatelessWidget {
   @override
@@ -79,7 +78,7 @@ class _SearchListBodyState extends State<_SearchListBody>
                   },
                   isSearch: false,
                 ),
-                _TimelineDelivery(),
+                favoritesPage(),
               ],
             ),
           ),
@@ -94,141 +93,107 @@ class _SearchListBodyState extends State<_SearchListBody>
   }
 }
 
-class _TimelineDelivery extends StatelessWidget {
+class favoritesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          TimelineTile(
-            alignment: TimelineAlign.manual,
-            lineXY: 0.1,
-            isFirst: true,
-            indicatorStyle: const IndicatorStyle(
-              width: 20,
-              color: Color(0xFF27AA69),
-              padding: EdgeInsets.all(6),
-            ),
-            endChild: const _RightChild(
-              asset: 'assets/images/logo.png',
-              title: 'Order Placed',
-              message: 'We have received your order.',
-            ),
-            beforeLineStyle: const LineStyle(
-              color: Color(0xFF27AA69),
-            ),
-          ),
-          TimelineTile(
-            alignment: TimelineAlign.manual,
-            lineXY: 0.1,
-            indicatorStyle: const IndicatorStyle(
-              width: 20,
-              color: Color(0xFF27AA69),
-              padding: EdgeInsets.all(6),
-            ),
-            endChild: const _RightChild(
-              asset: 'assets/images/logo.png',
-              title: 'Order Confirmed',
-              message: 'Your order has been confirmed.',
-            ),
-            beforeLineStyle: const LineStyle(
-              color: Color(0xFF27AA69),
-            ),
-          ),
-          TimelineTile(
-            alignment: TimelineAlign.manual,
-            lineXY: 0.1,
-            indicatorStyle: const IndicatorStyle(
-              width: 20,
-              color: Color(0xFF2B619C),
-              padding: EdgeInsets.all(6),
-            ),
-            endChild: const _RightChild(
-              asset: 'assets/images/logo.png',
-              title: 'Order Processed',
-              message: 'We are preparing your order.',
-            ),
-            beforeLineStyle: const LineStyle(
-              color: Color(0xFF27AA69),
-            ),
-            afterLineStyle: const LineStyle(
-              color: Color(0xFFDADADA),
-            ),
-          ),
-          TimelineTile(
-            alignment: TimelineAlign.manual,
-            lineXY: 0.1,
-            isLast: true,
-            indicatorStyle: const IndicatorStyle(
-              width: 20,
-              color: Color(0xFFDADADA),
-              padding: EdgeInsets.all(6),
-            ),
-            endChild: const _RightChild(
-              disabled: true,
-              asset: 'assets/images/logo.png',
-              title: 'Ready to Pickup',
-              message: 'Your order is ready for pickup.',
-            ),
-            beforeLineStyle: const LineStyle(
-              color: Color(0xFFDADADA),
-            ),
-          ),
-        ],
+    bool isLandscape = MediaQuery.of(context).size.aspectRatio > 3;
+    var columnCount = isLandscape ? 3 : 2;
+    double _gridSize = MediaQuery.of(context).size.height;
+    return Container(
+      width: 800,
+      height: _gridSize - 100,
+      margin: EdgeInsets.all(3),
+      color: Colors.white,
+      child: GridView.count(
+        crossAxisCount: columnCount,
+        children: List.generate(12, (index) {
+          return _TimelineDelivery();
+        }),
       ),
     );
   }
 }
 
-class _RightChild extends StatelessWidget {
-  const _RightChild({
-    Key key,
-    this.asset,
-    this.title,
-    this.message,
-    this.disabled = false,
-  }) : super(key: key);
+class _TimelineDelivery extends StatelessWidget {
+  final double width;
+  final double height;
+  final double cornerRadius;
+  final Color color;
+  final Color backgroundColor;
 
-  final String asset;
-  final String title;
-  final String message;
-  final bool disabled;
+  const _TimelineDelivery(
+      {Key key,
+      this.cornerRadius = 0,
+      this.color,
+      this.backgroundColor,
+      this.width = 100,
+      this.height = 80})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
+    return Card(
+      // width: width,
+      // height: height,
+      // decoration: BoxDecoration(
+      //   borderRadius: BorderRadius.circular(cornerRadius),
+      //   color: Colors.grey,
+      // ),
+      semanticContainer: true,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(2.0),
+      ),
+      color: Colors.white10,
+      elevation: 5,
+      margin: EdgeInsets.all(3),
+      child: Column(
         children: <Widget>[
-          Opacity(
-            child: Image.asset(asset, height: 50),
-            opacity: disabled ? 0.5 : 1,
+          Expanded(
+            child: Container(
+              color: randomColor(),
+            ),
           ),
-          const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+          Stack(
             children: <Widget>[
-              Text(
-                title,
-                style: GoogleFonts.yantramanav(
-                  color: disabled
-                      ? const Color(0xFFBABABA)
-                      : const Color(0xFF636564),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
+              Container(
+                  height: 16,
+                  child: new Text(
+                    "这是一个台词",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 14),
+                  ),
+                  margin: EdgeInsets.only(top: 12, left: 10, right: 70)),
+              Container(
+                height: 18,
+                child: new Text(
+                  "数量",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 14),
                 ),
+                margin: EdgeInsets.only(top: 40, left: 10, right: 30),
               ),
-              const SizedBox(height: 6),
-              Text(
-                message,
-                style: GoogleFonts.yantramanav(
-                  color: disabled
-                      ? const Color(0xFFD5D5D5)
-                      : const Color(0xFF636564),
-                  fontSize: 16,
+              Container(
+                height: 18,
+                child: new Text(
+                  "数量",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 14),
                 ),
+                margin:
+                    EdgeInsets.only(top: 72, left: 10, right: 60, bottom: 12),
               ),
             ],
           ),

@@ -1,6 +1,5 @@
 import 'package:ciying/common/AppConfig.dart';
 import 'package:ciying/common/constants.dart';
-// import 'package:ciying/page/login.dart';
 import 'package:ciying/page/Search/search.dart';
 import 'package:ciying/page/User/Login.dart';
 import 'package:ciying/Utils/store.dart';
@@ -60,13 +59,13 @@ class _AppRouterState extends State<AppRouter> {
               scaffoldBackgroundColor: AppDesignCourseAppTheme.BackgroundColor,
             ),
             home: Consumer<AuthModel>(builder: (context, model, child) {
-              if (_isLogin) return SearchPage();
-              return Login();
+              if (_isLogin) return new SearchPage();
+              return new Login();
             }),
             initialRoute: '/',
             routes: <String, WidgetBuilder>{
-              '/Login': (context) => _isLogin ? SearchPage() : Login(),
-              '/Search': (context) => _isLogin ? SearchPage() : Login(),
+              '/Login': (context) => _isLogin ? new SearchPage() : Login(),
+              '/Search': (context) => _isLogin ? new SearchPage() : Login(),
             },
             // onGenerateRoute: (RouteSettings settings) {
             //   final List<String> pathElements = settings.name.split('/');

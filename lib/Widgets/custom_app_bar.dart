@@ -22,19 +22,17 @@ class CustomAppBar extends StatelessWidget {
       paddingTop = 40;
     }
     return Container(
-      padding: EdgeInsets.only(top: paddingTop, left: 10),
+      padding: EdgeInsets.only(left: 10, top: paddingTop, right: 10),
+      height: 80,
       color: HexColor("#fff"),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             GestureDetector(
               onTap: tapDrawer,
-              child: Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Icon(
-                  Icons.dehaze,
-                  color: Colors.grey,
-                ),
+              child: Icon(
+                Icons.dehaze,
+                color: Colors.grey,
               ),
             ),
             if (!isSearch)

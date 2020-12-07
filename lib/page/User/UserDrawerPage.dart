@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ciying/page/Favorites/favorite_timeline.dart';
 import 'package:ciying/page/User/Login_out.dart';
 import 'package:ciying/page/User/UserCache.dart';
@@ -51,7 +52,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
   }
 
   _getLoginState() async {
-    var userInfo = await LoadUserCache();
+    var userInfo = await loadUserCache();
     setState(() {
       this.userInfo = userInfo;
       this._isLogin = true;
@@ -97,7 +98,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                     //   ),
                     // ),
                     Padding(
-                      padding: EdgeInsets.only(top: 140.0, left: 20),
+                      padding: EdgeInsets.only(top: 110.0, left: 20),
                       child: Text(
                         !_isLoading || userInfo != null
                             ? "       " + userInfo.phoneNumber
@@ -175,19 +176,37 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                                     onPressed: () {
                                       showDialog(
                                           context: context,
-                                          barrierDismissible: false,
+                                          barrierDismissible: true,
                                           builder: (_) {
-                                            return CustomDialog(
-                                              title: '温馨提示',
-                                              content: '公测版本暂不支持充值',
-                                              isCancel: false,
-                                              confirmContent: "知道啦",
-                                              // cancelColor: Colors.green[400],
-                                              // confirmColor: Colors.red[400],
-                                              outsideDismiss: true,
-                                              // confirmCallback: () {
-                                              //   loginOut(context);
-                                              // },
+                                            return Center(
+                                              child: Card(
+                                                child: Container(
+                                                  width: 300,
+                                                  height: 300,
+                                                  child: Column(
+                                                    children: <Widget>[
+                                                      SizedBox(
+                                                        height: 10.0,
+                                                      ),
+                                                      Text("请截图二维码",
+                                                          style: TextStyle(
+                                                              fontSize: 16.0)),
+                                                      SizedBox(
+                                                        height: 10.0,
+                                                      ),
+                                                      Image.asset(
+                                                        "assets/images/support.png",
+                                                        height: 200,
+                                                        width: 200,
+                                                      ),
+                                                      SizedBox(height: 10.0),
+                                                      Text("请添加微信，联系客服充值",
+                                                          style: TextStyle(
+                                                              fontSize: 16.0)),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
                                             );
                                           });
                                     },

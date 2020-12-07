@@ -35,15 +35,13 @@ abstract class CacheResourceSectionDao {
   // update isFavorite
   @Query(
       'UPDATE CacheResourceSection SET isFavorite = :isFavorite WHERE resourceId = :resourceId')
-  Future<List<CacheResourceSection>>
-      updateIsFavoriteResourceSectionsByResourceId(
-          bool isFavorite, String resourceId);
+  Future<void> updateIsFavoriteResourceSectionsByResourceId(
+      bool isFavorite, String resourceId);
 
 // update isDownload
   @Query(
       'UPDATE CacheResourceSection SET isDownload = :isDownload AND resourceAddressCachePath = :resourceAddressCachePath WHERE resourceId = :resourceId')
-  Future<List<CacheResourceSection>>
-      updateIsDownloadResourceSectionsByResourceId(
+  Future<void> updateIsDownloadResourceSectionsByResourceId(
     bool isDownload,
     String resourceAddressCachePath,
     String resourceId,
@@ -72,7 +70,7 @@ abstract class CacheResourceSectionDao {
 
   // check local cache by searchText; // no support 。。。https://github.com/vitusortner/floor/issues/310
   @Query(
-      'SELECT * FROM CacheResourceSection WHERE searchText = :searchText order by resourceId LIMIT :limit OFFSET :offset')
+      'SELECT * FROM CacheResourceSection WHERE searchText = :searchText order by resourceId ASC LIMIT :limit OFFSET :offset')
   Future<List<CacheResourceSection>> findResourceSectionsBySearchText(
       String searchText, int limit, int offset);
   // @Query('SELECT * FROM CacheResourceSection WHERE searchText = :searchText')

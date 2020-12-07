@@ -7,27 +7,25 @@ import 'package:floor/floor.dart';
 @entity
 class CacheResourceSection {
   @primaryKey
-  final String resourceId;
+  String resourceId;
 
-  final double duration;
+  double duration;
 
-  final String sourceName;
+  String sourceName;
 
-  final int emotionCode;
+  int emotionCode;
 
-  final String resourceAddress;
+  String resourceAddress;
+  @primaryKey
+  String sourceId;
 
-  final String sourceId;
+  bool isFavorite;
 
-  final bool isFavorite;
+  bool isDownload;
 
-  final bool isDownload;
+  String searchText;
 
-  final String name;
-
-  final String searchText;
-
-  final String resourceAddressCachePath;
+  String resourceAddressCachePath;
 
   CacheResourceSection(
       this.resourceId,
@@ -38,7 +36,6 @@ class CacheResourceSection {
       this.sourceId,
       this.isFavorite,
       this.isDownload,
-      this.name,
       this.searchText,
       this.resourceAddressCachePath);
 }

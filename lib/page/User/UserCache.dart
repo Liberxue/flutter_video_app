@@ -14,7 +14,7 @@ class UserInfo {
       this.accountLevel});
 }
 
-Future<UserInfo> LoadUserCache() async {
+Future<UserInfo> loadUserCache() async {
   UserInfo _user = new UserInfo();
   _user.token = await Cache.getCache("Token");
   _user.avatarImage = await Cache.getCache("AvatarImage");

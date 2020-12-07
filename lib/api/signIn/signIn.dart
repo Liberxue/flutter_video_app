@@ -3,6 +3,7 @@ import 'package:ciying/api/config.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:ciying/Utils/logger.dart';
 import 'package:ciying/Utils/systemInfo.dart';
+import 'package:grpc/grpc_connection_interface.dart';
 
 Future<SignInResponse> signInRequest(SignInRequest data) async {
   var _deveiceInfo = await GetDeviceInfo().getAllDeviceInfo();
@@ -10,8 +11,8 @@ Future<SignInResponse> signInRequest(SignInRequest data) async {
   var _deviceVersion = await GetDeviceInfo().deviceVersion();
   var _deviceType = await GetDeviceInfo().deviceType();
   SignInResponse response;
-  Manager manager = Manager.instance;
-  final stub = GateWayClient(manager.channel);
+  ClientChannel manager = await Manager().clientChannel();
+  final stub = GateWayClient(manager);
   data.deviceType = _deviceType.toString();
   data.deviceVersion = _deviceVersion.toString();
   data.isPhysicalDevice = _isPhysicalDevice;

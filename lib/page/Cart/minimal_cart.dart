@@ -52,7 +52,7 @@ class MinimalCart extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 2),
           child: new GestureDetector(
             child: new Hero(
-              tag: "tagHeroOrder${order.resourceSection.sourceID}",
+              tag: "tagHeroOrder${order.resourceSection.resourceID}",
               child: new ClipOval(
                 child: new CachedNetworkImage(
                   width: 80,

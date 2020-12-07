@@ -110,7 +110,7 @@ class RegisterState extends State<Register>
     registerAnimatController = AnimationController(
         duration: const Duration(milliseconds: 400), vsync: this);
     registerAnimatController.addListener(() {
-      double value = registerAnimatController.value;
+      // double value = registerAnimatController.value;
       // print("注册变化比率 $value");
       setState(() {});
     });

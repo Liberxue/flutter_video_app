@@ -1,6 +1,6 @@
 class GrpcConfig {
   // grpc GrpcServerAddress
-  static const ConfGrpcServerAddress = "192.168.2.186";
+  static const ConfGrpcServerAddress = "192.168.31.151";
   // static const ConfGrpcServerAddress = "106.14.242.66";
 
   static const ConfGrpcPort = 5003;

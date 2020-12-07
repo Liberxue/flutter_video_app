@@ -52,64 +52,55 @@ class _SearchListBodyState extends State<_SearchListBody>
 
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight;
+    // double statusBarHeight;
     // Platform.isIOS 刘海屏。。。。。
     // print(MediaQuery.of(context).padding.top)
-    if (MediaQuery.of(context).padding.top == null ||
-        MediaQuery.of(context).padding.top == 0) {
-      statusBarHeight = MediaQuery.of(context).padding.top - 40;
-    } else {
-      statusBarHeight = MediaQuery.of(context).padding.top - 15;
-    }
-    height = MediaQuery.of(context).size.height - statusBarHeight;
     double widthBar = MediaQuery.of(context).size.width;
-    return GestureDetector(
-      onTap: () {
-        //隐藏键盘
-        SystemChannels.textInput.invokeMethod('TextInput.hide');
-        //输入框失去焦点
-        searchInputFieldNode.unfocus();
-      },
-      // color: AppDesignCourseAppTheme.BackgroundColor,
-      // margin: EdgeInsets.only(top: 1),
-      child: SlideStack(
-        drawer: new UserDrawerPage(),
-        child: SlideContainer(
-          key: _slideKey,
-          child: Container(
-            width: widthBar,
-            // height: height * (1 - position / 5),
-            color: AppDesignCourseAppTheme.BackgroundColor,
-            child: Column(
-              children: <Widget>[
-                CustomAppBar(
-                  title: CommonConfig.ConfAppName,
-                  height: kToolbarHeight * (1 - position / 5),
-                  tapDrawer: () {
-                    _slideKey.currentState.openOrClose();
-                  },
-                  isSearch: true,
-                ),
-                Expanded(
-                    child: Stack(children: <Widget>[
-                  // new CustomScrollView(
-                  //   slivers: <Widget>[
-                  //       new SliverToBoxAdapter(child:new getSearchBarUI()),
-                  // ]),
-                  getSearchBarUI(),
-                  SearchTags(),
-                  // SearchTags(),
-                ]))
-              ],
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () {
+          //隐藏键盘
+          SystemChannels.textInput.invokeMethod('TextInput.hide');
+          //输入框失去焦点
+          searchInputFieldNode.unfocus();
+        },
+        child: SlideStack(
+          drawer: new UserDrawerPage(),
+          child: SlideContainer(
+            key: _slideKey,
+            child: Container(
+              width: widthBar,
+              color: AppDesignCourseAppTheme.BackgroundColor,
+              child: Column(
+                children: <Widget>[
+                  CustomAppBar(
+                    title: CommonConfig.ConfAppName,
+                    // height: kToolbarHeight * (1 - position / 5),
+                    tapDrawer: () {
+                      _slideKey.currentState.openOrClose();
+                    },
+                    isSearch: true,
+                  ),
+                  Expanded(
+                      child: Stack(children: <Widget>[
+                    new CustomScrollView(slivers: <Widget>[
+                      new SliverToBoxAdapter(child: new getSearchBarUI()),
+                    ]),
+                    // getSearchBarUI(),
+                    SearchTags(),
+                  ]))
+                ],
+              ),
             ),
+            slideDirection: SlideDirection.left,
+            onSlide: onSlide,
+            drawerSize: maxSlideDistance,
+            transform:
+                Matrix4.translationValues(0.0, height * position / 150, 0.0),
           ),
-          slideDirection: SlideDirection.left,
-          onSlide: onSlide,
-          drawerSize: maxSlideDistance,
-          transform:
-              Matrix4.translationValues(0.0, height * position / 150, 0.0),
         ),
       ),
+      // bottomNavigationBar: botNavBar,
     );
   }
 }

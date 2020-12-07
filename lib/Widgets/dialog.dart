@@ -5,12 +5,12 @@ YYDialog dialogShow(String msg) {
   return YYDialog().build()
     ..width = 150
     ..height = 110
-    ..backgroundColor = Colors.black.withOpacity(0.8)
+    ..backgroundColor = Colors.white.withOpacity(0.99)
     ..borderRadius = 10.0
     ..widget(Padding(
       padding: EdgeInsets.only(top: 21),
       child: Image.asset(
-        'assets/images/alert.png',
+        'assets/images/logo.gif',
         width: 50,
         height: 50,
       ),
@@ -21,7 +21,7 @@ YYDialog dialogShow(String msg) {
         msg,
         style: TextStyle(
           fontSize: 15,
-          color: Colors.white,
+          color: Colors.red,
         ),
       ),
     ))

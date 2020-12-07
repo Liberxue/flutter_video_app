@@ -1,7 +1,7 @@
 import 'package:ciying/common/AppConfig.dart';
-import 'package:ciying/page/Search/search_list.dart';
 import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/Utils/wordCount.dart';
+import 'package:ciying/page/Search/search_list.dart';
 import 'package:ciying/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -79,31 +79,25 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                           _searchEtController.text = txt;
                         },
                         // 键盘样式
-                        textInputAction: TextInputAction.done,
+                        textInputAction: TextInputAction.send,
                         //设置键盘的类型
                         keyboardType: TextInputType.text,
-
+                        inputFormatters: [
+                          // ignore: deprecated_member_use
+                          WhitelistingTextInputFormatter(
+                            RegExp("[a-zA-Z’']+[ ]*"),
+                          ),
+                          LengthLimitingTextInputFormatter(50)
+                        ],
                         style: const TextStyle(
                           fontSize: 18,
                         ),
                         cursorColor: HexColor("#1C284E"),
-
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: 20.0),
-                          // icon: Icon(
-                          //   Icons.search,
-                          //   color: HexColor("#1C284E"),
-                          // ),
-                          // errorText: _searchValidate ? "至少需要3个单词哦～" : null,
                           border: InputBorder.none,
-                          hintText: '请输入搜索内容...',
+                          hintText: '搜索80,000+视频片段内容...',
                         ),
-
-                        inputFormatters: [
-                          WhitelistingTextInputFormatter(
-                              RegExp("[a-zA-Z’]+[ ]*")),
-                          LengthLimitingTextInputFormatter(50)
-                        ],
                         // 回车提交
                         // onEditingComplete: () {
                         //   if (WordCount()

@@ -214,12 +214,14 @@ class ContainerState extends State<SlideContainer>
 
   void openOrClose() {
     final AnimationStatus status = animationController.status;
-    final bool isOpen = status == AnimationStatus.completed || status == AnimationStatus.forward;
+    final bool isOpen = status == AnimationStatus.completed ||
+        status == AnimationStatus.forward;
     // Reset dragTarget in close state. It's import!!!
     // Or the containerOffset value will be zero.
     dragTarget = isOpen ? dragTarget : 1.0;
-    animationController.fling(velocity: isOpen ? -2.0 : 2.0).then((_){
-      print("animationController.value:${animationController.value},dragTarget:$dragTarget");
+    animationController.fling(velocity: isOpen ? -2.0 : 2.0).then((_) {
+      print(
+          "animationController.value:${animationController.value},dragTarget:$dragTarget");
     });
   }
 

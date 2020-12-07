@@ -2,13 +2,16 @@ import 'package:ciying/api/call_config.dart';
 import 'package:ciying/api/config.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
 import 'package:ciying/Utils/logger.dart';
+import 'package:ciying/grpc/proto/search.pb.dart';
 
 class Resource {
   static Future<ResourcePreviewResponse> resourcePreviewAPIRequest(
       ResourcePreviewRequest data) async {
     ResourcePreviewResponse resourcePreviewResponse;
-    Manager manager = Manager.instance;
-    final stub = GateWayClient(manager.channel);
+    print(data);
+    print(data.resourceId);
+    var channelClient = await Manager().clientChannel();
+    final stub = GateWayClient(channelClient);
     var callConfig = await callOptionsConf();
     if (callConfig.metadata.map != null) {
       try {
