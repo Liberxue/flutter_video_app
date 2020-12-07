@@ -31,8 +31,8 @@ class Manager {
       port: GrpcConfig.ConfGrpcPort,
       options: const ChannelOptions(
         credentials: ChannelCredentials.insecure(),
-        connectionTimeout: GrpcConfig.ConfconnectionTimeout,
-        idleTimeout: GrpcConfig.ConfIdleTimeout,
+        // connectionTimeout: GrpcConfig.ConfconnectionTimeout,
+        // idleTimeout: GrpcConfig.ConfIdleTimeout,
         //   // backoffStrategy: backOffstrategy,
       ),
     );

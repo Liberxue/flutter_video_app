@@ -19,7 +19,6 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:video_player/video_player.dart';
-import 'package:ciying/widgets/CustomDialog.dart';
 
 class VideoPlayer extends StatefulWidget {
   final String searchText;
@@ -42,14 +41,11 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _getCoin().then((value) => _coin = value);
-    });
+    _getCoin();
     _resourcePreviewRequest();
   }
 
   void _resourcePreviewRequest() async {
-    // print("资源ID ");
     // print(widget._resourceSection.resourceID);
     // // List<String> resourceIdList = List<String>(0);
     // // resourceIdList.add(widget._resourceSection.resourceID);
@@ -121,17 +117,13 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
 
   Future<bool> _saveNetworkVideo() async {
     String albumName = CommonConfig.ConfAppName;
-    // getFileStream(url)
     ResourceDownloadRequest resourceDownloadRequest =
         new ResourceDownloadRequest();
-    var _userId = await Cache.getUserId();
+    var accountId = await Cache.getUserId();
     resourceDownloadRequest.resourceId = widget._resourceSection.resourceID;
-    resourceDownloadRequest.accountId = _userId;
+    resourceDownloadRequest.accountId = accountId.toString();
     ResourceDownload.resourceresourceDownloadAPIRequest(
         resourceDownloadRequest);
-    setState(() {
-      _getCoin().then((value) => _coin = value);
-    });
     return GallerySaver.saveVideo(resourceDataList[0].resourceAddress,
         albumName: albumName);
   }
@@ -143,21 +135,31 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  Future<Int64> _getCoin() async {
+  _getCoin() async {
     GetAccountCoinByAccountIdRequest getAccountCoinByAccountIdRequest =
         new GetAccountCoinByAccountIdRequest();
-    // getAccountCoinByAccountIdRequest.accountId = "";
+    var accountId = await Cache.getUserId();
+    getAccountCoinByAccountIdRequest.accountId = accountId.toString();
     GetAccountCoinByAccountIdResponse getAccountCoinByAccountIdResponse;
     getAccountCoinByAccountIdResponse =
         await GetAcountCoin.getAccountCoinByAccountIdRequest(
             getAccountCoinByAccountIdRequest);
     if (getAccountCoinByAccountIdResponse != null) {
       if (getAccountCoinByAccountIdResponse.code == ResponseCode.SUCCESSFUL) {
-        return getAccountCoinByAccountIdResponse.coin;
+        setState(() {
+          _coin = getAccountCoinByAccountIdResponse.coin;
+        });
+        return;
       }
-      return Int64(0);
+      setState(() {
+        _coin = Int64(0);
+      });
+      return;
     }
-    return Int64(0);
+    setState(() {
+      _coin = Int64(0);
+    });
+    return;
   }
 
   @override
@@ -278,46 +280,48 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
                             //     icon: new Icon(Icons.favorite_border),
                             //     label: new Text("收藏")),
                             new FlatButton.icon(
-                                onPressed: () {
-                                  // check 积分。。。。
-                                  if (_coin < Int64(CommonConfig.DefaultCoin)) {
-                                    dialogShow("无法下载 积分不足");
-                                    return;
-                                  }
-                                  var yyDialog = progressDialogBody();
-                                  yyDialog.show();
-                                  var result = _saveNetworkVideo();
-                                  result.then((value) {
-                                    yyDialog?.dismiss();
-                                    setState(() {
-                                      _isDownload = true;
-                                    });
+                              onPressed: () {
+                                // check 积分。。。。
+                                if (_coin < Int64(CommonConfig.DefaultCoin)) {
+                                  dialogShow("无法下载 积分不足");
+                                  return;
+                                }
+                                var yyDialog = progressDialogBody();
+                                yyDialog.show();
+                                var result = _saveNetworkVideo();
+                                result.then((value) {
+                                  yyDialog?.dismiss();
+                                  dialogShow("下载完成");
+                                  _getCoin();
+                                  setState(() {
+                                    _isDownload = true;
                                   });
-                                },
-                                icon: !_isDownload
-                                    ? Icon(
-                                        Icons.download_outlined,
+                                });
+                              },
+                              icon: !_isDownload
+                                  ? Icon(
+                                      Icons.download_outlined,
+                                      color: Colors.blue,
+                                    )
+                                  : Icon(
+                                      Icons.download_done_rounded,
+                                      color: Colors.red,
+                                    ),
+                              label: !_isDownload
+                                  ? Text(
+                                      "无水印下载;消耗" +
+                                          CommonConfig.DefaultCoin.toString() +
+                                          "积分",
+                                      style: TextStyle(
                                         color: Colors.blue,
-                                      )
-                                    : Icon(
-                                        Icons.download_done_rounded,
+                                        fontSize: 18,
+                                      ))
+                                  : Text("已下载,请在相册查看",
+                                      style: TextStyle(
                                         color: Colors.red,
-                                      ),
-                                label: !_isDownload
-                                    ? Text(
-                                        "无水印下载;消耗" +
-                                            CommonConfig.DefaultCoin
-                                                .toString() +
-                                            "积分",
-                                        style: TextStyle(
-                                          color: Colors.blue,
-                                          fontSize: 18,
-                                        ))
-                                    : Text("已下载,请在相册查看",
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 18,
-                                        ))),
+                                        fontSize: 18,
+                                      )),
+                            ),
                           ]),
                     )
                   ],

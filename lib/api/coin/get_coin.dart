@@ -1,3 +1,4 @@
+import 'package:ciying/Utils/store.dart';
 import 'package:ciying/api/call_config.dart';
 import 'package:ciying/api/config.dart';
 import 'package:ciying/grpc/proto/accountManager.pbgrpc.dart';

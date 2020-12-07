@@ -11,7 +11,7 @@ class CheckAcountStatus {
     CheckAccountIdStatusRequest checkAccountIdStatusRequest =
         new CheckAccountIdStatusRequest();
     var _userId = await Cache.getUserId();
-    checkAccountIdStatusRequest.accountId = _userId;
+    checkAccountIdStatusRequest.accountId = _userId.toString();
     CheckAccountIdStatusResponse checkAccountIdStatusResponse;
     var channelClient = await Manager().clientChannel();
     final stub = GateWayClient(channelClient);

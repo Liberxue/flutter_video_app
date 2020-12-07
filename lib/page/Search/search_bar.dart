@@ -79,13 +79,19 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                           _searchEtController.text = txt;
                         },
                         // 键盘样式
-                        textInputAction: TextInputAction.send,
+                        // textInputAction: TextInputAction.none,
                         //设置键盘的类型
                         keyboardType: TextInputType.text,
-                        inputFormatters: [
-                          // ignore: deprecated_member_use
-                          WhitelistingTextInputFormatter(
-                            RegExp("[a-zA-Z’']+[ ]*"),
+                        // inputFormatters: [
+                        //   FilteringTextInputFormatter(
+                        //     RegExp("[a-zA-Z’']+[ ]*"),
+                        //     allow: true,
+                        //   ),
+                        //   LengthLimitingTextInputFormatter(50)
+                        // ],
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(
+                            RegExp("[a-zA-Z⌴’']+[ ]*"),
                           ),
                           LengthLimitingTextInputFormatter(50)
                         ],
