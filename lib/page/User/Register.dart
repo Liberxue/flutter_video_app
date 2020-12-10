@@ -30,7 +30,7 @@ class RegisterState extends State<Register>
 
   ///未在输入TextField的边框颜色
   Color normalColor = Color.fromARGB(
-    120,
+    100,
     100,
     100,
     100,
@@ -344,17 +344,19 @@ class RegisterState extends State<Register>
                 child: new RaisedButton(
                     color: Colors.grey[80],
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(60)),
+                        borderRadius: BorderRadius.circular(30)),
                     padding: EdgeInsets.all(10),
                     onPressed: () async {
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) => Login()));
                     },
-                    child: new Text("登陆",
-                        style: TextStyle(
-                            fontSize: 18,
-                            // fontWeight: FontWeight.bold,
-                            color: Colors.black45)))),
+                    child: new Text(
+                      "登 陆",
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF213333),
+                          fontWeight: FontWeight.w400),
+                    ))),
           ],
         ),
       ),
@@ -419,16 +421,15 @@ class RegisterState extends State<Register>
             right: 22,
           ),
           decoration: BoxDecoration(
-            color:
-                focusNode.hasFocus ? HexColor('#AFB0BC') : HexColor('#E5E6EA'),
+            color: focusNode.hasFocus ? Color(0xFFEEF1F3) : Color(0xFFEDF0F2),
             borderRadius: BorderRadius.all(Radius.circular(30)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                   color: focusNode.hasFocus
-                      ? HexColor('#AFB0BC')
-                      : HexColor('#E5E6EA'),
-                  offset: const Offset(0, 2),
-                  blurRadius: 30.0),
+                      ? Color(0xFF00B6F0)
+                      : Color(0xFFEDF0F2),
+                  offset: const Offset(0, 0.1),
+                  blurRadius: 0.2),
             ],
           ),
           child: buildInputItemRow(
@@ -498,7 +499,7 @@ class RegisterState extends State<Register>
             obscureText: isPasswordInput ? true : false,
 
             ///输入文本的样式
-            style: TextStyle(fontSize: 16.0, color: normalColor),
+            style: TextStyle(fontSize: 16.0, color: Color(0xFF213333)),
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(
@@ -782,7 +783,7 @@ class RegisterState extends State<Register>
                       Future.delayed(Duration(milliseconds: 2000), () {
                         registerAnimatController.reverse();
                       });
-                      currentRestureStatus = RestureStatus.error;
+                      currentRestureStatus = RestureStatus.success;
                       setState(() {
                         MediaQuery.of(context).viewInsets.bottom == 0;
                       });
@@ -820,13 +821,13 @@ class RegisterState extends State<Register>
 
                 ///圆角矩形背景
                 decoration: BoxDecoration(
-                  color: HexColor("#252C4E"),
+                  color: Color(0xFF3A5160),
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: HexColor("#252C4E"),
-                        offset: const Offset(0, 2),
-                        blurRadius: 12.0),
+                        color: Color(0xFFEDF0F2),
+                        offset: const Offset(0, 0.8),
+                        blurRadius: 2.0),
                   ],
                 ),
 
@@ -834,9 +835,9 @@ class RegisterState extends State<Register>
                 child: Text(
                   "注册",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 14,
                       color: HexColor("#E5E6EA"),
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w400),
                 ),
               )),
 

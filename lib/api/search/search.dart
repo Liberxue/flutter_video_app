@@ -20,6 +20,7 @@ class Search {
       }
       return searchResponse;
     }
+    await manager.shutdown();
     return searchResponse;
   }
 }

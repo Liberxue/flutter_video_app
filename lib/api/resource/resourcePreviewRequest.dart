@@ -17,10 +17,13 @@ class Resource {
             await stub.resourcePreview(data, options: callConfig);
       } catch (e) {
         logger.e("resourcePreviewAPIRequest Caught error", '$e');
+        await channelClient.shutdown();
         return null;
       }
+      await channelClient.shutdown();
       return resourcePreviewResponse;
     }
+    await channelClient.shutdown();
     return null;
   }
 }

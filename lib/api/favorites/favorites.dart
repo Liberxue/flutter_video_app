@@ -18,10 +18,13 @@ class Favorites {
             await stub.favoriteAction(data, options: callConfig);
       } catch (e) {
         logger.e("favoritesAPIRequest Caught error", '$e');
+        await manager.shutdown();
         return null;
       }
+      await manager.shutdown();
       return favoriteActionResponse;
     }
+    await manager.shutdown();
     return null;
   }
 }

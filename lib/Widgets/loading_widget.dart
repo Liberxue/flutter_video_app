@@ -7,7 +7,7 @@ Widget loadingWidget(BuildContext context, bool isError) {
       height: MediaQuery.of(context).size.height,
       child: Column(children: <Widget>[
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.25,
+          height: MediaQuery.of(context).size.height * 0.1,
         ),
         Container(
           alignment: Alignment.bottomCenter,

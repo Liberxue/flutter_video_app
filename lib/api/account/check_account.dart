@@ -23,10 +23,13 @@ class CheckAcountStatus {
             options: callConfig);
       } catch (e) {
         logger.e("getAccountCoinByAccountIdRequest Caught error", '$e');
+        await channelClient.shutdown();
         return null;
       }
+      await channelClient.shutdown();
       return checkAccountIdStatusResponse;
     }
+    await channelClient.shutdown();
     return null;
   }
 }

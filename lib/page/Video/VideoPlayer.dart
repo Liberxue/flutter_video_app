@@ -1,17 +1,18 @@
+import 'package:chewie/chewie.dart';
 import 'package:ciying/Utils/store.dart';
 import 'package:ciying/Widgets/dialog.dart';
+import 'package:ciying/Widgets/loading_widget.dart';
 import 'package:ciying/api/coin/get_coin.dart';
 import 'package:ciying/api/resource/resourceDownload.dart';
 import 'package:ciying/api/resource/resourcePreviewRequest.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/accountManager.pb.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
-import 'package:chewie/chewie.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
 import 'package:ciying/page/Search/search_list.dart';
+import 'package:ciying/page/User/Login_out.dart';
+import 'package:ciying/page/User/UserCache.dart';
 import 'package:ciying/page/Video/my_chewie_custom.dart';
-import 'package:ciying/Utils/hexColor.dart';
-import 'package:ciying/widgets/loading_widget.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,24 +26,66 @@ class VideoPlayer extends StatefulWidget {
   final ResourceSection _resourceSection;
   VideoPlayer(this.searchText, this._resourceSection);
   @override
-  State<StatefulWidget> createState() {
-    return _VideoPlayerState();
-  }
+  _VideoPlayerState createState() => _VideoPlayerState();
 }
 
 VideoPlayerController _videoPlayerController;
 ChewieController _chewieController;
 List<ResourceData> resourceDataList;
 
-class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
+class _VideoPlayerState extends State<VideoPlayer>
+    with TickerProviderStateMixin {
+  final double infoHeight = 364.0;
+  AnimationController animationController;
+  Animation<double> animation;
+  double opacity1 = 0.0;
+  double opacity2 = 0.0;
+  double opacity3 = 0.0;
+  //
   bool _isDownload = false;
   bool _isLoading = true;
   Int64 _coin = Int64(0);
+  bool _isLogin = false;
+  UserInfo userInfo;
+
   @override
   void initState() {
-    super.initState();
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 2000), vsync: this);
+    animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        parent: animationController,
+        curve: Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
+    setData();
     _getCoin();
     _resourcePreviewRequest();
+    super.initState();
+  }
+
+  _getCoin() async {
+    GetAccountCoinByAccountIdRequest getAccountCoinByAccountIdRequest =
+        new GetAccountCoinByAccountIdRequest();
+    var accountId = await Cache.getUserId();
+    getAccountCoinByAccountIdRequest.accountId = accountId.toString();
+    GetAccountCoinByAccountIdResponse getAccountCoinByAccountIdResponse;
+    getAccountCoinByAccountIdResponse =
+        await GetAcountCoin.getAccountCoinByAccountIdRequest(
+            getAccountCoinByAccountIdRequest);
+    if (getAccountCoinByAccountIdResponse != null) {
+      if (getAccountCoinByAccountIdResponse.code == ResponseCode.SUCCESSFUL) {
+        setState(() {
+          _coin = getAccountCoinByAccountIdResponse.coin;
+        });
+        return;
+      }
+      setState(() {
+        _coin = Int64(0);
+      });
+      return;
+    }
+    setState(() {
+      _coin = Int64(0);
+    });
+    return;
   }
 
   void _resourcePreviewRequest() async {
@@ -74,9 +117,24 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
     });
   }
 
+  _getLoginState() async {
+    var userInfo = await loadUserCache();
+    if (userInfo == null || _isLogin) {
+      this._isLogin = false;
+      this._isLoading = false;
+    } else {
+      setState(() {
+        this.userInfo = userInfo;
+        this._isLogin = true;
+        this._isLoading = false;
+      });
+    }
+  }
+
   void _video() {
     // _downloadFile();
     //  _videoPlayerController = VideoPlayerController.file(file)
+    // print("video url ${resourceDataList[0].resourceAddress}");
     _videoPlayerController =
         VideoPlayerController.network(resourceDataList[0].resourceAddress);
     _chewieController = ChewieController(
@@ -94,26 +152,17 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
       autoInitialize: true,
       customControls: MyChewieMaterialControls(),
     );
+    _getLoginState();
   }
 
   Stream<FileResponse> fileStream;
 
-  // void _downloadFile() {
-  //   setState(() {
-  //     fileStream = DefaultCacheManager().getFileStream(
-  //         resourceDataList[0].resourceAddress,
-  //         withProgress: true);
-  //   });
-  //   // print(fileStream);
-  //   // print("cache end");
-  // }
-
-  // void _clearCache() {
-  //   DefaultCacheManager().emptyCache();
-  //   setState(() {
-  //     fileStream = null;
-  //   });
-  // }
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    _chewieController.dispose();
+    super.dispose();
+  }
 
   Future<bool> _saveNetworkVideo() async {
     String albumName = CommonConfig.ConfAppName;
@@ -128,53 +177,37 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
         albumName: albumName);
   }
 
-  @override
-  void dispose() {
-    _videoPlayerController.dispose();
-    _chewieController.dispose();
-    super.dispose();
-  }
-
-  _getCoin() async {
-    GetAccountCoinByAccountIdRequest getAccountCoinByAccountIdRequest =
-        new GetAccountCoinByAccountIdRequest();
-    var accountId = await Cache.getUserId();
-    getAccountCoinByAccountIdRequest.accountId = accountId.toString();
-    GetAccountCoinByAccountIdResponse getAccountCoinByAccountIdResponse;
-    getAccountCoinByAccountIdResponse =
-        await GetAcountCoin.getAccountCoinByAccountIdRequest(
-            getAccountCoinByAccountIdRequest);
-    if (getAccountCoinByAccountIdResponse != null) {
-      if (getAccountCoinByAccountIdResponse.code == ResponseCode.SUCCESSFUL) {
-        setState(() {
-          _coin = getAccountCoinByAccountIdResponse.coin;
-        });
-        return;
-      }
-      setState(() {
-        _coin = Int64(0);
-      });
-      return;
-    }
+  Future<void> setData() async {
+    animationController.forward();
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
     setState(() {
-      _coin = Int64(0);
+      opacity1 = 1.0;
     });
-    return;
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    setState(() {
+      opacity2 = 1.0;
+    });
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    setState(() {
+      opacity3 = 1.0;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // final platform = Theme.of(context).platform;
+    final double tempHeight = MediaQuery.of(context).size.height -
+        (MediaQuery.of(context).size.width / 1.2) -
+        50;
     return new Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(45.0),
+        preferredSize: Size.fromHeight(30.0),
         child: AppBar(
           title: Container(
             color: Colors.white10,
             child: Text(
               widget._resourceSection.transcript,
               style: TextStyle(
-                color: Colors.black,
+                color: Color(0xFF17262A),
                 fontSize: 18,
               ),
             ),
@@ -184,7 +217,7 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
               icon: Icon(
                 Icons.arrow_back_ios,
                 size: 20,
-                color: HexColor("#252C4E"),
+                color: Color(0xFF17262A),
               ),
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -198,163 +231,324 @@ class _VideoPlayerState extends State<VideoPlayer> with WidgetsBindingObserver {
           backgroundColor: Colors.white,
         ),
       ),
-      body: this._isLoading
-          ? loadingWidget(context, false)
-          : SizedBox(
-              child: new Card(
-                  // elevation: 1.0, //设置阴影
-                  // shape: const RoundedRectangleBorder(
-                  //     borderRadius:
-                  //         BorderRadius.all(Radius.circular(24.0))), //设置圆角
-                  child: new Column(children: <Widget>[
-              new Container(
-                child: new Column(
-                  children: <Widget>[
-                    videoPlay(context),
-                    new Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: new Text(
-                          "台词：${widget._resourceSection.transcript}",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              color: Colors.grey)),
-                    ),
-                    new Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: new Text("来源：${widget._resourceSection.source}",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              color: Colors.grey)),
-                    ),
-                    new Container(
-                      margin: EdgeInsets.only(top: 10, bottom: 40),
-                      child: new Text(
-                          "时长：${widget._resourceSection.duration} 秒",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              color: Colors.grey)),
-                    ),
-                    new Container(
-                      margin: EdgeInsets.only(top: 2.0),
-                      child: new Text(
-                          "片名:" + widget._resourceSection.sourceName,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              color: Colors.black)),
-                    ),
-                    new Container(
-                      margin: EdgeInsets.only(top: 5.0, bottom: 40),
-                      child: new Text("当前积分:" + _coin.toString(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              color: Colors.red)),
-                    ),
-                    new Container(
-                      margin: EdgeInsets.only(top: 2.0, bottom: 40),
-                      decoration: BoxDecoration(boxShadow: [
-                        BoxShadow(
-                          color: Colors.white,
-                          blurRadius:
-                              30.0, // has the effect of softening the shadow
-                          spreadRadius:
-                              5.0, // has the effect of extending the shadow
-                          offset: Offset(
-                            0.0, // horizontal, move right 10
-                            -20.0, // vertical, move down 10
-                          ),
-                        )
-                      ]),
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      height: MediaQuery.of(context).size.height / 10,
-                      child: new Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            // new FlatButton.icon(
-                            //     onPressed: () {},
-                            //     icon: new Icon(Icons.favorite_border),
-                            //     label: new Text("收藏")),
-                            new FlatButton.icon(
-                              onPressed: () {
-                                // check 积分。。。。
-                                if (_coin < Int64(CommonConfig.DefaultCoin)) {
-                                  dialogShow("无法下载 积分不足");
-                                  return;
-                                }
-                                var yyDialog = progressDialogBody();
-                                yyDialog.show();
-                                var result = _saveNetworkVideo();
-                                result.then((value) {
-                                  yyDialog?.dismiss();
-                                  dialogShow("下载完成");
-                                  _getCoin();
-                                  setState(() {
-                                    _isDownload = true;
-                                  });
-                                });
-                              },
-                              icon: !_isDownload
-                                  ? Icon(
-                                      Icons.download_outlined,
-                                      color: Colors.blue,
-                                    )
-                                  : Icon(
-                                      Icons.download_done_rounded,
-                                      color: Colors.red,
-                                    ),
-                              label: !_isDownload
-                                  ? Text(
-                                      "无水印下载;消耗" +
-                                          CommonConfig.DefaultCoin.toString() +
-                                          "积分",
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        fontSize: 18,
-                                      ))
-                                  : Text("已下载,请在相册查看",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 18,
-                                      )),
-                            ),
-                          ]),
-                    )
+      body: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                AspectRatio(
+                  aspectRatio: 1.2,
+                  child: this._isLoading
+                      ? loadingWidget(context, false)
+                      : Chewie(
+                          controller: _chewieController,
+                        ),
+                ),
+              ],
+            ),
+            Positioned(
+              // top: (MediaQuery.of(context).size.width / 1.2) - 24.0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: CupertinoColors.white,
+                  // borderRadius: const BorderRadius.only(
+                  //     topLeft: Radius.circular(32.0),
+                  //     topRight: Radius.circular(32.0)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        offset: const Offset(1.1, 1.1),
+                        blurRadius: 10.0),
                   ],
                 ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: SingleChildScrollView(
+                    child: Container(
+                      constraints: BoxConstraints(
+                          minHeight: infoHeight,
+                          maxHeight: tempHeight > infoHeight
+                              ? tempHeight
+                              : infoHeight),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 32.0, left: 18, right: 16),
+                            child: Text(
+                              "台词：${widget._resourceSection.transcript}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w200,
+                                fontSize: 22,
+                                letterSpacing: 0.27,
+                                color: Color(0xFF17262A),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 16, right: 16, bottom: 8, top: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  "当前积分:" + _coin.toString(),
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 18,
+                                    letterSpacing: 0.27,
+                                    color: Color(0xFF4A6572),
+                                  ),
+                                ),
+                                Container(
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "时长：${widget._resourceSection.duration} 秒",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w200,
+                                          fontSize: 18,
+                                          letterSpacing: 0.27,
+                                          color: Color(0xFF4A6572),
+                                        ),
+                                      ),
+                                      // Icon(
+                                      //   Icons.lock_clock,
+                                      //   color: Colors.blue,
+                                      //   size: 24,
+                                      // ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          AnimatedOpacity(
+                            duration: const Duration(milliseconds: 500),
+                            opacity: opacity1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Row(
+                                children: <Widget>[
+                                  // getTimeBoxUI('24', 'Classe'),
+                                  // getTimeBoxUI('2hours', 'Time'),
+                                  // getTimeBoxUI('24', 'Seat'),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: AnimatedOpacity(
+                              duration: const Duration(milliseconds: 500),
+                              opacity: opacity2,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16, right: 16, top: 8, bottom: 8),
+                                child: Text(
+                                  "来源：${widget._resourceSection.source}",
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 18,
+                                    letterSpacing: 0.27,
+                                    color: Colors.grey,
+                                  ),
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                          ),
+                          AnimatedOpacity(
+                            duration: const Duration(milliseconds: 500),
+                            opacity: opacity3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 16, bottom: 16, right: 16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  // Container(
+                                  //   width: 48,
+                                  //   height: 48,
+                                  //   child: Container(
+                                  //     decoration: BoxDecoration(
+                                  //       color: DesignCourseAppTheme.nearlyWhite,
+                                  //       borderRadius: const BorderRadius.all(
+                                  //         Radius.circular(16.0),
+                                  //       ),
+                                  //       border: Border.all(
+                                  //           color: DesignCourseAppTheme.grey
+                                  //               .withOpacity(0.2)),
+                                  //     ),
+                                  //     child: Icon(
+                                  //       Icons.add,
+                                  //       color: Colors.white,
+                                  //       size: 28,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // const SizedBox(
+                                  //   width: 16,
+                                  // ),
+                                  InkWell(
+                                    onTap: () {
+                                      // islogin
+                                      if (!this._isLogin) {
+                                        dialogShow("请先登陆 下载");
+                                        return loginOut(context);
+                                      } else if (_coin <
+                                          Int64(CommonConfig.DefaultCoin)) {
+                                        return dialogShow("无法下载 积分不足");
+                                      }
+                                      var yyDialog = progressDialogBody();
+                                      yyDialog.show();
+                                      var result = _saveNetworkVideo();
+                                      result.then((value) {
+                                        yyDialog?.dismiss();
+                                        dialogShow("下载完成");
+                                        _getCoin();
+                                        setState(() {
+                                          _isDownload = true;
+                                        });
+                                      });
+                                    },
+                                    child: Container(
+                                      height: 48,
+                                      width: 300,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFF00B6F0),
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(16.0),
+                                        ),
+                                        boxShadow: <BoxShadow>[
+                                          BoxShadow(
+                                              color: Color(0xFF00B6F0)
+                                                  .withOpacity(0.5),
+                                              offset: const Offset(1.1, 1.1),
+                                              blurRadius: 10.0),
+                                        ],
+                                      ),
+                                      child: Center(
+                                        child: !_isDownload
+                                            ? Text(
+                                                "无水印下载  消耗" +
+                                                    CommonConfig.DefaultCoin
+                                                        .toString() +
+                                                    "积分",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 18,
+                                                ))
+                                            : Text("已下载,请在相册查看",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  letterSpacing: 0.0,
+                                                  color: Colors.red[200],
+                                                  fontSize: 18,
+                                                )),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).padding.bottom,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ]))),
-    );
-  }
-
-  Widget videoPlay(BuildContext context) {
-    return Container(
-      child: Chewie(
-        controller: _chewieController,
+            ),
+          ],
+        ),
       ),
     );
   }
-}
 
-YYDialog progressDialogBody() {
-  return YYDialog().build()
-    ..width = 200
-    ..borderRadius = 4.0
-    ..barrierDismissible = false // 是否点击弹出外部消失
-    ..circularProgress(
-      padding: EdgeInsets.all(24.0),
-      valueColor: Colors.orange[500],
-    )
-    ..text(
-      padding: EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 12.0),
-      text: "正在下载,请稍后...",
-      alignment: Alignment.center,
-      color: Colors.orange[500],
-      fontSize: 18.0,
+  YYDialog progressDialogBody() {
+    return YYDialog().build()
+      ..width = 200
+      ..borderRadius = 4.0
+      ..barrierDismissible = false // 是否点击弹出外部消失
+      ..circularProgress(
+        padding: EdgeInsets.all(24.0),
+        valueColor: Colors.orange[500],
+      )
+      ..text(
+        padding: EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 12.0),
+        text: "正在下载,请稍后...",
+        alignment: Alignment.center,
+        color: Colors.orange[500],
+        fontSize: 18.0,
+      );
+    // ..show();
+  }
+
+  Widget getTimeBoxUI(String text1, String txt2) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                offset: const Offset(1.1, 1.1),
+                blurRadius: 8.0),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+              left: 18.0, right: 18.0, top: 12.0, bottom: 12.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                text1,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  letterSpacing: 0.27,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                txt2,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.w200,
+                  fontSize: 14,
+                  letterSpacing: 0.27,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
-  // ..show();
+  }
 }

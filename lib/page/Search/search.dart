@@ -1,3 +1,4 @@
+import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/Widgets/CustomDialog.dart';
 import 'package:ciying/api/account/check_account.dart';
 import 'package:ciying/api/msg/get_msg_channel.dart';
@@ -6,6 +7,7 @@ import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/accountManager.pbgrpc.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/page/Search/search_bar.dart';
+import 'package:ciying/page/Search/search_cache.dart';
 import 'package:ciying/page/Search/search_tags.dart';
 import 'package:ciying/page/User/Login_out.dart';
 import 'package:ciying/page/User/UserCache.dart';
@@ -33,6 +35,7 @@ class _SearchListBody extends StatefulWidget {
 class _SearchListBodyState extends State<_SearchListBody>
     with TickerProviderStateMixin {
   List<String> msgList = new List<String>();
+  AnimationController animationController;
 
   double position = 0.0;
   double height = 0.0;
@@ -49,9 +52,17 @@ class _SearchListBodyState extends State<_SearchListBody>
     super.initState();
     _searchEtController = TextEditingController();
     _checkAccountStatus();
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 2000), vsync: this);
     searchInputFieldNode.addListener(() {
       if (this.mounted) setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   _checkAccountStatus() async {
@@ -121,6 +132,7 @@ class _SearchListBodyState extends State<_SearchListBody>
           });
     else
       return Scaffold(
+        backgroundColor: Colors.white,
         body: GestureDetector(
           onTap: () {
             //隐藏键盘
@@ -160,9 +172,10 @@ class _SearchListBodyState extends State<_SearchListBody>
                         child: Stack(children: <Widget>[
                       new CustomScrollView(slivers: <Widget>[
                         new SliverToBoxAdapter(child: new getSearchBarUI()),
+                        new SliverToBoxAdapter(child: new SearchTags()),
+                        // new SliverToBoxAdapter(child: new SearchClass()),
                       ]),
-                      // getSearchBarUI(),
-                      SearchTags(),
+                      // SearchClass(),
                     ]))
                   ],
                 ),

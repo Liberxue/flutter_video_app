@@ -1,11 +1,11 @@
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ciying/Utils/store.dart';
 import 'package:ciying/api/coin/get_coin.dart';
 import 'package:ciying/grpc/proto/accountManager.pb.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/page/Favorites/favorite_timeline.dart';
+import 'package:ciying/page/User/Login.dart';
 import 'package:ciying/page/User/Login_out.dart';
 import 'package:ciying/page/User/UserCache.dart';
 import 'package:ciying/Utils/hexColor.dart';
@@ -60,39 +60,35 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
   }
 
   _getLoginState() async {
-    userInfo = await loadUserCache();
+    var userInfo = await loadUserCache();
     setState(() {
       this.userInfo = userInfo;
       this._isLogin = true;
       this._isLoading = false;
     });
-    if (userInfo == null && _isLogin) {
-      loginOut(context);
-    }
   }
 
   _getCoin() async {
     GetAccountCoinByAccountIdRequest getAccountCoinByAccountIdRequest =
         new GetAccountCoinByAccountIdRequest();
     var accountId = await Cache.getUserId();
-    print(accountId);
     getAccountCoinByAccountIdRequest.accountId = accountId.toString();
     GetAccountCoinByAccountIdResponse getAccountCoinByAccountIdResponse;
     getAccountCoinByAccountIdResponse =
         await GetAcountCoin.getAccountCoinByAccountIdRequest(
             getAccountCoinByAccountIdRequest);
-    if (getAccountCoinByAccountIdResponse != null) {
-      if (getAccountCoinByAccountIdResponse.code == ResponseCode.SUCCESSFUL) {
-        setState(() {
-          _coin = getAccountCoinByAccountIdResponse.coin;
-        });
-        return;
-      }
+    if (getAccountCoinByAccountIdResponse == null) {
+      return;
+    }
+    if (getAccountCoinByAccountIdResponse.code == ResponseCode.SUCCESSFUL) {
       setState(() {
-        _coin = Int64(0);
+        _coin = getAccountCoinByAccountIdResponse.coin;
       });
       return;
     }
+    setState(() {
+      _coin = Int64(0);
+    });
     return;
   }
 
@@ -100,7 +96,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _getCoin();
+        // _getCoin();
       },
       child: Container(
         // decoration: BoxDecoration(
@@ -110,40 +106,43 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
         //         fit: BoxFit.fill),
         // color: Colors.white),
 
-        color: HexColor("#283362"), //
+        color: HexColor("#F6F6F6"), //
         child: new BackdropFilter(
-          filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          filter: new ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
           child: Stack(
             children: [
               Column(
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      // 第三方登录显示用户头像？
-                      // Padding(
-                      //   padding: EdgeInsets.only(top: 120.0, left: 20),
-                      //   child: Container(
-                      //     width: 300,
-                      //     height: 80,
-                      //     decoration: BoxDecoration(
-                      //       shape: BoxShape.circle,
-                      //       image: DecorationImage(
-                      //         fit: BoxFit.cover,
-                      //         image: AssetImage('assets/images/alert.png'),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 120.0, left: 20),
+                        child: Container(
+                          width: 80,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.contain,
+                              image: AssetImage('assets/images/logo.png'),
+                            ),
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsets.only(top: 110.0, left: 20),
                         child: Text(
-                          !_isLoading || userInfo != null
+                          userInfo != null
                               ? "       " + userInfo.phoneNumber
-                              : "未知",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5
-                              .copyWith(color: Colors.white),
+                              : "游客模式",
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color: Color(0xFF17262A),
+                          ),
                         ),
                       ),
                     ],
@@ -178,12 +177,10 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                                   height: 30,
                                   color: Colors.transparent,
                                   child: Text(
-                                      !_isLoading || userInfo != null
-                                          ? _coin.toString()
-                                          : "0",
+                                      userInfo != null ? _coin.toString() : "0",
                                       style: TextStyle(
                                           fontSize: 20,
-                                          color: HexColor("#CFD0D1"))),
+                                          color: Color(0xFF213333))),
                                 ),
                               new Container(
                                 width: 10,
@@ -196,7 +193,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                                 child: Text(
                                   user[index].title,
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 14),
+                                      color: Colors.black, fontSize: 14),
                                 ),
                               ),
                               new Container(
@@ -251,7 +248,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                                       },
                                       child: new Text("充值",
                                           style: TextStyle(
-                                              color: Colors.white,
+                                              color: Color(0xFFEDF0F2),
                                               fontSize: 12)),
                                       color: HexColor("#DF9833"),
                                     ),
@@ -260,7 +257,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                               if (user[index].title != "积分")
                                 new Container(
                                   width: 120,
-                                  color: Colors.transparent,
+                                  color: Colors.black,
                                 ),
                               if (user[index].title != "积分")
                                 new Container(
@@ -270,7 +267,7 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                                   child: Text(
                                     '100',
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
+                                        color: Colors.black, fontSize: 18),
                                   ),
                                 ),
                             ],
@@ -287,22 +284,24 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                       return InkWell(
                         onTap: () {
                           if (index == 0) {
-                            showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (_) {
-                                  return CustomDialog(
-                                    title: '温馨提示',
-                                    content: '是否确认退出登陆',
-                                    isCancel: true,
-                                    // cancelColor: Colors.green[400],
-                                    // confirmColor: Colors.red[400],
-                                    outsideDismiss: true,
-                                    confirmCallback: () {
-                                      loginOut(context);
-                                    },
-                                  );
-                                });
+                            userInfo != null
+                                ? showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (_) {
+                                      return CustomDialog(
+                                        title: '温馨提示',
+                                        content: '是否确认退出登陆',
+                                        isCancel: true,
+                                        // cancelColor: Colors.green[400],
+                                        // confirmColor: Colors.red[400],
+                                        outsideDismiss: true,
+                                        confirmCallback: () {
+                                          loginOut(context);
+                                        },
+                                      );
+                                    })
+                                : loginOut(context);
                           }
                         },
                         child: Ink(
@@ -315,15 +314,19 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
                               Padding(
                                 padding: EdgeInsets.only(right: 20.0),
                                 child: Icon(
-                                  menus[index].icon,
-                                  color: Colors.white,
+                                  userInfo != null
+                                      ? menus[index].icon
+                                      : Icons.cloud_circle_outlined,
+                                  color: Colors.black,
                                 ),
                               ),
                               Center(
                                 child: Text(
-                                  menus[index].title,
+                                  userInfo != null
+                                      ? menus[index].title
+                                      : "立即登陆",
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 18),
+                                      color: Colors.black, fontSize: 18),
                                 ),
                               ),
                             ],

@@ -17,15 +17,15 @@ class AppRouter extends StatefulWidget {
 }
 
 class _AppRouterState extends State<AppRouter> {
-  bool _isLogin = false;
+  bool _isLogin = true;
   final ThemeModel _model = ThemeModel();
   final AuthModel _auth = AuthModel();
 
-  @override
-  void initState() {
-    super.initState();
-    _getLoginState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _getLoginState();
+  // }
 
   _getLoginState() async {
     _isLogin = await Cache.checkLoginState();
@@ -58,26 +58,21 @@ class _AppRouterState extends State<AppRouter> {
               primaryColor: AppDesignCourseAppTheme.BackgroundColor,
               scaffoldBackgroundColor: AppDesignCourseAppTheme.BackgroundColor,
             ),
+            // home: Consumer<AuthModel>(builder: (context, model, child) {
+            //   if (_isLogin) return new SearchPage();
+            //   return new Login();
+            // }),
             home: Consumer<AuthModel>(builder: (context, model, child) {
-              if (_isLogin) return new SearchPage();
-              return new Login();
+              // if (_isLogin) return new SearchPage();
+              return SearchPage();
             }),
             initialRoute: '/',
             routes: <String, WidgetBuilder>{
-              '/Login': (context) => _isLogin ? new SearchPage() : Login(),
-              '/Search': (context) => _isLogin ? new SearchPage() : Login(),
+              // '/Login': (context) => _isLogin ? new SearchPage() : Login(),
+              // '/Search': (context) => _isLogin ? new SearchPage() : Login(),
+              '/Login': (context) => Login(),
+              '/Search': (context) => SearchPage(),
             },
-            // onGenerateRoute: (RouteSettings settings) {
-            //   final List<String> pathElements = settings.name.split('/');
-            //   if (pathElements[1] == 'VideoPlayer') {
-            //     // String query = pathElements[2];
-            //     return MaterialPageRoute(builder: (BuildContext context) {
-            //       return _isLogin ? VideoPlayer(null) : Login();
-            //     });
-            //   } else {
-            //     return null;
-            //   }
-            // },
           ),
         ));
   }

@@ -11,7 +11,9 @@ Future<SignUpResponse> signUpRequest(SignUpRequest signUpRequest) async {
     signUpResponse = await stub.signUp(signUpRequest);
   } catch (e) {
     logger.e("signInResponse Caught error", "$e");
+    await manager.shutdown();
     return null;
   }
+  await manager.shutdown();
   return signUpResponse;
 }

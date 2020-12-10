@@ -355,7 +355,7 @@ class LoginState extends State<Login>
                     },
                     child: new Text("没有账号？注册",
                         style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
                             // fontWeight: FontWeight.bold,
                             color: Colors.black45)))),
           ],
@@ -422,24 +422,17 @@ class LoginState extends State<Login>
             right: 22,
           ),
           decoration: BoxDecoration(
-            color:
-                focusNode.hasFocus ? HexColor('#AFB0BC') : HexColor('#E5E6EA'),
+            color: focusNode.hasFocus ? Color(0xFFEEF1F3) : Color(0xFFEDF0F2),
             borderRadius: BorderRadius.all(Radius.circular(30)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                   color: focusNode.hasFocus
-                      ? HexColor('#AFB0BC')
-                      : HexColor('#E5E6EA'),
-                  offset: const Offset(0, 2),
-                  blurRadius: 30.0),
+                      ? Color(0xFF00B6F0)
+                      : Color(0xFFEDF0F2),
+                  offset: const Offset(0, 0.1),
+                  blurRadius: 0.2),
             ],
           ),
-          // decoration: BoxDecoration(
-          //   color: HexColor('#F4F5F7'),
-          //   borderRadius: BorderRadius.all(Radius.circular(30)),
-          //   border: Border.all(
-          //       color: focusNode.hasFocus ? selectColor : HexColor('#F4F5F7')),
-          // ),
           child: buildInputItemRow(
               preIconData, hintText, isPasswordInput, focusNode, controller),
         ));
@@ -481,7 +474,7 @@ class LoginState extends State<Login>
       ///输入文本的样式
       style: TextStyle(
         fontSize: 16.0,
-        color: HexColor("#1C284E"),
+        color: Color(0xFF213333),
       ),
       decoration: InputDecoration(
         hintText: hintText,
@@ -726,23 +719,23 @@ class LoginState extends State<Login>
                 //     borderRadius: BorderRadius.all(Radius.circular(30)),
                 //     border: Border.all(color: normalColor)),
                 decoration: BoxDecoration(
-                  color: HexColor("#252C4E"),
+                  color: Color(0xFF3A5160),
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: HexColor("#252C4E"),
-                        offset: const Offset(0, 2),
-                        blurRadius: 12.0),
+                        color: Color(0xFFEDF0F2),
+                        offset: const Offset(0, 0.8),
+                        blurRadius: 2.0),
                   ],
                 ),
 
                 ///透明度
                 child: Text(
-                  "登陆",
+                  "登 陆",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 14,
                       color: HexColor("#E5E6EA"),
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w400),
                 ),
               )),
 

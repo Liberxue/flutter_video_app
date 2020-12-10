@@ -1,8 +1,9 @@
+import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/api/search/search_tags.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
-import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/page/Search/search_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SearchTags extends StatefulWidget {
@@ -10,13 +11,44 @@ class SearchTags extends StatefulWidget {
   _SearchTagsState createState() => new _SearchTagsState();
 }
 
-class _SearchTagsState extends State<SearchTags> {
-  List<String> searchTags = new List<String>();
+class _SearchTagsState extends State<SearchTags> with TickerProviderStateMixin {
+  AnimationController animationController;
+  Animation<double> animation;
+  double opacity1 = 0.0;
+  double opacity2 = 0.0;
+  double opacity3 = 0.0;
+
+  List<Tags> searchTags = new List<Tags>();
   bool isLoading = true;
   @override
   void initState() {
-    super.initState();
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 200), vsync: this);
     loadSearchTagList();
+    setData();
+    super.initState();
+  }
+
+  Future<void> setData() async {
+    animationController.forward();
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    setState(() {
+      opacity1 = 1.0;
+    });
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    setState(() {
+      opacity2 = 1.0;
+    });
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    setState(() {
+      opacity3 = 1.0;
+    });
+  }
+
+  @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
   }
 
   Future loadSearchTagList() async {
@@ -32,89 +64,191 @@ class _SearchTagsState extends State<SearchTags> {
       });
     else
       setState(() {
-        searchTags = searchTagResponse.searchTags;
+        searchTags = searchTagResponse.tags;
         isLoading = false;
       });
   }
 
+  Future<bool> getData() async {
+    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        new Container(
-          padding: EdgeInsets.only(top: 330, left: 30, right: 30),
-          child: Text("猜你喜欢～点击标签即刻体验: ",
-              maxLines: 1,
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 12, left: 28),
+            child: Text(
+              "抖音热搜:",
               textAlign: TextAlign.left,
-              overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[10],
-              )),
-        ),
-        // child: new RaisedButton(
-        //   onPressed: () {},
-        //   child: new Text("换一批 ～ ",
-        //       style: TextStyle(color: Colors.white, fontSize: 14)),
-        //   color: Colors.grey[10],
-        // )),
-        new Container(
-            padding: EdgeInsets.only(top: 325, left: 30, right: 30),
-            child: GridView.builder(
-                itemCount: isLoading || this.searchTags != null
-                    ? this.searchTags.length
-                    : 0,
-                gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
-                    //单个子Widget的水平最大宽度
-                    maxCrossAxisExtent: 200,
-                    //水平单个子Widget之间间距
-                    // mainAxisSpacing: 1.5,
-                    //垂直单个子Widget之间间距
-                    crossAxisSpacing: 1.5,
-                    // //子组件宽高长度比例
-                    childAspectRatio: 4.0),
-                itemBuilder: (BuildContext context, int index) {
-                  return Wrap(
-                    // spacing: 2.0, // 主轴(水平)方向间距
-                    // runSpacing: 2.0, // 纵轴（垂直）方向间距
-                    direction: Axis.horizontal,
-                    children: <Widget>[
-                      InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  SearchList(this.searchTags[index]),
-                            ));
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10.0),
-                            constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width * 0.7,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: HexColor("#E5E6EA"),
-                              ),
-                              color: HexColor("#E4E5EA"),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12.0),
-                              ),
-                            ),
-                            child: Text(
-                                !isLoading
-                                    ? this.searchTags[index]
-                                    : "网络异常加载失败，请稍后重试",
-                                maxLines: 1,
-                                textAlign: TextAlign.left,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.grey[10],
-                                )),
-                          ))
-                    ],
+                fontWeight: FontWeight.w200,
+                fontSize: 18,
+                letterSpacing: 0.27,
+                color: HexColor("#252C4E"),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          new Container(
+            height: 120,
+            width: double.infinity,
+            child: FutureBuilder<bool>(
+                future: getData(),
+                builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                  return ListView.builder(
+                    padding: const EdgeInsets.only(
+                        top: 0, bottom: 0, right: 16, left: 16),
+                    itemCount: searchTags.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      final int count =
+                          searchTags.length > 10 ? 10 : searchTags.length;
+                      final Animation<double> animation =
+                          Tween<double>(begin: 0.0, end: 1.0).animate(
+                              CurvedAnimation(
+                                  parent: animationController,
+                                  curve: Interval((1 / count) * index, 1.0,
+                                      curve: Curves.fastOutSlowIn)));
+                      animationController.forward();
+
+                      return CategoryView(
+                        searchTag: searchTags[index],
+                        animation: animation,
+                        animationController: animationController,
+                        callback: () {
+                          // widget.callBack();
+                        },
+                      );
+                    },
                   );
-                }))
-      ],
+                }),
+          ),
+        ]);
+  }
+}
+
+class CategoryView extends StatelessWidget {
+  const CategoryView(
+      {Key key,
+      this.searchTag,
+      this.animationController,
+      this.animation,
+      this.callback})
+      : super(key: key);
+
+  final VoidCallback callback;
+  final Tags searchTag;
+  final AnimationController animationController;
+  final Animation<dynamic> animation;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animationController,
+      builder: (BuildContext context, Widget child) {
+        return FadeTransition(
+          opacity: animation,
+          child: Transform(
+            transform: Matrix4.translationValues(
+                100 * (1.0 - animation.value), 0.0, 0.0),
+            child: InkWell(
+              splashColor: Colors.white,
+              onTap: () {
+                Navigator.of(context)
+                    .push(CupertinoPageRoute(builder: (BuildContext context) {
+                  return SearchList(searchTag.tagKey);
+                }));
+              },
+              child: SizedBox(
+                width: 280,
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      child: Row(
+                        children: <Widget>[
+                          const SizedBox(
+                            width: 48,
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: HexColor('#F8FAFB'),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(16.0)),
+                              ),
+                              child: Row(
+                                children: <Widget>[
+                                  const SizedBox(
+                                    width: 48 + 24.0,
+                                  ),
+                                  Expanded(
+                                    child: InkWell(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 16),
+                                            child: Text(
+                                              '英语怎么表达 \n "${searchTag.tagValue}"',
+                                              maxLines: 3,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w300,
+                                                fontSize: 16,
+                                                letterSpacing: 0.27,
+                                                color: Color(0xFF17262A),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(top: 5, bottom: 24, left: 6),
+                        child: Row(
+                          children: <Widget>[
+                            ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(16.0)),
+                              child: AspectRatio(
+                                aspectRatio: 1.0,
+                                // child: Image.asset("assets/images/tags/7.png"),
+                                child: Icon(
+                                  Icons.help_outline_rounded,
+                                  color: Color(0xFFEDF0F9),
+                                  size: 58,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

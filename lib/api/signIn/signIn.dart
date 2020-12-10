@@ -20,11 +20,11 @@ Future<SignInResponse> signInRequest(SignInRequest data) async {
   var callConfig = await callOptionsConf();
   try {
     response = await stub.signIn(data, options: callConfig);
-    logger.i("signInRequest: $response");
   } catch (e) {
     logger.e('Error! SignInRequest Caught error:', '$e');
-    // await manager.channel.shutdown();
+    await manager.shutdown();
     return null;
   }
+  await manager.shutdown();
   return response;
 }

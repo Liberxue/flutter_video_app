@@ -17,10 +17,13 @@ class SearchTagsApi {
         searchTagResponse = await stub.searchTag(data, options: callConfig);
       } catch (e) {
         logger.e("searchTagsAPIRequest Caught error", '$e');
+        await manager.shutdown();
         return null;
       }
+      await manager.shutdown();
       return searchTagResponse;
     }
+    await manager.shutdown();
     return searchTagResponse;
   }
 }

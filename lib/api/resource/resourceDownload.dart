@@ -1,4 +1,3 @@
-import 'package:ciying/Utils/store.dart';
 import 'package:ciying/api/call_config.dart';
 import 'package:ciying/api/config.dart';
 import 'package:ciying/grpc/proto/gateWay.pbgrpc.dart';
@@ -18,10 +17,13 @@ class ResourceDownload {
             await stub.resourceDownload(data, options: callConfig);
       } catch (e) {
         logger.e("resourceresourceDownloadAPIRequest Caught error", '$e');
+        await channelClient.shutdown();
         return null;
       }
+      await channelClient.shutdown();
       return resourceDownloadResponse;
     }
+    await channelClient.shutdown();
     return null;
   }
 }

@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 
 Future<bool> loginOut(BuildContext context) async {
   bool result = await Cache.deleteCache("Token");
+  await Cache.deleteCache("AvatarImage");
+  await Cache.deleteCache("PhoneNumber");
+  await Cache.deleteCache("Coin");
+  await Cache.deleteCache("AccountLevel");
   if (result) {
     // Navigator.push(context,
     //     MaterialPageRoute(builder: (context) => Login(), maintainState: false));

@@ -1,5 +1,5 @@
-import 'package:ciying/page/Search/search.dart';
 import 'package:ciying/Utils/hexColor.dart';
+import 'package:ciying/page/Search/search.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -13,61 +13,100 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Platform.isIOS 刘海屏。。。。。
-    double paddingTop;
-    if (MediaQuery.of(context).padding.top == null ||
-        MediaQuery.of(context).padding.top == 0) {
-      paddingTop = 15;
-    } else {
-      paddingTop = 40;
-    }
     return Container(
-      padding: EdgeInsets.only(left: 10, top: paddingTop, right: 10),
-      height: 80,
-      color: HexColor("#fff"),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFFFF),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              offset: const Offset(0, 2),
+              blurRadius: 8.0),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top, left: 8, right: 8),
+        child: Row(
           children: <Widget>[
-            GestureDetector(
-              onTap: tapDrawer,
-              child: Icon(
-                Icons.dehaze,
-                color: Colors.grey,
+            Container(
+              alignment: Alignment.centerLeft,
+              width: AppBar().preferredSize.height + 40,
+              height: AppBar().preferredSize.height,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(32.0),
+                  ),
+                  onTap: tapDrawer,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(Icons.dehaze),
+                  ),
+                ),
               ),
             ),
             if (!isSearch)
-              Container(
-                width: MediaQuery.of(context).size.width * 0.5,
-                color: Colors.white10,
-                child: Text(
-                  title,
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
+              Expanded(
+                child: Center(
+                  child: Text(
+                    title,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
                   ),
                 ),
               ),
             if (!isSearch)
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => SearchPage(),
+              Container(
+                width: AppBar().preferredSize.height + 40,
+                height: AppBar().preferredSize.height,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    // Material(
+                    //   color: Colors.transparent,
+                    //   child: InkWell(
+                    //     borderRadius: const BorderRadius.all(
+                    //       Radius.circular(32.0),
+                    //     ),
+                    //     onTap: () {},
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: Icon(Icons.favorite_border),
+                    //     ),
+                    //   ),
+                    // ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(32.0),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => SearchPage(),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.search_outlined),
+                        ),
+                      ),
                     ),
-                  );
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(left: 10.0, right: 8.0),
-                  child: Icon(
-                    Icons.search,
-                    color: Colors.grey,
-                  ),
+                  ],
                 ),
-              ),
-          ]),
+              )
+          ],
+        ),
+      ),
     );
   }
 }

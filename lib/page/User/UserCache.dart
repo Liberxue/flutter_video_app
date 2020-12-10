@@ -15,6 +15,12 @@ class UserInfo {
 }
 
 Future<UserInfo> loadUserCache() async {
+  var token = await Cache.getCache("Token");
+  var phoneNumber = await Cache.getCache("PhoneNumber");
+  var coin = await Cache.getCache("Coin");
+  if (token == null || coin == null || phoneNumber == null) {
+    return null;
+  }
   UserInfo _user = new UserInfo();
   _user.token = await Cache.getCache("Token");
   _user.avatarImage = await Cache.getCache("AvatarImage");

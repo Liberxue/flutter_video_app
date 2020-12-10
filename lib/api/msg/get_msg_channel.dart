@@ -17,10 +17,13 @@ class GetMsgChannel {
             await stub.getMsgChannel(data, options: callConfig);
       } catch (e) {
         logger.e("getMsgChannelResponse Caught error", '$e');
+        await channelClient.shutdown();
         return null;
       }
+      await channelClient.shutdown();
       return getMsgChannelResponse;
     }
+    await channelClient.shutdown();
     return null;
   }
 }
