@@ -1,0 +1,72 @@
+name: Dart CI
+
+on:
+  push:
+    # branches: [ master ]
+  pull_request:
+    # branches: [ master ]
+
+jobs:
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '8.x'
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '1.20.3'
+          # channel: 'beta'
+      - run: dart --version
+      - run: flutter --version
+      - run: flutter channel dev
+      - run: flutter doctor
+      - run: flutter pub get
+      - run: flutter test
+      - name: send Go Vet
+        uses: appleboy/telegram-action@master
+        with:
+            to: ${{ secrets.TELEGRAM_TO }}
+            token: ${{ secrets.TELEGRAM_TOKEN }}
+            format: html
+            message: |
+                🦉 Repository:${{ github.repository }}
+                ⚡️ <a href="https://github.com/${{ github.repository }}/commit/${{ github.event.push.after }}">Commits</a> 
+                Pushed to ${{ github.ref }} by <em>${{ github.event.push.pusher.name }}</em> 
+                Actor ${{ github.actor }}:${{ github.event.head_commit.message }}
+                Ref: ${{ github.ref }}
+                Commit: ${{ github.sha }}
+                Ref: {{ commit.ref }}
+                The ${{ github.event_name }} flutter test step.
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: beta
+    - run: flutter config --enable-web
+    - run: flutter pub get
+    - run: flutter test
+    - run: flutter build web
+    - name: send Go Vet
+      uses: appleboy/telegram-action@master
+      with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: html
+          message: |
+              🦉 Repository:${{ github.repository }}
+              ⚡️ <a href="https://github.com/${{ github.repository }}/commit/${{ github.event.push.after }}">Commits</a> 
+              Pushed to ${{ github.ref }} by <em>${{ github.event.push.pusher.name }}</em> 
+              Actor ${{ github.actor }}:${{ github.event.head_commit.message }}
+              Ref: ${{ github.ref }}
+              Commit: ${{ github.sha }}
+              Ref: {{ commit.ref }}
+              The ${{ github.event_name }}  flutter build step.
+              

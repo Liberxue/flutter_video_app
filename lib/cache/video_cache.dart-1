@@ -1,0 +1,154 @@
+//  获取文件时，先从缓存中读取，缓存中没有对应文件和时间失效的情况下，再进行网络下载 DefaultCacheManager.dart
+import 'dart:io';
+
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
+Future<File> getSingleFile(String url, {Map<String, String> headers}) async {
+  var cacheFile = await getFileFromCache(url);
+  if (cacheFile != null) {
+    if (cacheFile.validTill.isBefore(DateTime.now())) {
+      webHelper.downloadFile(url, authHeaders: headers);
+    }
+    return cacheFile.file;
+  }
+  try {
+    var download = await webHelper.downloadFile(url, authHeaders: headers);
+    return download.file;
+  } catch (e) {
+    return null;
+  }
+}
+
+///Get the file from the cache
+///获取缓存文件getFileFromCache，调用到retrieveCacheData判断内存中是否有缓存，内存中没有缓存时，进行数据库中获取 _getCacheDataFromDatabase
+Future<FileInfo> getFileFromCache(String url) async {
+  return await store.getFile(url);
+}
+
+Future<FileInfo> getFile(String url) async {
+  var cacheObject = await retrieveCacheData(url);
+  if (cacheObject == null || cacheObject.relativePath == null) {
+    return null;
+  }
+  var path = p.join(await filePath, cacheObject.relativePath);
+  return new FileInfo(File(path), FileSource.Cache, cacheObject.validTill, url);
+}
+
+Future<CacheObject> retrieveCacheData(String url) {
+  if (_memCache.containsKey(url)) {
+    return Future.value(_memCache[url]);
+  }
+  if (!_futureCache.containsKey(url)) {
+    var completer = new Completer<CacheObject>();
+    _getCacheDataFromDatabase(url).then((cacheObject) async {
+      if (cacheObject != null && !await _fileExists(cacheObject)) {
+        final provider = await _cacheObjectProvider;
+        provider.delete(cacheObject.id);
+        cacheObject = null;
+      }
+      completer.complete(cacheObject);
+
+      _memCache[url] = cacheObject;
+      _futureCache[url] = null;
+    });
+
+    _futureCache[url] = completer.future;
+  }
+  return _futureCache[url];
+}
+
+Future<CacheObject> _getCacheDataFromDatabase(String url) async {
+  var provider = await _cacheObjectProvider;
+  var data = await provider.get(url);
+  if (await _fileExists(data)) {
+    _updateCacheDataInDatabase(data);
+  }
+  _scheduleCleanup();
+  return data;
+}
+
+///Download the file from the url
+Future<FileInfo> downloadFile(String url,
+    {Map<String, String> authHeaders, bool ignoreMemCache = false}) async {
+  if (!_memCache.containsKey(url) || ignoreMemCache) {
+    var completer = new Completer<FileInfo>();
+    () async {
+      try {
+        final cacheObject =
+            await _downloadRemoteFile(url, authHeaders: authHeaders);
+        completer.complete(cacheObject);
+      } catch (e) {
+        completer.completeError(e);
+      } finally {
+        _memCache.remove(url);
+      }
+    }();
+
+    _memCache[url] = completer.future;
+  }
+  return _memCache[url];
+}
+
+///Download the file from the url
+///3.下载文件结束时_downloadRemoteFile中生成缓存文件，store.putFile(cacheObject);
+
+Future<FileInfo> _downloadRemoteFile(String url,
+    {Map<String, String> authHeaders}) async {
+  var cacheObject = await _store.retrieveCacheData(url);
+  if (cacheObject == null) {
+    cacheObject = new CacheObject(url);
+  }
+
+  var headers = new Map<String, String>();
+  if (authHeaders != null) {
+    headers.addAll(authHeaders);
+  }
+
+  if (cacheObject.eTag != null) {
+    headers["If-None-Match"] = cacheObject.eTag;
+  }
+
+  var success = false;
+
+  var response = await _fileFetcher(url, headers: headers);
+  success = await _handleHttpResponse(response, cacheObject);
+
+  if (!success) {
+    throw HttpException(
+        "No valid statuscode. Statuscode was ${response?.statusCode}");
+  }
+
+  _store.putFile(cacheObject);
+  var filePath = p.join(await _store.filePath, cacheObject.relativePath);
+
+  return FileInfo(
+      new File(filePath), FileSource.Online, cacheObject.validTill, url);
+}
+// 4.网络下载文件_defaultHttpGetter，写入本地 _handleHttpResponse File(path).writeAsBytes(response.bodyBytes);
+
+Future<FileFetcherResponse> _defaultHttpGetter(String url,
+    {Map<String, String> headers}) async {
+  var httpResponse = await http.get(url, headers: headers);
+  return new HttpFileFetcherResponse(httpResponse);
+}
+
+Future<bool> _handleHttpResponse(
+    FileFetcherResponse response, CacheObject cacheObject) async {
+  if (response.statusCode == 200 || response.statusCode == 201) {
+    var basePath = await _store.filePath;
+    _setDataFromHeaders(cacheObject, response);
+    var path = p.join(basePath, cacheObject.relativePath);
+
+    var folder = new File(path).parent;
+    if (!(await folder.exists())) {
+      folder.createSync(recursive: true);
+    }
+    await new File(path).writeAsBytes(response.bodyBytes);
+    return true;
+  }
+  if (response.statusCode == 304) {
+    await _setDataFromHeaders(cacheObject, response);
+    return true;
+  }
+  return false;
+}

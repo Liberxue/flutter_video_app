@@ -1,0 +1,86 @@
+name: ciying
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.9
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.0
+  http: ^0.12.0+2
+  chewie: ^0.9.10
+  protoc_plugin: ^19.2.0+1
+  protobuf:
+  grpc:
+  base_x: ^1.0.1
+  device_info: ^1.0.0
+  fixnum: ^0.10.11  #fix flutter int64 https://github.com/PomCloud/gateway/issues/3
+  shared_preferences: ^0.5.12+2
+  provider: ^4.3.2+3
+  rxdart: ^0.24.1
+  cached_network_image: ^2.3.3
+  progress_dialog: ^1.1.0+1
+  flutter_share: ^1.0.5
+  crypto: ^2.1.5
+  flutter_ffmpeg: ^0.3.0
+  syncfusion_flutter_sliders: ^18.1.36-beta
+  animated_text_kit: ^3.1.0
+
+
+
+  # flutter_downloader: ^1.5.2
+  path_provider: ^1.6.24
+  # permission_handler: ^3.1.0
+  # toast: ^0.1.4
+
+
+  
+  gallery_saver: ^2.0.1
+  # image_picker: ^0.6.7+14
+  logger: ^0.9.4
+  flutter_cache_manager: ^2.0.0 #https://github.com/tekartik/sqflite/issues/536
+  flutter_custom_dialog: ^1.0.20 
+  floor: ^0.17.0
+  assets_audio_player: ^2.0.13+1
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.8.1
+  floor_generator: ^0.17.0
+  build_runner: ^1.10.3
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/audios/
+  # plugin:
+  #   platforms:
+  #     android:
+  #       package: com.ciying
+  #       pluginClass: ciying
+  #     ios:
+  #       pluginClass: ciying
+  #     macos:
+  #       pluginClass: ciying
+  #     web:
+  #       pluginClass: ciying
+  #       fileName: ciying.dart
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
+  
+# fonts:
+#   - family: appIconFont
+#     fonts:
+#     - asset: assets/fonts/iconfont.ttf
