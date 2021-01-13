@@ -9,8 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class SpeechLanguage extends StatefulWidget {
-  const SpeechLanguage({Key key, this.callBack}) : super(key: key);
-
+  const SpeechLanguage({Key key, this.tabAction, this.callBack})
+      : super(key: key);
+  final String tabAction;
   final Function callBack;
   @override
   _SpeechLanguageState createState() => new _SpeechLanguageState();
@@ -24,13 +25,13 @@ class _SpeechLanguageState extends State<SpeechLanguage>
   double opacity2 = 0.0;
   double opacity3 = 0.0;
 
-  List<LangType> seppckLangType = new List<LangType>();
+  List<LangType> seppckLangType = <LangType>[];
   bool isLoading = true;
   int _selectIndex = 0;
-  String _lang;
-  String _name;
-  double _defaultRate = 1.0;
-  double _defaultPitch = 2.4;
+  String _lang = "zh-CN-XiaoxiaoNeural";
+  String _name = "普通话-女";
+  double _defaultRate = 0.73;
+  double _speechPitch = 0.86;
 
   @override
   void initState() {
@@ -67,24 +68,26 @@ class _SpeechLanguageState extends State<SpeechLanguage>
 
   Future loadSpeeckList() async {
     GetSpeeckListRequest getSpeeckListRequest = GetSpeeckListRequest();
-    getSpeeckListRequest.action = "";
+    getSpeeckListRequest.action = widget.tabAction;
     GetSpeeckListResponse getSpeeckListResponse =
         await SpeechApi.getSpeeckListApiRequest(getSpeeckListRequest);
     if (this.mounted) {
       if (getSpeeckListResponse.code != ResponseCode.SUCCESSFUL)
         setState(() {
           seppckLangType = null;
-          print(getSpeeckListResponse.langType[0].lang);
-          print(getSpeeckListResponse.langType[0].rate);
-          _lang = getSpeeckListResponse.langType[0].lang;
-          _name = getSpeeckListResponse.langType[0].name;
-          _defaultRate = getSpeeckListResponse.langType[0].rate;
-          _defaultPitch = getSpeeckListResponse.langType[0].pitch;
           isLoading = true;
         });
       else
         setState(() {
           seppckLangType = getSpeeckListResponse.langType;
+          _lang = seppckLangType[0].lang;
+          _name = seppckLangType[0].name;
+          _defaultRate = seppckLangType[0].rate;
+          _speechPitch = seppckLangType[0].pitch;
+          Cache.setCache("speechLang", seppckLangType[0].lang);
+          Cache.setCache("name", seppckLangType[0].name);
+          Cache.setCache("speechRate", seppckLangType[0].rate.toString());
+          Cache.setCache("speechPitch", seppckLangType[0].pitch.toString());
           isLoading = false;
         });
     }
@@ -154,7 +157,7 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                               lang: _lang,
                               name: _name,
                               defaultRate: _defaultRate,
-                              defaultPitch: _defaultPitch,
+                              defaultPitch: _speechPitch,
                               child: FadeTransition(
                                 opacity: animation,
                                 child: ChoiceChip(
@@ -185,25 +188,29 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                                       _selectIndex = index;
                                       _lang = seppckLangType[index].lang;
                                       _name = seppckLangType[index].name;
-                                      print(seppckLangType[index].pitch);
-                                      // _defaultRate = seppckLangType[index].rate;
-                                      // _defaultPitch = seppckLangType[index].pitch;
-                                      setState(() {
-                                        _defaultRate =
-                                            seppckLangType[index].rate;
-                                        _defaultPitch =
-                                            seppckLangType[index].pitch;
-                                        // Cache.setCache(
-                                        //     "speechSpeed", value.toStringAsFixed(1));
-                                      });
-                                      // Cache.setCache(
-                                      //     "speechLang", seppckLangType[index].name);
-                                      // Cache.setCache(
-                                      //     "name", seppckLangType[index].name);
-                                      // Cache.setCache(
-                                      //     "defaultRate", seppckLangType[index].rate);
-                                      // Cache.setCache("defaultPitch",
-                                      //     seppckLangType[index].pitch);
+                                      _defaultRate = seppckLangType[index].rate;
+                                      _speechPitch =
+                                          seppckLangType[index].pitch;
+                                      print("sdddsdsdsdsdsdds");
+                                      print(seppckLangType[index]);
+                                      print(_lang);
+                                      print(_name);
+                                      print(_defaultRate);
+                                      print(_speechPitch);
+                                      Cache.setCache("speechLang",
+                                          seppckLangType[index].lang);
+                                      Cache.setCache(
+                                          "name", seppckLangType[index].name);
+                                      Cache.setCache(
+                                          "speechRate",
+                                          seppckLangType[index]
+                                              .rate
+                                              .toString());
+                                      Cache.setCache(
+                                          "speechPitch",
+                                          seppckLangType[index]
+                                              .pitch
+                                              .toString());
                                     });
                                   },
                                 ),
@@ -275,8 +282,8 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                             onChanged: (dynamic value) {
                               setState(() {
                                 _defaultRate = value;
-                                // Cache.setCache(
-                                //     "speechSpeed", value.toStringAsFixed(1));
+                                Cache.setCache(
+                                    "speechRate", value.toStringAsFixed(2));
                               });
                             },
                           ),
@@ -328,7 +335,7 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                             child: SfSlider(
                               min: 0.0,
                               max: 2.0,
-                              value: _defaultPitch,
+                              value: _speechPitch,
                               interval: 0.4,
                               showTicks: true,
                               activeColor: HexColor("#DAE5C8"),
@@ -349,9 +356,9 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                               minorTicksPerInterval: 1,
                               onChanged: (dynamic value) {
                                 setState(() {
-                                  _defaultPitch = value;
+                                  _speechPitch = value;
                                   Cache.setCache(
-                                      "speechVoice", value.toStringAsFixed(1));
+                                      "speechVoice", value.toStringAsFixed(2));
                                 });
                               },
                             )),

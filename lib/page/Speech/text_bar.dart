@@ -7,7 +7,6 @@ import 'package:ciying/Widgets/dialog.dart';
 import 'package:ciying/api/speech/speech.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/gateWay.pb.dart';
-import 'package:ciying/models/speech.dart';
 import 'package:ciying/page/Speech/speech_language.dart';
 import 'package:ciying/page/User/Login_out.dart';
 import 'package:ciying/page/User/UserCache.dart';
@@ -16,7 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:flutter_share/flutter_share.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class TextInputBarUI extends StatefulWidget {
   @override
@@ -27,6 +25,7 @@ class _TextInputBarUIState extends State<TextInputBarUI>
     with SingleTickerProviderStateMixin {
   TextEditingController _searchEtController = TextEditingController();
   TabController _controller;
+  List tabs = ["中文", "英文"];
 
   final assetsAudioPlayer = AssetsAudioPlayer();
   String _locaPath = "";
@@ -83,10 +82,20 @@ class _TextInputBarUIState extends State<TextInputBarUI>
   getGetSpeechFileResponse _getSpeechFileResponse;
 
   Future<String> _getSpeechResult() async {
+    String speechLang = await Cache.getCache("speechLang");
+    String name = await Cache.getCache("name");
+    String defaultRate = await Cache.getCache("speechRate");
+    String defaultPitch = await Cache.getCache("speechPitch");
+
+// grpc request
     GetSpeechFileRequest getSpeechFileRequest = new GetSpeechFileRequest();
     getSpeechFileRequest.text = _searchEtController.text;
-    getSpeechFileRequest.langType = "";
-    getSpeechFileRequest.speechUser = "";
+    getSpeechFileRequest.lang = speechLang;
+    getSpeechFileRequest.name = name;
+    getSpeechFileRequest.rate =
+        ((double.parse(defaultRate) - 1) * 100).toStringAsFixed(0) + "%";
+    getSpeechFileRequest.pitch =
+        ((double.parse(defaultPitch) / 2 - 0.5) * 100).toStringAsFixed(0) + "%";
     _getSpeechFileResponse =
         await SpeechApi.getSpeechFileApiRequest(getSpeechFileRequest);
     if (_getSpeechFileResponse == null) {
@@ -96,180 +105,153 @@ class _TextInputBarUIState extends State<TextInputBarUI>
     if (_getSpeechFileResponse.code == ResponseCode.SUCCESSFUL) {
       return _getSpeechFileResponse.filePath;
     }
-    // dialogShow("请求超时，请检查网络");
     return "";
   }
 
   @override
   Widget build(BuildContext context) {
     YYDialog.init(context);
-    double widthUI = MediaQuery.of(context).size.width;
+    // double widthUI = MediaQuery.of(context).size.width;
     double heightUI = MediaQuery.of(context).size.height;
     return ListView(
       children: <Widget>[
         Container(
-          // height: 45,
+          height: 38,
           decoration: new BoxDecoration(
             color: HexColor("#F8FAFB"),
           ),
-          child: new TabBar(
-            // indicatorWeight: 1.0,
-            indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(1),
-              color: HexColor("#EAF0F1"),
-            ),
-            labelColor: HexColor("#2B2F4F"),
-            unselectedLabelColor: HexColor("#2B2F4F").withOpacity(0.4),
-            // isScrollable: true,
-            controller: _controller,
-            tabs: [
-              new Tab(
-                child: Container(
-                  // decoration: BoxDecoration(
-                  //     borderRadius: BorderRadius.circular(2),
-                  //     border: Border.all(
-                  //       color: HexColor("#2B2F4F"),
-                  //       width: 1,
-                  //     )),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text("英文"),
-                  ),
-                ),
+          child: TabBar(
+              controller: _controller,
+              indicatorWeight: 1.0,
+              labelColor: HexColor("#2B2F4F"),
+              unselectedLabelColor: HexColor("#2B2F4F").withOpacity(0.4),
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(1),
+                color: HexColor("#EAF0F1"),
               ),
-              new Tab(
-                child: Container(
-                  // decoration: BoxDecoration(
-                  //     borderRadius: BorderRadius.circular(2),
-                  //     border: Border.all(
-                  //       color: HexColor("#2B2F4F").withOpacity(0.4),
-                  //       width: 1,
-                  //     )),
-
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text("中文"),
-                  ),
-                ),
-              ),
-            ],
-          ),
+              tabs: tabs.map((e) => Tab(text: e)).toList()),
         ),
-        new Container(
-          height: heightUI * 0.385,
+        Container(
+          // width: MediaQuery.of(context).size.width,
+          height: heightUI * 0.63,
           child: new TabBarView(
             controller: _controller,
-            children: <Widget>[
-              // input
-              Container(
-                width: widthUI / 1.05,
-                height: heightUI * 0.76,
-                decoration: BoxDecoration(
-                  color: HexColor("#EAF0F1"),
-                  // borderRadius: BorderRadius.all(Radius.circular(12)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: HexColor("#EAF0F1").withOpacity(0.2),
-                      offset: const Offset(0, 2),
-                      blurRadius: 12.0,
+            children: tabs.map((e) {
+              return new Positioned(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      height: heightUI * 0.4,
+                      decoration: BoxDecoration(
+                        color: HexColor("#EAF0F1"),
+                        // borderRadius: BorderRadius.all(Radius.circular(12)),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                            color: HexColor("#EAF0F1").withOpacity(0.2),
+                            offset: const Offset(0, 2),
+                            blurRadius: 12.0,
+                          ),
+                        ],
+                      ),
+                      child: TextField(
+                        onChanged: (String txt) {
+                          _searchEtController.text = txt;
+                        },
+                        // 最大换行数
+                        maxLines: 50,
+                        minLines: 1,
+                        inputFormatters: [
+                          // FilteringTextInputFormatter(
+                          //   RegExp("[a-zA-Z’',.?!~;《》\r|\n|\\s]+[ ]*"),
+                          //   allow: true,
+                          // ),
+                          LengthLimitingTextInputFormatter(_searchWordCount)
+                        ],
+                        // 键盘样式
+                        textInputAction: TextInputAction.go,
+                        //设置键盘的类型
+                        keyboardType: TextInputType.multiline,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                        ),
+                        cursorColor: Color(0xFF4A6572),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: e == "中文"
+                              ? '请输入或者粘贴文本...'
+                              : "请输入英文文本或者粘贴英文文本...(其他语言文本会被忽略哦～)",
+                          // filled: true,
+                          // fillColor: Colors.white,
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 15),
+                          isDense: true,
+                        ),
+                      ),
                     ),
+                    //
+                    // 发音
+                    SpeechLanguage(tabAction: "$e"),
                   ],
                 ),
-                child: TextField(
-                  onChanged: (String txt) {
-                    _searchEtController.text = txt;
-                  },
-                  // 最大换行数
-                  maxLines: 50,
-                  minLines: 1,
-                  inputFormatters: [
-                    FilteringTextInputFormatter(
-                      RegExp("[a-zA-Z’',.?!~;《》\r|\n|\\s]+[ ]*"),
-                      allow: true,
-                    ),
-                    LengthLimitingTextInputFormatter(_searchWordCount)
-                  ],
-                  // 键盘样式
-                  textInputAction: TextInputAction.go,
-                  //设置键盘的类型
-                  keyboardType: TextInputType.multiline,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16,
-                  ),
-                  cursorColor: Color(0xFF4A6572),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: '请输入或者粘贴英语文本...(中文会被忽略哦～)',
-                    // filled: true,
-                    // fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    isDense: true,
-                  ),
-                ),
-              ),
+              );
+
               // ddssd
-              Container(
-                width: widthUI / 1.05,
-                height: heightUI * 0.76,
-                decoration: BoxDecoration(
-                  color: HexColor("#EAF0F1"), //#F8FAFB
-                  // borderRadius: BorderRadius.all(Radius.circular(12)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: HexColor("#EAF0F1").withOpacity(0.2),
-                      offset: const Offset(0, 2),
-                      blurRadius: 12.0,
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  onChanged: (String txt) {
-                    _searchEtController.text = txt;
-                  },
-                  // 最大换行数
-                  maxLines: 50,
-                  minLines: 1,
-                  inputFormatters: [
-                    // FilteringTextInputFormatter(
-                    //   RegExp("[a-zA-Z’'\n\r]+[ ]*"),
-                    //   allow: true,
-                    // ),
-                    LengthLimitingTextInputFormatter(_searchWordCount)
-                  ],
-                  // 键盘样式
-                  textInputAction: TextInputAction.go,
-                  //设置键盘的类型
-                  keyboardType: TextInputType.multiline,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16,
-                  ),
-                  cursorColor: Color(0xFF4A6572),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: '请输入或者粘贴文本...(支持中英文哦～)',
-                    // filled: true,
-                    // fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    isDense: true,
-                  ),
-                ),
-              ),
-            ],
+              // Container(
+              //   width: widthUI / 1.05,
+              //   height: heightUI * 0.76,
+              //   decoration: BoxDecoration(
+              //     color: HexColor("#EAF0F1"), //#F8FAFB
+              //     // borderRadius: BorderRadius.all(Radius.circular(12)),
+              //     boxShadow: <BoxShadow>[
+              //       BoxShadow(
+              //         color: HexColor("#EAF0F1").withOpacity(0.2),
+              //         offset: const Offset(0, 2),
+              //         blurRadius: 12.0,
+              //       ),
+              //     ],
+              //   ),
+              //   child: TextField(
+              //     onChanged: (String txt) {
+              //       _searchEtController.text = txt;
+              //     },
+              //     // 最大换行数
+              //     maxLines: 50,
+              //     minLines: 1,
+              //     inputFormatters: [
+              //       LengthLimitingTextInputFormatter(_searchWordCount)
+              //     ],
+              //     // 键盘样式
+              //     textInputAction: TextInputAction.go,
+              //     //设置键盘的类型
+              //     keyboardType: TextInputType.multiline,
+              //     style: const TextStyle(
+              //       fontWeight: FontWeight.w400,
+              //       fontSize: 16,
+              //     ),
+              //     cursorColor: Color(0xFF4A6572),
+              //     decoration: InputDecoration(
+              //       border: InputBorder.none,
+              //       hintText: '请输入或者粘贴文本...(支持中英文哦～)',
+              //       // filled: true,
+              //       // fillColor: Colors.white,
+              //       contentPadding: const EdgeInsets.symmetric(
+              //           horizontal: 15, vertical: 15),
+              //       isDense: true,
+              //     ),
+              //   ),
+              // ),
+            }).toList(),
           ),
         ),
-        // 发音
-        SpeechLanguage(),
         //按钮位置
         AnimatedOpacity(
-          duration: const Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 1500),
           opacity: 1,
           child: Padding(
             padding: const EdgeInsets.only(
-              top: 30,
+              top: 5,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -278,12 +260,6 @@ class _TextInputBarUIState extends State<TextInputBarUI>
                 RaisedButton(
                   onPressed: () async {
                     // Speech speech = Provider.of<Speech>(context).speech();
-                    String speechVoice = await Cache.getCache("speechVoice");
-                    String speechLang = await Cache.getCache("speechLang");
-                    String speechSpeed = await Cache.getCache("speechSpeed");
-                    print(speechVoice);
-                    print(speechLang);
-                    print(speechSpeed);
                     //隐藏键盘
                     // SystemChannels.textInput.invokeMethod('TextInput.hide');
                     // //输入框失去焦点
@@ -296,21 +272,27 @@ class _TextInputBarUIState extends State<TextInputBarUI>
                       var yyDialog = progressDialogBody();
                       yyDialog.show();
                       var result = await _getSpeechResult();
-                      // dialogShow("下载完成");
-                      setState(() {
-                        _url = result;
-                      });
-                      if (_url.length > 0) {
+                      if (result.length < 1) {
                         yyDialog?.dismiss();
+                        dialogShow("抱歉 \n 生成文件失败,\n 请稍后重试或联系客服");
+                      }
+                      if (result.length > 0) {
+                        yyDialog?.dismiss();
+                        print(result);
+                        setState(() {
+                          _url = result;
+                        });
                         try {
-                          assetsAudioPlayer.open(
+                          await assetsAudioPlayer.open(
                             Audio.network(_url),
                           );
                           bool playing = assetsAudioPlayer.isPlaying.value;
-                          if (playing) {}
+                          if (playing) {
+                            print("playing");
+                          }
                         } catch (t) {
                           yyDialog?.dismiss();
-                          dialogShow("生成文件失败,\n 请重试");
+                          dialogShow("试听遇到点问题,\n 请重试");
                         }
                       }
                     } else {
@@ -325,7 +307,7 @@ class _TextInputBarUIState extends State<TextInputBarUI>
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.multitrack_audio, color: Colors.white),
-                      Text("    免费试听",
+                      Text("    试听",
                           textAlign: TextAlign.right,
                           style: TextStyle(fontSize: 14, color: Colors.white)),
                       SizedBox(
@@ -336,7 +318,7 @@ class _TextInputBarUIState extends State<TextInputBarUI>
                   ),
                 ),
                 const SizedBox(
-                  width: 4,
+                  width: 3,
                 ),
                 RaisedButton(
                   onPressed: () async {

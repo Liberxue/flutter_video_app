@@ -10,7 +10,7 @@ class CacheSearch {
   Future<List<CacheResourceSection>> cacheSearchBySearchText(
       SearchRequest searchRequest) async {
     //
-    List<ResourceSection> _resourceSection = new List<ResourceSection>();
+    List<ResourceSection> _resourceSection = <ResourceSection>[];
 
     List<CacheResourceSection> cacheResourceSection;
     AppDatabase _database = await getCacheDbInstance().getDatabaseInstance();
@@ -71,7 +71,7 @@ class CacheSearch {
         await await getCacheDbInstance().getDatabaseInstance();
     final resourceSectionDao = _database.resourceSectionDao;
     List<CacheResourceSection> _cacheResourceSectionData =
-        new List<CacheResourceSection>();
+        <CacheResourceSection>[];
     _resourceSection.forEach((element) {
       _cacheResourceSectionData.add(CacheResourceSection(
         element.resourceID,

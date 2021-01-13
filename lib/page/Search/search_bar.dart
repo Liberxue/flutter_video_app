@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:ciying/common/AppConfig.dart';
 import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/page/Search/search_list.dart';

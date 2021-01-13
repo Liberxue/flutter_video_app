@@ -2,11 +2,9 @@ import 'package:ciying/common/constants.dart';
 import 'package:ciying/page/Search/search.dart';
 import 'package:ciying/page/Search/search_list.dart';
 import 'package:ciying/page/User/Login.dart';
-import 'package:ciying/Utils/store.dart';
 import 'package:ciying/page/Video/VideoPlayer.dart';
+import 'package:ciying/single_screen.dart';
 import 'package:flutter/material.dart';
-
-import 'models/auth.dart';
 
 class AppRouter extends StatefulWidget {
   @override
@@ -16,8 +14,8 @@ class AppRouter extends StatefulWidget {
 }
 
 class _AppRouterState extends State<AppRouter> {
-  bool _isLogin = true;
-  final AuthModel _auth = AuthModel();
+  // bool _isLogin = true;
+  // final AuthModel _auth = AuthModel();
 
   // @override
   // void initState() {
@@ -25,10 +23,10 @@ class _AppRouterState extends State<AppRouter> {
   //   _getLoginState();
   // }
 
-  _getLoginState() async {
-    _isLogin = await Cache.checkLoginState();
-    _isLogin ? navigationPage() : Login();
-  }
+  // _getLoginState() async {
+  //   _isLogin = await Cache.checkLoginState();
+  //   _isLogin ? navigationPage() : Login();
+  // }
 
   @override
   void dispose() {
@@ -45,10 +43,11 @@ class _AppRouterState extends State<AppRouter> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      home: SingleScreen(), //启动页面
       debugShowCheckedModeBanner: CommonConfig.IsdebugShowCheckedModeBanner,
       routes: {
         '/Login': (context) => Login(),
-        '/': (context) => SearchPage(),
+        '/Search': (context) => SearchPage(),
         '/SearchList': (context, {searchText}) => SearchList(searchText),
         '/VideoPlayer': (context, {searchText}) => VideoPlayer("", searchText),
       },

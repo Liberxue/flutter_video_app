@@ -28,17 +28,11 @@ dependencies:
   crypto: ^2.1.5
   flutter_ffmpeg: ^0.3.0
   syncfusion_flutter_sliders: ^18.1.36-beta
-  animated_text_kit: ^3.1.0
-
-
-
+  animated_text: ^1.0.2
   # flutter_downloader: ^1.5.2
   path_provider: ^1.6.24
   # permission_handler: ^3.1.0
   # toast: ^0.1.4
-
-
-  
   gallery_saver: ^2.0.1
   # image_picker: ^0.6.7+14
   logger: ^0.9.4

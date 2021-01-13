@@ -11,7 +11,7 @@ String encodeBase58(String hash) {
 }
 
 Uint8List string2Uint8List(String source) {
-  var list = new List<int>();
+  var list = <int>[];
   source.runes.forEach((rune) {
     if (rune >= 0x10000) {
       rune -= 0x10000;

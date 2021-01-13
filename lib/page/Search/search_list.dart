@@ -127,10 +127,10 @@ class __ResourceListBodyState extends State<_ResourceListBody>
 
   bool _isLoading = true;
   bool _isError = false;
-  int pageCout = 28;
+  int pageCout = 10;
   // List<CacheResourceSection> _resourceSection =
   //     new List<CacheResourceSection>();
-  List<ResourceSection> _resourceSection = new List<ResourceSection>();
+  List<ResourceSection> _resourceSection = <ResourceSection>[];
   ScrollController _scrollController = ScrollController();
 
   int page = 0;
@@ -147,6 +147,8 @@ class __ResourceListBodyState extends State<_ResourceListBody>
           _scrollController.position.maxScrollExtent) {
         setState(() {
           isLoadMoreEnd = true;
+          isLoading = true;
+          page = _resourceSection.length;
         });
         _onLoadmore();
       }
@@ -183,16 +185,22 @@ class __ResourceListBodyState extends State<_ResourceListBody>
   Future<List<ResourceSection>> _fetchData() async {
     SearchRequest searchRequest = SearchRequest();
     searchRequest.text = widget.searchText;
-    searchRequest.offset = pageCout + this.page;
+    searchRequest.offset = page;
     searchRequest.limit = pageCout;
     SearchResponse searchResponse =
         await Search.searchAPIRequest(searchRequest);
+    if (searchResponse.size == _resourceSection.length) {
+      //没有更多
+      setState(() {
+        _isError = true;
+      });
+    }
     return searchResponse.resourceSection;
   }
 
   _onLoadmore() async {
-    if (!isLoading) {
-      page++;
+    print(isLoading);
+    if (!_isError) {
       await Future.delayed(Duration(seconds: 5), () {
         _fetchData().then((data) {
           setState(() {
@@ -255,7 +263,6 @@ class __ResourceListBodyState extends State<_ResourceListBody>
 
   @override
   Widget build(BuildContext context) {
-    var length = _resourceSection?.length ?? 0;
     YYDialog.init(context);
     return Container(
       child: SlideStack(
@@ -283,7 +290,6 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                     ),
                     Expanded(
                       child: NestedScrollView(
-                        controller: _scrollController,
                         headerSliverBuilder:
                             (BuildContext context, bool innerBoxIsScrolled) {
                           return <Widget>[
@@ -301,14 +307,25 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                           child: this._isLoading
                               ? loadingWidget(context, false)
                               : ListView.builder(
+                                  shrinkWrap:
+                                      true, // 该属性表示是否根据子组件的总长度来设置ListView的长度，默认值为false
                                   itemCount: _resourceSection.length,
-                                  padding: const EdgeInsets.only(top: 8),
+                                  controller: _scrollController,
+                                  padding: const EdgeInsets.only(top: 30),
                                   scrollDirection: Axis.vertical,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    if (index + 1 == length) {
-                                      _onLoadmore();
+                                    // print("length $length");
+                                    print(" _resourceSection.length");
+                                    print(_resourceSection.length);
+                                    print("index $index");
+                                    if (index + 1 == _resourceSection.length) {
                                       if (isLoadMoreEnd) {
+                                        // _onLoadmore();
+                                        if (_isError) {
+                                          return _buildLoadText(
+                                              '暂时没有更多啦\n\r我们会持续更新，欢迎反馈...');
+                                        }
                                         return _buildLoadText('上拉加载更多~');
                                       } else {
                                         return _buildProgressIndicator();
@@ -361,7 +378,18 @@ class __ResourceListBodyState extends State<_ResourceListBody>
       child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Center(
-          child: Text(text),
+          // child: Text(text),
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+              color: Color(0xFF17262A).withOpacity(0.6),
+            ),
+          ),
         ),
       ),
       color: Colors.white70,
