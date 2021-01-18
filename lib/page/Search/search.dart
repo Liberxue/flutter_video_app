@@ -1,4 +1,5 @@
 import 'package:ciying/Utils/hexColor.dart';
+import 'package:ciying/Utils/check_Update.dart';
 import 'package:ciying/common/AppConfig.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/page/Search/search_bar.dart';
@@ -13,10 +14,12 @@ import 'package:flutter/services.dart';
 
 class SearchPage extends StatefulWidget {
   @override
-  _SearchPageState createState() => _SearchPageState();
+  State createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
+  CheckUpdate checkUpdate = CheckUpdate();
+
   int _selectedIndex = 0;
   List<BottomNavigationBarItem> _barItem = [
     BottomNavigationBarItem(icon: Icon(Icons.search_sharp), title: Text('搜索')),

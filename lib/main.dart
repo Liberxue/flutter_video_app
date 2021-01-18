@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:ciying/appRouter.dart';
+import 'package:ciying/routers/appRouter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

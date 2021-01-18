@@ -96,13 +96,13 @@ class _SearchTagsState extends State<SearchTags> with TickerProviderStateMixin {
           Padding(
             padding: const EdgeInsets.only(top: 20, bottom: 12, left: 28),
             child: Text(
-              "抖音热搜:",
+              "搜索推荐:",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
                 letterSpacing: 0.27,
-                color: HexColor("#252C4E"),
+                color: HexColor("#252C4E").withOpacity(0.6),
               ),
             ),
           ),

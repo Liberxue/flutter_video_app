@@ -1,4 +1,5 @@
 import 'package:chewie/chewie.dart';
+import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/Utils/store.dart';
 import 'package:ciying/Widgets/dialog.dart';
 import 'package:ciying/Widgets/loading_widget.dart';
@@ -481,25 +482,26 @@ class _VideoPlayerState extends State<VideoPlayer>
                                         height: 48,
                                         width: 230,
                                         decoration: BoxDecoration(
-                                          color: Color(0xFF00B6F0),
+                                          color: HexColor('#252C4E'),
                                           borderRadius: const BorderRadius.all(
                                             Radius.circular(16.0),
                                           ),
                                           boxShadow: <BoxShadow>[
                                             BoxShadow(
-                                                color: Color(0xFF00B6F0)
-                                                    .withOpacity(0.5),
+                                                color: HexColor('#252C4E')
+                                                    .withOpacity(0.3),
                                                 offset: const Offset(1.1, 1.1),
                                                 blurRadius: 10.0),
                                           ],
                                         ),
                                         child: Center(
                                           child: !_isDownload
-                                              ? Text(
-                                                  "无水印下载  消耗" +
-                                                      CommonConfig.DefaultCoin
-                                                          .toString() +
-                                                      "积分",
+                                              // ? Text(
+                                              //     "无水印下载  消耗" +
+                                              //         CommonConfig.DefaultCoin
+                                              //             .toString() +
+                                              //         "积分",
+                                              ? Text("无水印下载",
                                                   style: TextStyle(
                                                     // decoration: TextDecoration
                                                     //     .lineThrough,
@@ -507,7 +509,7 @@ class _VideoPlayerState extends State<VideoPlayer>
                                                     //     Colors.white,
                                                     color: Colors.white,
                                                     letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w600,
+                                                    fontWeight: FontWeight.w400,
                                                     fontSize: 14,
                                                   ))
                                               : Text("已下载,请在相册查看",

@@ -196,52 +196,6 @@ class _TextInputBarUIState extends State<TextInputBarUI>
                   ],
                 ),
               );
-
-              // ddssd
-              // Container(
-              //   width: widthUI / 1.05,
-              //   height: heightUI * 0.76,
-              //   decoration: BoxDecoration(
-              //     color: HexColor("#EAF0F1"), //#F8FAFB
-              //     // borderRadius: BorderRadius.all(Radius.circular(12)),
-              //     boxShadow: <BoxShadow>[
-              //       BoxShadow(
-              //         color: HexColor("#EAF0F1").withOpacity(0.2),
-              //         offset: const Offset(0, 2),
-              //         blurRadius: 12.0,
-              //       ),
-              //     ],
-              //   ),
-              //   child: TextField(
-              //     onChanged: (String txt) {
-              //       _searchEtController.text = txt;
-              //     },
-              //     // 最大换行数
-              //     maxLines: 50,
-              //     minLines: 1,
-              //     inputFormatters: [
-              //       LengthLimitingTextInputFormatter(_searchWordCount)
-              //     ],
-              //     // 键盘样式
-              //     textInputAction: TextInputAction.go,
-              //     //设置键盘的类型
-              //     keyboardType: TextInputType.multiline,
-              //     style: const TextStyle(
-              //       fontWeight: FontWeight.w400,
-              //       fontSize: 16,
-              //     ),
-              //     cursorColor: Color(0xFF4A6572),
-              //     decoration: InputDecoration(
-              //       border: InputBorder.none,
-              //       hintText: '请输入或者粘贴文本...(支持中英文哦～)',
-              //       // filled: true,
-              //       // fillColor: Colors.white,
-              //       contentPadding: const EdgeInsets.symmetric(
-              //           horizontal: 15, vertical: 15),
-              //       isDense: true,
-              //     ),
-              //   ),
-              // ),
             }).toList(),
           ),
         ),
@@ -358,19 +312,20 @@ class _TextInputBarUIState extends State<TextInputBarUI>
                       Container(
                         margin: EdgeInsets.only(
                           top: 10,
+                          left: 30,
                         ),
-                        child: Text(" 6积分",
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                                fontSize: 14,
-                                decoration: TextDecoration.lineThrough,
-                                decorationColor: Colors.red,
-                                color: Colors.red[600])),
+                        // child: Text(" 6积分",
+                        //     textAlign: TextAlign.right,
+                        //     style: TextStyle(
+                        //         fontSize: 14,
+                        //         decoration: TextDecoration.lineThrough,
+                        //         decorationColor: Colors.red,
+                        //         color: Colors.red[600])),
                       ),
-                      Text("0 ",
-                          textAlign: TextAlign.right,
-                          style: TextStyle(fontSize: 14, color: Colors.yellow)),
-                      Text(" 积分下载",
+                      // Text("0 ",
+                      //     textAlign: TextAlign.right,
+                      //     style: TextStyle(fontSize: 14, color: Colors.yellow)),
+                      Text("下载",
                           textAlign: TextAlign.right,
                           style: TextStyle(fontSize: 14, color: Colors.white)),
                       SizedBox(

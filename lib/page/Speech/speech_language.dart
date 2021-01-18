@@ -175,11 +175,16 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                                       seppckLangType[index]
                                           .name[0]
                                           .toUpperCase(),
-                                      style: TextStyle(color: Colors.red),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14,
+                                          color: Colors.red),
                                     ),
                                   ),
                                   labelStyle: TextStyle(
-                                      color: HexColor("#536470"), fontSize: 18),
+                                      fontWeight: FontWeight.w300,
+                                      color: HexColor("#536470"),
+                                      fontSize: 14),
                                   selectedColor: Colors.red[60],
                                   shadowColor: Colors.white,
                                   selectedShadowColor: Colors.red[60],
@@ -191,12 +196,6 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                                       _defaultRate = seppckLangType[index].rate;
                                       _speechPitch =
                                           seppckLangType[index].pitch;
-                                      print("sdddsdsdsdsdsdds");
-                                      print(seppckLangType[index]);
-                                      print(_lang);
-                                      print(_name);
-                                      print(_defaultRate);
-                                      print(_speechPitch);
                                       Cache.setCache("speechLang",
                                           seppckLangType[index].lang);
                                       Cache.setCache(
@@ -250,8 +249,8 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                               child: Text(
                                 "语速",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 13,
                                     color: Color(0xFF4A6572)),
                               ),
                             ),
@@ -323,8 +322,8 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                               child: Text(
                                 "语调",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 13,
                                     color: Color(0xFF4A6572)),
                               ),
                             ),
@@ -369,61 +368,3 @@ class _SpeechLanguageState extends State<SpeechLanguage>
               ]);
   }
 }
-
-// class CategoryView extends StatefulWidget {
-//   const CategoryView(
-//       {Key key,
-//       this.langType,
-//       this.animationController,
-//       this.animation,
-//       this.callback})
-//       : super(key: key);
-
-//   final VoidCallback callback;
-//   final LangType langType;
-//   final AnimationController animationController;
-//   final Animation<dynamic> animation;
-//   @override
-//   _CategoryViewState createState() => new _CategoryViewState();
-// }
-
-// var pressed = false; // This is the press variable
-// Color selectedColor = Colors.transparent;
-// var selectedLangType = "";
-// int _selectIndex = 0;
-
-// class _CategoryViewState extends State<CategoryView> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return AnimatedBuilder(
-//         animation: widget.animationController,
-//         builder: (BuildContext context, Widget child) {
-//           // var inkWell = InkWell(
-//           //   onTap: () {
-//           //     setState(() {
-//           //       print(pressed);
-//           //       if (!pressed) {
-//           //         selectedColor = Colors.transparent;
-//           //       }
-//           //       pressed = !pressed;
-//           //       selectedColor = Colors.redAccent;
-//           //       print(widget.langType);
-//           //       Cache.setCache("speechLang", "");
-//           //     });
-//           //   },
-//           return ChoiceChip(
-//             label: Text('老孟'),
-//             selected: _selectIndex == 1,
-//             onSelected: (v) {
-//               setState(() {
-//                 _selectIndex = 1;
-//               });
-//             },
-//           );
-//           // return FadeTransition(
-//           //   opacity: widget.animation,
-//           //   child: inkWell,
-//           // );
-//         });
-//   }
-// }

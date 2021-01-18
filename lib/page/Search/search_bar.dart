@@ -1,6 +1,7 @@
 import 'package:ciying/common/AppConfig.dart';
 import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/page/Search/search_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
@@ -163,11 +164,10 @@ class _getSearchBarUIState extends State<getSearchBarUI> {
                             //           .getWordCount(_searchEtController.text) >=
                             //       _searchWordCount) {
                             FocusScope.of(context).requestFocus(FocusNode());
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                              builder: (context) =>
-                                  SearchList(_searchEtController.text),
-                            ));
+
+                            Navigator.of(context).push(CupertinoPageRoute(
+                                builder: (context) =>
+                                    SearchList(_searchEtController.text)));
                             //   } else {
                             //     dialogShow("不能少于2个词哦");
                             //   }

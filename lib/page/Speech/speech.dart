@@ -176,11 +176,12 @@ class _SpeechPageState extends State<SpeechPage> with TickerProviderStateMixin {
                           left: 15,
                           right: 15,
                           child: Container(
-                            child: Text("消息提示：",
+                            child: Text(" 使用技巧:  增加空格或标点符号，调整断句和停顿",
                                 maxLines: 1,
                                 textAlign: TextAlign.left,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
+                                  fontWeight: FontWeight.w300,
                                   fontSize: 14,
                                   color: HexColor("#2B2F4F"),
                                 )),

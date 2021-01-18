@@ -2,8 +2,7 @@ import 'package:ciying/common/constants.dart';
 import 'package:ciying/page/Search/search.dart';
 import 'package:ciying/page/Search/search_list.dart';
 import 'package:ciying/page/User/Login.dart';
-import 'package:ciying/page/Video/VideoPlayer.dart';
-import 'package:ciying/single_screen.dart';
+import 'package:ciying/routers/single_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter extends StatefulWidget {
@@ -49,7 +48,7 @@ class _AppRouterState extends State<AppRouter> {
         '/Login': (context) => Login(),
         '/Search': (context) => SearchPage(),
         '/SearchList': (context, {searchText}) => SearchList(searchText),
-        '/VideoPlayer': (context, {searchText}) => VideoPlayer("", searchText),
+        // '/VideoPlayer': (context, {searchText}) => VideoPlayer("", searchText),
       },
     );
   }

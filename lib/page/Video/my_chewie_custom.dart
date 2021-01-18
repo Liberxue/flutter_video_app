@@ -41,11 +41,12 @@ class _MyChewieMaterialControlsState extends State<MyChewieMaterialControls> {
               context,
               chewieController.videoPlayerController.value.errorDescription,
             )
-          : Center(
-              child: Icon(
-                Icons.error,
-                color: Colors.red,
-                size: 42,
+          : GestureDetector(
+              onTap: () => print("上报错误～～～～～～"),
+              child: Text(
+                '当前资源请求错误，请点击重试',
+                style: TextStyle(color: Colors.red),
+                textDirection: TextDirection.ltr,
               ),
             );
     }

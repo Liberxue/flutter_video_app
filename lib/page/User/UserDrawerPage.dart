@@ -4,8 +4,6 @@ import 'package:ciying/Utils/store.dart';
 import 'package:ciying/api/coin/get_coin.dart';
 import 'package:ciying/grpc/proto/accountManager.pb.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
-import 'package:ciying/page/Favorites/favorite_timeline.dart';
-import 'package:ciying/page/User/Login.dart';
 import 'package:ciying/page/User/Login_out.dart';
 import 'package:ciying/page/User/UserCache.dart';
 import 'package:ciying/Utils/hexColor.dart';
@@ -151,130 +149,130 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 180, left: 10),
-                child: ListView.builder(
-                    itemCount: user.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          if (index == 1) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => FavoriteTimeline(),
-                                    maintainState: false));
-                          }
-                        },
-                        child: Ink(
-                          height: 50.0,
-                          width: 100,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              if (user[index].title == "积分")
-                                new Container(
-                                  padding: EdgeInsets.only(left: 10.0),
-                                  height: 30,
-                                  color: Colors.transparent,
-                                  child: Text(
-                                      userInfo != null ? _coin.toString() : "0",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Color(0xFF213333))),
-                                ),
-                              new Container(
-                                width: 10,
-                                color: Colors.transparent,
-                              ),
-                              new Container(
-                                width: 80,
-                                height: 33,
-                                color: Colors.transparent,
-                                child: Text(
-                                  user[index].title,
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 14),
-                                ),
-                              ),
-                              new Container(
-                                width: 20,
-                                color: Colors.transparent,
-                              ),
-                              if (user[index].title == "积分")
-                                new Container(
-                                  width: 85,
-                                  child: new Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        0.0, 0.0, 0.0, 10.0),
-                                    child: new RaisedButton(
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            barrierDismissible: true,
-                                            builder: (_) {
-                                              return Center(
-                                                child: Card(
-                                                  child: Container(
-                                                    width: 300,
-                                                    height: 300,
-                                                    child: Column(
-                                                      children: <Widget>[
-                                                        SizedBox(
-                                                          height: 10.0,
-                                                        ),
-                                                        Text("请截图二维码",
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    16.0)),
-                                                        SizedBox(
-                                                          height: 10.0,
-                                                        ),
-                                                        Image.asset(
-                                                          "assets/images/support.png",
-                                                          height: 200,
-                                                          width: 200,
-                                                        ),
-                                                        SizedBox(height: 10.0),
-                                                        Text("请添加微信，联系客服充值",
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    14.0)),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            });
-                                      },
-                                      child: new Text("充值",
-                                          style: TextStyle(
-                                              color: Color(0xFFEDF0F2),
-                                              fontSize: 12)),
-                                      color: HexColor("#DF9833"),
-                                    ),
-                                  ),
-                                ),
-                              if (user[index].title != "积分")
-                                new Container(
-                                  width: 120,
-                                  color: Colors.black,
-                                ),
-                              if (user[index].title != "积分")
-                                new Container(
-                                  width: 100,
-                                  height: 30,
-                                  color: Colors.transparent,
-                                  child: Text(
-                                    '100',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 18),
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
+                // child: ListView.builder(
+                //     itemCount: user.length,
+                //     itemBuilder: (context, index) {
+                // return InkWell(
+                //   onTap: () {
+                //     if (index == 1) {
+                //       Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //               builder: (context) => FavoriteTimeline(),
+                //               maintainState: false));
+                //     }
+                //   },
+                // child: Ink(
+                //   height: 50.0,
+                //   width: 100,
+                //   child: Row(
+                //     crossAxisAlignment: CrossAxisAlignment.stretch,
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     children: <Widget>[
+                //       if (user[index].title == "积分")
+                //         new Container(
+                //           padding: EdgeInsets.only(left: 10.0),
+                //           height: 30,
+                //           color: Colors.transparent,
+                //           child: Text(
+                //               userInfo != null ? _coin.toString() : "0",
+                //               style: TextStyle(
+                //                   fontSize: 20,
+                //                   color: Color(0xFF213333))),
+                //         ),
+                //       new Container(
+                //         width: 10,
+                //         color: Colors.transparent,
+                //       ),
+                //       new Container(
+                //         width: 80,
+                //         height: 33,
+                //         color: Colors.transparent,
+                //         child: Text(
+                //           user[index].title,
+                //           style: TextStyle(
+                //               color: Colors.black, fontSize: 14),
+                //         ),
+                //       ),
+                //       new Container(
+                //         width: 20,
+                //         color: Colors.transparent,
+                //       ),
+                //       if (user[index].title == "积分")
+                //         new Container(
+                //           width: 85,
+                //           child: new Padding(
+                //             padding: const EdgeInsets.fromLTRB(
+                //                 0.0, 0.0, 0.0, 10.0),
+                //             child: new RaisedButton(
+                //               onPressed: () {
+                //                 showDialog(
+                //                     context: context,
+                //                     barrierDismissible: true,
+                //                     builder: (_) {
+                //                       return Center(
+                //                         child: Card(
+                //                           child: Container(
+                //                             width: 300,
+                //                             height: 300,
+                //                             child: Column(
+                //                               children: <Widget>[
+                //                                 SizedBox(
+                //                                   height: 10.0,
+                //                                 ),
+                //                                 Text("请截图二维码",
+                //                                     style: TextStyle(
+                //                                         fontSize:
+                //                                             16.0)),
+                //                                 SizedBox(
+                //                                   height: 10.0,
+                //                                 ),
+                //                                 Image.asset(
+                //                                   "assets/images/support.png",
+                //                                   height: 200,
+                //                                   width: 200,
+                //                                 ),
+                //                                 SizedBox(height: 10.0),
+                //                                 Text("请添加微信，联系客服充值",
+                //                                     style: TextStyle(
+                //                                         fontSize:
+                //                                             14.0)),
+                //                               ],
+                //                             ),
+                //                           ),
+                //                         ),
+                //                       );
+                //                     });
+                //               },
+                //               child: new Text("充值",
+                //                   style: TextStyle(
+                //                       color: Color(0xFFEDF0F2),
+                //                       fontSize: 12)),
+                //               color: HexColor("#DF9833"),
+                //             ),
+                //           ),
+                //         ),
+                //       if (user[index].title != "积分")
+                //         new Container(
+                //           width: 120,
+                //           color: Colors.black,
+                //         ),
+                //       if (user[index].title != "积分")
+                //         new Container(
+                //           width: 100,
+                //           height: 30,
+                //           color: Colors.transparent,
+                //           child: Text(
+                //             '100',
+                //             style: TextStyle(
+                //                 color: Colors.black, fontSize: 18),
+                //           ),
+                //         ),
+                //     ],
+                //   ),
+                // ),
+                // );
+                // }),
               ),
               Container(
                 padding: EdgeInsets.only(top: 320, left: 20),

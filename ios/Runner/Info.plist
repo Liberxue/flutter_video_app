@@ -33,6 +33,17 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+  <key>NSExceptionDomains</key>
+    <key>https://flutter.dev/</key>
+      <!-- add this key to enable subdomains such as sub.yourserver.com -->
+      <key>NSIncludesSubdomains</key>
+      <true/>
+      <!-- add this key to allow standard HTTP requests, thus negating the ATS -->
+      <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+      <true/>
+      <!-- add this key to specify the minimum TLS version to accept -->
+      <key>NSTemporaryExceptionMinimumTLSVersion</key>
+      <string>TLSv1.1</string>
 	<key>NSCameraUsageDescription</key>
 	<string>词影保存视频</string>
 	<key>NSMicrophoneUsageDescription</key>

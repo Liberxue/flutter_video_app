@@ -4,6 +4,7 @@ import 'package:ciying/api/search/search.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
+import 'package:ciying/page/Search/filters_screen.dart';
 import 'package:ciying/page/Search/search_list_view.dart';
 import 'package:ciying/widgets/custom_app_bar.dart';
 import 'package:ciying/Utils/hexColor.dart';
@@ -26,7 +27,7 @@ class _SearchListState extends State<SearchList> {
   List<BottomNavigationBarItem> _barItem = [
     BottomNavigationBarItem(
         icon: Icon(Icons.search_sharp), title: Text('聚合搜索')),
-    BottomNavigationBarItem(icon: Icon(Icons.cut_sharp), title: Text('定制化搜索')),
+    BottomNavigationBarItem(icon: Icon(Icons.cut_sharp), title: Text('关于我们')),
   ];
 
   @override
@@ -35,21 +36,40 @@ class _SearchListState extends State<SearchList> {
       debugShowCheckedModeBanner: CommonConfig.IsdebugShowCheckedModeBanner,
       home: Scaffold(
         backgroundColor: HexColor("#fff"),
-        body: getList(widget.searchText, this._selectedIndex),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (int index) {
-            setState(() {
-              this._selectedIndex = index;
-            });
-          },
-          currentIndex: this._selectedIndex,
-          items: _barItem,
-          fixedColor: HexColor("#252C4E"),
-          selectedFontSize: 12,
-          type: BottomNavigationBarType.fixed,
-        ),
+        body: _ResourceListBody(widget.searchText),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   onTap: (int index) {
+        //     setState(() {
+        //       this._selectedIndex = index;
+        //     });
+        //   },
+        //   currentIndex: this._selectedIndex,
+        //   items: _barItem,
+        //   fixedColor: HexColor("#252C4E"),
+        //   selectedFontSize: 12,
+        //   type: BottomNavigationBarType.fixed,
+        // ),
       ),
     );
+    // return MaterialApp(
+    //   debugShowCheckedModeBanner: CommonConfig.IsdebugShowCheckedModeBanner,
+    //   home: Scaffold(
+    //     backgroundColor: HexColor("#fff"),
+    //     body: getList(widget.searchText, this._selectedIndex),
+    //     bottomNavigationBar: BottomNavigationBar(
+    //       onTap: (int index) {
+    //         setState(() {
+    //           this._selectedIndex = index;
+    //         });
+    //       },
+    //       currentIndex: this._selectedIndex,
+    //       items: _barItem,
+    //       fixedColor: HexColor("#252C4E"),
+    //       selectedFontSize: 12,
+    //       type: BottomNavigationBarType.fixed,
+    //     ),
+    //   ),
+    // );
   }
 
   getList(String search, int selectedIndex) {
@@ -57,12 +77,8 @@ class _SearchListState extends State<SearchList> {
       return _ResourceListBody(search);
     } else if (selectedIndex == 1) {
       return VipCustomPageContent();
-    } else {}
+    }
   }
-  //   List<Widget> _pageList = [
-  //   _ResourceListBody(search),
-  //   // NewsPage(),
-  // ];
 }
 
 // 定制化。。。。。
@@ -90,7 +106,7 @@ class VipCustomPageContent extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                "联系我们",
+                "关于我们",
                 style: TextStyle(
                     fontSize: 14,
                     color: HexColor("#252C4E"),
@@ -137,6 +153,7 @@ class __ResourceListBodyState extends State<_ResourceListBody>
   bool isLoadingMore = true; //是否加载更多
   bool isLoading = false; //是否加载中
   bool isLoadMoreEnd = false; //是否加载完毕
+  String showText = '';
 
   @override
   void initState() {
@@ -315,16 +332,12 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                                   scrollDirection: Axis.vertical,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    // print("length $length");
-                                    print(" _resourceSection.length");
-                                    print(_resourceSection.length);
-                                    print("index $index");
                                     if (index + 1 == _resourceSection.length) {
                                       if (isLoadMoreEnd) {
                                         // _onLoadmore();
-                                        if (_isError) {
+                                        if (_isError || _isLoading) {
                                           return _buildLoadText(
-                                              '暂时没有更多啦\n\r我们会持续更新，欢迎反馈...');
+                                              '暂时没有更多～ 请过会重试\n\r我们会持续更新，欢迎反馈......');
                                         }
                                         return _buildLoadText('上拉加载更多~');
                                       } else {
@@ -439,7 +452,7 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      '精准搜索/自定义素材,点击右下角洽谈...',
+                      '自定义素材/搜索 智能视频分层情感行为分析...',
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
@@ -458,7 +471,7 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                     borderRadius: const BorderRadius.all(
                       Radius.circular(4.0),
                     ),
-                    onTap: () {
+                    onTap: () async {
                       FocusScope.of(context).requestFocus(FocusNode());
                       // Navigator.push<dynamic>(
                       //   context,
@@ -466,6 +479,19 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                       //       builder: (BuildContext context) => FiltersScreen(),
                       //       fullscreenDialog: true),
                       // );
+                      final result = await Navigator.push(
+                          //等待
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => new FiltersScreen(),
+                              fullscreenDialog: true));
+                      //SnackBar是用户操作后，显示提示信息的一个控件，类似Tost，会自动隐藏。SnackBar是以Scaffold的showSnackBar方法来进行显示的
+                      Scaffold.of(context)
+                          .showSnackBar(SnackBar(content: Text('$result')));
+                      setState(() {
+                        showText = '$result';
+                        print(showText);
+                      });
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -476,16 +502,16 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                             style: TextStyle(
                               fontWeight: FontWeight.w100,
                               fontSize: 16,
-                              // color: Color(0xFF4A6572),
-                              color: Colors.white,
+                              color: Color(0xFF4A6572),
+                              // color: Colors.white,
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Icon(
                               Icons.sort,
-                              // color: Color(0xFF4A6572),
-                              color: Colors.white,
+                              color: Color(0xFF4A6572),
+                              // color: Colors.white,
                             ),
                           ),
                         ],

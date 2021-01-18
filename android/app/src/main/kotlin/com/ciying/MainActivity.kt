@@ -1,4 +1,4 @@
-package com.example.ciying
+package com.ciying
 
 import io.flutter.embedding.android.FlutterActivity
 

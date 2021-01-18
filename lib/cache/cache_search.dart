@@ -67,12 +67,12 @@ class CacheSearch {
   //  cache by duration is null ; start request remote and save remote response to cache
   Future<List<CacheResourceSection>> saveSearchData(
       List<ResourceSection> _resourceSection, String searchText) async {
-    AppDatabase _database =
-        await await getCacheDbInstance().getDatabaseInstance();
+    AppDatabase _database = await getCacheDbInstance().getDatabaseInstance();
     final resourceSectionDao = _database.resourceSectionDao;
     List<CacheResourceSection> _cacheResourceSectionData =
         <CacheResourceSection>[];
     _resourceSection.forEach((element) {
+      var resourceAddressCachePath;
       _cacheResourceSectionData.add(CacheResourceSection(
         element.resourceID,
         element.duration,
@@ -83,7 +83,7 @@ class CacheSearch {
         element.isFavorite,
         element.isDownload,
         searchText,
-        null,
+        resourceAddressCachePath,
       ));
     });
     await resourceSectionDao.insertResourceSections(_cacheResourceSectionData);
