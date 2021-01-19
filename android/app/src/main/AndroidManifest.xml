@@ -37,5 +37,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+          
+           <!-- 版本更新重试提示弹窗-->
+        <activity
+            android:name=".RetryUpdateTipDialog"
+            android:theme="@style/DialogTheme" />
     </application>
 </manifest>

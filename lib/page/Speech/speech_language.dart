@@ -102,7 +102,7 @@ class _SpeechLanguageState extends State<SpeechLanguage>
   Widget build(BuildContext context) {
     return isLoading
         ? Padding(
-            padding: const EdgeInsets.all(50),
+            padding: const EdgeInsets.all(20),
             child: Text(
               "正在加载 ... ",
               textAlign: TextAlign.left,
@@ -110,7 +110,7 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                 fontWeight: FontWeight.w400,
                 fontSize: 18,
                 letterSpacing: 0.27,
-                color: HexColor("#252C4E"),
+                color: HexColor("#252C4E").withOpacity(0.75),
               ),
             ),
           )
@@ -119,11 +119,11 @@ class _SpeechLanguageState extends State<SpeechLanguage>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
                 const SizedBox(
-                  height: 15,
+                  height: 5,
                 ),
                 new Container(
-                  height: 60,
-                  width: double.infinity,
+                  height: 50,
+                  width: double.infinity * 0.5,
                   child: FutureBuilder<bool>(
                       future: getData(),
                       builder:
@@ -183,7 +183,8 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                                   ),
                                   labelStyle: TextStyle(
                                       fontWeight: FontWeight.w300,
-                                      color: HexColor("#536470"),
+                                      color:
+                                          HexColor("#536470").withOpacity(0.75),
                                       fontSize: 14),
                                   selectedColor: Colors.red[60],
                                   shadowColor: Colors.white,
@@ -224,7 +225,7 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                   opacity: 1,
                   child: Padding(
                     padding: const EdgeInsets.only(
-                      top: 2,
+                      top: 1,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -236,7 +237,7 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                           ),
                           child: Container(
                             width: 50,
-                            height: 35,
+                            height: 30,
                             decoration: BoxDecoration(
                               color: HexColor("F3DFE0"),
                               borderRadius:
@@ -257,7 +258,7 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                           ),
                         ),
                         Container(
-                          width: 360,
+                          width: MediaQuery.of(context).size.width * 0.8,
                           child: SfSlider(
                             min: 0.6,
                             max: 1.6,
@@ -330,7 +331,7 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                           ),
                         ),
                         Container(
-                            width: 360,
+                            width: MediaQuery.of(context).size.width * 0.8,
                             child: SfSlider(
                               min: 0.0,
                               max: 2.0,

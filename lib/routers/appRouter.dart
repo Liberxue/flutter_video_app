@@ -16,11 +16,10 @@ class _AppRouterState extends State<AppRouter> {
   // bool _isLogin = true;
   // final AuthModel _auth = AuthModel();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _getLoginState();
-  // }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   // _getLoginState() async {
   //   _isLogin = await Cache.checkLoginState();

@@ -4,7 +4,6 @@ import 'package:ciying/api/search/search.dart';
 import 'package:ciying/common/constants.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
-import 'package:ciying/page/Search/filters_screen.dart';
 import 'package:ciying/page/Search/search_list_view.dart';
 import 'package:ciying/widgets/custom_app_bar.dart';
 import 'package:ciying/Utils/hexColor.dart';
@@ -479,19 +478,20 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                       //       builder: (BuildContext context) => FiltersScreen(),
                       //       fullscreenDialog: true),
                       // );
-                      final result = await Navigator.push(
-                          //等待
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => new FiltersScreen(),
-                              fullscreenDialog: true));
-                      //SnackBar是用户操作后，显示提示信息的一个控件，类似Tost，会自动隐藏。SnackBar是以Scaffold的showSnackBar方法来进行显示的
-                      Scaffold.of(context)
-                          .showSnackBar(SnackBar(content: Text('$result')));
-                      setState(() {
-                        showText = '$result';
-                        print(showText);
-                      });
+
+                      // final result = await Navigator.push(
+                      //     //等待
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => new FiltersScreen(),
+                      //         fullscreenDialog: true));
+                      // //SnackBar是用户操作后，显示提示信息的一个控件，类似Tost，会自动隐藏。SnackBar是以Scaffold的showSnackBar方法来进行显示的
+                      // Scaffold.of(context)
+                      //     .showSnackBar(SnackBar(content: Text('$result')));
+                      // setState(() {
+                      //   showText = '$result';
+                      //   print(showText);
+                      // });
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -502,16 +502,16 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                             style: TextStyle(
                               fontWeight: FontWeight.w100,
                               fontSize: 16,
-                              color: Color(0xFF4A6572),
-                              // color: Colors.white,
+                              // color: Color(0xFF4A6572),
+                              color: Colors.white,
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Icon(
                               Icons.sort,
-                              color: Color(0xFF4A6572),
-                              // color: Colors.white,
+                              // color: Color(0xFF4A6572),
+                              color: Colors.white,
                             ),
                           ),
                         ],

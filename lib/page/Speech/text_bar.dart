@@ -1,6 +1,4 @@
 import 'dart:ui';
-
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/Utils/store.dart';
 import 'package:ciying/Widgets/dialog.dart';
@@ -15,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:just_audio/just_audio.dart';
 
 class TextInputBarUI extends StatefulWidget {
   @override
@@ -27,7 +26,8 @@ class _TextInputBarUIState extends State<TextInputBarUI>
   TabController _controller;
   List tabs = ["中文", "英文"];
 
-  final assetsAudioPlayer = AssetsAudioPlayer();
+  final player = AudioPlayer();
+
   String _locaPath = "";
   String _url = "";
   bool _isLoading = false;
@@ -71,10 +71,11 @@ class _TextInputBarUIState extends State<TextInputBarUI>
   }
 
   @override
-  void dispose() {
+  Future<void> dispose() async {
     _searchEtController.dispose();
-    assetsAudioPlayer.dispose();
-    assetsAudioPlayer.stop();
+    await player.stop();
+// Permanently release decoders/resources used by the player.
+    await player.dispose();
     super.dispose();
   }
 
@@ -116,7 +117,8 @@ class _TextInputBarUIState extends State<TextInputBarUI>
     return ListView(
       children: <Widget>[
         Container(
-          height: 38,
+          height: heightUI * 0.05,
+          width: MediaQuery.of(context).size.width * 0.8,
           decoration: new BoxDecoration(
             color: HexColor("#F8FAFB"),
           ),
@@ -133,7 +135,7 @@ class _TextInputBarUIState extends State<TextInputBarUI>
         ),
         Container(
           // width: MediaQuery.of(context).size.width,
-          height: heightUI * 0.63,
+          height: heightUI * 0.66,
           child: new TabBarView(
             controller: _controller,
             children: tabs.map((e) {
@@ -237,13 +239,9 @@ class _TextInputBarUIState extends State<TextInputBarUI>
                           _url = result;
                         });
                         try {
-                          await assetsAudioPlayer.open(
-                            Audio.network(_url),
-                          );
-                          bool playing = assetsAudioPlayer.isPlaying.value;
-                          if (playing) {
-                            print("playing");
-                          }
+                          await player.setUrl(_url);
+                          player
+                              .play(); // Usually you don't want to wait for playback to finish.
                         } catch (t) {
                           yyDialog?.dismiss();
                           dialogShow("试听遇到点问题,\n 请重试");

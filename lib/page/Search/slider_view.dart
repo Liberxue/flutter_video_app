@@ -60,7 +60,7 @@ class _SliderViewState extends State<SliderView> {
               },
               min: 0,
               max: 100,
-              activeColor: HexColor('#252C4E'),
+              activeColor: HexColor('#54D3C2'),
               inactiveColor: Colors.grey.withOpacity(0.4),
               divisions: 100,
               value: distValue,

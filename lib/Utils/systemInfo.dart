@@ -13,6 +13,14 @@ class GetDeviceInfo {
   //   return encodeBase58(version);
   // }
 
+  static bool isIos() {
+    return Platform.isIOS;
+  }
+
+  static bool isAndroid() {
+    return Platform.isAndroid;
+  }
+
   Future<String> getAllDeviceInfo() async {
     // return json.encode(_deviceInfo);
 

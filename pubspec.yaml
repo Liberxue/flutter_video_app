@@ -2,7 +2,7 @@ name: ciying
 description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.9
+version: 1.0.0+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -39,10 +39,10 @@ dependencies:
   flutter_cache_manager: ^2.0.0 #https://github.com/tekartik/sqflite/issues/536
   flutter_custom_dialog: ^1.0.20 
   floor: ^0.17.0
-  assets_audio_player: ^2.0.13+1
+  just_audio: ^0.6.5
   flutter_inappwebview: ^4.0.0+4
   flutter_xupdate: ^0.0.3
-  fluro: ^1.7.8
+  oktoast: ^2.3.1+1
 
 
 

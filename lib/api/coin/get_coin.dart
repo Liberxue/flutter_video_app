@@ -11,7 +11,7 @@ class GetAcountCoin {
     var channelClient = await Manager().clientChannel();
     final stub = GateWayClient(channelClient);
     var callConfig = await checkTokenCallOptionsConf();
-    if (callConfig.metadata.map == null) {
+    if (callConfig == null) {
       await channelClient.shutdown();
       return null;
     }
