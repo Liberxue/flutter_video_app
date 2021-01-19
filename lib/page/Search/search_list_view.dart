@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/Utils/response_code_enum.dart';
+import 'package:ciying/grpc/proto/common.pbenum.dart';
+import 'package:ciying/grpc/proto/gateWay.pb.dart';
 import 'package:ciying/grpc/proto/search.pb.dart';
-import 'package:ciying/models/router._arg.dart';
+import 'package:ciying/models/Feedback.dart';
 import 'package:ciying/page/Video/VideoPlayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -107,11 +109,26 @@ class _SearchlListViewState extends State<SearchlListView> {
                                 // ),
                                 errorWidget: (context, url, error) =>
                                     GestureDetector(
-                                  onTap: () => print("上报错误～～～～～～"),
-                                  child: Text(
-                                    '当前资源请求错误，请点击重试',
-                                    style: TextStyle(color: Colors.red),
-                                    textDirection: TextDirection.ltr,
+                                  onTap: () {
+                                    FeedbackRequest feedbackRequest =
+                                        new FeedbackRequest();
+                                    feedbackRequest.feedbackType =
+                                        FeedbackType.ErrorReport;
+                                    feedbackRequest.content =
+                                        widget.resourceSection.resourceID;
+                                    FeedBackModel()
+                                        .favoriteAction(feedbackRequest);
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      ' 已上报反馈 \r\n 当前资源请求错误 \r\n 请手动点击重试 ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14,
+                                        color: Colors.red.withOpacity(0.8),
+                                      ),
+                                      textDirection: TextDirection.ltr,
+                                    ),
                                   ),
                                 ),
                               ),

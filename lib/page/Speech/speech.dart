@@ -188,6 +188,7 @@ class _SpeechPageState extends State<SpeechPage> with TickerProviderStateMixin {
                         //   ),
                         // ),
                         Container(
+                          padding: const EdgeInsets.all(12),
                           child: Text(" 使用技巧:  增加空格或标点符号，调整断句和停顿",
                               maxLines: 1,
                               textAlign: TextAlign.left,

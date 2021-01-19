@@ -257,6 +257,13 @@ class __ResourceListBodyState extends State<_ResourceListBody>
         _isError = true;
       });
       return;
+    }
+    if (searchResponse.size <= 1) {
+      dialogShow(" \n\r 数据正在预热 \n\r 请过会再重试喔");
+      setState(() {
+        _isError = true;
+      });
+      return;
     } else
       setState(() {
         _resourceSection.addAll(searchResponse.resourceSection);
@@ -336,7 +343,7 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                                         // _onLoadmore();
                                         if (_isError || _isLoading) {
                                           return _buildLoadText(
-                                              '暂时没有更多～ 请过会重试\n\r我们会持续更新，欢迎反馈......');
+                                              '暂时没有更多～ 请稍后重试\n\r我们会持续更新,欢迎反馈......');
                                         }
                                         return _buildLoadText('上拉加载更多~');
                                       } else {

@@ -1,13 +1,18 @@
 import 'dart:async';
 import 'package:chewie/chewie.dart';
+import 'package:ciying/grpc/proto/common.pbenum.dart';
+import 'package:ciying/grpc/proto/gateWay.pb.dart';
+import 'package:ciying/models/Feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/src/material_progress_bar.dart';
 
 class MyChewieMaterialControls extends StatefulWidget {
+  final String resourceAddress;
   final String transcript;
   final String chinsesTranScript;
-  MyChewieMaterialControls(this.transcript, this.chinsesTranScript);
+  MyChewieMaterialControls(
+      this.resourceAddress, this.transcript, this.chinsesTranScript);
 
   // const MyChewieMaterialControls({Key key}) : super(key: key);
 
@@ -42,11 +47,22 @@ class _MyChewieMaterialControlsState extends State<MyChewieMaterialControls> {
               chewieController.videoPlayerController.value.errorDescription,
             )
           : GestureDetector(
-              onTap: () => print("上报错误～～～～～～"),
-              child: Text(
-                '当前资源请求错误，请点击重试',
-                style: TextStyle(color: Colors.red),
-                textDirection: TextDirection.ltr,
+              onTap: () {
+                FeedbackRequest feedbackRequest = new FeedbackRequest();
+                feedbackRequest.feedbackType = FeedbackType.ErrorReport;
+                feedbackRequest.content = widget.resourceAddress;
+                FeedBackModel().favoriteAction(feedbackRequest);
+              },
+              child: Center(
+                child: Text(
+                  ' 已上报反馈 \r\n 当前资源请求错误 \r\n 请手动点击重试 ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    color: Colors.red.withOpacity(0.8),
+                  ),
+                  textDirection: TextDirection.ltr,
+                ),
               ),
             );
     }

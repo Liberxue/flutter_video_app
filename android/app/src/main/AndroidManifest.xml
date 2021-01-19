@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ciying">
    <application
+        android:networkSecurityConfig="@xml/network_security_config"
         android:label="ciying"
         android:icon="@mipmap/launcher_icon">
         <activity
@@ -37,7 +38,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-          
            <!-- 版本更新重试提示弹窗-->
         <activity
             android:name=".RetryUpdateTipDialog"

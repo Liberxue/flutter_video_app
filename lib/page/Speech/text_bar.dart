@@ -115,6 +115,7 @@ class _TextInputBarUIState extends State<TextInputBarUI>
     // double widthUI = MediaQuery.of(context).size.width;
     double heightUI = MediaQuery.of(context).size.height;
     return ListView(
+      padding: const EdgeInsets.only(top: 45),
       children: <Widget>[
         Container(
           height: heightUI * 0.05,
@@ -135,7 +136,7 @@ class _TextInputBarUIState extends State<TextInputBarUI>
         ),
         Container(
           // width: MediaQuery.of(context).size.width,
-          height: heightUI * 0.66,
+          height: heightUI * 0.63,
           child: new TabBarView(
             controller: _controller,
             children: tabs.map((e) {
@@ -144,7 +145,7 @@ class _TextInputBarUIState extends State<TextInputBarUI>
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      height: heightUI * 0.4,
+                      height: heightUI * 0.38,
                       decoration: BoxDecoration(
                         color: HexColor("#EAF0F1"),
                         // borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -207,7 +208,7 @@ class _TextInputBarUIState extends State<TextInputBarUI>
           opacity: 1,
           child: Padding(
             padding: const EdgeInsets.only(
-              top: 5,
+              top: 2,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

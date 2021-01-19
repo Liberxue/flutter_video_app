@@ -153,6 +153,7 @@ class _VideoPlayerState extends State<VideoPlayer>
       autoInitialize: true,
       allowedScreenSleep: false,
       customControls: MyChewieMaterialControls(
+        widget._resourceSection.resourceID,
           widget._resourceSection.transcript,
           widget._resourceSection.chinsesTranScript),
     );
