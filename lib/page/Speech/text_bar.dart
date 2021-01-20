@@ -71,11 +71,11 @@ class _TextInputBarUIState extends State<TextInputBarUI>
   }
 
   @override
-  Future<void> dispose() async {
+  void dispose() {
     _searchEtController.dispose();
-    await player.stop();
+    // player.stop();
 // Permanently release decoders/resources used by the player.
-    await player.dispose();
+    // player.dispose();
     super.dispose();
   }
 
@@ -140,7 +140,7 @@ class _TextInputBarUIState extends State<TextInputBarUI>
           child: new TabBarView(
             controller: _controller,
             children: tabs.map((e) {
-              return new Positioned(
+              return Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
