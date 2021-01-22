@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/Utils/response_code_enum.dart';
 import 'package:ciying/grpc/proto/common.pbenum.dart';
@@ -8,6 +8,7 @@ import 'package:ciying/models/Feedback.dart';
 import 'package:ciying/page/Video/VideoPlayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 
 class SearchlListView extends StatefulWidget {
   const SearchlListView(this.resourceSection, this.searchText,
@@ -39,6 +40,7 @@ class _SearchlListViewState extends State<SearchlListView> {
               child: InkWell(
                 splashColor: Colors.transparent,
                 onTap: () {
+                  // print(widget.resourceSection);
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
@@ -77,61 +79,61 @@ class _SearchlListViewState extends State<SearchlListView> {
                           children: <Widget>[
                             AspectRatio(
                               aspectRatio: 2,
-                              // child: Image.network(
-                              //   widget.resourceSection.resourceAddress,
-                              //   fit: BoxFit.cover,
-                              // ),
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    widget.resourceSection.resourceAddress,
-                                imageBuilder: (context, imageProvider) =>
-                                    Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
-                                        colorFilter: ColorFilter.mode(
-                                            Colors.white, BlendMode.colorBurn)),
-                                  ),
-                                ),
-                                // placeholder: (context, url) =>
-                                //     CircularProgressIndicator(),
-
-                                // errorWidget: (context, url, error) =>
-                                //     Icon(Icons.error),
-                                // errorWidget: (context, url, e) => Center(
-                                //   // print("dsddss"),
-                                //   child: Text(
-                                //     '当前资源请求错误，请点击重试',
-                                //     style: TextStyle(color: Colors.red),
-                                //     textDirection: TextDirection.ltr,
-                                //   ),
-                                // ),
-                                errorWidget: (context, url, error) =>
-                                    GestureDetector(
-                                  onTap: () {
-                                    FeedbackRequest feedbackRequest =
-                                        new FeedbackRequest();
-                                    feedbackRequest.feedbackType =
-                                        FeedbackType.ErrorReport;
-                                    feedbackRequest.content =
-                                        widget.resourceSection.resourceID;
-                                    FeedBackModel()
-                                        .favoriteAction(feedbackRequest);
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      ' 已上报反馈 \r\n 当前资源请求错误 \r\n 请手动点击重试 ',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14,
-                                        color: Colors.red.withOpacity(0.8),
-                                      ),
-                                      textDirection: TextDirection.ltr,
-                                    ),
-                                  ),
-                                ),
+                              child: Image.network(
+                                widget.resourceSection.resourceAddress,
+                                fit: BoxFit.cover,
                               ),
+                              // child: CachedNetworkImage(
+                              //   imageUrl:
+                              //       widget.resourceSection.resourceAddress,
+                              //   imageBuilder: (context, imageProvider) =>
+                              //       Container(
+                              //     decoration: BoxDecoration(
+                              //       image: DecorationImage(
+                              //           image: imageProvider,
+                              //           fit: BoxFit.cover,
+                              //           colorFilter: ColorFilter.mode(
+                              //               Colors.white, BlendMode.colorBurn)),
+                              //     ),
+                              //   ),
+                              // placeholder: (context, url) =>
+                              //     CircularProgressIndicator(),
+
+                              // errorWidget: (context, url, error) =>
+                              //     Icon(Icons.error),
+                              // errorWidget: (context, url, e) => Center(
+                              //   // print("dsddss"),
+                              //   child: Text(
+                              //     '当前资源请求错误，请点击重试',
+                              //     style: TextStyle(color: Colors.red),
+                              //     textDirection: TextDirection.ltr,
+                              //   ),
+                              // ),
+                              // errorWidget: (context, url, error) =>
+                              //     GestureDetector(
+                              //   onTap: () {
+                              //     FeedbackRequest feedbackRequest =
+                              //         new FeedbackRequest();
+                              //     feedbackRequest.feedbackType =
+                              //         FeedbackType.ErrorReport;
+                              //     feedbackRequest.content =
+                              //         widget.resourceSection.resourceID;
+                              //     FeedBackModel()
+                              //         .favoriteAction(feedbackRequest);
+                              //   },
+                              //   child: Center(
+                              //     child: Text(
+                              //       ' 已上报反馈 \r\n 当前资源请求错误 \r\n 请手动点击重试 ',
+                              //       style: TextStyle(
+                              //         fontWeight: FontWeight.w400,
+                              //         fontSize: 14,
+                              //         color: Colors.red.withOpacity(0.8),
+                              //       ),
+                              //       textDirection: TextDirection.ltr,
+                              //     ),
+                              //   ),
+                              // ),
+                              // ),
                             ),
                             Container(
                               color: Colors.white,
@@ -150,9 +152,21 @@ class _SearchlListViewState extends State<SearchlListView> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(
-                                              '${widget.resourceSection.transcript}',
-                                              textAlign: TextAlign.left,
+                                            ParsedText(
+                                              text:
+                                                  '${widget.resourceSection.transcript}',
+                                              parse: <MatchText>[
+                                                MatchText(
+                                                  pattern:
+                                                      "[${widget.searchText}]",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14,
+                                                    color: Colors.redAccent
+                                                        .withOpacity(0.76),
+                                                  ),
+                                                ),
+                                              ],
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
@@ -161,19 +175,53 @@ class _SearchlListViewState extends State<SearchlListView> {
                                                 color: Color(0xFF17262A),
                                               ),
                                             ),
+                                            // Text(
+                                            //   '${widget.resourceSection.transcript}',
+                                            //   textAlign: TextAlign.left,
+                                            //   maxLines: 1,
+                                            //   overflow: TextOverflow.ellipsis,
+                                            //   style: TextStyle(
+                                            //     fontWeight: FontWeight.w400,
+                                            //     fontSize: 14,
+                                            //     color: Color(0xFF17262A),
+                                            //   ),
+                                            // ),
                                             const SizedBox(
                                               height: 8,
                                             ),
-                                            Text(
-                                              '中文:${widget.resourceSection.chinsesTranScript}',
-                                              textAlign: TextAlign.left,
+                                            // Text(
+                                            //   '中文:${widget.resourceSection.chinsesTranScript}',
+                                            //   textAlign: TextAlign.left,
+                                            //   maxLines: 1,
+                                            //   overflow: TextOverflow.ellipsis,
+                                            //   style: TextStyle(
+                                            //     fontWeight: FontWeight.w400,
+                                            //     fontSize: 14,
+                                            //     color: Color(0xFF17262A)
+                                            //         .withOpacity(0.6),
+                                            //   ),
+                                            // ),
+                                            ParsedText(
+                                              text:
+                                                  '中文:${widget.resourceSection.chinsesTranScript}',
+                                              parse: <MatchText>[
+                                                MatchText(
+                                                  pattern:
+                                                      "[${widget.searchText}]",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14,
+                                                    color: Colors.redAccent
+                                                        .withOpacity(0.75),
+                                                  ),
+                                                ),
+                                              ],
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 14,
-                                                color: Color(0xFF17262A)
-                                                    .withOpacity(0.6),
+                                                color: Color(0xFF17262A),
                                               ),
                                             ),
                                             const SizedBox(

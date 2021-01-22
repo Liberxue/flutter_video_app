@@ -458,7 +458,7 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      '自定义素材/搜索 智能视频分层情感行为分析...',
+                      '视频深度分析引擎，智能视频分层，情感及行为分析',
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,

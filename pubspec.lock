@@ -43,13 +43,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.5.0-nullsafety.3"
-  audio_session:
-    dependency: transitive
+  audioplayers:
+    dependency: "direct main"
     description:
-      name: audio_session
+      name: audioplayers
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.0.11"
+    version: "0.17.2"
   base_x:
     dependency: "direct main"
     description:
@@ -321,6 +321,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.8.1"
+  flutter_parsed_text:
+    dependency: "direct main"
+    description:
+      name: flutter_parsed_text
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.2.5"
   flutter_share:
     dependency: "direct main"
     description:
@@ -443,27 +450,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.1.1"
-  just_audio:
-    dependency: "direct main"
-    description:
-      name: just_audio
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.6.5"
-  just_audio_platform_interface:
-    dependency: transitive
-    description:
-      name: just_audio_platform_interface
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.0.0"
-  just_audio_web:
-    dependency: transitive
-    description:
-      name: just_audio_web
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.2.1"
   logger:
     dependency: "direct main"
     description:

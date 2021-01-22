@@ -39,10 +39,12 @@ dependencies:
   flutter_cache_manager: ^2.0.0 #https://github.com/tekartik/sqflite/issues/536
   flutter_custom_dialog: ^1.0.20 
   floor: ^0.17.0
-  just_audio: ^0.6.5
+  audioplayers: ^0.17.2
   flutter_inappwebview: ^4.0.0+4
   flutter_xupdate: ^0.0.3
   oktoast: ^2.3.1+1
+  flutter_parsed_text: ^1.2.5
+
 
 
 

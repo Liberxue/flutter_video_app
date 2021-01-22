@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:ciying/Utils/hexColor.dart';
 import 'package:ciying/Utils/store.dart';
 import 'package:ciying/Widgets/dialog.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:flutter_share/flutter_share.dart';
-import 'package:just_audio/just_audio.dart';
 
 class TextInputBarUI extends StatefulWidget {
   @override
@@ -26,7 +26,7 @@ class _TextInputBarUIState extends State<TextInputBarUI>
   TabController _controller;
   List tabs = ["中文", "英文"];
 
-  final player = AudioPlayer();
+  AudioPlayer audioPlayer = AudioPlayer();
 
   String _locaPath = "";
   String _url = "";
@@ -239,11 +239,10 @@ class _TextInputBarUIState extends State<TextInputBarUI>
                         setState(() {
                           _url = result;
                         });
-                        try {
-                          await player.setUrl(_url);
-                          player
-                              .play(); // Usually you don't want to wait for playback to finish.
-                        } catch (t) {
+                        int resultAudio = await audioPlayer.play(_url);
+                        if (resultAudio == 1) {
+                          // success
+                        } else {
                           yyDialog?.dismiss();
                           dialogShow("试听遇到点问题,\n 请重试");
                         }

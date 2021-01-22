@@ -153,7 +153,7 @@ class _VideoPlayerState extends State<VideoPlayer>
       autoInitialize: true,
       allowedScreenSleep: false,
       customControls: MyChewieMaterialControls(
-        widget._resourceSection.resourceID,
+          widget._resourceSection.resourceID,
           widget._resourceSection.transcript,
           widget._resourceSection.chinsesTranScript),
     );
@@ -395,7 +395,7 @@ class _VideoPlayerState extends State<VideoPlayer>
                                   padding: const EdgeInsets.only(
                                       left: 16, right: 16, top: 1.0),
                                   child: Text(
-                                    "来源：${widget._resourceSection.source} \r\n\r\n温馨提示：当前搜索信息均搜集自互联网。仅作为个人学习、研究之用。如有侵权，请联系删除。\r\n\r\n词影提供: 物体、场景、人脸、动作、行为等视频内容识别分析，欢迎联系洽谈。",
+                                    "来源：${widget._resourceSection.source} \r\n\r\n温馨提示：当前搜索信息均搜集自互联网。仅作为个人学习、研究之用。如有侵权，请联系删除。",
                                     textAlign: TextAlign.justify,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w200,
