@@ -32,14 +32,16 @@ dependencies:
   # flutter_downloader: ^1.5.2
   path_provider: ^1.6.24
   # permission_handler: ^3.1.0
-  # toast: ^0.1.4
-  gallery_saver: ^2.0.1
+  # gallery_saver: ^2.0.1
+  gallery_saver:
+      git:
+        url: git@github.com:Liberxue/gallery_saver.git
   # image_picker: ^0.6.7+14
   logger: ^0.9.4
   flutter_cache_manager: ^2.0.0 #https://github.com/tekartik/sqflite/issues/536
   flutter_custom_dialog: ^1.0.20 
   floor: ^0.17.0
-  audioplayers: ^0.17.2
+  audioplayers: 0.17.2
   flutter_inappwebview: ^4.0.0+4
   flutter_xupdate: ^0.0.3
   oktoast: ^2.3.1+1

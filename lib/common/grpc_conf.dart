@@ -10,5 +10,5 @@ class GrpcConfig {
   static const ConfconnectionTimeout = Duration(seconds: 150);
   // grpc idleTimeout
   static const ConfIdleTimeout = Duration(seconds: 150);
-  static const String ApiVersion = "0.0.4";
+  static const String ApiVersion = "0.1.9";
 }

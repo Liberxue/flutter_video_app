@@ -105,14 +105,18 @@ class RegisterState extends State<Register>
     _privacyProtocolRecognizer = TapGestureRecognizer();
 
     userPhoneFieldNode.addListener(() {
-      setState(() {});
+      if (this.mounted) {
+        setState(() {});
+      }
     });
     registerAnimatController = AnimationController(
         duration: const Duration(milliseconds: 400), vsync: this);
     registerAnimatController.addListener(() {
       // double value = registerAnimatController.value;
       // print("注册变化比率 $value");
-      setState(() {});
+      if (this.mounted) {
+        setState(() {});
+      }
     });
 
     logoAnimatController = AnimationController(

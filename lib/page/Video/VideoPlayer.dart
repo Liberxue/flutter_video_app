@@ -74,19 +74,25 @@ class _VideoPlayerState extends State<VideoPlayer>
             getAccountCoinByAccountIdRequest);
     if (getAccountCoinByAccountIdResponse != null) {
       if (getAccountCoinByAccountIdResponse.code == ResponseCode.SUCCESSFUL) {
-        setState(() {
-          _coin = getAccountCoinByAccountIdResponse.coin;
-        });
+        if (this.mounted) {
+          setState(() {
+            _coin = getAccountCoinByAccountIdResponse.coin;
+          });
+        }
         return;
       }
+      if (this.mounted) {
+        setState(() {
+          _coin = Int64(0);
+        });
+      }
+      return;
+    }
+    if (this.mounted) {
       setState(() {
         _coin = Int64(0);
       });
-      return;
     }
-    setState(() {
-      _coin = Int64(0);
-    });
     return;
   }
 
@@ -95,25 +101,36 @@ class _VideoPlayerState extends State<VideoPlayer>
     resourcePreviewRequest.resourceId = widget._resourceSection.resourceID;
     ResourcePreviewResponse resourcePreviewResponse =
         await Resource.resourcePreviewAPIRequest(resourcePreviewRequest);
+    if (resourcePreviewResponse == null) {
+      if (this.mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
+    }
     if (resourcePreviewResponse.code != ResponseCode.SUCCESSFUL) {
       // print("resourcePreviewResponse.code !=0");
       // EasyLoading.showSuccess('Use in initState');
       dialogShow("资源不存在，或者丢失");
-      setState(() {
-        _isLoading = false;
-      });
+      if (this.mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
       return;
     }
-
-    setState(() {
-      resourceDataList = resourcePreviewResponse.data;
-      if (resourceDataList != null) {
-        _video();
-        _isLoading = false;
-      }
-      // EasyLoading.showSuccess('Use in initState');
-      // _isLoading = false;
-    });
+    if (this.mounted) {
+      setState(() {
+        resourceDataList = resourcePreviewResponse.data;
+        if (resourceDataList != null) {
+          _video();
+          _isLoading = false;
+        }
+        // EasyLoading.showSuccess('Use in initState');
+        // _isLoading = false;
+      });
+    }
   }
 
   _getLoginState() async {
@@ -123,11 +140,13 @@ class _VideoPlayerState extends State<VideoPlayer>
       this._isLoading = false;
       return;
     } else {
-      setState(() {
-        this.userInfo = userInfo;
-        this._isLogin = true;
-        this._isLoading = false;
-      });
+      if (this.mounted) {
+        setState(() {
+          this.userInfo = userInfo;
+          this._isLogin = true;
+          this._isLoading = false;
+        });
+      }
     }
     return;
   }
@@ -166,6 +185,7 @@ class _VideoPlayerState extends State<VideoPlayer>
   void dispose() {
     _videoPlayerController.dispose();
     _chewieController.dispose();
+    animationController.dispose(); // you need this
     super.dispose();
   }
 
@@ -180,8 +200,13 @@ class _VideoPlayerState extends State<VideoPlayer>
         resourceDownloadRequest);
 //         flutter: http://yarn-preview-video.oss-cn-shanghai.aliyuncs.com/1ce353606c1fa093acc28f317694c1d5.mp4?Expires=1608705107&OSSAccessKeyId=LTAI4G5WxpWR3Hq8SDPU96Mh&Signature=hDWOh%2F9wBLHEaYfZm5j4i6DKmME%3D
 // [VERBOSE-2:ui_dart_state.cc(177)] Unhandled Exception: Invalid argument(s): File on path is not a video.
-    return GallerySaver.saveVideo(resourceDataList[0].resourceAddress + "&.mp4",
+    return GallerySaver.saveVideo(resourceDataList[0].resourceAddress,
+        widget._resourceSection.resourceID + ".mp4",
         albumName: albumName);
+    // return GallerySaver.saveVideo(
+    //     "https://ciying-video.oss-cn-shanghai.aliyuncs.com/003c75f6-43ef-4e89-9c18-46c65dbf4604.mp4?Expires=1611652042&OSSAccessKeyId=TMP.3Kg5obBV3kdUQTCYFm2jSjRh6ymeqH3HXwTMg2fWFzFhB1v4tsc7eAbfJLB5xTLK5z2BV1qJELuPnWoBR68dwRjmY8DkWv&Signature=mkpk7OCLQD%2FfFLJgHebg5H3b708%3D",
+    //     widget._resourceSection.resourceID + ".mp4",
+    //     albumName: albumName);
   }
 
   Future<void> setData() async {
@@ -349,16 +374,16 @@ class _VideoPlayerState extends State<VideoPlayer>
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(
-                                    "当前积分:" + _coin.toString(),
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w200,
-                                      fontSize: 12,
-                                      letterSpacing: 0.27,
-                                      color: Color(0xFF4A6572),
-                                    ),
-                                  ),
+                                  // Text(
+                                  //   "当前积分:" + _coin.toString(),
+                                  //   textAlign: TextAlign.left,
+                                  //   style: TextStyle(
+                                  //     fontWeight: FontWeight.w200,
+                                  //     fontSize: 12,
+                                  //     letterSpacing: 0.27,
+                                  //     color: Color(0xFF4A6572),
+                                  //   ),
+                                  // ),
                                   Container(
                                     child: Row(
                                       children: <Widget>[

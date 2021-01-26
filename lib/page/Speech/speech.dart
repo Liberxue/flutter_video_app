@@ -28,7 +28,9 @@ class _SpeechPageState extends State<SpeechPage> with TickerProviderStateMixin {
   final GlobalKey<ContainerState> _slideKey = GlobalKey<ContainerState>();
 
   void onSlide(double position) {
-    setState(() => this.position = position);
+    if (this.mounted) {
+      setState(() => this.position = position);
+    }
   }
 
   final double infoHeight = 364.0;

@@ -54,11 +54,15 @@ class _TextInputBarUIState extends State<TextInputBarUI>
       this._isLogin = false;
       this._isLoading = false;
     } else {
-      setState(() {
-        this.userInfo = userInfo;
-        this._isLogin = true;
-        this._isLoading = false;
-      });
+      if (this.mounted) {
+        if (this.mounted) {
+          setState(() {
+            this.userInfo = userInfo;
+            this._isLogin = true;
+            this._isLoading = false;
+          });
+        }
+      }
     }
   }
 
@@ -236,9 +240,11 @@ class _TextInputBarUIState extends State<TextInputBarUI>
                       if (result.length > 0) {
                         yyDialog?.dismiss();
                         print(result);
-                        setState(() {
-                          _url = result;
-                        });
+                        if (this.mounted) {
+                          setState(() {
+                            _url = result;
+                          });
+                        }
                         int resultAudio = await audioPlayer.play(_url);
                         if (resultAudio == 1) {
                           // success
@@ -283,9 +289,11 @@ class _TextInputBarUIState extends State<TextInputBarUI>
                       if (_url.length < 0) {
                         yyDialog.show();
                         var result = await _getSpeechResult();
-                        setState(() {
-                          _url = result;
-                        });
+                        if (this.mounted) {
+                          setState(() {
+                            _url = result;
+                          });
+                        }
                         yyDialog?.dismiss();
                         if (_url.length > 0 && _url != null) {
                           return shareFile(_url);

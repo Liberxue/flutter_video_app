@@ -59,11 +59,13 @@ class _UserDrawerPageState extends State<UserDrawerPage> {
 
   _getLoginState() async {
     var userInfo = await loadUserCache();
-    setState(() {
-      this.userInfo = userInfo;
-      this._isLogin = true;
-      this._isLoading = false;
-    });
+    if (this.mounted) {
+      setState(() {
+        this.userInfo = userInfo;
+        this._isLogin = true;
+        this._isLoading = false;
+      });
+    }
   }
 
   _getCoin() async {

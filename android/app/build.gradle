@@ -35,11 +35,11 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.ciying"
-        minSdkVersion 17
+        // audioplayers pub~~!!!!!!! In order to support the playBytes method, this has a hard requirement on using API >= 23 features, and your build may failure depending on your minimum sdk targeting. To override this, you will need to add <uses-sdk tools:overrideLibrary="xyz.luan.audioplayers"/> to your build.gradle
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        multiDexEnabled true
     }
 
     buildTypes {
@@ -57,6 +57,4 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    // https://stackoverflow.com/questions/54911906/cannot-fit-requested-classes-in-a-single-dex-file-even-for-earlier-commits-whic
-    implementation 'com.android.support:multidex:1.0.3'
 }

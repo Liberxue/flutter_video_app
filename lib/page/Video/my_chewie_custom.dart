@@ -304,15 +304,19 @@ class _MyChewieMaterialControlsState extends State<MyChewieMaterialControls> {
         onTap: () {
           if (_latestValue != null && _latestValue.isPlaying) {
             if (_displayTapped) {
-              setState(() {
-                _hideStuff = true;
-              });
+              if (this.mounted) {
+                setState(() {
+                  _hideStuff = true;
+                });
+              }
             } else
               _cancelAndRestartTimer();
           } else {
-            setState(() {
-              _hideStuff = true;
-            });
+            if (this.mounted) {
+              setState(() {
+                _hideStuff = true;
+              });
+            }
           }
         },
         onDoubleTap: () {

@@ -355,11 +355,13 @@ class _SpeechLanguageState extends State<SpeechLanguage>
                               enableTooltip: true,
                               minorTicksPerInterval: 1,
                               onChanged: (dynamic value) {
-                                setState(() {
-                                  _speechPitch = value;
-                                  Cache.setCache(
-                                      "speechVoice", value.toStringAsFixed(2));
-                                });
+                                if (this.mounted) {
+                                  setState(() {
+                                    _speechPitch = value;
+                                    Cache.setCache("speechVoice",
+                                        value.toStringAsFixed(2));
+                                  });
+                                }
                               },
                             )),
                       ],

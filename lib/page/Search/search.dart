@@ -32,9 +32,11 @@ class _SearchPageState extends State<SearchPage> {
         body: getList(this._selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (int index) {
-            setState(() {
-              this._selectedIndex = index;
-            });
+            if (this.mounted) {
+              setState(() {
+                this._selectedIndex = index;
+              });
+            }
           },
           currentIndex: this._selectedIndex,
           items: _barItem,
@@ -131,7 +133,9 @@ class _SearchPageContentState extends State<SearchPageContent>
   final GlobalKey<ContainerState> _slideKey = GlobalKey<ContainerState>();
 
   void onSlide(double position) {
-    setState(() => this.position = position);
+    if (this.mounted) {
+      setState(() => this.position = position);
+    }
   }
 
   @override

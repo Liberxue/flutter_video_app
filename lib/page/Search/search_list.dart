@@ -142,7 +142,7 @@ class __ResourceListBodyState extends State<_ResourceListBody>
 
   bool _isLoading = true;
   bool _isError = false;
-  int pageCout = 10;
+  int pageCout = 28;
   // List<CacheResourceSection> _resourceSection =
   //     new List<CacheResourceSection>();
   List<ResourceSection> _resourceSection = <ResourceSection>[];
@@ -215,14 +215,12 @@ class __ResourceListBodyState extends State<_ResourceListBody>
   }
 
   _onLoadmore() async {
-    print(isLoading);
-    if (!_isError) {
-      await Future.delayed(Duration(seconds: 5), () {
-        _fetchData().then((data) {
-          setState(() {
-            _resourceSection.addAll(data);
-            isLoading = false;
-          });
+    if (!_isError && isLoadingMore) {
+      _fetchData().then((data) {
+        setState(() {
+          _resourceSection.addAll(data);
+          isLoading = true;
+          isLoadingMore = true;
         });
       });
     }
@@ -341,7 +339,9 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                                     if (index + 1 == _resourceSection.length) {
                                       if (isLoadMoreEnd) {
                                         // _onLoadmore();
-                                        if (_isError || _isLoading) {
+                                        if (_isError ||
+                                            _isLoading ||
+                                            !isLoadingMore) {
                                           return _buildLoadText(
                                               '暂时没有更多～ 请稍后重试\n\r我们会持续更新,欢迎反馈......');
                                         }
@@ -351,8 +351,8 @@ class __ResourceListBodyState extends State<_ResourceListBody>
                                       }
                                     }
                                     final int count =
-                                        _resourceSection.length > 10
-                                            ? 10
+                                        _resourceSection.length > 28
+                                            ? 28
                                             : _resourceSection.length;
                                     final Animation<double> animation =
                                         Tween<double>(begin: 0.0, end: 1.0)

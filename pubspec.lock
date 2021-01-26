@@ -355,10 +355,12 @@ packages:
   gallery_saver:
     dependency: "direct main"
     description:
-      name: gallery_saver
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.0.1"
+      path: "."
+      ref: HEAD
+      resolved-ref: "4488781f397cf976ffa4726749b306f2a9f622e1"
+      url: "git@github.com:Liberxue/gallery_saver.git"
+    source: git
+    version: "2.0.3"
   glob:
     dependency: transitive
     description:
